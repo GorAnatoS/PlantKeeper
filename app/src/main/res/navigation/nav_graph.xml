@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/myPlantsFragment"
         android:name="com.goranatos.plantskeeper.ui.home.MyPlantsFragment"
-        android:label="MyPlantsFragment" />
+        tools:layout="@layout/fragment_my_plants"
+        android:label="MyPlantsFragment" >
+        <action
+            android:id="@+id/action_myPlantsFragment_to_addNewPlant"
+            app:destination="@id/addNewPlant" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPlant"
+        android:name="com.goranatos.plantskeeper.ui.newPlant.AddNewPlant"
+        android:label="fragment_add_new_plant"
+        tools:layout="@layout/fragment_add_new_plant" />
+
+
 </navigation>

@@ -29,32 +29,6 @@ class PlantsKeeperApplication : Application(), DIAware {
 
         }
 
-
-
-/*    override val kodein = Kodein.lazy {
-
-
-
-
-
-
-
-        *//*bind() from singleton { MoexDatabase(instance()) }
-        bind() from singleton { instance<MoexDatabase>().moexDao() }
-        bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
-        bind() from singleton { MoexApiService(instance()) }
-        bind<MoexNetworkDataSource>() with singleton { MoexNetworkDataSourceImpl(instance()) }
-        bind<MoexRepository>() with singleton { MoexRepositoryImpl(instance(), instance()) }
-        bind() from provider { MoexViewModelFactory(instance()) }
-
-        bind() from singleton { YahooApiService(instance()) }
-        bind<YahooNetworkDataSource>() with singleton {YahooNetworkDataSourceImpl(instance()) }
-        //bind() from provider { AnaliticsViewModelFactory(instance()) }  private val viewModelFactory: MoexViewModelFactory by instance()
-
-        bind() from provider { RecommendationsViewModelFactory(instance(), instance()) }*//*
-
-    }*/
-
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)

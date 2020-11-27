@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.PlantItemCard
@@ -18,9 +19,6 @@ import kotlinx.coroutines.launch
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
-
-const val INSET_TYPE_KEY = "inset_type"
-const val INSET = "inset"
 
 class MyPlantsFragment : ScopedFragment(), DIAware {
 
@@ -40,6 +38,16 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
+
+        fab.setOnClickListener { view ->
+
+            val action =
+                MyPlantsFragmentDirections
+                    .actionMyPlantsFragmentToAddNewPlant()
+            view.findNavController().navigate(action)
+
+        }
+
         bindUI()
     }
 
