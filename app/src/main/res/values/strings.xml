@@ -26,4 +26,5 @@
     <string name="changed">changed</string>
     <string name="deleted">Удалено</string>
     <string name="delete_item">удалить</string>
+    <string name="give_a_name_to_a_plant">Назовите растение</string>
 </resources>

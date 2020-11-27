@@ -1,7 +1,9 @@
 package com.goranatos.plantskeeper.ui.home.plantInfo
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +23,7 @@ import kotlinx.coroutines.withContext
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
-
+import java.util.*
 
 class PlantInfo : ScopedFragment(), DIAware {
 
@@ -64,26 +66,50 @@ class PlantInfo : ScopedFragment(), DIAware {
 
         bindingPlantInfo.buttonChange.setOnClickListener {
 
-            uiScope.launch(Dispatchers.IO) {//launch(Dispatchers.Default){
+            if (bindingPlantInfo.editTextTextPlantName.text.toString().isNullOrEmpty()) {
+                showWrongInput()
+                Snackbar.make(requireView(), getString(R.string.give_a_name_to_a_plant), Snackbar.LENGTH_SHORT).show()
+            } else {
+                uiScope.launch(Dispatchers.IO) {//launch(Dispatchers.Default){
 
-                val newPlant = Plant(
-                        plant_id,
-                        bindingPlantInfo.editTextTextPlantName.text.toString(),
-                        bindingPlantInfo.editTextTextPlantDescription.text.toString()
-                )
+                    val newPlant = Plant(
+                            plant_id,
+                            bindingPlantInfo.editTextTextPlantName.text.toString(),
+                            bindingPlantInfo.editTextTextPlantDescription.text.toString()
+                    )
 
-                viewModel.updatePlant(newPlant)
+                    viewModel.updatePlant(newPlant)
 
-                hideKeyboard()
+                    hideKeyboard()
 
-                Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT).show()
 
-                findNavController().navigateUp()
+                    findNavController().navigateUp()
+                }
             }
         }
 
         setHasOptionsMenu(true)
 
+    }
+
+    private fun showWrongInput(){
+        if (bindingPlantInfo.editTextTextPlantName.text.isEmpty()) bindingPlantInfo.editTextTextPlantName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
+        else bindingPlantInfo.editTextTextPlantName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+
+        val mTimerTask =
+                MyTimerTask()
+        val mTimer = Timer()
+        mTimer.schedule(mTimerTask, 850)
+
+    }
+
+    internal inner class MyTimerTask : TimerTask() {
+        override fun run() {
+            activity?.runOnUiThread {
+                bindingPlantInfo.editTextTextPlantName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+            }
+        }
     }
 
     private fun bindUI() = launch(Dispatchers.IO) {
