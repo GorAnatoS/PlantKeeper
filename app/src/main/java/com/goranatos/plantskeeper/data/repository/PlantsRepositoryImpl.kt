@@ -13,7 +13,7 @@ class PlantsRepositoryImpl(
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(plant: Plant) {
+    override suspend fun insert(plant: Plant) {
         plantsDatabaseDao.insert(plant)
     }
 

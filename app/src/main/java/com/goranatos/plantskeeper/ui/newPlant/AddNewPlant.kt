@@ -1,58 +1,87 @@
 package com.goranatos.plantskeeper.ui.newPlant
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.data.entity.Plant
+import com.goranatos.plantskeeper.databinding.FragmentAddNewPlantBinding
+import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.IS_ADDED_NEW_PLANT
+import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.uiScope
+import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
+import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
+import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
+import kotlinx.coroutines.launch
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.closestDI
+import org.kodein.di.instance
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddNewPlant.newInstance] factory method to
- * create an instance of this fragment.
- */
-class AddNewPlant : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class AddNewPlant : ScopedFragment(), DIAware {
+
+
+
+    override val di by closestDI()
+
+    private lateinit var viewModel: MyPlantsViewModel
+    private val viewModelFactory: MyPlantsViewModelFactory by instance()
+
+    lateinit var bindingAddNewPlantBinding: FragmentAddNewPlantBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
+
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_new_plant, container, false)
+
+        bindingAddNewPlantBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_add_new_plant, container, false)
+
+        bindingAddNewPlantBinding.buttonAdd.setOnClickListener {
+            uiScope.launch {
+
+                bindingAddNewPlantBinding.apply {
+                    val newPlant: Plant = Plant(
+                        0,
+                        editTextTextPlantName.text.toString(),
+                        editTextTextPlantDescription.text.toString()
+                    )
+
+                    viewModel.insertPlant(newPlant)
+
+                }
+
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(IS_ADDED_NEW_PLANT, true)
+
+                hideKeyboard()
+
+                Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT).show()
+
+
+
+                findNavController().navigateUp()
+            }
+        }
+
+
+        return bindingAddNewPlantBinding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddNewPlant.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                AddNewPlant().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-    }
+
 }

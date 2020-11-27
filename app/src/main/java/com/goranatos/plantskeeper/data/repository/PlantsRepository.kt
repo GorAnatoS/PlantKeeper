@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface PlantsRepository {
     suspend fun getAllMyPlants(): Flow<List<Plant>>
+    suspend fun insert(plant: Plant)
 }
