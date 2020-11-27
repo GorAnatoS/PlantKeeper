@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_list_items">8dp</dimen>
+    <dimen name="margin_half">8dp</dimen>
+    <dimen name="margin_list_horizontal">8dp</dimen>
+</resources>
