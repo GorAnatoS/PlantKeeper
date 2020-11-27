@@ -44,8 +44,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
 
-
-
     }
 
     override fun onCreateView(
@@ -66,22 +64,11 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         })
 
         fab.setOnClickListener { view ->
-
             val action =
                 MyPlantsFragmentDirections
                     .actionMyPlantsFragmentToAddNewPlant()
             view.findNavController().navigate(action)
-
-            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-                IS_ADDED_NEW_PLANT
-            )
-                ?.observe(viewLifecycleOwner) { isAddedNewPlant ->
-                    if (isAddedNewPlant) {
-                        // TODO: 11/27/2020
-                    }
-                }
-
-        }
+            }
 
         bindUI()
     }

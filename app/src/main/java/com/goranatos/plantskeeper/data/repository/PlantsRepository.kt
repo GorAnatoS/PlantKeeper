@@ -1,11 +1,15 @@
 package com.goranatos.plantskeeper.data.repository
 
 
+import androidx.lifecycle.LiveData
 import com.goranatos.plantskeeper.data.entity.Plant
 import kotlinx.coroutines.flow.Flow
 
 
 interface PlantsRepository {
     suspend fun getAllMyPlants(): Flow<List<Plant>>
-    suspend fun insert(plant: Plant)
+    suspend fun insertPlant(plant: Plant)
+    suspend fun getPlant(id: Int): LiveData<Plant>
+    suspend fun updatePlant(plant: Plant)
+    suspend fun deletePlant(plant: Plant)
 }

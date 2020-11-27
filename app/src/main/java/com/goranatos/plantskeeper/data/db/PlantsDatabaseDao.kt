@@ -1,5 +1,6 @@
 package com.goranatos.plantskeeper.data.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.goranatos.plantskeeper.data.entity.Plant
 import kotlinx.coroutines.flow.Flow
@@ -13,11 +14,14 @@ interface PlantsDatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(plant: Plant)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(plant: Plant)
 
     @Query("SELECT * FROM $TABLE_NAME")
     fun getAllMyPlants(): Flow<List<Plant>>
+
+    @Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
+    fun getPlant(id : Int): LiveData<Plant>
 
     @Delete
     fun delete(plant: Plant)

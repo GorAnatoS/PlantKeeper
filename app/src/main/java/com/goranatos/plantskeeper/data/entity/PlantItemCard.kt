@@ -1,6 +1,8 @@
 package com.goranatos.plantskeeper.data.entity
 
+import androidx.navigation.findNavController
 import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.ui.home.MyPlantsFragmentDirections
 
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
@@ -14,9 +16,13 @@ class PlantItemCard(private val content: Plant) : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
-
         viewHolder.apply {
             viewHolder.containerView.tvTitle.text = content.name
+
+            //при нажатии на карточку открываем подробное описание растения
+            itemView.setOnClickListener{
+                it.findNavController().navigate(MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantInfo(content.id))
+            }
         }
 
     }

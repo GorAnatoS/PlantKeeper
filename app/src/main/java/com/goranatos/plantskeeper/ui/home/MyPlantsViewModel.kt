@@ -19,15 +19,22 @@ class MyPlantsViewModel(private val repository: PlantsRepository) : ViewModel() 
         }
     }
 
-
-    suspend fun getAllMyPlants(): LiveData<List<Plant>> {
-        return repository.getAllMyPlants().asLiveData()
+    suspend fun updatePlant(plant: Plant) {
+        repository.updatePlant(plant)
     }
 
+    suspend fun deletePlant(plant: Plant) {
+        repository.deletePlant(plant)
+    }
 
     suspend fun insertPlant(plant: Plant) {
-        repository.insert(plant)
+        repository.insertPlant(plant)
     }
+
+    suspend fun getPlant(id: Int): LiveData<Plant> {
+        return repository.getPlant(id)
+    }
+
 
 }
 

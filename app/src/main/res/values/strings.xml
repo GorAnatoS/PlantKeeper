@@ -19,4 +19,11 @@
     <string name="added">Добавлено</string>
     <string name="new_plant">Новое растение</string>
     <string name="plant_description">Добавьте любую дополнительную информацию по растению</string>
+    <string name="change">изменить</string>
+    <string name="name_of_plant">Название растения</string>
+    <string name="plant_description_short">Дополнительная инфомация о растении</string>
+    <string name="plant_id_in_database">plant_id_in_database</string>
+    <string name="changed">changed</string>
+    <string name="deleted">Удалено</string>
+    <string name="delete_item">удалить</string>
 </resources>
