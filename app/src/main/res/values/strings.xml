@@ -17,4 +17,6 @@
     <string name="add_new_plant">Добавить новое растение</string>
     <string name="empty_db_text">Добавьте новое растение</string>
     <string name="added">Добавлено</string>
+    <string name="new_plant">Новое растение</string>
+    <string name="plant_description">Добавьте любую дополнительную информацию по растению</string>
 </resources>
