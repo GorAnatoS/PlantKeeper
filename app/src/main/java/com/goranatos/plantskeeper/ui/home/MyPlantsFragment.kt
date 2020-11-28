@@ -33,8 +33,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     companion object {
         var viewModelJob = Job()
         val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-        const val IS_ADDED_NEW_PLANT = "isAddedNewPlant"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

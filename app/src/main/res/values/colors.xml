@@ -11,4 +11,7 @@
 
     <color name="textColor">#FF000000</color>
     <color name="pink_900">#880e4f</color>
+
+    <color name="circle_icon_button_color">@color/purple_200</color>
+    <color name="circle_icon_content_color">@color/teal_200</color>
 </resources>

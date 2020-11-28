@@ -2,11 +2,8 @@ package com.goranatos.plantskeeper.ui.home.plantAddAndInfo
 
 import android.os.Bundle
 import android.view.*
-
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +15,7 @@ import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.uiScope
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
+import com.ramotion.circlemenu.CircleMenuView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,14 +38,13 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     }
 
     companion object {
-
         var isAddNewPlant: Boolean = false
 
+        //id and Plant которые надо изменить в БД
         lateinit var thePlant: Plant
         var plant_id = 0
 
     }
-
 
     override val di by closestDI()
 
@@ -55,7 +52,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     private val viewModelFactory: MyPlantsViewModelFactory by instance()
 
     lateinit var binding: FragmentAddAndChangePlantBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,65 +62,73 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding =
-                DataBindingUtil.inflate(inflater, R.layout.fragment_add_and_change_plant, container, false)
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_add_and_change_plant,
+                container,
+                false
+            )
 
         binding.lifecycleOwner = this
 
         if (!isAddNewPlant) {
             setHasOptionsMenu(true)
             bindUI()
+            binding.buttonAddAndChange.text = getString(R.string.change)
+        } else {
+            binding.buttonAddAndChange.text = getString(R.string.create)
         }
+
+        setCircleButton()
 
         binding.buttonAddAndChange.setOnClickListener {
 
             if (binding.editTextTextPlantName.text.toString().isNullOrEmpty()) {
                 showWrongInput()
-                Snackbar.make(requireView(), getString(R.string.give_a_name_to_a_plant), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.give_a_name_to_a_plant),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             } else {
                 if (isAddNewPlant) {
                     uiScope.launch {
 
                         binding.apply {
                             val newPlant = Plant(
-                                    0,
-                                    editTextTextPlantName.text.toString(),
-                                    editTextTextPlantDescription.text.toString()
+                                0,
+                                editTextTextPlantName.text.toString(),
+                                editTextTextPlantDescription.text.toString()
                             )
 
                             viewModel.insertPlant(newPlant)
 
-
                         }
-
-
-
                     }
 
-                    Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT)
+                        .show()
                 } else {
 
                     uiScope.launch(Dispatchers.IO) {
 
                         val newPlant = Plant(
-                                plant_id,
-                                binding.editTextTextPlantName.text.toString(),
-                                binding.editTextTextPlantDescription.text.toString()
+                            plant_id,
+                            binding.editTextTextPlantName.text.toString(),
+                            binding.editTextTextPlantDescription.text.toString()
                         )
 
                         viewModel.updatePlant(newPlant)
 
-
-
-
                     }
-                    Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
+                        .show()
 
                 }
 
@@ -137,71 +141,117 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     }
 
 
+    private fun setCircleButton() {
+        binding.circleButton.eventListener = object :
+            CircleMenuView.EventListener() {
+            override fun onMenuOpenAnimationStart(view: CircleMenuView) {
+                //binding.circleButton.visibility = View.INVISIBLE
+            }
+
+            override fun onMenuCloseAnimationEnd(view: CircleMenuView) {
+                //binding.circleButton.visibility = View.VISIBLE
+            }
+
+            override fun onButtonClickAnimationStart(
+                view: CircleMenuView,
+                index: Int
+            ) {
+                when (index) {
+                    0 -> binding.plantImage.setImageResource(R.drawable.ic_flower)
+                    1 -> binding.plantImage.setImageResource(R.drawable.ic_cactus)
+                    2 -> binding.plantImage.setImageResource(R.drawable.ic_plant)
+                    3 -> binding.plantImage.setImageResource(R.drawable.ic_tree)
 
 
-    private fun showWrongInput() {
+                }
 
-        hideKeyboard()
+                fun onButtonClickAnimationEnd(
+                    view: CircleMenuView,
+                    index: Int
+                ) {
 
-        val color = binding.editTextTextPlantName.currentHintTextColor
-        if (binding.editTextTextPlantName.text.isEmpty()) binding.editTextTextPlantName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
-        else binding.editTextTextPlantName.setHintTextColor(ContextCompat.getColor(requireContext(), color))
-
-        val mTimerTask =
-                MyTimerTask()
-        val mTimer = Timer()
-        mTimer.schedule(mTimerTask, 850)
-
-    }
-
-    internal inner class MyTimerTask : TimerTask() {
-        override fun run() {
-            activity?.runOnUiThread {
-                binding.editTextTextPlantName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+                    binding.circleButton.visibility = View.VISIBLE
+                }
             }
         }
     }
 
-    private fun bindUI() = launch(Dispatchers.IO) {
 
-        withContext(Dispatchers.Main) {
+        private fun showWrongInput() {
+            hideKeyboard()
 
-            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
-                it?.let { plant ->
-                    thePlant = plant
+            val color = binding.editTextTextPlantName.currentHintTextColor
+            if (binding.editTextTextPlantName.text.isEmpty()) binding.editTextTextPlantName.setHintTextColor(
+                ContextCompat.getColor(requireContext(), R.color.errorColor)
+            )
+            else binding.editTextTextPlantName.setHintTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    color
+                )
+            )
 
-                    binding.apply {
-                        binding.editTextTextPlantName.setText(thePlant.name.toString())
-                        binding.editTextTextPlantDescription.setText(thePlant.desc.toString())
-                    }
+            val mTimerTask =
+                MyTimerTask()
+            val mTimer = Timer()
+            mTimer.schedule(mTimerTask, 850)
+        }
+
+        internal inner class MyTimerTask : TimerTask() {
+            override fun run() {
+                activity?.runOnUiThread {
+                    binding.editTextTextPlantName.setHintTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.textColor
+                        )
+                    )
                 }
-            })
-
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.plant_info_menu, menu)
-
-        val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
-
-        deleteItemFromDB.setOnMenuItemClickListener {
-            deleteItemFromDB()
-            true
+            }
         }
 
-        return super.onCreateOptionsMenu(menu, inflater)
-    }
+        private fun bindUI() = launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
 
-    private fun deleteItemFromDB() {
-        launch(Dispatchers.IO) {
-            viewModel.deletePlant(thePlant)
+                viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
+                    it?.let { plant ->
+                        thePlant = plant
 
-            Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT).show()
+                        binding.apply {
+                            binding.editTextTextPlantName.setText(thePlant.name.toString())
+                            binding.editTextTextPlantDescription.setText(thePlant.desc.toString())
+                        }
+                    }
+                })
+            }
+        }
 
-            findNavController().navigateUp()
+        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+            inflater.inflate(R.menu.plant_info_menu, menu)
+
+            val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
+
+            deleteItemFromDB.setOnMenuItemClickListener {
+                deleteItemFromDB()
+                true
+            }
+
+            return super.onCreateOptionsMenu(menu, inflater)
+        }
+
+        private fun deleteItemFromDB() {
+            launch(Dispatchers.IO) {
+                viewModel.deletePlant(thePlant)
+
+                Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
+                    .show()
+
+                findNavController().navigateUp()
+            }
+        }
+
+        override fun onStop() {
+            super.onStop()
+            binding.circleButton.visibility = View.INVISIBLE
         }
     }
-
-
-}

@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.plantAddAndInfo.PlantAddAndInfo">
 
-        <TextView
-            android:id="@+id/textViewPlantName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPlantName"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPlantName"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPlantName" />
 
         <EditText
             android:id="@+id/editTextTextPlantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginTop="@dimen/margin_normal"
             android:ems="10"
+            android:gravity="center"
+            android:hint="@string/name"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textViewPlantName"
-            app:layout_constraintTop_toTopOf="parent"
-            android:hint="@string/new_plant" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
+            android:id="@+id/plantImage"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="36dp"
+            android:backgroundTint="@color/teal_200"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantName"
-            tools:src="@tools:sample/avatars" />
+            app:srcCompat="@drawable/ic_tree" />
 
-        <TextView
-            android:id="@+id/textViewPlantDescription"
+        <com.ramotion.circlemenu.CircleMenuView
+            android:id="@+id/circleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/description"
+            app:button_colors="@array/colorsPlantsImages"
+            app:button_icons="@array/plantsImages"
+            app:duration_close="@integer/durationOfCircleMenu"
+            app:duration_open="@integer/durationOfCircleMenu"
+            app:duration_ring="@integer/durationOfCircleMenu"
+            app:icon_color="@color/purple_200"
+            app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toTopOf="parent">
+        </com.ramotion.circlemenu.CircleMenuView>
 
 
         <EditText
@@ -60,15 +61,14 @@
             android:layout_marginEnd="@dimen/margin_half"
             android:ems="10"
             android:gravity="top|left"
+            android:hint="@string/notes"
             android:inputType="textMultiLine"
             android:lines="5"
             android:minLines="2"
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPlantDescription"
-
-            android:hint="@string/plant_description" />
+            app:layout_constraintTop_toBottomOf="@+id/plantImage" />
 
         <Button
             android:id="@+id/buttonAddAndChange"
@@ -79,7 +79,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-
+        
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
