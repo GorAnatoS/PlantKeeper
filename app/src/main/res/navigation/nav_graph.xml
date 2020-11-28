@@ -10,27 +10,18 @@
         tools:layout="@layout/fragment_my_plants"
         android:label="MyPlantsFragment" >
         <action
-            android:id="@+id/action_myPlantsFragment_to_addNewPlant"
-            app:destination="@id/addNewPlant" />
-        <action
-            android:id="@+id/action_myPlantsFragment_to_plantInfo"
-            app:destination="@id/plantInfo" />
+            android:id="@+id/action_myPlantsFragment_to_plantAddAndInfo"
+            app:destination="@id/plantAddAndInfo" />
     </fragment>
     <fragment
-        android:id="@+id/addNewPlant"
-        android:name="com.goranatos.plantskeeper.ui.home.newPlant.AddNewPlant"
-        android:label="fragment_add_new_plant"
-        tools:layout="@layout/fragment_add_new_plant" />
-
-    <fragment
-        tools:layout="@layout/fragment_plant_info"
-        android:id="@+id/plantInfo"
-        android:name="com.goranatos.plantskeeper.ui.home.plantInfo.PlantInfo"
-        android:label="PlantInfo" >
+        android:id="@+id/plantAddAndInfo"
+        tools:layout="@layout/fragment_add_and_change_plant"
+        android:name="com.goranatos.plantskeeper.ui.home.plantAddAndInfo.PlantAddAndInfo"
+        android:label="PlantAddAndInfo" >
         <argument
             android:name="plant_id_in_database"
-            app:nullable="false"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 
 

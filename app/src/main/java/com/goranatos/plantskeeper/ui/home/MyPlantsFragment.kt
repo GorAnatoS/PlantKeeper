@@ -1,5 +1,6 @@
 package com.goranatos.plantskeeper.ui.home
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
@@ -19,8 +19,6 @@ import kotlinx.android.synthetic.main.fragment_my_plants.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-
-
 import kotlinx.coroutines.launch
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
@@ -47,9 +45,9 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
 
@@ -61,14 +59,16 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
         viewModel.allPlants.observe(viewLifecycleOwner, Observer {
             initRecycleView(it.toPlantItemCards())
+            if (it.isNotEmpty()) textViewEmptyDatabaseNotification.visibility = View.GONE
+            else textViewEmptyDatabaseNotification.visibility = View.VISIBLE
         })
 
         fab.setOnClickListener { view ->
             val action =
-                MyPlantsFragmentDirections
-                    .actionMyPlantsFragmentToAddNewPlant()
+                    MyPlantsFragmentDirections
+                            .actionMyPlantsFragmentToPlantAddAndInfo()
             view.findNavController().navigate(action)
-            }
+        }
 
         bindUI()
     }

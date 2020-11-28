@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), DIAware {
         setSupportActionBar(findViewById(R.id.toolbar))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+   /* override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -35,7 +35,9 @@ class MainActivity : AppCompatActivity(), DIAware {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
+    }*/
+
+    // TODO: 11/27/2020 menu 
 
 
 }

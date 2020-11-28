@@ -3,6 +3,7 @@ package com.goranatos.plantskeeper.data.entity
 import androidx.navigation.findNavController
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.ui.home.MyPlantsFragmentDirections
+//import com.goranatos.plantskeeper.ui.home.MyPlantsFragmentDirections
 
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
@@ -21,7 +22,7 @@ class PlantItemCard(private val content: Plant) : Item() {
 
             //при нажатии на карточку открываем подробное описание растения
             itemView.setOnClickListener{
-                it.findNavController().navigate(MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantInfo(content.id))
+                it.findNavController().navigate(MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(content.id))
             }
         }
 
