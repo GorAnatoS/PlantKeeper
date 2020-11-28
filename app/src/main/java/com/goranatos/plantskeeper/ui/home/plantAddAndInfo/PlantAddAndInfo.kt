@@ -1,6 +1,11 @@
 package com.goranatos.plantskeeper.ui.home.plantAddAndInfo
 
+import android.app.Activity.RESULT_OK
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -161,6 +166,12 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                     1 -> binding.plantImage.setImageResource(R.drawable.ic_cactus)
                     2 -> binding.plantImage.setImageResource(R.drawable.ic_plant)
                     3 -> binding.plantImage.setImageResource(R.drawable.ic_tree)
+                    4 -> {
+                        dispatchTakePictureIntent()
+                    }
+                    5 -> {
+
+                    }
 
 
                 }
@@ -177,81 +188,101 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     }
 
 
-        private fun showWrongInput() {
-            hideKeyboard()
-
-            val color = binding.editTextTextPlantName.currentHintTextColor
-            if (binding.editTextTextPlantName.text.isEmpty()) binding.editTextTextPlantName.setHintTextColor(
-                ContextCompat.getColor(requireContext(), R.color.errorColor)
-            )
-            else binding.editTextTextPlantName.setHintTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    color
-                )
-            )
-
-            val mTimerTask =
-                MyTimerTask()
-            val mTimer = Timer()
-            mTimer.schedule(mTimerTask, 850)
-        }
-
-        internal inner class MyTimerTask : TimerTask() {
-            override fun run() {
-                activity?.runOnUiThread {
-                    binding.editTextTextPlantName.setHintTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.textColor
-                        )
-                    )
-                }
-            }
-        }
-
-        private fun bindUI() = launch(Dispatchers.IO) {
-            withContext(Dispatchers.Main) {
-
-                viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
-                    it?.let { plant ->
-                        thePlant = plant
-
-                        binding.apply {
-                            binding.editTextTextPlantName.setText(thePlant.name.toString())
-                            binding.editTextTextPlantDescription.setText(thePlant.desc.toString())
-                        }
-                    }
-                })
-            }
-        }
-
-        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-            inflater.inflate(R.menu.plant_info_menu, menu)
-
-            val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
-
-            deleteItemFromDB.setOnMenuItemClickListener {
-                deleteItemFromDB()
-                true
-            }
-
-            return super.onCreateOptionsMenu(menu, inflater)
-        }
-
-        private fun deleteItemFromDB() {
-            launch(Dispatchers.IO) {
-                viewModel.deletePlant(thePlant)
-
-                Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
-                    .show()
-
-                findNavController().navigateUp()
-            }
-        }
-
-        override fun onStop() {
-            super.onStop()
-            binding.circleButton.visibility = View.INVISIBLE
+    val REQUEST_IMAGE_CAPTURE = 1
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
+            // display error state to the user
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            binding.plantImage.setImageBitmap(imageBitmap)
+            binding.circleButton.visibility = View.VISIBLE
+        }
+    }
+
+
+
+    private fun showWrongInput() {
+        hideKeyboard()
+
+        val color = binding.editTextTextPlantName.currentHintTextColor
+        if (binding.editTextTextPlantName.text.isEmpty()) binding.editTextTextPlantName.setHintTextColor(
+            ContextCompat.getColor(requireContext(), R.color.errorColor)
+        )
+        else binding.editTextTextPlantName.setHintTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                color
+            )
+        )
+
+        val mTimerTask =
+            MyTimerTask()
+        val mTimer = Timer()
+        mTimer.schedule(mTimerTask, 850)
+    }
+
+    internal inner class MyTimerTask : TimerTask() {
+        override fun run() {
+            activity?.runOnUiThread {
+                binding.editTextTextPlantName.setHintTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.textColor
+                    )
+                )
+            }
+        }
+    }
+
+    private fun bindUI() = launch(Dispatchers.IO) {
+        withContext(Dispatchers.Main) {
+
+            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
+                it?.let { plant ->
+                    thePlant = plant
+
+                    binding.apply {
+                        binding.editTextTextPlantName.setText(thePlant.name.toString())
+                        binding.editTextTextPlantDescription.setText(thePlant.desc.toString())
+                    }
+                }
+            })
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.plant_info_menu, menu)
+
+        val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
+
+        deleteItemFromDB.setOnMenuItemClickListener {
+            deleteItemFromDB()
+            true
+        }
+
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun deleteItemFromDB() {
+        launch(Dispatchers.IO) {
+            viewModel.deletePlant(thePlant)
+
+            Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
+                .show()
+
+            findNavController().navigateUp()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.circleButton.visibility = View.INVISIBLE
+    }
+}
