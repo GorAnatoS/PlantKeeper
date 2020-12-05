@@ -51,12 +51,6 @@ import java.util.*
 
 @RuntimePermissions
 class PlantAddAndInfo : ScopedFragment(), DIAware {
-
-    private fun isToCreateNewPlant() {
-        plant_id = arguments?.getInt("plant_id_in_database")!!
-        isAddNewPlant = plant_id == -1
-    }
-
     companion object {
         var isAddNewPlant: Boolean = false
 
@@ -131,6 +125,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         super.onCreate(savedInstanceState)
 
         isToCreateNewPlant()
+
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
 
@@ -253,6 +248,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
+    private fun isToCreateNewPlant() {
+        plant_id = arguments?.getInt("plant_id_in_database")!!
+        isAddNewPlant = plant_id == -1
+    }
 
     private fun showWrongInput() {
         hideKeyboard()
@@ -401,4 +400,5 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
+    // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
 }

@@ -13,15 +13,29 @@
         android:layout_height="wrap_content"
         android:minHeight="?listPreferredItemHeightSmall">
 
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvTitle"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPlant"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Хлорофитум" />
+
+        <ImageView
+            android:id="@+id/imageViewPlant"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginBottom="@dimen/margin_half"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Хлорофитум" />
+            app:srcCompat="@drawable/ic_tree" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
