@@ -1,13 +1,23 @@
 package com.goranatos.plantskeeper.ui.home.plantAddAndInfo
 
+import android.Manifest
+import android.R.attr.maxHeight
+import android.R.attr.maxWidth
 import android.app.Activity.RESULT_OK
-import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.provider.MediaStore.Images
 import android.view.*
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,13 +31,18 @@ import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.ramotion.circlemenu.CircleMenuView
+import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
+
 
 /*
     Добавляет новые и редактирует имеющийся цветок\растение
@@ -49,6 +64,17 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         lateinit var thePlant: Plant
         var plant_id = 0
 
+
+        private const val SAMPLE_CROPPED_IMAGE_NAME = "SampleCropImage"
+
+        //Camera
+        const val REQUEST_IMAGE_CAPTURE = 631
+
+        //selectPicture
+        const val REQUEST_CHOOSE_FROM_GALLERY = 632
+
+        private var currentPhotoPath = ""
+
     }
 
     override val di by closestDI()
@@ -57,6 +83,36 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     private val viewModelFactory: MyPlantsViewModelFactory by instance()
 
     lateinit var binding: FragmentAddAndChangePlantBinding
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+
+                REQUEST_CHOOSE_FROM_GALLERY -> {
+                    val selectedUri = data!!.data
+                    if (selectedUri != null) {
+                        openCropActivity(selectedUri, createImageFile().toUri())
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.toast_cannot_retrieve_selected_image,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                REQUEST_IMAGE_CAPTURE -> {
+                    openCropActivity(uri, createImageFile().toUri())
+                }
+
+                UCrop.REQUEST_CROP -> {
+
+                    handleCropResult(data)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,7 +190,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                     }
                     Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
                         .show()
-
                 }
 
                 hideKeyboard()
@@ -149,13 +204,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     private fun setCircleButton() {
         binding.circleButton.eventListener = object :
             CircleMenuView.EventListener() {
-            override fun onMenuOpenAnimationStart(view: CircleMenuView) {
-                //binding.circleButton.visibility = View.INVISIBLE
-            }
-
-            override fun onMenuCloseAnimationEnd(view: CircleMenuView) {
-                //binding.circleButton.visibility = View.VISIBLE
-            }
 
             override fun onButtonClickAnimationStart(
                 view: CircleMenuView,
@@ -170,42 +218,12 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         dispatchTakePictureIntent()
                     }
                     5 -> {
-
+                        chooseFromGallery()
                     }
-
-
-                }
-
-                fun onButtonClickAnimationEnd(
-                    view: CircleMenuView,
-                    index: Int
-                ) {
-
-                    binding.circleButton.visibility = View.VISIBLE
                 }
             }
         }
     }
-
-
-    val REQUEST_IMAGE_CAPTURE = 1
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            // display error state to the user
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            binding.plantImage.setImageBitmap(imageBitmap)
-            binding.circleButton.visibility = View.VISIBLE
-        }
-    }
-
 
 
     private fun showWrongInput() {
@@ -266,7 +284,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
             deleteItemFromDB()
             true
         }
-
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -281,8 +298,76 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        binding.circleButton.visibility = View.INVISIBLE
+    private var pictureImagePath = ""
+
+
+    lateinit var uri: Uri
+    private fun dispatchTakePictureIntent() {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName = "$timeStamp.jpg"
+        val storageDir: File = Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_PICTURES
+        )
+        pictureImagePath = storageDir.absolutePath + "/" + imageFileName
+        val file: File = File(pictureImagePath)
+        //val outputFileUri = Uri.fromFile(file)
+        val outputFileUri = FileProvider.getUriForFile(
+            requireContext(),
+            requireContext().applicationContext.packageName.toString() + ".provider",
+            file
+        )
+        uri = outputFileUri
+
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
+        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
     }
+
+    private fun chooseFromGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+            .setType("image/*")
+            .addCategory(Intent.CATEGORY_OPENABLE)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val mimeTypes = arrayOf("image/jpeg", "image/png")
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+        }
+
+        startActivityForResult(
+            Intent.createChooser(
+                intent,
+                getString(R.string.label_select_picture)
+            ), REQUEST_CHOOSE_FROM_GALLERY
+        )
+    }
+
+    private fun openCropActivity(sourceUri: Uri, destinationUri: Uri) {
+        UCrop.of(sourceUri, destinationUri)
+            .withMaxResultSize(maxWidth, maxHeight)
+            .withAspectRatio(1f, 1f)
+            .start(requireContext(), this)
+    }
+
+    private fun handleCropResult(data: Intent?) {
+        val resultUri = UCrop.getOutput(data!!)
+        binding.plantImage.setImageURI(resultUri)
+    }
+
+    lateinit var currentPhotoPath: String
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
+
 }

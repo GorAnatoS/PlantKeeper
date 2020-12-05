@@ -31,4 +31,9 @@
     <string name="change2">Изменить</string>
     <string name="create">Создать</string>
     <string name="notes">Заметки</string>
+    <string name="label_select_picture">Выбрать изображение</string>
+    <string name="toast_cannot_retrieve_selected_image">Не могу загрузить выбранное изображение</string>
+    <string name="toast_unexpected_error">Неизвестная ошибка</string>
+
+    <string name="file_provider_authorities">com.goranatos.plantskeeper.provider</string>
 </resources>
