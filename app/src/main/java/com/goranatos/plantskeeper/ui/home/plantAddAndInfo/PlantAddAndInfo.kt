@@ -1,18 +1,14 @@
 package com.goranatos.plantskeeper.ui.home.plantAddAndInfo
 
-import android.Manifest
 import android.R.attr.maxHeight
 import android.R.attr.maxWidth
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.MediaStore.Images
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
