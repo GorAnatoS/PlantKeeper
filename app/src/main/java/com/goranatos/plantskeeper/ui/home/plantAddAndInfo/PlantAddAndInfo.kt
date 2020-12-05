@@ -225,12 +225,24 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                 index: Int
             ) {
                 when (index) {
-                    0 -> binding.plantImage.setImageResource(R.drawable.ic_flower)
-                    1 -> binding.plantImage.setImageResource(R.drawable.ic_cactus)
-                    2 -> binding.plantImage.setImageResource(R.drawable.ic_plant)
-                    3 -> binding.plantImage.setImageResource(R.drawable.ic_tree)
+                    0 -> {
+                        binding.plantImage.setImageResource(R.drawable.ic_flower)
+                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_flower").toString()
+
+                    }
+                    1 -> {
+                        binding.plantImage.setImageResource(R.drawable.ic_cactus)
+                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_cactus").toString()
+                    }
+                    2 -> {
+                        binding.plantImage.setImageResource(R.drawable.ic_plant)
+                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_plant").toString()
+                    }
+                    3 -> {
+                        binding.plantImage.setImageResource(R.drawable.ic_tree)
+                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_tree").toString()
+                    }
                     4 -> {
-                        //dispatchTakePictureIntent()
                         dispatchTakePictureIntentWithPermissionCheck()
                     }
                     5 -> {
