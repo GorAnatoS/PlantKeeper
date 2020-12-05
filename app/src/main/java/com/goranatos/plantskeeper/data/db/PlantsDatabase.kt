@@ -15,6 +15,7 @@ const val ID_COLUMN = "id"
 const val NAME_COLUMN = "name"
 const val DESCRIPTION_COLUMN = "description"
 const val IMAGE_COLUMN = "image"
+const val IMAGE_PATH_COLUMN = "image_path"
 
 //поливать и т.п. 1 раз во сколько дней?
 const val WATER_NEED_COLUMN = "watering_need"

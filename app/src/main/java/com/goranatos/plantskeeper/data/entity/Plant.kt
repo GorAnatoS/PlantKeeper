@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.goranatos.plantskeeper.data.db.*
 
-@Entity(tableName = TABLE_NAME )
+@Entity(tableName = TABLE_NAME)
 data class Plant(
 
     @PrimaryKey(autoGenerate = true)
@@ -18,10 +18,11 @@ data class Plant(
     @ColumnInfo(name = DESCRIPTION_COLUMN)
     val desc: String?,
 
-  /*  @ColumnInfo(name = IMAGE_COLUMN, typeAffinity = ColumnInfo.BLOB)
-    val image: ByteArray?,*/
+    /*  @ColumnInfo(name = IMAGE_COLUMN, typeAffinity = ColumnInfo.BLOB)
+      val image: ByteArray?,*/
 
-
+    @ColumnInfo(name = IMAGE_PATH_COLUMN)
+    val image_path: String?,
 )
 
 

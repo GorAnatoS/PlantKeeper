@@ -1,5 +1,6 @@
 package com.goranatos.plantskeeper.ui.home.plantAddAndInfo
 
+import android.Manifest
 import android.R.attr.maxHeight
 import android.R.attr.maxWidth
 import android.app.Activity.RESULT_OK
@@ -34,6 +35,8 @@ import kotlinx.coroutines.withContext
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.RuntimePermissions
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -46,6 +49,7 @@ import java.util.*
     при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
  */
 
+@RuntimePermissions
 class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     private fun isToCreateNewPlant() {
@@ -61,8 +65,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         var plant_id = 0
 
 
-        private const val SAMPLE_CROPPED_IMAGE_NAME = "SampleCropImage"
-
         //Camera
         const val REQUEST_IMAGE_CAPTURE = 631
 
@@ -71,6 +73,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         private var currentPhotoPath = ""
 
+        lateinit var uriDestination: Uri
+        lateinit var uriCapturedImage: Uri
     }
 
     override val di by closestDI()
@@ -80,6 +84,12 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     lateinit var binding: FragmentAddAndChangePlantBinding
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // NOTE: delegate the permission handling to generated function
+        onRequestPermissionsResult(requestCode, grantResults)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (resultCode == RESULT_OK) {
@@ -87,8 +97,12 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
                 REQUEST_CHOOSE_FROM_GALLERY -> {
                     val selectedUri = data!!.data
+
+                    uriDestination = createImageFile().toUri()
+                    currentPhotoPath = uriDestination.toString()
+
                     if (selectedUri != null) {
-                        openCropActivity(selectedUri, createImageFile().toUri())
+                        openCropActivity(selectedUri, uriDestination)
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -99,7 +113,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                 }
 
                 REQUEST_IMAGE_CAPTURE -> {
-                    openCropActivity(uri, createImageFile().toUri())
+                    uriDestination = createImageFile().toUri()
+                    currentPhotoPath = uriDestination.toString()
+
+                    openCropActivity(uriCapturedImage, uriDestination)
                 }
 
                 UCrop.REQUEST_CROP -> {
@@ -161,7 +178,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                             val newPlant = Plant(
                                 0,
                                 editTextTextPlantName.text.toString(),
-                                editTextTextPlantDescription.text.toString()
+                                editTextTextPlantDescription.text.toString(),
+                                currentPhotoPath,
                             )
 
                             viewModel.insertPlant(newPlant)
@@ -178,7 +196,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         val newPlant = Plant(
                             plant_id,
                             binding.editTextTextPlantName.text.toString(),
-                            binding.editTextTextPlantDescription.text.toString()
+                            binding.editTextTextPlantDescription.text.toString(),
+                            currentPhotoPath,
                         )
 
                         viewModel.updatePlant(newPlant)
@@ -211,7 +230,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                     2 -> binding.plantImage.setImageResource(R.drawable.ic_plant)
                     3 -> binding.plantImage.setImageResource(R.drawable.ic_tree)
                     4 -> {
-                        dispatchTakePictureIntent()
+                        //dispatchTakePictureIntent()
+                        dispatchTakePictureIntentWithPermissionCheck()
                     }
                     5 -> {
                         chooseFromGallery()
@@ -265,6 +285,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                     binding.apply {
                         binding.editTextTextPlantName.setText(thePlant.name.toString())
                         binding.editTextTextPlantDescription.setText(thePlant.desc.toString())
+
+                        if (!plant.image_path.isNullOrEmpty()){
+                            binding.plantImage.setImageURI(Uri.parse(plant.image_path))
+                        }
                     }
                 }
             })
@@ -297,8 +321,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     private var pictureImagePath = ""
 
 
-    lateinit var uri: Uri
-    private fun dispatchTakePictureIntent() {
+    @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun dispatchTakePictureIntent() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "$timeStamp.jpg"
         val storageDir: File = Environment.getExternalStoragePublicDirectory(
@@ -312,7 +336,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
             requireContext().applicationContext.packageName.toString() + ".provider",
             file
         )
-        uri = outputFileUri
+        uriCapturedImage = outputFileUri
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
@@ -349,10 +373,9 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         binding.plantImage.setImageURI(resultUri)
     }
 
-    lateinit var currentPhotoPath: String
 
     @Throws(IOException::class)
-    private fun createImageFile(): File {
+    fun createImageFile(): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
