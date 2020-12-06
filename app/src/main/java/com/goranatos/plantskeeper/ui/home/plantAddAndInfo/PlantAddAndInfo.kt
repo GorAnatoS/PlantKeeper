@@ -157,6 +157,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
 
         setWaterSwitch()
+        setFertilizeSwitch()
 
         setCircleButton()
 
@@ -321,9 +322,12 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         if (plant.water_need.isNullOrEmpty()){
                             binding.includePlantWatering.waterGroup.visibility = View.GONE
                             binding.includePlantWatering.hibernateMode.visibility = View.GONE
+
+                            binding.includePlantFertilizing.fertiliteGroup.visibility = View.GONE
+                            binding.includePlantFertilizing.hibernateMode.visibility = View.GONE
                         } else {
-                            binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
-                            binding.includePlantWatering.hibernateMode.visibility = View.VISIBLE
+                            binding.includePlantFertilizing.fertiliteGroup.visibility = View.VISIBLE
+                            binding.includePlantFertilizing.hibernateMode.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -356,6 +360,32 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                 binding.includePlantWatering.hibernateMode.visibility = View.VISIBLE
             } else {
                 binding.includePlantWatering.hibernateMode.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun setFertilizeSwitch(){
+        if (isAddNewPlant) {
+            binding.switchFertilize.isChecked = true
+            binding.includePlantFertilizing.switchHibernate.isChecked = false
+
+            binding.includePlantFertilizing.fertiliteGroup.visibility = View.VISIBLE
+            binding.includePlantFertilizing.hibernateMode.visibility = View.GONE
+        }
+
+        binding.switchFertilize.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.includePlantFertilizing.fertiliteGroup.visibility = View.VISIBLE
+            } else {
+                binding.includePlantFertilizing.fertiliteGroup.visibility = View.GONE
+            }
+        }
+
+        binding.includePlantFertilizing.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.includePlantFertilizing.hibernateMode.visibility = View.VISIBLE
+            } else {
+                binding.includePlantFertilizing.hibernateMode.visibility = View.GONE
             }
         }
     }

@@ -204,5 +204,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switchWater" />
 
+        <include
+            android:id="@+id/includePlantFertilizing"
+            layout="@layout/include_plant_fertilizing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/includePlantWatering" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
