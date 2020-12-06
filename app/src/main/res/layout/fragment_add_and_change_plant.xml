@@ -198,7 +198,7 @@
         <include
             android:id="@+id/includePlantWatering"
             layout="@layout/include_plant_watering"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"

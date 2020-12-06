@@ -78,7 +78,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        // NOTE: delegate the permission handling to generated function
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
@@ -124,7 +123,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         isToCreateNewPlant()
 
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
 
     }
@@ -144,9 +142,12 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         binding.lifecycleOwner = this
 
+        bindUICommon()
+
         if (!isAddNewPlant) {
             setHasOptionsMenu(true)
-            bindUI()
+
+            bindUISetPlant()
             binding.buttonAddAndChange.text = getString(R.string.change)
         } else {
             binding.buttonAddAndChange.text = getString(R.string.create)
@@ -293,7 +294,19 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
-    private fun bindUI() = launch(Dispatchers.IO) {
+     private fun bindUICommon() = launch(Dispatchers.IO) {
+        withContext(Dispatchers.Main) {
+
+            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
+                it?.let { plant ->
+                    thePlant = plant
+                }
+            })
+        }
+
+    }
+
+    private fun bindUISetPlant() = launch(Dispatchers.IO) {
         withContext(Dispatchers.Main) {
 
             viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
@@ -310,8 +323,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
                         if (plant.water_need.isNullOrEmpty()){
                             binding.includePlantWatering.waterGroup.visibility = View.GONE
+                            binding.includePlantWatering.hibernateMode.visibility = View.GONE
                         } else {
                             binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+                            binding.includePlantWatering.hibernateMode.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -325,11 +340,27 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     }
 
     private fun setWaterSwitch(){
+        if (isAddNewPlant) {
+            binding.switchWater.isChecked = true
+            binding.includePlantWatering.switchHibernate.isChecked = false
+
+            binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+            binding.includePlantWatering.hibernateMode.visibility = View.GONE
+        }
+
         binding.switchWater.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
             } else {
                 binding.includePlantWatering.waterGroup.visibility = View.GONE
+            }
+        }
+
+        binding.includePlantWatering.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.includePlantWatering.hibernateMode.visibility = View.VISIBLE
+            } else {
+                binding.includePlantWatering.hibernateMode.visibility = View.GONE
             }
         }
     }
