@@ -8,6 +8,16 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.plantAddAndInfo.PlantAddAndInfo">
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_half"
+            android:visibility="gone"
+            app:constraint_referenced_ids="editTextTextPlantName, plantImage, editTextTextPlantDescription, buttonAddAndChange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <EditText
             android:id="@+id/editTextTextPlantName"
@@ -30,10 +40,11 @@
             android:layout_marginTop="36dp"
             android:backgroundTint="@color/teal_200"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintHorizontal_bias="0.29"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantName"
             app:srcCompat="@drawable/ic_tree" />
+
 
         <com.ramotion.circlemenu.CircleMenuView
             android:id="@+id/circleButton"
@@ -45,28 +56,28 @@
             app:duration_open="@integer/durationOfCircleMenu"
             app:duration_ring="@integer/durationOfCircleMenu"
             app:icon_color="@color/purple_200"
-            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintBottom_toBottomOf="@+id/plantImage"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </com.ramotion.circlemenu.CircleMenuView>
-
+            app:layout_constraintTop_toTopOf="@+id/plantImage" />
 
         <EditText
             android:id="@+id/editTextTextPlantDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_half"
-            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="@dimen/margin_half"
             android:ems="10"
             android:gravity="top|left"
             android:hint="@string/notes"
             android:inputType="textMultiLine"
             android:lines="5"
-            android:minLines="2"
+            android:minLines="1"
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/plantImage" />
 
@@ -79,6 +90,119 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_half"
+            app:constraint_referenced_ids="progressBar_loading, textView_loading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_half"
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginEnd="@dimen/margin_half"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_half"
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginEnd="@dimen/margin_half"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:text="@string/download"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar_loading"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchWater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Поливать"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription" />
+
+        <!--
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipWatering"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/to_water" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipFertilizing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/to_fertilize" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Действие#"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plantImage" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/slider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/chipGroup" />-->
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchFertilize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Удобрять"
+            app:layout_constraintStart_toEndOf="@+id/switchWater"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription" />
+
+        <include
+            android:id="@+id/includePlantWatering"
+            layout="@layout/include_plant_watering"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switchWater" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

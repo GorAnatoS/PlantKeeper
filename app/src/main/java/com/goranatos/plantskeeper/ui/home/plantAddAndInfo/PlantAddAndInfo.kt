@@ -42,7 +42,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 /*
     Добавляет новые и редактирует имеющийся цветок\растение
 
@@ -57,7 +56,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         //id and Plant которые надо изменить в БД
         lateinit var thePlant: Plant
         var plant_id = 0
-
 
         //Camera
         const val REQUEST_IMAGE_CAPTURE = 631
@@ -152,7 +150,14 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
             binding.buttonAddAndChange.text = getString(R.string.change)
         } else {
             binding.buttonAddAndChange.text = getString(R.string.create)
+            binding.groupContent.visibility = View.VISIBLE
+            binding.groupLoading.visibility = View.GONE
+
+            binding.switchWater.isChecked = true
+            binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
         }
+
+        setWaterSwitch()
 
         setCircleButton()
 
@@ -175,6 +180,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                                 editTextTextPlantName.text.toString(),
                                 editTextTextPlantDescription.text.toString(),
                                 currentPhotoPath,
+                                binding.includePlantWatering.editTextNumberSignedDays.text.toString()
                             )
 
                             viewModel.insertPlant(newPlant)
@@ -193,6 +199,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                             binding.editTextTextPlantName.text.toString(),
                             binding.editTextTextPlantDescription.text.toString(),
                             currentPhotoPath,
+                            binding.includePlantWatering.editTextNumberSignedDays.text.toString()
                         )
 
                         viewModel.updatePlant(newPlant)
@@ -300,9 +307,30 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         if (!plant.image_path.isNullOrEmpty()){
                             binding.plantImage.setImageURI(Uri.parse(plant.image_path))
                         }
+
+                        if (plant.water_need.isNullOrEmpty()){
+                            binding.includePlantWatering.waterGroup.visibility = View.GONE
+                        } else {
+                            binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+                        }
                     }
                 }
             })
+
+
+
+            binding.groupContent.visibility = View.VISIBLE
+            binding.groupLoading.visibility = View.GONE
+        }
+    }
+
+    private fun setWaterSwitch(){
+        binding.switchWater.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+            } else {
+                binding.includePlantWatering.waterGroup.visibility = View.GONE
+            }
         }
     }
 

@@ -36,4 +36,7 @@
     <string name="toast_unexpected_error">Неизвестная ошибка</string>
 
     <string name="file_provider_authorities">com.goranatos.plantskeeper.provider</string>
+    <string name="download">Загрузка</string>
+    <string name="to_water">Поливать</string>
+    <string name="to_fertilize">Удобрять</string>
 </resources>
