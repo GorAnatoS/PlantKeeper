@@ -82,7 +82,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         if (resultCode == RESULT_OK) {
             when (requestCode) {
 
@@ -124,7 +123,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         isToCreateNewPlant()
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
-
     }
 
     override fun onCreateView(
@@ -303,7 +301,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                 }
             })
         }
-
     }
 
     private fun bindUISetPlant() = launch(Dispatchers.IO) {
@@ -331,8 +328,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                     }
                 }
             })
-
-
 
             binding.groupContent.visibility = View.VISIBLE
             binding.groupLoading.visibility = View.GONE
