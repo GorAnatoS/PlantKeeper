@@ -9,13 +9,13 @@
         android:icon="@drawable/ic_baseline_delete_24"
         android:orderInCategory="100"
         android:title="@string/delete_item"
-        app:showAsAction="ifRoom|collapseActionView"/>
+        app:showAsAction="ifRoom|collapseActionView" />
 
     <item
         android:id="@+id/delete_item_from_db"
         android:icon="@drawable/ic_baseline_delete_24"
         android:orderInCategory="100"
         android:title="@string/delete_item"
-        app:showAsAction="ifRoom|collapseActionView"/>
+        app:showAsAction="ifRoom|collapseActionView" />
 
 </menu>
