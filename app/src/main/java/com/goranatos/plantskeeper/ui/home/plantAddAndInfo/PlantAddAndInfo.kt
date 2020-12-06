@@ -51,7 +51,7 @@ import java.util.*
 @RuntimePermissions
 class PlantAddAndInfo : ScopedFragment(), DIAware {
     companion object {
-        var isAddNewPlant: Boolean = false
+        var isNewPlant: Boolean = false
 
         //id and Plant которые надо изменить в БД
         lateinit var thePlant: Plant
@@ -76,7 +76,11 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     lateinit var binding: FragmentAddAndChangePlantBinding
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         onRequestPermissionsResult(requestCode, grantResults)
     }
@@ -140,20 +144,16 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         binding.lifecycleOwner = this
 
-        bindUICommon()
 
-        if (!isAddNewPlant) {
-            setHasOptionsMenu(true)
-
-            bindUISetPlant()
-            binding.buttonAddAndChange.text = getString(R.string.change)
-        } else {
-            binding.buttonAddAndChange.text = getString(R.string.create)
+        if (isNewPlant) {
             binding.groupContent.visibility = View.VISIBLE
             binding.groupLoading.visibility = View.GONE
 
             binding.switchWater.isChecked = true
             binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+        } else {
+            bindUISetPlant()
+        
         }
 
         setWaterSwitch()
@@ -161,62 +161,64 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         setCircleButton()
 
-        binding.buttonAddAndChange.setOnClickListener {
 
-            if (binding.editTextTextPlantName.text.toString().isNullOrEmpty()) {
-                showWrongInput()
-                Snackbar.make(
-                    requireView(),
-                    getString(R.string.give_a_name_to_a_plant),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            } else {
-                if (isAddNewPlant) {
-                    uiScope.launch {
-
-                        binding.apply {
-                            val newPlant = Plant(
-                                0,
-                                editTextTextPlantName.text.toString(),
-                                editTextTextPlantDescription.text.toString(),
-                                currentPhotoPath,
-                                binding.includePlantWatering.editTextNumberSignedDays.text.toString()
-                            )
-
-                            viewModel.insertPlant(newPlant)
-
-                        }
-                    }
-
-                    Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT)
-                        .show()
-                } else {
-
-                    uiScope.launch(Dispatchers.IO) {
-
-                        val newPlant = Plant(
-                            plant_id,
-                            binding.editTextTextPlantName.text.toString(),
-                            binding.editTextTextPlantDescription.text.toString(),
-                            currentPhotoPath,
-                            binding.includePlantWatering.editTextNumberSignedDays.text.toString()
-                        )
-
-                        viewModel.updatePlant(newPlant)
-
-                    }
-                    Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
-                        .show()
-                }
-
-                hideKeyboard()
-                findNavController().navigateUp()
-            }
-        }
+        setHasOptionsMenu(true)
 
         return binding.root
     }
 
+
+    private fun clickSavePlantToDB() {
+        if (binding.editTextTextPlantName.text.toString().isNullOrEmpty()) {
+            showWrongInput()
+            Snackbar.make(
+                requireView(),
+                getString(R.string.give_a_name_to_a_plant),
+                Snackbar.LENGTH_SHORT
+            ).show()
+        } else {
+            if (isNewPlant) {
+                uiScope.launch {
+
+                    binding.apply {
+                        val newPlant = Plant(
+                            0,
+                            editTextTextPlantName.text.toString(),
+                            editTextTextPlantDescription.text.toString(),
+                            currentPhotoPath,
+                            binding.includePlantWatering.editTextNumberSignedDays.text.toString()
+                        )
+
+                        viewModel.insertPlant(newPlant)
+
+                    }
+                }
+
+                Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT)
+                    .show()
+            } else {
+
+                uiScope.launch(Dispatchers.IO) {
+
+                    val newPlant = Plant(
+                        plant_id,
+                        binding.editTextTextPlantName.text.toString(),
+                        binding.editTextTextPlantDescription.text.toString(),
+                        currentPhotoPath,
+                        binding.includePlantWatering.editTextNumberSignedDays.text.toString()
+                    )
+
+                    viewModel.updatePlant(newPlant)
+
+                }
+                Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+
+            hideKeyboard()
+            findNavController().navigateUp()
+        }
+    }
 
     private fun setCircleButton() {
         binding.circleButton.eventListener = object :
@@ -229,20 +231,28 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                 when (index) {
                     0 -> {
                         binding.plantImage.setImageResource(R.drawable.ic_flower)
-                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_flower").toString()
+                        currentPhotoPath =
+                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower")
+                                .toString()
 
                     }
                     1 -> {
                         binding.plantImage.setImageResource(R.drawable.ic_cactus)
-                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_cactus").toString()
+                        currentPhotoPath =
+                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_cactus")
+                                .toString()
                     }
                     2 -> {
                         binding.plantImage.setImageResource(R.drawable.ic_plant)
-                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_plant").toString()
+                        currentPhotoPath =
+                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant")
+                                .toString()
                     }
                     3 -> {
                         binding.plantImage.setImageResource(R.drawable.ic_tree)
-                        currentPhotoPath = Uri.parse("android.resource://"+requireContext().getPackageName()+"/drawable/ic_tree").toString()
+                        currentPhotoPath =
+                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_tree")
+                                .toString()
                     }
                     4 -> {
                         dispatchTakePictureIntentWithPermissionCheck()
@@ -257,7 +267,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     private fun isToCreateNewPlant() {
         plant_id = arguments?.getInt("plant_id_in_database")!!
-        isAddNewPlant = plant_id == -1
+        isNewPlant = plant_id == -1
     }
 
     private fun showWrongInput() {
@@ -293,16 +303,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
-     private fun bindUICommon() = launch(Dispatchers.IO) {
-        withContext(Dispatchers.Main) {
-
-            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
-                it?.let { plant ->
-                    thePlant = plant
-                }
-            })
-        }
-    }
 
     private fun bindUISetPlant() = launch(Dispatchers.IO) {
         withContext(Dispatchers.Main) {
@@ -315,11 +315,11 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         binding.editTextTextPlantName.setText(thePlant.name.toString())
                         binding.editTextTextPlantDescription.setText(thePlant.desc.toString())
 
-                        if (!plant.image_path.isNullOrEmpty()){
+                        if (!plant.image_path.isNullOrEmpty()) {
                             binding.plantImage.setImageURI(Uri.parse(plant.image_path))
                         }
 
-                        if (plant.water_need.isNullOrEmpty()){
+                        if (plant.water_need.isNullOrEmpty()) {
                             binding.includePlantWatering.waterGroup.visibility = View.GONE
                             binding.includePlantWatering.hibernateMode.visibility = View.GONE
 
@@ -338,8 +338,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
-    private fun setWaterSwitch(){
-        if (isAddNewPlant) {
+    private fun setWaterSwitch() {
+        if (isNewPlant) {
             binding.switchWater.isChecked = true
             binding.includePlantWatering.switchHibernate.isChecked = false
 
@@ -364,8 +364,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
-    private fun setFertilizeSwitch(){
-        if (isAddNewPlant) {
+    private fun setFertilizeSwitch() {
+        if (isNewPlant) {
             binding.switchFertilize.isChecked = true
             binding.includePlantFertilizing.switchHibernate.isChecked = false
 
@@ -393,12 +393,34 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_info_menu, menu)
 
+
         val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
 
         deleteItemFromDB.setOnMenuItemClickListener {
             deleteItemFromDB()
             true
         }
+
+       
+
+        val savePlantToDB = menu?.findItem(R.id.save_plant_to_db)
+        savePlantToDB.setOnMenuItemClickListener {
+            clickSavePlantToDB()
+            true
+        }
+
+
+        // TODO: 12/6/2020 сделать название кнопки сохранить или изменить 
+        if (isNewPlant) {
+            deleteItemFromDB.isVisible = false
+            //savePlantToDB.text = requireContext().getString(R.string.create) 
+            
+        } else {
+            //binding.buttonAddAndChange.text = getString(R.string.change)   
+        }
+
+        
+        
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
