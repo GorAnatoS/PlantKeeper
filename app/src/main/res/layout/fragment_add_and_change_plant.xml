@@ -54,8 +54,8 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
-                            android:maxLines="2"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:maxLines="2" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,8 +104,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-             <!--   <com.ramotion.circlemenu.CircleMenuView
+                <!--   <com.ramotion.circlemenu.CircleMenuView
                     android:visibility="gone"
                     android:id="@+id/circleButton"
                     android:layout_width="wrap_content"
@@ -188,9 +187,10 @@
                 android:id="@+id/switchWater"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/margin_2x"
                 android:text="Поливать"
+                app:layout_constraintEnd_toStartOf="@+id/switchFertilize"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription" />
 
@@ -198,11 +198,22 @@
                 android:id="@+id/switchFertilize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
                 android:text="Удобрять"
+                app:layout_constraintEnd_toStartOf="@+id/switchIsHibernateOn"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/switchWater"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription" />
+                app:layout_constraintTop_toTopOf="@+id/switchWater" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchIsHibernateOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Режим покоя"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/switchFertilize"
+                app:layout_constraintTop_toTopOf="@+id/switchFertilize" />
+
 
             <include
                 android:id="@+id/includePlantWatering"
@@ -210,6 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switchWater" />
 
@@ -219,9 +231,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/includePlantWatering" />
-            />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

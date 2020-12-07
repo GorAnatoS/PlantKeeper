@@ -163,16 +163,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         return binding.root
     }
 
-    private fun bindCreateNewPlant() {
-        binding.groupContent.visibility = View.VISIBLE
-        binding.groupLoading.visibility = View.GONE
 
-        binding.switchWater.isChecked = true
-        binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
-
-        currentPhotoPath = "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1"
-        binding.plantImage.setImageURI(Uri.parse(currentPhotoPath))
-    }
 
     private fun clickSavePlantToDB() {
         if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
@@ -192,7 +183,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                             editTextTextPlantDescription.text.toString(),
                             currentPhotoPath,
                             binding.includePlantWatering.editTextNumberSignedDays.text.toString(),
-                            0
+                            if (binding.switchIsHibernateOn.isChecked) 1 else 0
                         )
                         viewModel.insertPlant(newPlant)
                     }
@@ -209,7 +200,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         binding.editTextTextPlantDescription.text.toString(),
                         currentPhotoPath,
                         binding.includePlantWatering.editTextNumberSignedDays.text.toString(),
-                        0
+                        if (binding.switchIsHibernateOn.isChecked) 1 else 0
                     )
 
                     viewModel.updatePlant(newPlant)
@@ -271,6 +262,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         isNewPlant = plant_id == -1
     }
 
+
+    // TODO: 12/8/2020 material change
     private fun showWrongInput() {
         hideKeyboard()
 
@@ -304,6 +297,19 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
+    private fun bindCreateNewPlant() {
+        binding.groupContent.visibility = View.VISIBLE
+        binding.groupLoading.visibility = View.GONE
+
+        binding.switchWater.isChecked = true
+        binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+
+        currentPhotoPath = "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1"
+        binding.plantImage.setImageURI(Uri.parse(currentPhotoPath))
+
+        binding.switchIsHibernateOn.isChecked = false
+    }
+
     private fun bindEditExistingPlant() = launch(Dispatchers.IO) {
 
         withContext(Dispatchers.Main) {
@@ -331,6 +337,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                             binding.includePlantFertilizing.fertiliteGroup.visibility = View.VISIBLE
                             binding.includePlantFertilizing.hibernateMode.visibility = View.VISIBLE
                         }
+
+                        binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
                     }
                 }
             })
@@ -444,6 +452,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     }
 
+    //Gallery And Photo functions
+
     @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun dispatchTakePictureIntent() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -496,7 +506,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         val resultUri = UCrop.getOutput(data!!)
         binding.plantImage.setImageURI(resultUri)
     }
-
 
     @Throws(IOException::class)
     fun createImageFile(): File {
