@@ -18,6 +18,7 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
@@ -27,8 +28,9 @@ import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.uiScope
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
+import com.goranatos.plantskeeper.ui.home.plantAddAndInfo.selecPlantImageFromCollection.IMAGE_URI
+import com.goranatos.plantskeeper.ui.home.plantAddAndInfo.selecPlantImageFromCollection.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
-import com.ramotion.circlemenu.CircleMenuView
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -159,9 +161,9 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         setWaterSwitch()
         setFertilizeSwitch()
 
-        setCircleButton()
-
         setToggleButtons()
+
+        setImageUriListener()
 
         setHasOptionsMenu(true)
 
@@ -221,18 +223,24 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
+    private fun setImageUriListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
+            ?.observe(viewLifecycleOwner) { uri ->
+                binding.plantImage.setImageURI(Uri.parse(uri))
+            }
+    }
+
     private fun setToggleButtons() {
 
-        /*  binding.toggleTakeImage.setOnClickListener {
-              val items = arrayOf("Item 1", "Item 2", "Item 3")
+        binding.toggleTakeImage.setOnClickListener {
 
-              MaterialAlertDialogBuilder(requireContext())
-                  .setTitle(resources.getString(R.string.add))
-                  .setItems(items) { dialog, which ->
-                      // Respond to item chosen
-                  }
-                  .show()
-          }*/
+            val fragmentManager = getParentFragmentManager()
+            val newFragment = SelectPlantImageFromCollectionFragment()
+
+            // The device is using a large layout, so show the fragment as a dialog
+            newFragment.show(fragmentManager, "dialog")
+
+        }
 
         binding.toggleTakePhoto.setOnClickListener {
             val items = arrayOf(getString(R.string.from_gallery), getString(R.string.take_photo))
@@ -255,50 +263,50 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     }
 
-    private fun setCircleButton() {
-        binding.circleButton.eventListener = object :
-            CircleMenuView.EventListener() {
+    /*  private fun setCircleButton() {
+          binding.circleButton.eventListener = object :
+              CircleMenuView.EventListener() {
 
-            override fun onButtonClickAnimationStart(
-                view: CircleMenuView,
-                index: Int
-            ) {
-                when (index) {
-                    0 -> {
-                        binding.plantImage.setImageResource(R.drawable.ic_flower)
-                        currentPhotoPath =
-                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower")
-                                .toString()
+              override fun onButtonClickAnimationStart(
+                  view: CircleMenuView,
+                  index: Int
+              ) {
+                  when (index) {
+                      0 -> {
+  //                        binding.plantImage.setImageResource(R.drawable.ic_flower)
+                          currentPhotoPath =
+                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower")
+                                  .toString()
 
-                    }
-                    1 -> {
-                        binding.plantImage.setImageResource(R.drawable.ic_cactus)
-                        currentPhotoPath =
-                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_cactus")
-                                .toString()
-                    }
-                    2 -> {
-                        binding.plantImage.setImageResource(R.drawable.ic_plant)
-                        currentPhotoPath =
-                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant")
-                                .toString()
-                    }
-                    3 -> {
-                        binding.plantImage.setImageResource(R.drawable.ic_tree)
-                        currentPhotoPath =
-                            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_tree")
-                                .toString()
-                    }
-                    4 -> {
-                        dispatchTakePictureIntentWithPermissionCheck()
-                    }
-                    5 -> {
-                        chooseFromGallery()
-                    }
-                }
-            }
-        }
-    }
+                      }
+                      1 -> {
+  //                        binding.plantImage.setImageResource(R.drawable.ic_cactus)
+                          currentPhotoPath =
+                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_cactus")
+                                  .toString()
+                      }
+                      2 -> {
+  //                        binding.plantImage.setImageResource(R.drawable.ic_plant)
+                          currentPhotoPath =
+                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant")
+                                  .toString()
+                      }
+                      3 -> {
+  //                        binding.plantImage.setImageResource(R.drawable.ic_tree)
+                          currentPhotoPath =
+                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_tree")
+                                  .toString()
+                      }
+                      4 -> {
+                          dispatchTakePictureIntentWithPermissionCheck()
+                      }
+                      5 -> {
+                          chooseFromGallery()
+                      }
+                  }
+              }
+          }
+      }*/
 
     private fun isToCreateNewPlant() {
         plant_id = arguments?.getInt("plant_id_in_database")!!
@@ -423,6 +431,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                 binding.includePlantFertilizing.hibernateMode.visibility = View.GONE
             }
         }
+    }
+
+    private fun setSelectPlantImageFromCollection() {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

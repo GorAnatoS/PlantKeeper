@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="plantsImages">
+  <!--  <array name="plantsImages">
         <item>@drawable/ic_flower</item>
         <item>@drawable/ic_cactus</item>
         <item>@drawable/ic_plant</item>
@@ -8,7 +8,7 @@
         <item>@drawable/ic_baseline_add_a_photo_24</item>
         <item>@drawable/ic_baseline_collections_24</item>
 
-    </array>
+    </array>-->
 
     <array name="colorsPlantsImages">
         <item>@color/purple_200</item>

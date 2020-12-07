@@ -1,15 +1,15 @@
 package com.goranatos.plantskeeper.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import android.net.Uri
+import androidx.lifecycle.*
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MyPlantsViewModel(private val repository: PlantsRepository) : ViewModel() {
+
+    //lateinit var thePlantUri: MutableLiveData<Uri>
 
     lateinit var allPlants: LiveData<List<Plant>>
 

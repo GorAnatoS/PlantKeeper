@@ -104,7 +104,7 @@
 
 
 
-                <com.ramotion.circlemenu.CircleMenuView
+             <!--   <com.ramotion.circlemenu.CircleMenuView
                     android:visibility="gone"
                     android:id="@+id/circleButton"
                     android:layout_width="wrap_content"
@@ -119,7 +119,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.8"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/plantImage" />
+                    app:layout_constraintTop_toTopOf="@+id/plantImage" />-->
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -192,50 +192,6 @@
                 android:text="Поливать"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription" />
-
-            <!--
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/button">
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipWatering"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/to_water" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chipFertilizing"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/to_fertilize" />
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Действие#"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/plantImage" />
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/slider"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />-->
-
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchFertilize"
