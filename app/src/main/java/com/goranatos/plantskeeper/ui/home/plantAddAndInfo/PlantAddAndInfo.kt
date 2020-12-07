@@ -191,7 +191,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                             editTextTextPlantName.editText?.text.toString(),
                             editTextTextPlantDescription.text.toString(),
                             currentPhotoPath,
-                            binding.includePlantWatering.editTextNumberSignedDays.text.toString()
+                            binding.includePlantWatering.editTextNumberSignedDays.text.toString(),
+                            0
                         )
                         viewModel.insertPlant(newPlant)
                     }
@@ -207,7 +208,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         binding.editTextTextPlantName.editText?.text.toString(),
                         binding.editTextTextPlantDescription.text.toString(),
                         currentPhotoPath,
-                        binding.includePlantWatering.editTextNumberSignedDays.text.toString()
+                        binding.includePlantWatering.editTextNumberSignedDays.text.toString(),
+                        0
                     )
 
                     viewModel.updatePlant(newPlant)

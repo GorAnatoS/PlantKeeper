@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.goranatos.plantskeeper.data.entity.Plant
-import okhttp3.internal.Internal.instance
 
 
 const val DATABASE_NAME = "Plants_database.db"
@@ -25,6 +26,8 @@ const val REPLANT_NEED_COLUMN = "replanting_need"
 const val CUT_NEED_COLUMN = "cutting_need"
 const val TURN_NEED_COLUMN = "turning_need"
 
+const val IS_HIBERNATE_MODE_ON = "is_hibernate_mode_on"
+
 //начать поливать... с какого числа
 const val START_WATER_FROM_COLUMN = "to_water_from"
 const val START_FERTILIZE_FROM_COLUMN = "to_fertilize_from"
@@ -33,12 +36,28 @@ const val START_REPLANT_FROM_COLUMN = "to_replant_from"
 const val START_CUT_FROM_COLUMN = "to_cut_from"
 const val START_TURN_FROM_COLUMN = "to_turn_from"
 
-const val DATABASE_VERSION = 1
+const val DATABASE_VERSION = 2
 
 @Database(entities = [Plant::class], version = DATABASE_VERSION)
 abstract class PlantsDatabase : RoomDatabase() {
 
     abstract fun plantsDatabaseDao(): PlantsDatabaseDao
+
+    //MIGRATION
+/*
+    val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                "ALTER TABLE Plants_database "
+                        + " ADD COLUMN is_hibernate_mode_on BOOLEAN"
+            )
+
+            *//*database.execSQL(
+                "ALTER TABLE $TABLE_NAME "
+                        + " ADD COLUMN $IS_HIBERNATE_MODE_ON BOOLEAN"
+            )*//*
+        }
+    }*/
 
     companion object {
 
@@ -59,11 +78,29 @@ abstract class PlantsDatabase : RoomDatabase() {
                     INSTANCE
 
                 if (instance == null) {
+
+                    //MIGRATIONS
+                    val MIGRATION_1_2 : Migration = object : Migration(1, 2) {
+                        override fun migrate(database: SupportSQLiteDatabase) {
+                           /* database.execSQL(
+                                "ALTER TABLE Plants_database "
+                                        + " ADD COLUMN is_hibernate_mode_on INTEGER DEFAULT 0 NOT NULL"
+                            )*/
+
+                            database.execSQL(
+                                "ALTER TABLE $TABLE_NAME"
+                                        + " ADD COLUMN $IS_HIBERNATE_MODE_ON INTEGER DEFAULT 0 NOT NULL"
+                            )
+                        }
+                    }
+
+
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         PlantsDatabase::class.java,
-                        DATABASE_NAME
-                    ).build()
+                        DATABASE_NAME)
+                        .addMigrations(MIGRATION_1_2)
+                        .build()
                 }
 
                 INSTANCE = instance
@@ -71,6 +108,8 @@ abstract class PlantsDatabase : RoomDatabase() {
             }
         }
     }
+
+
 }
 
 
