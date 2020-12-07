@@ -146,16 +146,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         binding.lifecycleOwner = this
 
         if (isNewPlant) {
-
             bindCreateNewPlant()
-
-
-
         } else {
             bindEditExistingPlant()
         }
-
-
 
         setWaterSwitch()
         setFertilizeSwitch()

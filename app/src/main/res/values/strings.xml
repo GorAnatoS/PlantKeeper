@@ -39,7 +39,7 @@
     <string name="download">Загрузка</string>
     <string name="to_water">Поливать</string>
     <string name="to_fertilize">Удобрять</string>
-    <string name="from_gallery">Из галлереи</string>
+    <string name="from_gallery">Из галереи</string>
     <string name="take_photo">Сделать фото</string>
     <string name="choose_photo">Выбрать фотографию</string>
     <string name="delete_plant_from_db">Удалить растение?</string>
