@@ -18,6 +18,7 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
@@ -144,7 +145,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         binding.lifecycleOwner = this
 
-
         if (isNewPlant) {
             binding.groupContent.visibility = View.VISIBLE
             binding.groupLoading.visibility = View.GONE
@@ -153,7 +153,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
             binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
         } else {
             bindUISetPlant()
-        
+
         }
 
         setWaterSwitch()
@@ -161,6 +161,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         setCircleButton()
 
+        setToggleButtons()
 
         setHasOptionsMenu(true)
 
@@ -169,7 +170,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
 
     private fun clickSavePlantToDB() {
-        if (binding.editTextTextPlantName.text.toString().isNullOrEmpty()) {
+        if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
             showWrongInput()
             Snackbar.make(
                 requireView(),
@@ -183,7 +184,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                     binding.apply {
                         val newPlant = Plant(
                             0,
-                            editTextTextPlantName.text.toString(),
+                            editTextTextPlantName.editText?.text.toString(),
                             editTextTextPlantDescription.text.toString(),
                             currentPhotoPath,
                             binding.includePlantWatering.editTextNumberSignedDays.text.toString()
@@ -202,7 +203,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
                     val newPlant = Plant(
                         plant_id,
-                        binding.editTextTextPlantName.text.toString(),
+                        binding.editTextTextPlantName.editText?.text.toString(),
                         binding.editTextTextPlantDescription.text.toString(),
                         currentPhotoPath,
                         binding.includePlantWatering.editTextNumberSignedDays.text.toString()
@@ -218,6 +219,40 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
             hideKeyboard()
             findNavController().navigateUp()
         }
+    }
+
+    private fun setToggleButtons() {
+
+        /*  binding.toggleTakeImage.setOnClickListener {
+              val items = arrayOf("Item 1", "Item 2", "Item 3")
+
+              MaterialAlertDialogBuilder(requireContext())
+                  .setTitle(resources.getString(R.string.add))
+                  .setItems(items) { dialog, which ->
+                      // Respond to item chosen
+                  }
+                  .show()
+          }*/
+
+        binding.toggleTakePhoto.setOnClickListener {
+            val items = arrayOf(getString(R.string.from_gallery), getString(R.string.take_photo))
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(resources.getString(R.string.choose_photo))
+                .setItems(items) { dialog, which ->
+                    // Respond to item chosen
+                    when (which) {
+                        0 -> {
+                            chooseFromGallery()
+                        }
+                        1 -> {
+                            dispatchTakePictureIntentWithPermissionCheck()
+                        }
+                    }
+                }
+                .show()
+        }
+
     }
 
     private fun setCircleButton() {
@@ -273,14 +308,14 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     private fun showWrongInput() {
         hideKeyboard()
 
-        val color = binding.editTextTextPlantName.currentHintTextColor
-        if (binding.editTextTextPlantName.text.isEmpty()) binding.editTextTextPlantName.setHintTextColor(
+        val color = binding.editTextTextPlantName.editText?.currentHintTextColor
+        if (binding.editTextTextPlantName.editText?.text.isNullOrEmpty()) binding.editTextTextPlantName.editText?.setHintTextColor(
             ContextCompat.getColor(requireContext(), R.color.errorColor)
         )
-        else binding.editTextTextPlantName.setHintTextColor(
+        else binding.editTextTextPlantName.editText?.setHintTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                color
+                color!!
             )
         )
 
@@ -293,7 +328,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     internal inner class MyTimerTask : TimerTask() {
         override fun run() {
             activity?.runOnUiThread {
-                binding.editTextTextPlantName.setHintTextColor(
+                binding.editTextTextPlantName.editText?.setHintTextColor(
                     ContextCompat.getColor(
                         requireContext(),
                         R.color.textColor
@@ -312,7 +347,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                     thePlant = plant
 
                     binding.apply {
-                        binding.editTextTextPlantName.setText(thePlant.name.toString())
+                        binding.editTextTextPlantName.editText?.setText(thePlant.name.toString())
                         binding.editTextTextPlantDescription.setText(thePlant.desc.toString())
 
                         if (!plant.image_path.isNullOrEmpty()) {
@@ -401,7 +436,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
             true
         }
 
-       
 
         val savePlantToDB = menu?.findItem(R.id.save_plant_to_db)
         savePlantToDB.setOnMenuItemClickListener {
@@ -410,29 +444,41 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
 
 
-        // TODO: 12/6/2020 сделать название кнопки сохранить или изменить 
+        // TODO: 12/6/2020 сделать название кнопки сохранить или изменить
         if (isNewPlant) {
             deleteItemFromDB.isVisible = false
             //savePlantToDB.text = requireContext().getString(R.string.create) 
-            
+
         } else {
             //binding.buttonAddAndChange.text = getString(R.string.change)   
         }
 
-        
-        
+
+
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun deleteItemFromDB() {
-        launch(Dispatchers.IO) {
-            viewModel.deletePlant(thePlant)
 
-            Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
-                .show()
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.delete_plant_from_db))
+            .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
+            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                // Respond to neutral button press
+            }
+            .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
+                // Respond to positive button press
+                launch(Dispatchers.IO) {
+                    viewModel.deletePlant(thePlant)
 
-            findNavController().navigateUp()
-        }
+                    Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
+                        .show()
+
+                    findNavController().navigateUp()
+                }
+            }
+            .show()
+
     }
 
     private var pictureImagePath = ""

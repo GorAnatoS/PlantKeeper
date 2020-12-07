@@ -22,4 +22,6 @@
     <style name="Theme.PlantsKeeper.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.PlantsKeeper.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
 </resources>

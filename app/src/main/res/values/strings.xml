@@ -39,4 +39,10 @@
     <string name="download">Загрузка</string>
     <string name="to_water">Поливать</string>
     <string name="to_fertilize">Удобрять</string>
+    <string name="from_gallery">Из галлереи</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="choose_photo">Выбрать фотографию</string>
+    <string name="delete_plant_from_db">Удалить растение?</string>
+    <string name="are_you_sure_to_delete_the_plant_from_db">Вы точно уверены, что хотите удалить это растение из своей коллекции?</string>
+    <string name="cancel">Отменить</string>
 </resources>

@@ -20,53 +20,109 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_half"
                 android:visibility="gone"
-                app:constraint_referenced_ids="editTextTextPlantName, plantImage, editTextTextPlantDescription, buttonAddAndChange"
+                app:constraint_referenced_ids="editTextTextPlantName, plantImage, editTextTextPlantDescription"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible" />
 
-            <EditText
-                android:id="@+id/editTextTextPlantName"
-                android:layout_width="wrap_content"
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPlantLogo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="@string/name"
-                android:inputType="textPersonName"
+                android:layout_margin="@dimen/margin_half"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/editTextTextPlantName"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_half"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/name"
+                        app:layout_constraintEnd_toStartOf="@+id/plantImage"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/plantImage"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginTop="@dimen/margin_half"
+                        android:layout_marginEnd="@dimen/margin_half"
+                        android:layout_marginBottom="@dimen/margin_half"
+                        android:backgroundTint="@color/teal_200"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_crassula" />
+
+                    <Button
+                        android:id="@+id/toggleTakePhoto"
+                        style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="@dimen/margin_half"
+                        app:icon="@drawable/ic_baseline_add_a_photo_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/toggleTakeImage"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/editTextTextPlantName"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantName"
+                        app:singleSelection="true" />
+
+                    <Button
+                        android:id="@+id/toggleTakeImage"
+                        style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_half"
+                        app:icon="@drawable/ic_baseline_local_florist_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/editTextTextPlantName"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/toggleTakePhoto"
+                        app:layout_constraintTop_toTopOf="@+id/toggleTakePhoto"
+                        app:singleSelection="true" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <ImageView
-                android:id="@+id/plantImage"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_marginTop="36dp"
-                android:backgroundTint="@color/teal_200"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.29"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantName"
-                app:srcCompat="@drawable/ic_tree" />
 
+                <com.ramotion.circlemenu.CircleMenuView
+                    android:visibility="gone"
+                    android:id="@+id/circleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:button_colors="@array/colorsPlantsImages"
+                    app:button_icons="@array/plantsImages"
+                    app:duration_close="@integer/durationOfCircleMenu"
+                    app:duration_open="@integer/durationOfCircleMenu"
+                    app:duration_ring="@integer/durationOfCircleMenu"
+                    app:icon_color="@color/purple_200"
+                    app:layout_constraintBottom_toBottomOf="@+id/plantImage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.8"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/plantImage" />
 
-            <com.ramotion.circlemenu.CircleMenuView
-                android:id="@+id/circleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:button_colors="@array/colorsPlantsImages"
-                app:button_icons="@array/plantsImages"
-                app:duration_close="@integer/durationOfCircleMenu"
-                app:duration_open="@integer/durationOfCircleMenu"
-                app:duration_ring="@integer/durationOfCircleMenu"
-                app:icon_color="@color/purple_200"
-                app:layout_constraintBottom_toBottomOf="@+id/plantImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.8"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/plantImage" />
+            </com.google.android.material.card.MaterialCardView>
+
 
             <EditText
                 android:id="@+id/editTextTextPlantDescription"
@@ -85,7 +141,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/plantImage" />
+                app:layout_constraintTop_toBottomOf="@+id/cardPlantLogo" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_loading"

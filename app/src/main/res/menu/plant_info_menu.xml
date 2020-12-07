@@ -15,7 +15,7 @@
         android:id="@+id/save_plant_to_db"
         android:icon="@drawable/ic_baseline_check_24"
         android:orderInCategory="100"
-        android:title="@string/delete_item"
-        app:showAsAction="ifRoom|collapseActionView" />
+        android:title="@string/save"
+        app:showAsAction="always|withText" />
 
 </menu>
