@@ -47,7 +47,6 @@ import java.util.*
 
 /*
     Добавляет новые и редактирует имеющийся цветок\растение
-
     при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
  */
 
@@ -62,7 +61,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         //Camera
         const val REQUEST_IMAGE_CAPTURE = 631
-
         //selectPicture
         const val REQUEST_CHOOSE_FROM_GALLERY = 632
 
@@ -148,15 +146,16 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         binding.lifecycleOwner = this
 
         if (isNewPlant) {
-            binding.groupContent.visibility = View.VISIBLE
-            binding.groupLoading.visibility = View.GONE
 
-            binding.switchWater.isChecked = true
-            binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+            bindCreateNewPlant()
+
+
+
         } else {
-            bindUISetPlant()
-
+            bindEditExistingPlant()
         }
+
+
 
         setWaterSwitch()
         setFertilizeSwitch()
@@ -170,6 +169,16 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         return binding.root
     }
 
+    private fun bindCreateNewPlant() {
+        binding.groupContent.visibility = View.VISIBLE
+        binding.groupLoading.visibility = View.GONE
+
+        binding.switchWater.isChecked = true
+        binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+
+        currentPhotoPath = "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1"
+        binding.plantImage.setImageURI(Uri.parse(currentPhotoPath))
+    }
 
     private fun clickSavePlantToDB() {
         if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
@@ -182,7 +191,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         } else {
             if (isNewPlant) {
                 uiScope.launch {
-
                     binding.apply {
                         val newPlant = Plant(
                             0,
@@ -191,16 +199,13 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                             currentPhotoPath,
                             binding.includePlantWatering.editTextNumberSignedDays.text.toString()
                         )
-
                         viewModel.insertPlant(newPlant)
-
                     }
                 }
 
                 Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT)
                     .show()
             } else {
-
                 uiScope.launch(Dispatchers.IO) {
 
                     val newPlant = Plant(
@@ -225,8 +230,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     private fun setImageUriListener() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
-            ?.observe(viewLifecycleOwner) { uri ->
-                binding.plantImage.setImageURI(Uri.parse(uri))
+            ?.observe(viewLifecycleOwner) { uri_string ->
+                binding.plantImage.setImageURI(Uri.parse(uri_string))
+
+                currentPhotoPath = uri_string
             }
     }
 
@@ -262,51 +269,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
 
     }
-
-    /*  private fun setCircleButton() {
-          binding.circleButton.eventListener = object :
-              CircleMenuView.EventListener() {
-
-              override fun onButtonClickAnimationStart(
-                  view: CircleMenuView,
-                  index: Int
-              ) {
-                  when (index) {
-                      0 -> {
-  //                        binding.plantImage.setImageResource(R.drawable.ic_flower)
-                          currentPhotoPath =
-                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower")
-                                  .toString()
-
-                      }
-                      1 -> {
-  //                        binding.plantImage.setImageResource(R.drawable.ic_cactus)
-                          currentPhotoPath =
-                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_cactus")
-                                  .toString()
-                      }
-                      2 -> {
-  //                        binding.plantImage.setImageResource(R.drawable.ic_plant)
-                          currentPhotoPath =
-                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant")
-                                  .toString()
-                      }
-                      3 -> {
-  //                        binding.plantImage.setImageResource(R.drawable.ic_tree)
-                          currentPhotoPath =
-                              Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_tree")
-                                  .toString()
-                      }
-                      4 -> {
-                          dispatchTakePictureIntentWithPermissionCheck()
-                      }
-                      5 -> {
-                          chooseFromGallery()
-                      }
-                  }
-              }
-          }
-      }*/
 
     private fun isToCreateNewPlant() {
         plant_id = arguments?.getInt("plant_id_in_database")!!
@@ -346,8 +308,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
+    private fun bindEditExistingPlant() = launch(Dispatchers.IO) {
 
-    private fun bindUISetPlant() = launch(Dispatchers.IO) {
         withContext(Dispatchers.Main) {
 
             viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
@@ -360,6 +322,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
                         if (!plant.image_path.isNullOrEmpty()) {
                             binding.plantImage.setImageURI(Uri.parse(plant.image_path))
+                            currentPhotoPath = plant.image_path
                         }
 
                         if (plant.water_need.isNullOrEmpty()) {
@@ -433,10 +396,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
-    private fun setSelectPlantImageFromCollection() {
-
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_info_menu, menu)
 
@@ -444,7 +403,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
 
         deleteItemFromDB.setOnMenuItemClickListener {
-            deleteItemFromDB()
+            deletePlantItemFromDB()
             true
         }
 
@@ -459,19 +418,15 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         // TODO: 12/6/2020 сделать название кнопки сохранить или изменить
         if (isNewPlant) {
             deleteItemFromDB.isVisible = false
-            //savePlantToDB.text = requireContext().getString(R.string.create) 
-
+            //savePlantToDB.text = requireContext().getString(R.string.create)
         } else {
             //binding.buttonAddAndChange.text = getString(R.string.change)   
         }
 
-
-
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun deleteItemFromDB() {
-
+    private fun deletePlantItemFromDB() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.delete_plant_from_db))
             .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
@@ -493,9 +448,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     }
 
-    private var pictureImagePath = ""
-
-
     @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun dispatchTakePictureIntent() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -503,9 +455,10 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         val storageDir: File = Environment.getExternalStoragePublicDirectory(
             Environment.DIRECTORY_PICTURES
         )
-        pictureImagePath = storageDir.absolutePath + "/" + imageFileName
+
+        var pictureImagePath = storageDir.absolutePath + "/" + imageFileName
+
         val file: File = File(pictureImagePath)
-        //val outputFileUri = Uri.fromFile(file)
         val outputFileUri = FileProvider.getUriForFile(
             requireContext(),
             requireContext().applicationContext.packageName.toString() + ".provider",

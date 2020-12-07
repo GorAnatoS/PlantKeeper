@@ -101,18 +101,16 @@ class SelectPlantImageFromCollectionFragment : DialogFragment() {
 
     private fun List<Uri>.toPlantItemImageCard(): List<PlantImageItemCard> {
         return this.map {
-            PlantImageItemCard(it, kkk)
+            PlantImageItemCard(it, onPlantImageItemClickedListener)
         }
     }
 
-    val kkk = object : OnPlantImageItemClickedListener {
+    val onPlantImageItemClickedListener = object : OnPlantImageItemClickedListener {
         override fun onPlantImageClicked(uri: Uri) {
-            Toast.makeText(requireContext(), uri.toString(), Toast.LENGTH_SHORT).show()
             findNavController().currentBackStackEntry?.savedStateHandle?.set(
                 IMAGE_URI,
                 uri.toString()
             )
-            //findNavController().previousBackStackEntry?.savedStateHandle?.set(IMAGE_URI, uri.toString())
             myDialog.dismiss()
 
         }
