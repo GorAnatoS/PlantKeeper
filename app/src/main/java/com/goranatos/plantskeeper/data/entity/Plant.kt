@@ -18,9 +18,6 @@ data class Plant(
     @ColumnInfo(name = DESCRIPTION_COLUMN)
     val desc: String?,
 
-    /*  @ColumnInfo(name = IMAGE_COLUMN, typeAffinity = ColumnInfo.BLOB)
-      val image: ByteArray?,*/
-
     @ColumnInfo(name = IMAGE_PATH_COLUMN)
     val image_path: String?,
 
