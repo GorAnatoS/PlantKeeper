@@ -30,8 +30,8 @@ import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.uiScope
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
-import com.goranatos.plantskeeper.ui.plantAddAndInfo.selecPlantImageFromCollection.IMAGE_URI
-import com.goranatos.plantskeeper.ui.plantAddAndInfo.selecPlantImageFromCollection.SelectPlantImageFromCollectionFragment
+import com.goranatos.plantskeeper.ui.plantAddAndInfo.selectPlantIPictureFromCollection.IMAGE_URI
+import com.goranatos.plantskeeper.ui.plantAddAndInfo.selectPlantIPictureFromCollection.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers

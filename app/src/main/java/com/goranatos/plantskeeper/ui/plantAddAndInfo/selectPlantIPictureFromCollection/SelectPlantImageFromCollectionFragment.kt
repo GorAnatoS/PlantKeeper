@@ -1,4 +1,4 @@
-package com.goranatos.plantskeeper.ui.plantAddAndInfo.selecPlantImageFromCollection
+package com.goranatos.plantskeeper.ui.plantAddAndInfo.selectPlantIPictureFromCollection
 
 import android.app.Dialog
 import android.net.Uri
