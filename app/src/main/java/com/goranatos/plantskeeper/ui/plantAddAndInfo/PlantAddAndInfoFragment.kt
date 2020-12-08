@@ -68,7 +68,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         //selectPicture
         const val REQUEST_CHOOSE_FROM_GALLERY = 632
 
-        private var currentPhotoPath = ""
 
         lateinit var uriDestination: Uri
         lateinit var uriCapturedImage: Uri
@@ -137,7 +136,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                     val selectedUri = data!!.data
 
                     uriDestination = createImageFile().toUri()
-                    currentPhotoPath = uriDestination.toString()
+                    thePlant.image_path = uriDestination.toString()
 
                     if (selectedUri != null) {
                         openCropActivity(selectedUri, uriDestination)
@@ -152,7 +151,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
                 REQUEST_IMAGE_CAPTURE -> {
                     uriDestination = createImageFile().toUri()
-                    currentPhotoPath = uriDestination.toString()
+                    thePlant.image_path = uriDestination.toString()
 
                     openCropActivity(uriCapturedImage, uriDestination)
                 }
@@ -178,7 +177,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             if (isNewPlant) {
                 uiScope.launch {
                     binding.apply {
-                        val newPlant = Plant(
+/*                        val newPlant = Plant(
                             0,
                             editTextTextPlantName.editText?.text.toString(),
                             editTextTextPlantDescription.text.toString(),
@@ -187,8 +186,8 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                             if (binding.switchIsHibernateOn.isChecked) 1 else 0,
                             null,
                             null,
-                        )
-                        viewModel.insertPlant(newPlant)
+                        )*/
+                        viewModel.insertPlant(thePlant)
                     }
                 }
 
@@ -197,7 +196,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             } else {
                 uiScope.launch(Dispatchers.IO) {
 
-                    val newPlant = Plant(
+                   /* val newPlant = Plant(
                         plant_id,
                         binding.editTextTextPlantName.editText?.text.toString(),
                         binding.editTextTextPlantDescription.text.toString(),
@@ -206,9 +205,9 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                         if (binding.switchIsHibernateOn.isChecked) 1 else 0,
                         null,
                         null,
-                    )
+                    )*/
 
-                    viewModel.updatePlant(newPlant)
+                    viewModel.updatePlant(thePlant)
 
                 }
                 Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
@@ -220,7 +219,24 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         }
     }
 
-     private fun setDatePickerForStartWatering() {
+    private fun createNewPlantEntity() {
+        thePlant = Plant(
+            0,
+            null,
+            null,
+            "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1",
+            null,
+             0,
+            null,
+            null,
+        )
+
+
+
+    }
+
+
+    private fun setDatePickerForStartWatering() {
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
         val builder = MaterialDatePicker.Builder.datePicker()
@@ -237,11 +253,11 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         }
 
 
-      /*  if (isNewPlant) {
+        /*  if (isNewPlant) {
 
-        } else {
+          } else {
 
-        }*/
+          }*/
     }
 
     private fun setImageUriListener() {
@@ -249,12 +265,14 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             ?.observe(viewLifecycleOwner) { uri_string ->
                 binding.plantImage.setImageURI(Uri.parse(uri_string))
 
-                currentPhotoPath = uri_string
+                thePlant.image_path = uri_string
             }
     }
 
     private fun setToWaterFromDateListener() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(TO_WATER_FROM_DATE_STRING)
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
+            TO_WATER_FROM_DATE_STRING
+        )
             ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
                 binding.tvToWaterFromDateVal.text = to_water_from_date_string
             }
@@ -337,11 +355,11 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         binding.groupContent.visibility = View.VISIBLE
         binding.groupLoading.visibility = View.GONE
 
-        whenPlantCreateSetWaterToggleGroup()
+        whenCreateNewPlantSetWaterToggleGroup()
 
-        currentPhotoPath =
-            "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1"
-        binding.plantImage.setImageURI(Uri.parse(currentPhotoPath))
+        createNewPlantEntity()
+
+        binding.plantImage.setImageURI(Uri.parse(thePlant.image_path))
 
         binding.switchIsHibernateOn.isChecked = false
 
@@ -362,10 +380,10 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
                         if (!plant.image_path.isNullOrEmpty()) {
                             binding.plantImage.setImageURI(Uri.parse(plant.image_path))
-                            currentPhotoPath = plant.image_path
+                            thePlant.image_path =  plant.image_path
                         }
 
-                        whenPlantExistsSetToggleWaterGroup()
+                        whenThePlantExistsSetToggleWaterGroup()
 
                         binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
 
@@ -423,13 +441,12 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         }
 
 
-
     }
 
 
-    //START WaterToggleGroup
+//START WaterToggleGroup
 
-    private fun whenPlantExistsSetToggleWaterGroup() {
+    private fun whenThePlantExistsSetToggleWaterGroup() {
         if (thePlant.water_need.isNullOrEmpty()) {
             binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
         } else {
@@ -439,7 +456,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         setToggleGroupToWaterAddOnButtonCheckedListener()
     }
 
-    private fun whenPlantCreateSetWaterToggleGroup() {
+    private fun whenCreateNewPlantSetWaterToggleGroup() {
         binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
 
         setToggleGroupToWaterAddOnButtonCheckedListener()
@@ -461,8 +478,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         }
     }
 
-    //END WaterToggleGroup
-
+//END WaterToggleGroup
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -489,7 +505,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             deleteItemFromDB.isVisible = false
             //savePlantToDB.text = requireContext().getString(R.string.create)
         } else {
-            //binding.buttonAddAndChange.text = getString(R.string.change)   
+            //binding.buttonAddAndChange.text = getString(R.string.change)
         }
 
         return super.onCreateOptionsMenu(menu, inflater)
@@ -517,7 +533,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
     }
 
-    //Gallery And Photo functions
+//Gallery And Photo functions
 
     @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun dispatchTakePictureIntent() {
@@ -583,7 +599,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
+            thePlant.image_path = absolutePath
         }
     }
 
@@ -596,10 +612,10 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
-    // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
+// TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
 
 
-    // TODO: 12/8/2020 !!! 
+// TODO: 12/8/2020 !!!
 
 
 }
