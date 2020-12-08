@@ -9,8 +9,10 @@ import kotlinx.coroutines.launch
 
 class MyPlantsViewModel(private val repository: PlantsRepository) : ViewModel() {
 
-    //lateinit var thePlantUri: MutableLiveData<Uri>
-
+    lateinit var thePlant: Plant
+    suspend fun insertThePlantIntoDB() {
+        repository.insertPlant(thePlant)
+    }
     lateinit var allPlants: LiveData<List<Plant>>
 
     init {
