@@ -38,7 +38,7 @@ const val START_REPLANT_FROM_COLUMN = "to_replant_from"
 const val START_CUT_FROM_COLUMN = "to_cut_from"
 const val START_TURN_FROM_COLUMN = "to_turn_from"
 
-const val DATABASE_VERSION = 2
+const val DATABASE_VERSION = 3
 
 @Database(entities = [Plant::class], version = DATABASE_VERSION)
 abstract class PlantsDatabase : RoomDatabase() {
@@ -94,8 +94,11 @@ abstract class PlantsDatabase : RoomDatabase() {
                     val MIGRATION_2_3 : Migration = object : Migration(2, 3) {
                         override fun migrate(database: SupportSQLiteDatabase) {
                             database.execSQL(
-                                "ALTER TABLE $TABLE_NAME"
-                                        + " ADD COLUMN ($HIBERNATE_MODE_DATE_START INTEGER, $HIBERNATE_MODE_DATE_FINISH INTEGER)"
+                                "ALTER TABLE $TABLE_NAME ADD COLUMN $HIBERNATE_MODE_DATE_START INTEGER"
+                            )
+
+                            database.execSQL(
+                                "ALTER TABLE $TABLE_NAME ADD COLUMN $HIBERNATE_MODE_DATE_FINISH INTEGER"
                             )
                         }
                     }
