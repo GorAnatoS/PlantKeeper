@@ -53,7 +53,7 @@ import java.util.*
  */
 
 @RuntimePermissions
-class PlantAddAndInfo : ScopedFragment(), DIAware {
+class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     companion object {
 
         // TODO: 12/8/2020 new structure DATA
