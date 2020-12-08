@@ -27,6 +27,8 @@ const val CUT_NEED_COLUMN = "cutting_need"
 const val TURN_NEED_COLUMN = "turning_need"
 
 const val IS_HIBERNATE_MODE_ON = "is_hibernate_mode_on"
+const val HIBERNATE_MODE_DATE_START = "hibernate_mode_start_date"
+const val HIBERNATE_MODE_DATE_FINISH = "hibernate_mode_finish_date"
 
 //начать поливать... с какого числа
 const val START_WATER_FROM_COLUMN = "to_water_from"
@@ -82,14 +84,18 @@ abstract class PlantsDatabase : RoomDatabase() {
                     //MIGRATIONS
                     val MIGRATION_1_2 : Migration = object : Migration(1, 2) {
                         override fun migrate(database: SupportSQLiteDatabase) {
-                           /* database.execSQL(
-                                "ALTER TABLE Plants_database "
-                                        + " ADD COLUMN is_hibernate_mode_on INTEGER DEFAULT 0 NOT NULL"
-                            )*/
-
                             database.execSQL(
                                 "ALTER TABLE $TABLE_NAME"
                                         + " ADD COLUMN $IS_HIBERNATE_MODE_ON INTEGER DEFAULT 0 NOT NULL"
+                            )
+                        }
+                    }
+
+                    val MIGRATION_2_3 : Migration = object : Migration(2, 3) {
+                        override fun migrate(database: SupportSQLiteDatabase) {
+                            database.execSQL(
+                                "ALTER TABLE $TABLE_NAME"
+                                        + " ADD COLUMN ($HIBERNATE_MODE_DATE_START INTEGER, $HIBERNATE_MODE_DATE_FINISH INTEGER)"
                             )
                         }
                     }
@@ -100,6 +106,7 @@ abstract class PlantsDatabase : RoomDatabase() {
                         PlantsDatabase::class.java,
                         DATABASE_NAME)
                         .addMigrations(MIGRATION_1_2)
+                        .addMigrations(MIGRATION_2_3)
                         .build()
                 }
 

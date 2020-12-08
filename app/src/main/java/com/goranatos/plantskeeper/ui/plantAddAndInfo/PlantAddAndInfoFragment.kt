@@ -184,7 +184,9 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                             editTextTextPlantDescription.text.toString(),
                             currentPhotoPath,
                             binding.tvToWaterFromDateVal.text.toString(),
-                            if (binding.switchIsHibernateOn.isChecked) 1 else 0
+                            if (binding.switchIsHibernateOn.isChecked) 1 else 0,
+                            null,
+                            null,
                         )
                         viewModel.insertPlant(newPlant)
                     }
@@ -201,7 +203,9 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                         binding.editTextTextPlantDescription.text.toString(),
                         currentPhotoPath,
                         binding.tvToWaterFromDateVal.text.toString(),
-                        if (binding.switchIsHibernateOn.isChecked) 1 else 0
+                        if (binding.switchIsHibernateOn.isChecked) 1 else 0,
+                        null,
+                        null,
                     )
 
                     viewModel.updatePlant(newPlant)
@@ -218,7 +222,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
      private fun setDatePickerForStartWatering() {
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
-
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
@@ -387,13 +390,40 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     private fun setHibernateSwitch() {
         binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-//                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
                 binding.groupHibernateData.visibility = View.VISIBLE
             } else {
-//                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
                 binding.groupHibernateData.visibility = View.GONE
             }
         }
+
+        binding.tvDateHibernateStartFromVal.setOnClickListener {
+            val builder = MaterialDatePicker.Builder.datePicker()
+
+            builder.setTitleText("Режим покоя начинается с")
+            val materialDatePicker = builder.build()
+
+            materialDatePicker.addOnPositiveButtonClickListener {
+                binding.tvDateHibernateStartFromVal.text = Time.getFormattedDateString(it)
+            }
+
+            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
+        }
+
+        binding.tvDateHibernateFinishVal.setOnClickListener {
+            val builder = MaterialDatePicker.Builder.datePicker()
+
+            builder.setTitleText("Режим покоя заканчивается")
+            val materialDatePicker = builder.build()
+
+            materialDatePicker.addOnPositiveButtonClickListener {
+                binding.tvDateHibernateFinishVal.text = Time.getFormattedDateString(it)
+            }
+
+            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
+        }
+
+
+
     }
 
 

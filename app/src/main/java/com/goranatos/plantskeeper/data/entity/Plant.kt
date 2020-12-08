@@ -27,6 +27,12 @@ data class Plant(
     @ColumnInfo(name = IS_HIBERNATE_MODE_ON)
     val is_hibernate_on: Int = 0,
 
+    @ColumnInfo(name = HIBERNATE_MODE_DATE_START)
+    val hibernate_mode_date_start: Long?,
+
+    @ColumnInfo(name = HIBERNATE_MODE_DATE_FINISH)
+    val hibernate_mode_date_finish: Long?,
+
 // TODO: 12/7/2020 + дата начинать полив с х числа + дата начало периода спячки + дата конец периода спячки + режим спячки есть ? булеан 
 )
 

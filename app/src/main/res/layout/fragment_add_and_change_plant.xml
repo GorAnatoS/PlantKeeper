@@ -242,15 +242,15 @@
                 android:id="@+id/tvDateHibernateFinishVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="01.04"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:drawableStartCompat="@drawable/ic_baseline_pause_24"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDateHibernateStartFromVal"
-                app:layout_constraintEnd_toEndOf="@+id/switchIsHibernateOn"
-                app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal" />
+                app:layout_constraintStart_toStartOf="@+id/tvDateHibernateStartFromVal"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateHibernateStartFromVal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

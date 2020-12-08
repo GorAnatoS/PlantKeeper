@@ -49,6 +49,11 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.set(
+            TO_WATER_FROM_DATE_STRING,
+            Time.getFormattedDateString()
+        )
+
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
         val materialDatePicker = builder.build()
