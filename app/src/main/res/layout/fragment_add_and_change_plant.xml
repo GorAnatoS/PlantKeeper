@@ -214,6 +214,45 @@
                 app:layout_constraintStart_toEndOf="@+id/switchFertilize"
                 app:layout_constraintTop_toTopOf="@+id/switchFertilize" />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_hibernate_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_half"
+                android:visibility="gone"
+                app:constraint_referenced_ids="tvDateHibernateStartFromVal, tvDateHibernateFinishVal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/tvDateHibernateStartFromVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="01.10"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/switchIsHibernateOn"
+                app:layout_constraintTop_toBottomOf="@+id/switchIsHibernateOn"
+                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24" />
+
+            <TextView
+                android:id="@+id/tvDateHibernateFinishVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="01.04"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDateHibernateStartFromVal"
+                app:layout_constraintEnd_toEndOf="@+id/switchIsHibernateOn"
+                app:layout_constraintStart_toEndOf="@+id/tvDateHibernateStartFromVal"
+                app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal"
+                app:drawableStartCompat="@drawable/ic_baseline_pause_24" />
 
             <include
                 android:id="@+id/includePlantWatering"
@@ -234,6 +273,15 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/includePlantWatering" />
+
+            <include
+                android:id="@+id/includeHibernateSettings"
+                layout="@layout/include_hibernate_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDateHibernateStartFromVal" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

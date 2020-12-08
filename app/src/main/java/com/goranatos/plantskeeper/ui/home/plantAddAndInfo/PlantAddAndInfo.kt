@@ -77,13 +77,46 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
     lateinit var binding: FragmentAddAndChangePlantBinding
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, grantResults)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        isToCreateNewPlant()
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_add_and_change_plant,
+                container,
+                false
+            )
+
+        binding.lifecycleOwner = this
+
+        if (isNewPlant) {
+            bindCreateNewPlant()
+        } else {
+            bindEditExistingPlant()
+        }
+
+        setWaterSwitch()
+        setFertilizeSwitch()
+        setHibernateSwitch()
+
+        setToggleButtons()
+
+        setImageUriListener()
+
+        setHasOptionsMenu(true)
+
+        return binding.root
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -120,47 +153,6 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                 }
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        isToCreateNewPlant()
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_add_and_change_plant,
-                container,
-                false
-            )
-
-        binding.lifecycleOwner = this
-
-        if (isNewPlant) {
-            bindCreateNewPlant()
-        } else {
-            bindEditExistingPlant()
-        }
-
-        setWaterSwitch()
-        setFertilizeSwitch()
-
-        setToggleButtons()
-
-        setImageUriListener()
-
-        setHasOptionsMenu(true)
-
-        return binding.root
     }
 
 
@@ -308,6 +300,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         binding.plantImage.setImageURI(Uri.parse(currentPhotoPath))
 
         binding.switchIsHibernateOn.isChecked = false
+        binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+        binding.groupHibernateData.visibility = View.GONE
     }
 
     private fun bindEditExistingPlant() = launch(Dispatchers.IO) {
@@ -339,12 +333,34 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
                         }
 
                         binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
+
+                        if (binding.switchIsHibernateOn.isChecked){
+                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
+                            binding.groupHibernateData.visibility = View.VISIBLE
+                        } else {
+                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+                            binding.groupHibernateData.visibility = View.GONE
+                        }
+
                     }
                 }
             })
 
             binding.groupContent.visibility = View.VISIBLE
             binding.groupLoading.visibility = View.GONE
+        }
+    }
+
+
+    private fun setHibernateSwitch() {
+        binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
+                binding.groupHibernateData.visibility = View.VISIBLE
+            } else {
+                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+                binding.groupHibernateData.visibility = View.GONE
+            }
         }
     }
 
@@ -522,5 +538,15 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
+    }
+
     // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
+
 }
