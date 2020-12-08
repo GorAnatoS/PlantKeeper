@@ -1,4 +1,4 @@
-package com.goranatos.plantskeeper.ui.home.plantAddAndInfo
+package com.goranatos.plantskeeper.ui.plantAddAndInfo
 
 import android.Manifest
 import android.R.attr.maxHeight
@@ -18,18 +18,20 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.MaterialDatePicker
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.FragmentAddAndChangePlantBinding
+import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.uiScope
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
-import com.goranatos.plantskeeper.ui.home.plantAddAndInfo.selecPlantImageFromCollection.IMAGE_URI
-import com.goranatos.plantskeeper.ui.home.plantAddAndInfo.selecPlantImageFromCollection.SelectPlantImageFromCollectionFragment
+import com.goranatos.plantskeeper.ui.plantAddAndInfo.selecPlantImageFromCollection.IMAGE_URI
+import com.goranatos.plantskeeper.ui.plantAddAndInfo.selecPlantImageFromCollection.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
@@ -53,6 +55,8 @@ import java.util.*
 @RuntimePermissions
 class PlantAddAndInfo : ScopedFragment(), DIAware {
     companion object {
+
+        // TODO: 12/8/2020 new structure DATA
         var isNewPlant: Boolean = false
 
         //id and Plant которые надо изменить в БД
@@ -68,6 +72,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         lateinit var uriDestination: Uri
         lateinit var uriCapturedImage: Uri
+
+        private var formattedDateLong: Long = 0
     }
 
     override val di by closestDI()
@@ -106,6 +112,8 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
             bindEditExistingPlant()
         }
 
+        setTimeFunctions()
+
         setWaterSwitch()
         setFertilizeSwitch()
         setHibernateSwitch()
@@ -118,6 +126,7 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
         return binding.root
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
@@ -204,6 +213,31 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
 
             hideKeyboard()
             findNavController().navigateUp()
+        }
+    }
+    
+    private fun setTimeFunctions() {
+        binding.tvDateWaterStartFromVal.text = Time.getFormattedDateString()
+
+
+        val builder = MaterialDatePicker.Builder.datePicker()
+        builder.setTitleText("Поливать с")
+        val materialDatePicker = builder.build()
+
+        materialDatePicker.addOnPositiveButtonClickListener {
+            binding.tvDateWaterStartFromVal.text = Time.getFormattedDateString(it)
+            formattedDateLong = it
+        }
+
+        binding.tvDateWaterStartFromVal.setOnClickListener{
+            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
+        }
+
+
+        if (isNewPlant){
+
+        } else {
+
         }
     }
 
@@ -548,5 +582,9 @@ class PlantAddAndInfo : ScopedFragment(), DIAware {
     }
 
     // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
+
+
+    // TODO: 12/8/2020 !!! 
+    
 
 }

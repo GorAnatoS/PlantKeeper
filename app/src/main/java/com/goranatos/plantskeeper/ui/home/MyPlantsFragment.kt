@@ -1,14 +1,10 @@
 package com.goranatos.plantskeeper.ui.home
 
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -17,10 +13,8 @@ import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.entity.PlantItemCard
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
-import com.goranatos.plantskeeper.ui.home.plantAddAndInfo.PlantAddAndInfo
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.fragment_my_plants.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

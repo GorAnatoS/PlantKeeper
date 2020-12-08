@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PlantsKeeper</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
@@ -45,4 +45,25 @@
     <string name="delete_plant_from_db">Удалить растение?</string>
     <string name="are_you_sure_to_delete_the_plant_from_db">Вы точно уверены, что хотите удалить это растение из своей коллекции?</string>
     <string name="cancel">Отменить</string>
+
+
+<!--    MaterialDatePicker-->
+    <string name="mtrl_picker_range_header_unselected" tools:override="true">Выберите дату</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:override="true">%s - Дата окончания</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:override="true">Дата начала - %s</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:override="true">Дата начала</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:override="true">Дата начала</string>
+    <string name="mtrl_picker_text_input_date_format" tools:override="true">dd.MM.yyyy</string>
+    <string name="mtrl_picker_out_of_range" tools:override="true">Вы вышли за границу\nдопустимых значений: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:override="true">Неверный формат даты.\Используйте: %1$s</string>
+    <string name="mtrl_picker_save" tools:override="true">Сохранить</string>
+    <string name="mtrl_picker_date_header_title" tools:override="true">Выберите дату</string>
+    <string name="mtrl_picker_date_header_unselected" tools:override="true">Выбранная дата</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:override="true">Дата</string>
+    <string name="mtrl_picker_text_input_year_abbr" tools:override="true">г</string>
+    <string name="mtrl_picker_text_input_month_abbr" tools:override="true">м</string>
+    <string name="mtrl_picker_text_input_day_abbr" tools:override="true">д</string>
+    <string name="mtrl_picker_invalid_range" tools:override="true">Неверный диапазон.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:override="true">Формат: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:override="true">Пример: %1$s</string>
 </resources>

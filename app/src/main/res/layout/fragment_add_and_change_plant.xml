@@ -12,7 +12,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.home.plantAddAndInfo.PlantAddAndInfo">
+            tools:context=".ui.plantAddAndInfo.PlantAddAndInfo">
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_content"
@@ -188,11 +188,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_2x"
+                tools:checked="true"
                 android:text="Поливать"
                 app:layout_constraintEnd_toStartOf="@+id/switchFertilize"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription" />
+
+
+            <TextView
+                android:id="@+id/tvDateWaterStartFromVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="01.10"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
+                app:layout_constraintStart_toStartOf="@+id/switchWater"
+                app:layout_constraintTop_toBottomOf="@+id/switchWater" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchFertilize"
@@ -208,6 +224,7 @@
                 android:id="@+id/switchIsHibernateOn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:checked="true"
                 android:text="Режим покоя"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -232,6 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="01.10"
+                android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
@@ -243,16 +261,15 @@
                 android:id="@+id/tvDateHibernateFinishVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="01.04"
+                android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_baseline_pause_24"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDateHibernateStartFromVal"
                 app:layout_constraintEnd_toEndOf="@+id/switchIsHibernateOn"
-                app:layout_constraintStart_toEndOf="@+id/tvDateHibernateStartFromVal"
-                app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal"
-                app:drawableStartCompat="@drawable/ic_baseline_pause_24" />
+                app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal" />
 
             <include
                 android:id="@+id/includePlantWatering"
@@ -281,6 +298,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateHibernateStartFromVal" />
+
+
 
 
 
