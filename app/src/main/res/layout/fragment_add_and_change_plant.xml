@@ -103,26 +103,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                <!--   <com.ramotion.circlemenu.CircleMenuView
-                    android:visibility="gone"
-                    android:id="@+id/circleButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:button_colors="@array/colorsPlantsImages"
-                    app:button_icons="@array/plantsImages"
-                    app:duration_close="@integer/durationOfCircleMenu"
-                    app:duration_open="@integer/durationOfCircleMenu"
-                    app:duration_ring="@integer/durationOfCircleMenu"
-                    app:icon_color="@color/purple_200"
-                    app:layout_constraintBottom_toBottomOf="@+id/plantImage"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.8"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/plantImage" />-->
-
             </com.google.android.material.card.MaterialCardView>
-
 
             <EditText
                 android:id="@+id/editTextTextPlantDescription"
@@ -183,53 +164,50 @@
                 app:layout_constraintTop_toBottomOf="@+id/progressBar_loading"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchWater"
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupToWater"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_2x"
-                tools:checked="true"
-                android:text="Поливать"
-                app:layout_constraintEnd_toStartOf="@+id/switchFertilize"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription">
+
+                <Button
+                    android:id="@+id/toggleButtonToWater"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Поливать" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
             <TextView
-                android:id="@+id/tvDateWaterStartFromVal"
+                android:id="@+id/tvToWaterFromDateVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="01.10"
                 android:gravity="center"
+                android:text="01.10"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-                app:layout_constraintStart_toStartOf="@+id/switchWater"
-                app:layout_constraintTop_toBottomOf="@+id/switchWater" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchFertilize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Удобрять"
-                app:layout_constraintEnd_toStartOf="@+id/switchIsHibernateOn"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/switchWater"
-                app:layout_constraintTop_toTopOf="@+id/switchWater" />
+                app:layout_constraintStart_toStartOf="@+id/toggleGroupToWater"
+                app:layout_constraintTop_toBottomOf="@+id/toggleGroupToWater" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchIsHibernateOn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:checked="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="Режим покоя"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/switchFertilize"
-                app:layout_constraintTop_toTopOf="@+id/switchFertilize" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription"
+                tools:checked="true" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_hibernate_data"
@@ -248,21 +226,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="01.10"
                 android:gravity="center"
+                android:text="01.10"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
                 app:layout_constraintStart_toStartOf="@+id/switchIsHibernateOn"
-                app:layout_constraintTop_toBottomOf="@+id/switchIsHibernateOn"
-                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24" />
+                app:layout_constraintTop_toBottomOf="@+id/switchIsHibernateOn" />
 
             <TextView
                 android:id="@+id/tvDateHibernateFinishVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="01.04"
                 android:gravity="center"
+                android:text="01.04"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
@@ -270,38 +248,6 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvDateHibernateStartFromVal"
                 app:layout_constraintEnd_toEndOf="@+id/switchIsHibernateOn"
                 app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal" />
-
-            <include
-                android:id="@+id/includePlantWatering"
-                layout="@layout/include_plant_watering"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switchWater" />
-
-            <include
-                android:id="@+id/includePlantFertilizing"
-                layout="@layout/include_plant_fertilizing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/includePlantWatering" />
-
-            <include
-                android:id="@+id/includeHibernateSettings"
-                layout="@layout/include_hibernate_settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateHibernateStartFromVal" />
-
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -30,8 +30,6 @@ import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.uiScope
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
-import com.goranatos.plantskeeper.ui.plantAddAndInfo.selectPlantIPictureFromCollection.IMAGE_URI
-import com.goranatos.plantskeeper.ui.plantAddAndInfo.selectPlantIPictureFromCollection.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
@@ -65,6 +63,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
         //Camera
         const val REQUEST_IMAGE_CAPTURE = 631
+
         //selectPicture
         const val REQUEST_CHOOSE_FROM_GALLERY = 632
 
@@ -106,21 +105,22 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
         binding.lifecycleOwner = this
 
+
+
         if (isNewPlant) {
             bindCreateNewPlant()
         } else {
             bindEditExistingPlant()
         }
 
-        setTimeFunctions()
+        setDatePickerForStartWatering()
 
-        setWaterSwitch()
-        setFertilizeSwitch()
         setHibernateSwitch()
 
         setToggleButtons()
 
         setImageUriListener()
+        setToWaterFromDateListener()
 
         setHasOptionsMenu(true)
 
@@ -165,7 +165,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     }
 
 
-
     private fun clickSavePlantToDB() {
         if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
             showWrongInput()
@@ -183,7 +182,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                             editTextTextPlantName.editText?.text.toString(),
                             editTextTextPlantDescription.text.toString(),
                             currentPhotoPath,
-                            binding.includePlantWatering.editTextNumberSignedDays.text.toString(),
+                            binding.tvToWaterFromDateVal.text.toString(),
                             if (binding.switchIsHibernateOn.isChecked) 1 else 0
                         )
                         viewModel.insertPlant(newPlant)
@@ -200,7 +199,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                         binding.editTextTextPlantName.editText?.text.toString(),
                         binding.editTextTextPlantDescription.text.toString(),
                         currentPhotoPath,
-                        binding.includePlantWatering.editTextNumberSignedDays.text.toString(),
+                        binding.tvToWaterFromDateVal.text.toString(),
                         if (binding.switchIsHibernateOn.isChecked) 1 else 0
                     )
 
@@ -215,9 +214,9 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             findNavController().navigateUp()
         }
     }
-    
-    private fun setTimeFunctions() {
-        binding.tvDateWaterStartFromVal.text = Time.getFormattedDateString()
+
+     private fun setDatePickerForStartWatering() {
+        binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
 
         val builder = MaterialDatePicker.Builder.datePicker()
@@ -225,20 +224,20 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            binding.tvDateWaterStartFromVal.text = Time.getFormattedDateString(it)
+            binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(it)
             formattedDateLong = it
         }
 
-        binding.tvDateWaterStartFromVal.setOnClickListener{
+        binding.tvToWaterFromDateVal.setOnClickListener {
             materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
         }
 
 
-        if (isNewPlant){
+      /*  if (isNewPlant) {
 
         } else {
 
-        }
+        }*/
     }
 
     private fun setImageUriListener() {
@@ -247,6 +246,13 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                 binding.plantImage.setImageURI(Uri.parse(uri_string))
 
                 currentPhotoPath = uri_string
+            }
+    }
+
+    private fun setToWaterFromDateListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(TO_WATER_FROM_DATE_STRING)
+            ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
+                binding.tvToWaterFromDateVal.text = to_water_from_date_string
             }
     }
 
@@ -327,14 +333,14 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         binding.groupContent.visibility = View.VISIBLE
         binding.groupLoading.visibility = View.GONE
 
-        binding.switchWater.isChecked = true
-        binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
+        whenPlantCreateSetWaterToggleGroup()
 
-        currentPhotoPath = "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1"
+        currentPhotoPath =
+            "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1"
         binding.plantImage.setImageURI(Uri.parse(currentPhotoPath))
 
         binding.switchIsHibernateOn.isChecked = false
-        binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+
         binding.groupHibernateData.visibility = View.GONE
     }
 
@@ -355,24 +361,15 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                             currentPhotoPath = plant.image_path
                         }
 
-                        if (plant.water_need.isNullOrEmpty()) {
-                            binding.includePlantWatering.waterGroup.visibility = View.GONE
-                            binding.includePlantWatering.hibernateMode.visibility = View.GONE
-
-                            binding.includePlantFertilizing.fertiliteGroup.visibility = View.GONE
-                            binding.includePlantFertilizing.hibernateMode.visibility = View.GONE
-                        } else {
-                            binding.includePlantFertilizing.fertiliteGroup.visibility = View.VISIBLE
-                            binding.includePlantFertilizing.hibernateMode.visibility = View.VISIBLE
-                        }
+                        whenPlantExistsSetToggleWaterGroup()
 
                         binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
 
-                        if (binding.switchIsHibernateOn.isChecked){
-                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
+                        if (binding.switchIsHibernateOn.isChecked) {
+//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
                             binding.groupHibernateData.visibility = View.VISIBLE
                         } else {
-                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
                             binding.groupHibernateData.visibility = View.GONE
                         }
 
@@ -389,66 +386,53 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     private fun setHibernateSwitch() {
         binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
+//                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
                 binding.groupHibernateData.visibility = View.VISIBLE
             } else {
-                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+//                binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
                 binding.groupHibernateData.visibility = View.GONE
             }
         }
     }
 
-    private fun setWaterSwitch() {
-        if (isNewPlant) {
-            binding.switchWater.isChecked = true
-            binding.includePlantWatering.switchHibernate.isChecked = false
 
-            binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
-            binding.includePlantWatering.hibernateMode.visibility = View.GONE
+    //START WaterToggleGroup
+
+    private fun whenPlantExistsSetToggleWaterGroup() {
+        if (thePlant.water_need.isNullOrEmpty()) {
+            binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+        } else {
+            binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
         }
 
-        binding.switchWater.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                binding.includePlantWatering.waterGroup.visibility = View.VISIBLE
-            } else {
-                binding.includePlantWatering.waterGroup.visibility = View.GONE
-            }
-        }
+        setToggleGroupToWaterAddOnButtonCheckedListener()
+    }
 
-        binding.includePlantWatering.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
+    private fun whenPlantCreateSetWaterToggleGroup() {
+        binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+
+        setToggleGroupToWaterAddOnButtonCheckedListener()
+    }
+
+    private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
+        binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+            // Respond to button selection
             if (isChecked) {
-                binding.includePlantWatering.hibernateMode.visibility = View.VISIBLE
+                val fragmentManager = getParentFragmentManager()
+                val newFragment = SetWateringSettingsFragmentDialog()
+                newFragment.show(fragmentManager, "dialog")
+
+                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
             } else {
-                binding.includePlantWatering.hibernateMode.visibility = View.GONE
+                binding.tvToWaterFromDateVal.visibility = View.GONE
+                binding.tvToWaterFromDateVal.text = null
             }
         }
     }
 
-    private fun setFertilizeSwitch() {
-        if (isNewPlant) {
-            binding.switchFertilize.isChecked = true
-            binding.includePlantFertilizing.switchHibernate.isChecked = false
+    //END WaterToggleGroup
 
-            binding.includePlantFertilizing.fertiliteGroup.visibility = View.VISIBLE
-            binding.includePlantFertilizing.hibernateMode.visibility = View.GONE
-        }
 
-        binding.switchFertilize.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                binding.includePlantFertilizing.fertiliteGroup.visibility = View.VISIBLE
-            } else {
-                binding.includePlantFertilizing.fertiliteGroup.visibility = View.GONE
-            }
-        }
-
-        binding.includePlantFertilizing.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                binding.includePlantFertilizing.hibernateMode.visibility = View.VISIBLE
-            } else {
-                binding.includePlantFertilizing.hibernateMode.visibility = View.GONE
-            }
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_info_menu, menu)
@@ -585,6 +569,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
 
     // TODO: 12/8/2020 !!! 
-    
+
 
 }

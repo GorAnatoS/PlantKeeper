@@ -25,7 +25,7 @@ data class Plant(
     val image_path: String?,
 
     @ColumnInfo(name = WATER_NEED_COLUMN)
-    val water_need: String?, //для примера - 1\3 - одначает что частота полива 1 раз в день в обычное время и 1 раз в 3 дня в период спячки\зимнее
+    val water_need: String?, //для примера - 1\3 - одначает что частота полива 1 раз в день в обычное время и 1 раз в 3 дня в период спячки\зимнее --------- empty or null - not need
 
     @ColumnInfo(name = IS_HIBERNATE_MODE_ON)
     val is_hibernate_on: Int = 0,
