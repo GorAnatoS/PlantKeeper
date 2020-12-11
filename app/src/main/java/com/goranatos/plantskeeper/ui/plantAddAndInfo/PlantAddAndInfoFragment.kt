@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.FragmentAddAndChangePlantBinding
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
@@ -21,19 +23,20 @@ import permissions.dispatcher.RuntimePermissions
     при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
  */
 
-
 class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     override val di by closestDI()
 
-    private lateinit var viewModel: PlantAddAndInfoViewModel
-    private val viewModelFactory: PlantsAddAndInfoViewModelFactory by instance()
+    private val args: PlantAddAndInfoFragmentArgs by navArgs()
+
+    private lateinit var viewModel: MyPlantsViewModel
+    private val viewModelFactory: MyPlantsViewModelFactory by instance()
 
     lateinit var binding: FragmentAddAndChangePlantBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(PlantAddAndInfoViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -47,24 +50,26 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                 container,
                 false
             )
-
         binding.lifecycleOwner = this
 
-        binding.viewModel = viewModel
+       //binding.viewModel = viewModel
+
+
 
         return binding.root
     }
 
-}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.thePlantId = args.plantId
+    }
 
+
+}
 
 // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
 
-
 // TODO: 12/8/2020 !!!
-
-
-
 
 /*
 package com.goranatos.plantskeeper.ui.plantAddAndInfo

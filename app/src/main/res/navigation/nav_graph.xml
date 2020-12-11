@@ -17,7 +17,12 @@
         android:id="@+id/plantAddAndInfo"
         tools:layout="@layout/fragment_add_and_change_plant"
         android:name="com.goranatos.plantskeeper.ui.plantAddAndInfo.PlantAddAndInfoFragment"
-        android:label="PlantAddAndInfo" />
+        android:label="PlantAddAndInfo" >
+        <argument
+            android:name="plantId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
 
 </navigation>

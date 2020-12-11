@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -51,7 +52,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         viewModel.allPlants.observe(viewLifecycleOwner, {
             initRecycleView(it.toPlantItemCards())
             if (it.isNotEmpty()) textViewEmptyDatabaseNotification.visibility = View.GONE
@@ -61,7 +61,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state is true.
                 this.findNavController().navigate(
-                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo())
+                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.thePlantId))
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
                 viewModel.doneNavigating()
@@ -69,9 +69,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         })
 
         fab.setOnClickListener { view ->
-         /*   viewModel.moveToThePlant(-1)
-            findNavController().navigate(MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo())*/
-
+            viewModel.thePlantId = -1
             viewModel.onItemClicked()
         }
     }
@@ -95,9 +93,8 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
     private val onPlantItemCardClickedListener = object : OnPlantItemCardClickedListener {
         override fun onPlantItemCardClicked(id: Int) {
+            viewModel.thePlantId = id
             viewModel.onItemClicked()
-           /* viewModel.moveToThePlant(id)
-            findNavController().navigate(MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo())*/
         }
     }
 }
