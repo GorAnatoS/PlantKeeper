@@ -64,9 +64,8 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.thePlant.name}"
                             android:maxLines="2" />
-
+                        <!--  android:text="@{viewModel.thePlant.name}"-->
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
