@@ -14,7 +14,11 @@ import kotlinx.android.synthetic.main.item_plant.view.*
  * Created by qsufff on 9/13/2020.
  */
 
-class PlantItemCard(private val content: Plant) : Item() {
+interface OnPlantItemCardClickedListener {
+    fun onPlantItemCardClicked(id: Int)
+}
+
+class PlantItemCard(private val content: Plant, val plantItemCardListener: OnPlantItemCardClickedListener) : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
@@ -28,7 +32,7 @@ class PlantItemCard(private val content: Plant) : Item() {
             }
             //при нажатии на карточку открываем подробное описание растения
             itemView.setOnClickListener{
-                it.findNavController().navigate(MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(content.id))
+                plantItemCardListener.onPlantItemCardClicked(position)
             }
         }
 

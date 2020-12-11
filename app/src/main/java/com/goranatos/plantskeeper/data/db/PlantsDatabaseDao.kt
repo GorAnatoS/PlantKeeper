@@ -23,6 +23,9 @@ interface PlantsDatabaseDao {
     @Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
     fun getPlant(id : Int): LiveData<Plant>
 
+    @Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
+    fun getJustPlant(id : Int): Plant
+
     @Delete
     fun delete(plant: Plant)
 }

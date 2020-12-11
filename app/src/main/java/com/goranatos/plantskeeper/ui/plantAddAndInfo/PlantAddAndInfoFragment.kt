@@ -1,5 +1,74 @@
 package com.goranatos.plantskeeper.ui.plantAddAndInfo
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.databinding.FragmentAddAndChangePlantBinding
+import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
+import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.closestDI
+import org.kodein.di.instance
+import permissions.dispatcher.RuntimePermissions
+
+/*
+    Добавляет новые и редактирует имеющийся цветок\растение
+    при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
+ */
+
+
+class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
+    override val di by closestDI()
+
+    private lateinit var viewModel: PlantAddAndInfoViewModel
+    private val viewModelFactory: PlantsAddAndInfoViewModelFactory by instance()
+
+    lateinit var binding: FragmentAddAndChangePlantBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(PlantAddAndInfoViewModel::class.java)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_add_and_change_plant,
+                container,
+                false
+            )
+
+        binding.lifecycleOwner = this
+
+        binding.viewModel = viewModel
+
+        return binding.root
+    }
+
+}
+
+
+// TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
+
+
+// TODO: 12/8/2020 !!!
+
+
+
+
+/*
+package com.goranatos.plantskeeper.ui.plantAddAndInfo
+
 import android.Manifest
 import android.R.attr.maxHeight
 import android.R.attr.maxWidth
@@ -19,11 +88,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
-import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.FragmentAddAndChangePlantBinding
 import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
@@ -55,19 +122,11 @@ import java.util.*
 class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     companion object {
 
-        // TODO: 12/8/2020 new structure DATA
-        var isNewPlant: Boolean = false
-
-        //id and Plant которые надо изменить в БД
-//        lateinit var thePlant: Plant
-        var plant_id = 0
-
         //Camera
         const val REQUEST_IMAGE_CAPTURE = 631
 
         //selectPicture
         const val REQUEST_CHOOSE_FROM_GALLERY = 632
-
 
         lateinit var uriDestination: Uri
         lateinit var uriCapturedImage: Uri
@@ -85,16 +144,13 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        isToCreateNewPlant()
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -107,11 +163,29 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
         binding.viewModel = viewModel
 
-        if (isNewPlant) {
+      /*  if (viewModel.isCreateNewPlant) {
             bindCreateNewPlant()
         } else {
             bindEditExistingPlant()
+        }*/
+
+        uiScope.launch {
+
+            viewModel.thePlant.observe(viewLifecycleOwner, {
+                binding.groupContent.visibility = View.VISIBLE
+                binding.groupLoading.visibility = View.GONE
+
+                Toast.makeText(requireContext(), it.toString() + "\n\n" + viewModel.plantIdTest.value, Toast.LENGTH_LONG).show()
+
+                //binding.plantImage.setImageURI(Uri.parse(it.image_path))
+            })
+
+            viewModel.obtainThePlant()
+
+
         }
+
+
 
         setDatePickerForStartWatering()
 
@@ -123,6 +197,49 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         setToWaterFromDateListener()
 
         setHasOptionsMenu(true)
+
+
+     /*   uiScope.launch {
+
+            viewModel.getPlant(viewModel.plantIdTest.value).observe(viewLifecycleOwner, {
+                it?.let { plant ->
+
+                    binding.apply {
+
+                        if (!plant.image_path.isNullOrEmpty()) {
+                            binding.plantImage.setImageURI(Uri.parse( plant.image_path))
+                        }
+
+                      *//*  //binding.editTextTextPlantName.editText?.setText(viewModel?.thePlant?.name.toString())
+                        binding.editTextTextPlantDescription.setText(viewModel?.thePlant?.desc.toString())
+
+                        if (!plant.image_path.isNullOrEmpty()) {
+                            binding.plantImage.setImageURI(Uri.parse(plant.image_path))
+                            viewModel?.thePlant?.image_path = plant.image_path
+                        }
+
+                        whenThePlantExistsSetToggleWaterGroup()
+
+                        binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
+
+                        if (binding.switchIsHibernateOn.isChecked) {
+//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
+                            binding.groupHibernateData.visibility = View.VISIBLE
+                        } else {
+//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+                            binding.groupHibernateData.visibility = View.GONE
+                        }*//*
+
+                    }
+
+
+                }
+            })
+        }*/
+
+
+        ///
+
 
         return binding.root
     }
@@ -136,7 +253,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                     val selectedUri = data!!.data
 
                     uriDestination = createImageFile().toUri()
-                    viewModel.thePlant.image_path = uriDestination.toString()
+                    viewModel.thePlant.value?.image_path = uriDestination.toString()
 
                     if (selectedUri != null) {
                         openCropActivity(selectedUri, uriDestination)
@@ -151,7 +268,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
                 REQUEST_IMAGE_CAPTURE -> {
                     uriDestination = createImageFile().toUri()
-                    viewModel.thePlant.image_path = uriDestination.toString()
+                    viewModel.thePlant.value?.image_path = uriDestination.toString()
 
                     openCropActivity(uriCapturedImage, uriDestination)
                 }
@@ -163,7 +280,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             }
         }
     }
-
+/*
 
     private fun clickSavePlantToDB() {
         if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
@@ -174,10 +291,10 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                 Snackbar.LENGTH_SHORT
             ).show()
         } else {
-            if (isNewPlant) {
+            if (viewModel.isCreateNewPlant) {
                 uiScope.launch {
                     binding.apply {
-/*                        val newPlant = Plant(
+*//*                        val newPlant = Plant(
                             0,
                             editTextTextPlantName.editText?.text.toString(),
                             editTextTextPlantDescription.text.toString(),
@@ -186,7 +303,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                             if (binding.switchIsHibernateOn.isChecked) 1 else 0,
                             null,
                             null,
-                        )*/
+                        )*//*
                         viewModel?.insertThePlantIntoDB()
                         //viewModel?.insertPlant(viewModel.thePlant)
                     }
@@ -197,7 +314,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             } else {
                 uiScope.launch(Dispatchers.IO) {
 
-                    /* val newPlant = Plant(
+                    *//* val newPlant = Plant(
                          plant_id,
                          binding.editTextTextPlantName.editText?.text.toString(),
                          binding.editTextTextPlantDescription.text.toString(),
@@ -206,9 +323,9 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
                          if (binding.switchIsHibernateOn.isChecked) 1 else 0,
                          null,
                          null,
-                     )*/
+                     )*//*
 
-                    viewModel.updatePlant(viewModel.thePlant)
+                    viewModel.updatePlant(viewModel.thePlant.value!!)
 
                 }
                 Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
@@ -218,23 +335,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             hideKeyboard()
             findNavController().navigateUp()
         }
-    }
-
-    private fun createNewPlantEntity() {
-        viewModel.thePlant = Plant(
-            0,
-            null,
-            null,
-            "android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1",
-            null,
-            0,
-            null,
-            null,
-        )
-
-
-    }
-
+    }*/
 
     private fun setDatePickerForStartWatering() {
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
@@ -265,7 +366,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             ?.observe(viewLifecycleOwner) { uri_string ->
                 binding.plantImage.setImageURI(Uri.parse(uri_string))
 
-                viewModel.thePlant.image_path = uri_string
+                viewModel.thePlant.value?.image_path = uri_string
             }
     }
 
@@ -311,11 +412,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
     }
 
-    private fun isToCreateNewPlant() {
-        plant_id = arguments?.getInt("plant_id_in_database")!!
-        isNewPlant = plant_id == -1
-    }
-
 
     // TODO: 12/8/2020 material change
     private fun showWrongInput() {
@@ -352,14 +448,14 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     }
 
     private fun bindCreateNewPlant() {
-        binding.groupContent.visibility = View.VISIBLE
-        binding.groupLoading.visibility = View.GONE
+
 
         whenCreateNewPlantSetWaterToggleGroup()
 
-        createNewPlantEntity()
+        //createNewPlantEntity()
 
-        binding.plantImage.setImageURI(Uri.parse(viewModel.thePlant.image_path))
+        // TODO: 12/8/2020
+        //binding.plantImage.setImageURI(Uri.parse(viewModel.thePlant.value?.image_path))
 
         binding.switchIsHibernateOn.isChecked = false
 
@@ -370,20 +466,19 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
         withContext(Dispatchers.Main) {
 
-            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
+/*            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
                 it?.let { plant ->
                     viewModel.thePlant = plant
 
                     binding.apply {
 
-                        // TODO: 12/8/2020 !!! 
-                        /*       binding.editTextTextPlantName.editText?.setText(viewModel.thePlant.name.toString())
-                        binding.editTextTextPlantDescription.setText(viewModel.thePlant.desc.toString())
+                        //binding.editTextTextPlantName.editText?.setText(viewModel?.thePlant?.name.toString())
+                        binding.editTextTextPlantDescription.setText(viewModel?.thePlant?.desc.toString())
 
                         if (!plant.image_path.isNullOrEmpty()) {
                             binding.plantImage.setImageURI(Uri.parse(plant.image_path))
-                            viewModel.thePlant.image_path = plant.image_path
-                        }*/
+                            viewModel?.thePlant?.image_path = plant.image_path
+                        }
 
                         whenThePlantExistsSetToggleWaterGroup()
 
@@ -399,7 +494,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
                     }
                 }
-            })
+            })*/
 
             binding.groupContent.visibility = View.VISIBLE
             binding.groupLoading.visibility = View.GONE
@@ -449,7 +544,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 //START WaterToggleGroup
 
     private fun whenThePlantExistsSetToggleWaterGroup() {
-        if (viewModel.thePlant.water_need.isNullOrEmpty()) {
+        if (viewModel.thePlant.value?.water_need.isNullOrEmpty()) {
             binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
         } else {
             binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
@@ -496,14 +591,14 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
 
         val savePlantToDB = menu?.findItem(R.id.save_plant_to_db)
-        savePlantToDB.setOnMenuItemClickListener {
+      /*  savePlantToDB.setOnMenuItemClickListener {
             clickSavePlantToDB()
             true
-        }
+        }*/
 
 
         // TODO: 12/6/2020 сделать название кнопки сохранить или изменить
-        if (isNewPlant) {
+        if (viewModel.isCreateNewPlant) {
             deleteItemFromDB.isVisible = false
             //savePlantToDB.text = requireContext().getString(R.string.create)
         } else {
@@ -523,7 +618,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
                 // Respond to positive button press
                 launch(Dispatchers.IO) {
-                    viewModel.deletePlant(viewModel.thePlant)
+                    viewModel.deletePlant(viewModel.thePlant.value!!)
 
                     Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
                         .show()
@@ -601,7 +696,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
-            viewModel.thePlant.image_path = absolutePath
+            viewModel.thePlant.value?.image_path = absolutePath
         }
     }
 
@@ -621,3 +716,4 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
 
 }
+ */

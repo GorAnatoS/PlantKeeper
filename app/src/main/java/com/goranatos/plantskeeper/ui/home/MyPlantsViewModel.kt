@@ -1,19 +1,34 @@
 package com.goranatos.plantskeeper.ui.home
 
-import android.net.Uri
+import android.app.Application
 import androidx.lifecycle.*
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.goranatos.plantskeeper.internal.lazyDeferred
+import kotlinx.coroutines.*
 
-class MyPlantsViewModel(private val repository: PlantsRepository) : ViewModel() {
+class MyPlantsViewModel(private val repository: PlantsRepository) :
+    ViewModel() {
 
-    lateinit var thePlant: Plant
-    suspend fun insertThePlantIntoDB() {
-        repository.insertPlant(thePlant)
-    }
+
+    private val viewModelJob = Job()
+
+    val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
     lateinit var allPlants: LiveData<List<Plant>>
+
+    private val _navigateToThePlant = MutableLiveData<Boolean?>()
+    val navigateToThePlant: LiveData<Boolean?>
+        get() = _navigateToThePlant
+
+
+    fun doneNavigating() {
+        _navigateToThePlant.value = null
+    }
+
+    fun onItemClicked(){
+        _navigateToThePlant.value = true
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -22,21 +37,27 @@ class MyPlantsViewModel(private val repository: PlantsRepository) : ViewModel() 
     }
 
     suspend fun updatePlant(plant: Plant) {
-        repository.updatePlant(plant)
+        withContext(Dispatchers.IO) {
+            repository.updatePlant(plant)
+        }
     }
 
     suspend fun deletePlant(plant: Plant) {
-        repository.deletePlant(plant)
-    }
-
-    suspend fun insertPlant(plant: Plant) {
-        repository.insertPlant(plant)
+        withContext(Dispatchers.IO) {
+            repository.deletePlant(plant)
+        }
     }
 
     suspend fun getPlant(id: Int): LiveData<Plant> {
-        return repository.getPlant(id)
+        return withContext(Dispatchers.IO) {
+            repository.getPlant(id)
+        }
     }
 
 
-}
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 
+}
