@@ -18,13 +18,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
+import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.IMAGE_URI
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.TO_WATER_FROM_DATE_STRING
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
@@ -143,6 +147,12 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 binding.editTextTextPlantDescription.setText(plant.desc.toString())
             }
 
+            if (plant.water_need.isNullOrEmpty()) {
+                binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+            } else {
+                binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+            }
+
             Toast.makeText(
                 requireContext(),
                 viewModel.thePlant.value.toString() + "\n\n",
@@ -165,6 +175,13 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         setImageUriListener()
 
+        setDatePickerForStartWatering()
+
+        setToWaterFromDateListener()
+
+        setToggleGroupToWaterAddOnButtonCheckedListener()
+
+        setHibernateSwitch()
 
     }
 
@@ -399,112 +416,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
     }
 
-
-}
-
-// TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
-
-// TODO: 12/8/2020 !!!
-
-/*
-
-@RuntimePermissions
-class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
-
-
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_add_and_change_plant,
-                container,
-                false
-            )
-
-        binding.lifecycleOwner = this
-
-        binding.viewModel = viewModel
-
-      /*  if (viewModel.isCreateNewPlant) {
-            bindCreateNewPlant()
-        } else {
-            bindEditExistingPlant()
-        }*/
-
-        uiScope.launch {
-
-            viewModel.thePlant.observe(viewLifecycleOwner, {
-
-            })
-
-            viewModel.obtainThePlant()
-
-
-        }
-
-
-
-        setDatePickerForStartWatering()
-
-        setHibernateSwitch()
-
-        setToggleButtons()
-
-
-        setToWaterFromDateListener()
-
-
-
-
-     /*   uiScope.launch {
-
-            viewModel.getPlant(viewModel.plantIdTest.value).observe(viewLifecycleOwner, {
-                it?.let { plant ->
-
-                    binding.apply {
-
-
-
-
-
-
-
-                        whenThePlantExistsSetToggleWaterGroup()
-
-                        binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
-
-                        if (binding.switchIsHibernateOn.isChecked) {
-//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
-                            binding.groupHibernateData.visibility = View.VISIBLE
-                        } else {
-//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
-                            binding.groupHibernateData.visibility = View.GONE
-                        }*//*
-
-                    }
-
-
-                }
-            })
-        }*/
-
-
-        ///
-
-
-        return binding.root
-    }
-
-
-
-/*
-
-
     private fun setDatePickerForStartWatering() {
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
@@ -529,8 +440,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
           }*/
     }
 
-
-
     private fun setToWaterFromDateListener() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
             TO_WATER_FROM_DATE_STRING
@@ -541,63 +450,27 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     }
 
 
+//START WaterToggleGroup
 
+    private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
+        binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+            // Respond to button selection
+            if (isChecked) {
+                val fragmentManager = getParentFragmentManager()
+                val newFragment = SetWateringSettingsFragmentDialog()
+                newFragment.show(fragmentManager, "dialog")
 
-    private fun bindCreateNewPlant() {
-
-
-        whenCreateNewPlantSetWaterToggleGroup()
-
-        //createNewPlantEntity()
-
-        // TODO: 12/8/2020
-        //binding.plantImage.setImageURI(Uri.parse(viewModel.thePlant.value?.image_path))
-
-        binding.switchIsHibernateOn.isChecked = false
-
-        binding.groupHibernateData.visibility = View.GONE
-    }
-
-    private fun bindEditExistingPlant() = launch(Dispatchers.IO) {
-
-        withContext(Dispatchers.Main) {
-
-/*            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
-                it?.let { plant ->
-                    viewModel.thePlant = plant
-
-                    binding.apply {
-
-                        //binding.editTextTextPlantName.editText?.setText(viewModel?.thePlant?.name.toString())
-                        binding.editTextTextPlantDescription.setText(viewModel?.thePlant?.desc.toString())
-
-                        if (!plant.image_path.isNullOrEmpty()) {
-                            binding.plantImage.setImageURI(Uri.parse(plant.image_path))
-                            viewModel?.thePlant?.image_path = plant.image_path
-                        }
-
-                        whenThePlantExistsSetToggleWaterGroup()
-
-                        binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
-
-                        if (binding.switchIsHibernateOn.isChecked) {
-//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
-                            binding.groupHibernateData.visibility = View.VISIBLE
-                        } else {
-//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
-                            binding.groupHibernateData.visibility = View.GONE
-                        }
-
-                    }
-                }
-            })*/
-
-            binding.groupContent.visibility = View.VISIBLE
-            binding.groupLoading.visibility = View.GONE
+                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
+            } else {
+                binding.tvToWaterFromDateVal.visibility = View.GONE
+                binding.tvToWaterFromDateVal.text = null
+            }
         }
     }
 
+//END WaterToggleGroup
 
+    //START HIBERNATE MODE settings
     private fun setHibernateSwitch() {
         binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -636,41 +509,52 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
     }
 
+    //END HIBERNATE MODE settings
 
-//START WaterToggleGroup
 
-    private fun whenThePlantExistsSetToggleWaterGroup() {
-        if (viewModel.thePlant.value?.water_need.isNullOrEmpty()) {
-            binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-        } else {
-            binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+
+}
+
+// TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
+
+// TODO: 12/8/2020 !!!
+
+/*
+
+
+    private fun bindEditExistingPlant() = launch(Dispatchers.IO) {
+
+        withContext(Dispatchers.Main) {
+
+/*            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
+                it?.let { plant ->
+                    viewModel.thePlant = plant
+
+                    binding.apply {
+
+
+
+                        binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
+
+                        if (binding.switchIsHibernateOn.isChecked) {
+//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
+                            binding.groupHibernateData.visibility = View.VISIBLE
+                        } else {
+//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
+                            binding.groupHibernateData.visibility = View.GONE
+                        }
+
+                    }
+                }
+            })*/
+
+            binding.groupContent.visibility = View.VISIBLE
+            binding.groupLoading.visibility = View.GONE
         }
-
-        setToggleGroupToWaterAddOnButtonCheckedListener()
     }
 
-    private fun whenCreateNewPlantSetWaterToggleGroup() {
-        binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
 
-        setToggleGroupToWaterAddOnButtonCheckedListener()
-    }
 
-    private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
-        binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
-            // Respond to button selection
-            if (isChecked) {
-                val fragmentManager = getParentFragmentManager()
-                val newFragment = SetWateringSettingsFragmentDialog()
-                newFragment.show(fragmentManager, "dialog")
 
-                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
-            } else {
-                binding.tvToWaterFromDateVal.visibility = View.GONE
-                binding.tvToWaterFromDateVal.text = null
-            }
-        }
-    }
-
-//END WaterToggleGrou
 }
  */
