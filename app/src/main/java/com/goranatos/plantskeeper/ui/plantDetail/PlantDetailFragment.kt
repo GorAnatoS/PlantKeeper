@@ -1,12 +1,18 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
+import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -17,13 +23,20 @@ import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.IMAGE_URI
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
+import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.RuntimePermissions
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 /*
@@ -31,6 +44,7 @@ import java.util.*
     при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
  */
 
+@RuntimePermissions
 class PlantDetailFragment : ScopedFragment(), DIAware {
 
     companion object {
@@ -54,6 +68,42 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     private lateinit var viewModel: PlantDetailViewModel
 
     lateinit var binding: FragmentDetailedPlantBinding
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+
+                REQUEST_CHOOSE_FROM_GALLERY -> {
+                    val selectedUri = data!!.data
+
+                    uriDestination = createImageFile().toUri()
+                    viewModel.thePlant.value?.image_path = uriDestination.toString()
+
+                    if (selectedUri != null) {
+                        openCropActivity(selectedUri, uriDestination)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.toast_cannot_retrieve_selected_image,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                REQUEST_IMAGE_CAPTURE -> {
+                    uriDestination = createImageFile().toUri()
+                    viewModel.thePlant.value?.image_path = uriDestination.toString()
+
+                    openCropActivity(uriCapturedImage, uriDestination)
+                }
+
+                UCrop.REQUEST_CROP -> {
+
+                    handleCropResult(data)
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -113,6 +163,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         setToggleButtons()
 
+        setImageUriListener()
 
 
     }
@@ -168,13 +219,76 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                             chooseFromGallery()
                         }
                         1 -> {
-                            //dispatchTakePictureIntentWithPermissionCheck()
+                            dispatchTakePictureIntentWithPermissionCheck()
                         }
                     }
                 }
                 .show()
         }
 
+    }
+
+//Gallery And Photo functions
+
+    @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun dispatchTakePictureIntent() {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName = "$timeStamp.jpg"
+        val storageDir: File = Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_PICTURES
+        )
+
+        var pictureImagePath = storageDir.absolutePath + "/" + imageFileName
+
+        val file: File = File(pictureImagePath)
+        val outputFileUri = FileProvider.getUriForFile(
+            requireContext(),
+            requireContext().applicationContext.packageName.toString() + ".provider",
+            file
+        )
+        uriCapturedImage = outputFileUri
+
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
+        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
+    }
+
+
+
+    private fun openCropActivity(sourceUri: Uri, destinationUri: Uri) {
+        UCrop.of(sourceUri, destinationUri)
+           // .withMaxResultSize(maxWidth, maxHeight)
+            .withAspectRatio(1f, 1f)
+            .start(requireContext(), this)
+    }
+
+    private fun handleCropResult(data: Intent?) {
+        val resultUri = UCrop.getOutput(data!!)
+        binding.plantImage.setImageURI(resultUri)
+    }
+
+    @Throws(IOException::class)
+    fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            viewModel.thePlant.value?.image_path = absolutePath
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 
     private fun chooseFromGallery() {
@@ -193,6 +307,15 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 getString(R.string.label_select_picture)
             ), REQUEST_CHOOSE_FROM_GALLERY
         )
+    }
+
+    private fun setImageUriListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
+            ?.observe(viewLifecycleOwner) { uri_string ->
+                binding.plantImage.setImageURI(Uri.parse(uri_string))
+
+                viewModel.thePlant.value?.image_path = uri_string
+            }
     }
 
     private fun deletePlantItemFromDB() {
@@ -275,6 +398,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             }
         }
     }
+
+
 }
 
 // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
@@ -330,7 +455,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
         setToggleButtons()
 
-        setImageUriListener()
+
         setToWaterFromDateListener()
 
 
@@ -376,41 +501,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
 
-                REQUEST_CHOOSE_FROM_GALLERY -> {
-                    val selectedUri = data!!.data
-
-                    uriDestination = createImageFile().toUri()
-                    viewModel.thePlant.value?.image_path = uriDestination.toString()
-
-                    if (selectedUri != null) {
-                        openCropActivity(selectedUri, uriDestination)
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.toast_cannot_retrieve_selected_image,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                REQUEST_IMAGE_CAPTURE -> {
-                    uriDestination = createImageFile().toUri()
-                    viewModel.thePlant.value?.image_path = uriDestination.toString()
-
-                    openCropActivity(uriCapturedImage, uriDestination)
-                }
-
-                UCrop.REQUEST_CROP -> {
-
-                    handleCropResult(data)
-                }
-            }
-        }
-    }
 /*
 
 
@@ -438,14 +529,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
           }*/
     }
 
-    private fun setImageUriListener() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
-            ?.observe(viewLifecycleOwner) { uri_string ->
-                binding.plantImage.setImageURI(Uri.parse(uri_string))
 
-                viewModel.thePlant.value?.image_path = uri_string
-            }
-    }
 
     private fun setToWaterFromDateListener() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
@@ -587,80 +671,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         }
     }
 
-//END WaterToggleGroup
-
-
-
-
-
-//Gallery And Photo functions
-
-    @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    fun dispatchTakePictureIntent() {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "$timeStamp.jpg"
-        val storageDir: File = Environment.getExternalStoragePublicDirectory(
-            Environment.DIRECTORY_PICTURES
-        )
-
-        var pictureImagePath = storageDir.absolutePath + "/" + imageFileName
-
-        val file: File = File(pictureImagePath)
-        val outputFileUri = FileProvider.getUriForFile(
-            requireContext(),
-            requireContext().applicationContext.packageName.toString() + ".provider",
-            file
-        )
-        uriCapturedImage = outputFileUri
-
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
-        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
-    }
-
-
-
-    private fun openCropActivity(sourceUri: Uri, destinationUri: Uri) {
-        UCrop.of(sourceUri, destinationUri)
-            .withMaxResultSize(maxWidth, maxHeight)
-            .withAspectRatio(1f, 1f)
-            .start(requireContext(), this)
-    }
-
-    private fun handleCropResult(data: Intent?) {
-        val resultUri = UCrop.getOutput(data!!)
-        binding.plantImage.setImageURI(resultUri)
-    }
-
-    @Throws(IOException::class)
-    fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            viewModel.thePlant.value?.image_path = absolutePath
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, grantResults)
-    }
-
-// TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
-
-
-// TODO: 12/8/2020 !!!
-
-
+//END WaterToggleGrou
 }
  */
