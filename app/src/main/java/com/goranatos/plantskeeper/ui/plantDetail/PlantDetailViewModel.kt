@@ -1,18 +1,28 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.view.View
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import kotlinx.coroutines.*
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PlantDetailViewModel(
     private val repository: PlantsRepository,
@@ -139,6 +149,28 @@ class PlantDetailViewModel(
         newFragment.show(fragmentManager, "dialog")
     }
 
+
+    //FUNCTIONS FOR SELECTIONG IMAGE OF THE PLANT START
+    @Throws(IOException::class)
+    fun createImageFile(context: Context): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            thePlant.value?.image_path = absolutePath
+        }
+    }
+
+    fun createUriDestinationForImageFile(context: Context){
+        uriDestination = createImageFile(context).toUri()
+        thePlant.value?.image_path = uriDestination.toString()
+    }
+    //FUNCTIONS FOR SELECTIONG IMAGE OF THE PLANT END
 
 
     /**

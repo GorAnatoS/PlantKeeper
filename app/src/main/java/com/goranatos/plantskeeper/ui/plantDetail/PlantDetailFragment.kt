@@ -69,8 +69,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 REQUEST_CHOOSE_FROM_GALLERY -> {
                     val selectedUri = data!!.data
 
-                    uriDestination = createImageFile().toUri()
-                    viewModel.thePlant.value?.image_path = uriDestination.toString()
+                    viewModel.createUriDestinationForImageFile(requireContext())
+
 
                     if (selectedUri != null) {
                         openCropActivity(selectedUri, uriDestination)
@@ -84,8 +84,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
 
                 REQUEST_IMAGE_CAPTURE -> {
-                    uriDestination = createImageFile().toUri()
-                    viewModel.thePlant.value?.image_path = uriDestination.toString()
+                    viewModel.createUriDestinationForImageFile(requireContext())
 
                     openCropActivity(uriCapturedImage, uriDestination)
                 }
@@ -263,20 +262,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.plantImage.setImageURI(resultUri)
     }
 
-    @Throws(IOException::class)
-    fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            viewModel.thePlant.value?.image_path = absolutePath
-        }
-    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
