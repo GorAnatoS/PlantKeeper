@@ -102,4 +102,12 @@ class PlantDetailViewModel(
         if (it) View.VISIBLE
         else View.GONE
     }
+
+    /**
+     * Если у растения поле water_need не установлено или пусто, то значит кнопка отжата. Иначе - наоборот
+     */
+    val isToggleToWaterChecked = Transformations.map(thePlant) {
+        !it.water_need.isNullOrEmpty()
+    }
+
 }

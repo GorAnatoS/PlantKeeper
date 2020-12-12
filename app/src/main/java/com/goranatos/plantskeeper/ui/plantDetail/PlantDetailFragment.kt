@@ -130,6 +130,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         binding.viewModel = viewModel
 
+        viewModel.isToggleToWaterChecked.observe(viewLifecycleOwner, { toggled ->
+            if (toggled) binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+            else binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+        })
+
         viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
 
             binding.groupContent.visibility = View.VISIBLE
@@ -138,20 +143,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             if (plant?.image_path != null) {
                 binding.plantImage.setImageURI(Uri.parse(plant.image_path))
             }
-
-            if (plant?.name != null) {
-                binding.editTextTextPlantNameInputText.setText(plant.name)
-            }
-
+            
             if (plant?.desc != null) {
                 binding.editTextTextPlantDescription.setText(plant.desc.toString())
             }
 
-            if (plant.water_need.isNullOrEmpty()) {
-                binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-            } else {
-                binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
-            }
 
             Toast.makeText(
                 requireContext(),

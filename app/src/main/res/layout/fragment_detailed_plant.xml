@@ -5,6 +5,7 @@
 
 
     <data>
+
         <variable
             name="viewModel"
             type="com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel" />
@@ -63,8 +64,9 @@
                             android:id="@+id/editTextTextPlantNameInputText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="2" />
-                        <!--  android:text="@{viewModel.thePlant.name}"-->
+                            android:maxLines="2"
+                            android:text="@{viewModel.thePlant.name}" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -125,9 +127,9 @@
                 android:hint="@string/notes"
                 android:inputType="textMultiLine"
                 android:lines="5"
-                android:visibility="gone"
                 android:minLines="1"
                 android:scrollbars="vertical"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -213,21 +215,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:checked="@{viewModel.isSwitchHibernateBtnVisible}"
                 android:text="Режим покоя"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription"
-                tools:checked="true"
-                android:checked="@{viewModel.isSwitchHibernateBtnVisible}"/>
+                tools:checked="true" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_hibernate_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_half"
+                android:visibility="@{viewModel.hibernateGroupVisible}"
                 app:constraint_referenced_ids="tvDateHibernateStartFromVal, tvDateHibernateFinishVal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:visibility="@{viewModel.hibernateGroupVisible}"
                 tools:visibility="visible" />
 
             <TextView
