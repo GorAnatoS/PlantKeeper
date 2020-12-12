@@ -51,12 +51,22 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         binding.viewModel = viewModel
 
-        viewModel.thePlant.observe(viewLifecycleOwner, {
+        viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
 
             binding.groupContent.visibility = View.VISIBLE
             binding.groupLoading.visibility = View.GONE
 
-            if (it.image_path != null) binding.plantImage.setImageURI(Uri.parse(it.image_path))
+            if (plant?.image_path != null) {
+                binding.plantImage.setImageURI(Uri.parse(plant.image_path))
+            }
+
+            if (plant?.name != null) {
+                binding.editTextTextPlantNameInputText.setText(plant.name)
+            }
+
+            if (plant?.desc != null) {
+                binding.editTextTextPlantDescription.setText(plant.desc.toString())
+            }
 
             Toast.makeText(
                 requireContext(),
@@ -147,17 +157,11 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 
                     binding.apply {
 
-                        if (!plant.image_path.isNullOrEmpty()) {
-                            binding.plantImage.setImageURI(Uri.parse( plant.image_path))
-                        }
 
-                      *//*  //binding.editTextTextPlantName.editText?.setText(viewModel?.thePlant?.name.toString())
-                        binding.editTextTextPlantDescription.setText(viewModel?.thePlant?.desc.toString())
 
-                        if (!plant.image_path.isNullOrEmpty()) {
-                            binding.plantImage.setImageURI(Uri.parse(plant.image_path))
-                            viewModel?.thePlant?.image_path = plant.image_path
-                        }
+
+
+
 
                         whenThePlantExistsSetToggleWaterGroup()
 

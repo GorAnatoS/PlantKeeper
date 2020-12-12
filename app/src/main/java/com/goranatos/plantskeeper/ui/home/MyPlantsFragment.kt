@@ -69,7 +69,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         })
 
         fab.setOnClickListener { view ->
-            viewModel.navigateToPlantId = -1
+            viewModel.updateNavigateToPlantId(-1)
             viewModel.onItemClicked()
         }
     }
@@ -93,7 +93,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
     private val onPlantItemCardClickedListener = object : OnPlantItemCardClickedListener {
         override fun onPlantItemCardClicked(id: Int) {
-            viewModel.navigateToPlantId = id
+            viewModel.updateNavigateToPlantId(id+1)
             viewModel.onItemClicked()
         }
     }

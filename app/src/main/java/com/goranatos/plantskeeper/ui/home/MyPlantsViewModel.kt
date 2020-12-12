@@ -13,6 +13,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository) :
 
     lateinit var allPlants: LiveData<List<Plant>>
 
+    //create new plant
     var navigateToPlantId = -1
 
     private val _navigateToThePlant = MutableLiveData<Boolean?>()
@@ -27,6 +28,9 @@ class MyPlantsViewModel(private val repository: PlantsRepository) :
         _navigateToThePlant.value = true
     }
 
+    fun updateNavigateToPlantId(newId : Int){
+        navigateToPlantId = newId
+    }
     init {
         viewModelScope.launch(Dispatchers.IO) {
             allPlants = repository.getAllMyPlants().asLiveData()

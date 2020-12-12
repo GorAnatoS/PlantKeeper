@@ -8,7 +8,7 @@ import kotlinx.coroutines.*
 
 class PlantDetailViewModel(
     private val repository: PlantsRepository,
-    private val plantId: Int
+    private val plantId: Int,
 ) : ViewModel() {
 
     private val viewModelJob = Job()
@@ -32,7 +32,7 @@ class PlantDetailViewModel(
                 0,
                 null,
                 null,
-                null,
+                "android.resource://com.goranatos.plantskeeper/drawable/ic_plant1",
                 null,
                 0,
                 null,
