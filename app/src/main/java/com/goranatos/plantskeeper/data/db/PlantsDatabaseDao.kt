@@ -21,11 +21,12 @@ interface PlantsDatabaseDao {
     fun getAllMyPlants(): Flow<List<Plant>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
-    fun getPlant(id : Int): LiveData<Plant>
-
-    @Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
-    fun getJustPlant(id : Int): Plant
+    fun getPlant(id : Int): Plant
 
     @Delete
     fun delete(plant: Plant)
 }
+
+
+/*@Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
+    fun getPlant(id : Int): LiveData<Plant>*/

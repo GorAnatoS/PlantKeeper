@@ -18,13 +18,8 @@ class PlantsRepositoryImpl(
         plantsDatabaseDao.insert(plant)
     }
 
-    override suspend fun getPlant(id: Int): LiveData<Plant> {
+    override suspend fun getPlant(id: Int): Plant {
         return plantsDatabaseDao.getPlant(id)
-    }
-
-
-    override suspend fun getJustPlant(id: Int): Plant {
-        return plantsDatabaseDao.getJustPlant(id)
     }
 
     override suspend fun updatePlant(plant: Plant) {

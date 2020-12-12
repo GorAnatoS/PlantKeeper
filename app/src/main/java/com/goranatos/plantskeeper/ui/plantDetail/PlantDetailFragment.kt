@@ -1,5 +1,6 @@
-package com.goranatos.plantskeeper.ui.plantAddAndInfo
+package com.goranatos.plantskeeper.ui.plantDetail
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,35 +10,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.goranatos.plantskeeper.R
-import com.goranatos.plantskeeper.databinding.FragmentAddAndChangePlantBinding
+import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
-import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
-import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
-import permissions.dispatcher.RuntimePermissions
 
 /*
     Добавляет новые и редактирует имеющийся цветок\растение
     при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
  */
 
-class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
+class PlantDetailFragment : ScopedFragment(), DIAware {
     override val di by closestDI()
 
-    private val args: PlantAddAndInfoFragmentArgs by navArgs()
+    private val args: PlantDetailFragmentArgs by navArgs()
 
-    private lateinit var viewModel: MyPlantsViewModel
-    private val viewModelFactory: MyPlantsViewModelFactory by instance()
+    private lateinit var viewModel: PlantDetailViewModel
 
-    lateinit var binding: FragmentAddAndChangePlantBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
-    }
+    lateinit var binding: FragmentDetailedPlantBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,25 +37,36 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         binding =
             DataBindingUtil.inflate(
                 inflater,
-                R.layout.fragment_add_and_change_plant,
+                R.layout.fragment_detailed_plant,
                 container,
                 false
             )
         binding.lifecycleOwner = this
 
-       //binding.viewModel = viewModel
+        val viewModelFactory: PlantDetailViewModelFactory by instance(arg = args.plantId)
 
+        viewModel = ViewModelProvider(this, viewModelFactory).get(PlantDetailViewModel::class.java)
 
+        viewModel.setPlant()
+
+        binding.viewModel = viewModel
+
+        viewModel.thePlant.observe(viewLifecycleOwner, {
+
+            binding.groupContent.visibility = View.VISIBLE
+            binding.groupLoading.visibility = View.GONE
+
+            if (it.image_path != null) binding.plantImage.setImageURI(Uri.parse(it.image_path))
+
+            Toast.makeText(
+                requireContext(),
+                viewModel.thePlant.value.toString() + "\n\n",
+                Toast.LENGTH_SHORT
+            ).show()
+        })
 
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.thePlantId = args.plantId
-    }
-
-
 }
 
 // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
@@ -72,56 +74,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 // TODO: 12/8/2020 !!!
 
 /*
-package com.goranatos.plantskeeper.ui.plantAddAndInfo
-
-import android.Manifest
-import android.R.attr.maxHeight
-import android.R.attr.maxWidth
-import android.app.Activity.RESULT_OK
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.view.*
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.net.toUri
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
-import com.goranatos.plantskeeper.R
-import com.goranatos.plantskeeper.databinding.FragmentAddAndChangePlantBinding
-import com.goranatos.plantskeeper.internal.Time
-import com.goranatos.plantskeeper.ui.base.ScopedFragment
-import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.uiScope
-import com.goranatos.plantskeeper.ui.home.MyPlantsViewModel
-import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
-import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
-import com.yalantis.ucrop.UCrop
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.closestDI
-import org.kodein.di.instance
-import permissions.dispatcher.NeedsPermission
-import permissions.dispatcher.RuntimePermissions
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
-
-/*
-    Добавляет новые и редактирует имеющийся цветок\растение
-    при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
- */
-
 
 @RuntimePermissions
 class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
@@ -139,18 +91,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         private var formattedDateLong: Long = 0
     }
 
-    override val di by closestDI()
 
-    private lateinit var viewModel: MyPlantsViewModel
-    private val viewModelFactory: MyPlantsViewModelFactory by instance()
-
-    lateinit var binding: FragmentAddAndChangePlantBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -177,12 +118,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         uiScope.launch {
 
             viewModel.thePlant.observe(viewLifecycleOwner, {
-                binding.groupContent.visibility = View.VISIBLE
-                binding.groupLoading.visibility = View.GONE
 
-                Toast.makeText(requireContext(), it.toString() + "\n\n" + viewModel.plantIdTest.value, Toast.LENGTH_LONG).show()
-
-                //binding.plantImage.setImageURI(Uri.parse(it.image_path))
             })
 
             viewModel.obtainThePlant()

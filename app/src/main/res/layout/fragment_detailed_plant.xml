@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-   <!-- <data>
+    <data>
         <variable
             name="viewModel"
-            type="com.goranatos.plantskeeper.ui.plantAddAndInfo.PlantAddAndInfoViewModel" />
-    </data>-->
+            type="com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.plantAddAndInfo.PlantAddAndInfoFragment">
+            tools:context=".ui.plantDetail.PlantDetailFragment">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPlantLogo"

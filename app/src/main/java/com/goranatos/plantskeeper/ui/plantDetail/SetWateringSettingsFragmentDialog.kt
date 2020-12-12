@@ -1,4 +1,4 @@
-package com.goranatos.plantskeeper.ui.plantAddAndInfo
+package com.goranatos.plantskeeper.ui.plantDetail
 
 import android.app.Dialog
 import android.content.DialogInterface

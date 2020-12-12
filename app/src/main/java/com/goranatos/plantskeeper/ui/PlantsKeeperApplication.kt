@@ -6,6 +6,7 @@ import com.goranatos.plantskeeper.data.db.PlantsDatabase
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.data.repository.PlantsRepositoryImpl
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModelFactory
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.*
 import org.kodein.di.android.x.androidXModule
@@ -25,7 +26,7 @@ class PlantsKeeperApplication : Application(), DIAware {
         bind() from singleton { instance<PlantsDatabase>().plantsDatabaseDao() }
         bind<PlantsRepository>() with singleton { PlantsRepositoryImpl(instance()) }
         bind() from singleton { MyPlantsViewModelFactory(instance()) }
-
+        bind() from factory { plantId: Int -> PlantDetailViewModelFactory(instance(), plantId) }
     }
 
     override fun onCreate() {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -61,15 +60,16 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state is true.
                 this.findNavController().navigate(
-                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.thePlantId))
+                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId))
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
                 viewModel.doneNavigating()
+
             }
         })
 
         fab.setOnClickListener { view ->
-            viewModel.thePlantId = -1
+            viewModel.navigateToPlantId = -1
             viewModel.onItemClicked()
         }
     }
@@ -93,7 +93,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
     private val onPlantItemCardClickedListener = object : OnPlantItemCardClickedListener {
         override fun onPlantItemCardClicked(id: Int) {
-            viewModel.thePlantId = id
+            viewModel.navigateToPlantId = id
             viewModel.onItemClicked()
         }
     }
