@@ -28,6 +28,8 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
     lateinit var binding: IncludePlantWateringSettingsBinding
 
+
+    var saved_to_water_from_date: String = ""
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
     override fun onCreateView(
@@ -47,31 +49,47 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
         setHibernateMode()
 
-        binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
-
-        findNavController().currentBackStackEntry?.savedStateHandle?.set(
-            TO_WATER_FROM_DATE_STRING,
-            Time.getFormattedDateString()
-        )
+        saved_to_water_from_date = Time.getFormattedDateString()
+        binding.tvToWaterFromDateVal.text = saved_to_water_from_date
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(it)
-
-            findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                TO_WATER_FROM_DATE_STRING,
-                Time.getFormattedDateString(it)
-            )
+            saved_to_water_from_date = Time.getFormattedDateString(it)
+            binding.tvToWaterFromDateVal.text = saved_to_water_from_date
         }
+
+
 
         binding.tvToWaterFromDateVal.setOnClickListener {
             materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
         }
 
+        binding.buttonSave.setOnClickListener {
+            dismiss()
+
+            findNavController().currentBackStackEntry?.savedStateHandle?.set(
+                TO_WATER_FROM_DATE_STRING,
+                saved_to_water_from_date
+            )
+        }
+
+        binding.buttonCancel.setOnClickListener {
+            dismiss()
+        }
+
         return binding.root
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.set(
+            TO_WATER_FROM_DATE_STRING,
+            null
+        )
     }
 
     private fun setHibernateMode() {

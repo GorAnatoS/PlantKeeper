@@ -1,5 +1,6 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
+import android.net.Uri
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -12,6 +13,19 @@ class PlantDetailViewModel(
     private val repository: PlantsRepository,
     private val plantId: Int,
 ) : ViewModel() {
+
+    companion object {
+        //Camera request code
+        const val REQUEST_IMAGE_CAPTURE = 631
+
+        //selectPicture request code
+        const val REQUEST_CHOOSE_FROM_GALLERY = 632
+
+        lateinit var uriDestination: Uri
+        lateinit var uriCapturedImage: Uri
+
+        var formattedDateLong: Long = 0
+    }
 
     private val viewModelJob = Job()
     val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -88,6 +102,15 @@ class PlantDetailViewModel(
         }
     }
 
+    //OPTIONS MENU START
+
+
+
+    //OPTIONS MENU END
+
+
+
+
     /**
      * If plant.is_hibernate_on == 1 then is checked, 0 - unchecked
      */
@@ -109,5 +132,15 @@ class PlantDetailViewModel(
     val isToggleToWaterChecked = Transformations.map(thePlant) {
         !it.water_need.isNullOrEmpty()
     }
+
+    /**
+     * Если у растения поле isToggleToWaterChecked истино, то показываем tvToWaterFromDateVal, иначе - нет
+     */
+    val tvToWaterFromDateValVisible = Transformations.map(isToggleToWaterChecked) {
+        if (it) View.VISIBLE
+        else View.GONE
+    }
+
+
 
 }

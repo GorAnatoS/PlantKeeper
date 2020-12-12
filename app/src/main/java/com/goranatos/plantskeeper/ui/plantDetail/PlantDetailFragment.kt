@@ -25,6 +25,11 @@ import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
 import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_CHOOSE_FROM_GALLERY
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_IMAGE_CAPTURE
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.formattedDateLong
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriCapturedImage
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.IMAGE_URI
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
@@ -50,21 +55,6 @@ import java.util.*
 
 @RuntimePermissions
 class PlantDetailFragment : ScopedFragment(), DIAware {
-
-    companion object {
-
-        //Camera
-        const val REQUEST_IMAGE_CAPTURE = 631
-
-        //selectPicture
-        const val REQUEST_CHOOSE_FROM_GALLERY = 632
-
-        lateinit var uriDestination: Uri
-        lateinit var uriCapturedImage: Uri
-
-        private var formattedDateLong: Long = 0
-    }
-
     override val di by closestDI()
 
     private val args: PlantDetailFragmentArgs by navArgs()
@@ -143,11 +133,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             if (plant?.image_path != null) {
                 binding.plantImage.setImageURI(Uri.parse(plant.image_path))
             }
-            
+
             if (plant?.desc != null) {
                 binding.editTextTextPlantDescription.setText(plant.desc.toString())
             }
-
 
             Toast.makeText(
                 requireContext(),
@@ -192,7 +181,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
 
-        val savePlantToDB = menu?.findItem(R.id.save_plant_to_db)
+        val savePlantToDB = menu.findItem(R.id.save_plant_to_db)
         savePlantToDB.setOnMenuItemClickListener {
             onClickOptionMenuSavePlant()
             true
@@ -217,7 +206,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
             // The device is using a large layout, so show the fragment as a dialog
             newFragment.show(fragmentManager, "dialog")
-
         }
 
         binding.toggleTakePhoto.setOnClickListener {
@@ -322,14 +310,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         )
     }
 
-    private fun setImageUriListener() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
-            ?.observe(viewLifecycleOwner) { uri_string ->
-                binding.plantImage.setImageURI(Uri.parse(uri_string))
 
-                viewModel.thePlant.value?.image_path = uri_string
-            }
-    }
 
     private fun deletePlantItemFromDB() {
         MaterialAlertDialogBuilder(requireContext())
@@ -427,26 +408,35 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.tvToWaterFromDateVal.setOnClickListener {
             materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
         }
-
-
-        /*  if (isNewPlant) {
-
-          } else {
-
-          }*/
     }
 
+    /**
+     * Ожидаем, когда из диплога выберем следующую дату полива
+     */
     private fun setToWaterFromDateListener() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
             TO_WATER_FROM_DATE_STRING
         )
             ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
                 binding.tvToWaterFromDateVal.text = to_water_from_date_string
+                viewModel.thePlant.value?.water_need = to_water_from_date_string
+            }
+    }
+
+    /**
+     * Ожидаем, когда изменится uri изображения
+     */
+    private fun setImageUriListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
+            ?.observe(viewLifecycleOwner) { uri_string ->
+                binding.plantImage.setImageURI(Uri.parse(uri_string))
+
+                viewModel.thePlant.value?.image_path = uri_string
             }
     }
 
 
-//START WaterToggleGroup
+    //START WaterToggleGroup
 
     private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
         binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
@@ -456,15 +446,14 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 val newFragment = SetWateringSettingsFragmentDialog()
                 newFragment.show(fragmentManager, "dialog")
 
-                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
             } else {
-                binding.tvToWaterFromDateVal.visibility = View.GONE
-                binding.tvToWaterFromDateVal.text = null
+                //binding.tvToWaterFromDateVal.text = null
+                viewModel.thePlant.value?.water_need = null
             }
         }
     }
 
-//END WaterToggleGroup
+    //END WaterToggleGroup
 
     //START HIBERNATE MODE settings
     private fun setHibernateSwitch() {
@@ -512,43 +501,3 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
 
 // TODO: 12/8/2020 !!!
-
-/*
-
-
-    private fun bindEditExistingPlant() = launch(Dispatchers.IO) {
-
-        withContext(Dispatchers.Main) {
-
-/*            viewModel.getPlant(plant_id).observe(viewLifecycleOwner, {
-                it?.let { plant ->
-                    viewModel.thePlant = plant
-
-                    binding.apply {
-
-
-
-                        binding.switchIsHibernateOn.isChecked = plant.is_hibernate_on == 1
-
-                        if (binding.switchIsHibernateOn.isChecked) {
-//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.VISIBLE
-                            binding.groupHibernateData.visibility = View.VISIBLE
-                        } else {
-//                            binding.includeHibernateSettings.cardHibernateGroup.visibility = View.GONE
-                            binding.groupHibernateData.visibility = View.GONE
-                        }
-
-                    }
-                }
-            })*/
-
-            binding.groupContent.visibility = View.VISIBLE
-            binding.groupLoading.visibility = View.GONE
-        }
-    }
-
-
-
-
-}
- */
