@@ -1,28 +1,17 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.view.View
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import kotlinx.coroutines.*
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class PlantDetailViewModel(
     private val repository: PlantsRepository,
@@ -98,6 +87,7 @@ class PlantDetailViewModel(
                 thePlant.value = getPlant(plantId)
 
                 isToCreateNewPlant = false
+
             }
         }
     }
@@ -149,10 +139,6 @@ class PlantDetailViewModel(
         newFragment.show(fragmentManager, "dialog")
     }
 
-
-
-
-
     /**
      * If plant.is_hibernate_on == 1 then is checked, 0 - unchecked
      */
@@ -161,28 +147,10 @@ class PlantDetailViewModel(
     }
 
     /**
-     * If isSwitchHibernateBtnVisible returns View.VISIBLE for hibernateGroup.visibility
-     */
-    val hibernateGroupVisible = Transformations.map(isSwitchHibernateBtnVisible) {
-        if (it) View.VISIBLE
-        else View.GONE
-    }
-
-    /**
      * Если у растения поле water_need не установлено или пусто, то значит кнопка отжата. Иначе - наоборот
      */
     val isToggleToWaterChecked = Transformations.map(thePlant) {
         !it.water_need.isNullOrEmpty()
     }
-
-    /**
-     * Если у растения поле isToggleToWaterChecked истино, то показываем tvToWaterFromDateVal, иначе - нет
-     */
-    val tvToWaterFromDateValVisible = Transformations.map(isToggleToWaterChecked) {
-        if (it) View.VISIBLE
-        else View.GONE
-    }
-
-
 
 }

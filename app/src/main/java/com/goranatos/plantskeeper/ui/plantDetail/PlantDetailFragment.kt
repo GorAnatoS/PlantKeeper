@@ -63,6 +63,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     lateinit var binding: FragmentDetailedPlantBinding
 
+
+    //special var for firstUse check
+    var isToShowFirstSetWaterSettings  = false
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
@@ -115,11 +119,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         binding.viewModel = viewModel
 
-        viewModel.isToggleToWaterChecked.observe(viewLifecycleOwner, { toggled ->
-            if (toggled) binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
-            else binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-        })
-
         viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
 
             binding.groupContent.visibility = View.VISIBLE
@@ -132,6 +131,22 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             if (plant?.desc != null) {
                 binding.editTextTextPlantDescription.setText(plant.desc.toString())
             }
+
+            if (plant?.water_need.isNullOrEmpty())
+                binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+            
+            else
+                binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+
+
+
+            if (plant.is_hibernate_on != 0){
+                binding.groupHibernateData.visibility = View.VISIBLE
+                isToShowFirstSetWaterSettings = true
+            } else {
+                binding.groupHibernateData.visibility = View.GONE
+            }
+
 
             Toast.makeText(
                 requireContext(),
@@ -154,8 +169,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         setImageUriListener()
 
         setDatePickerForStartWatering()
-        setToWaterFromDateListener()
-        setToggleGroupToWaterAddOnButtonCheckedListener()
+
+        setToggleGroupWatering()
 
         setHibernateSwitch()
 
@@ -297,10 +312,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             .setTitle(resources.getString(R.string.delete_plant_from_db))
             .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
             .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
-                // Respond to neutral button press
             }
             .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
-                // Respond to positive button press
                 launch(Dispatchers.IO) {
                     viewModel.deletePlant()
 
@@ -309,9 +322,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
                     findNavController().navigateUp()
                 }
-            }
-            .show()
-
+            }.show()
     }
 
     private fun onClickOptionMenuSavePlant() {
@@ -392,23 +403,48 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
     }
 
+    var tempCheckedtoggleGroupToWater = false
     //START WaterToggleGroup
-    private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
-        binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+    private fun setToggleGroupWatering() {
+
+
+        binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
             // Respond to button selection
             if (isChecked) {
+                tempCheckedtoggleGroupToWater = true
+            } else {
+                //binding.tvToWaterFromDateVal.text = null
+                viewModel.thePlant.value?.water_need = null
+                binding.tvToWaterFromDateVal.visibility = View.GONE
+                tempCheckedtoggleGroupToWater = false
+            }
+        }
+
+        binding.toggleButtonToWater.setOnClickListener {
+            if (tempCheckedtoggleGroupToWater) {
+
                 val fragmentManager = getParentFragmentManager()
                 val newFragment = SetWateringSettingsFragmentDialog()
                 newFragment.show(fragmentManager, "dialog")
 
-            } else {
-                //binding.tvToWaterFromDateVal.text = null
-                viewModel.thePlant.value?.water_need = null
+                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
             }
         }
+
+        // Ожидаем, когда из диплога выберем следующую дату полива
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(TO_WATER_FROM_DATE_STRING)
+            ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
+
+                if (to_water_from_date_string == "uncheck") {
+                    binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+                    return@observe
+                }
+
+                viewModel.thePlant.value?.water_need = to_water_from_date_string
+            }
     }
 
-
+    
     private fun setDatePickerForStartWatering() {
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
@@ -426,18 +462,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
     }
 
-    /**
-     * Ожидаем, когда из диплога выберем следующую дату полива
-     */
-    private fun setToWaterFromDateListener() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
-            TO_WATER_FROM_DATE_STRING
-        )
-            ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
-                //binding.tvToWaterFromDateVal.text = to_water_from_date_string
-                viewModel.thePlant.value?.water_need = to_water_from_date_string
-            }
-    }
+
     //END WaterToggleGroup
 
 
@@ -446,8 +471,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 viewModel.thePlant.value?.is_hibernate_on = 1
+                binding.groupHibernateData.visibility = View.VISIBLE
             } else {
                 viewModel.thePlant.value?.is_hibernate_on = 0
+                binding.groupHibernateData.visibility = View.GONE
             }
         }
 
