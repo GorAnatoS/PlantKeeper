@@ -32,7 +32,7 @@ class PlantItemCard(private val content: Plant, val plantItemCardListener: OnPla
             }
             //при нажатии на карточку открываем подробное описание растения
             itemView.setOnClickListener{
-                plantItemCardListener.onPlantItemCardClicked(position)
+                plantItemCardListener.onPlantItemCardClicked(content.id)
             }
         }
 

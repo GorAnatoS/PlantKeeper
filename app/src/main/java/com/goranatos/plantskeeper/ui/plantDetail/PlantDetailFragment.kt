@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -13,11 +14,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
+import java.util.*
 
 /*
     Добавляет новые и редактирует имеющийся цветок\растение
@@ -98,7 +101,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         val savePlantToDB = menu?.findItem(R.id.save_plant_to_db)
         savePlantToDB.setOnMenuItemClickListener {
-            //clickSavePlantToDB()
+            onClickOptionMenuSavePlant()
             true
         }
 
@@ -127,6 +130,65 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             }
             .show()
 
+    }
+
+    private fun onClickOptionMenuSavePlant() {
+        if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
+            showWrongInput()
+            Snackbar.make(
+                requireView(),
+                getString(R.string.give_a_name_to_a_plant),
+                Snackbar.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        viewModel.onInsertOrUpdatePlant()
+
+        if (viewModel.isToCreateNewPlant) {
+            Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT).show()
+        } else {
+            Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT).show()
+        }
+
+        hideKeyboard()
+        findNavController().navigateUp()
+    }
+
+
+    // TODO: 12/8/2020 material change
+    private fun showWrongInput() {
+        hideKeyboard()
+
+        val color = binding.editTextTextPlantName.editText?.currentHintTextColor
+        if (binding.editTextTextPlantName.editText?.text.isNullOrEmpty()) binding.editTextTextPlantName.editText?.setHintTextColor(
+            ContextCompat.getColor(requireContext(), R.color.errorColor)
+        )
+        else binding.editTextTextPlantName.editText?.setHintTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                color!!
+            )
+        )
+
+        val mTimerTask =
+            MyTimerTask()
+        val mTimer = Timer()
+        mTimer.schedule(mTimerTask, 850)
+    }
+
+    internal inner class MyTimerTask : TimerTask() {
+        override fun run() {
+            activity?.runOnUiThread {
+                binding.editTextTextPlantName.editText?.setHintTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.textColor
+                    )
+                )
+            }
+        }
     }
 }
 
@@ -278,60 +340,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     }
 /*
 
-    private fun clickSavePlantToDB() {
-        if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
-            showWrongInput()
-            Snackbar.make(
-                requireView(),
-                getString(R.string.give_a_name_to_a_plant),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        } else {
-            if (viewModel.isCreateNewPlant) {
-                uiScope.launch {
-                    binding.apply {
-*//*                        val newPlant = Plant(
-                            0,
-                            editTextTextPlantName.editText?.text.toString(),
-                            editTextTextPlantDescription.text.toString(),
-                            currentPhotoPath,
-                            binding.tvToWaterFromDateVal.text.toString(),
-                            if (binding.switchIsHibernateOn.isChecked) 1 else 0,
-                            null,
-                            null,
-                        )*//*
-                        viewModel?.insertThePlantIntoDB()
-                        //viewModel?.insertPlant(viewModel.thePlant)
-                    }
-                }
-
-                Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT)
-                    .show()
-            } else {
-                uiScope.launch(Dispatchers.IO) {
-
-                    *//* val newPlant = Plant(
-                         plant_id,
-                         binding.editTextTextPlantName.editText?.text.toString(),
-                         binding.editTextTextPlantDescription.text.toString(),
-                         currentPhotoPath,
-                         binding.tvToWaterFromDateVal.text.toString(),
-                         if (binding.switchIsHibernateOn.isChecked) 1 else 0,
-                         null,
-                         null,
-                     )*//*
-
-                    viewModel.updatePlant(viewModel.thePlant.value!!)
-
-                }
-                Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
-                    .show()
-            }
-
-            hideKeyboard()
-            findNavController().navigateUp()
-        }
-    }*/
 
     private fun setDatePickerForStartWatering() {
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
@@ -409,39 +417,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
     }
 
 
-    // TODO: 12/8/2020 material change
-    private fun showWrongInput() {
-        hideKeyboard()
-
-        val color = binding.editTextTextPlantName.editText?.currentHintTextColor
-        if (binding.editTextTextPlantName.editText?.text.isNullOrEmpty()) binding.editTextTextPlantName.editText?.setHintTextColor(
-            ContextCompat.getColor(requireContext(), R.color.errorColor)
-        )
-        else binding.editTextTextPlantName.editText?.setHintTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                color!!
-            )
-        )
-
-        val mTimerTask =
-            MyTimerTask()
-        val mTimer = Timer()
-        mTimer.schedule(mTimerTask, 850)
-    }
-
-    internal inner class MyTimerTask : TimerTask() {
-        override fun run() {
-            activity?.runOnUiThread {
-                binding.editTextTextPlantName.editText?.setHintTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.textColor
-                    )
-                )
-            }
-        }
-    }
 
     private fun bindCreateNewPlant() {
 

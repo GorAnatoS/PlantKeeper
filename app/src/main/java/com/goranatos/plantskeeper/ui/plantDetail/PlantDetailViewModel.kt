@@ -14,8 +14,6 @@ class PlantDetailViewModel(
     private val viewModelJob = Job()
     val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var mPlantId = plantId
-
     var isToCreateNewPlant = false
 
     val thePlant: MutableLiveData<Plant> by lazy {
@@ -24,18 +22,31 @@ class PlantDetailViewModel(
 
     suspend fun getPlant(plantId: Int): Plant {
         return withContext(Dispatchers.IO) {
-             repository.getPlant(plantId)
+            repository.getPlant(plantId)
         }
     }
 
-    suspend fun deletePlant(){
+    suspend fun deletePlant() {
         return withContext(Dispatchers.IO) {
             repository.deletePlant(thePlant.value!!)
         }
     }
 
+    suspend fun insertPlant() {
+        return withContext(Dispatchers.IO) {
+            repository.insertPlant(thePlant.value!!)
+        }
+    }
+
+    suspend fun updatePlant() {
+        return withContext(Dispatchers.IO) {
+            repository.updatePlant(thePlant.value!!)
+        }
+    }
+
+
     fun setPlant() {
-        if (mPlantId == -1) {
+        if (plantId == -1) {
             thePlant.value = Plant(
                 0,
                 null,
@@ -46,12 +57,26 @@ class PlantDetailViewModel(
                 null,
                 null,
             )
-            isToCreateNewPlant = false
+            isToCreateNewPlant = true
         } else {
             uiScope.launch {
-                thePlant.value = getPlant(mPlantId)
+                thePlant.value = getPlant(plantId)
 
-                isToCreateNewPlant = true
+                isToCreateNewPlant = false
+            }
+        }
+    }
+
+    fun onInsertOrUpdatePlant() {
+        uiScope.launch {
+            if (isToCreateNewPlant) {
+                insertPlant()
+                /* Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT)
+                 .show()*/
+            } else {
+                updatePlant()
+                /*Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
+                 .show()*/
             }
         }
     }
