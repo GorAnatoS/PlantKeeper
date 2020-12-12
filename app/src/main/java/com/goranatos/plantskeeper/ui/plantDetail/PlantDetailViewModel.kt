@@ -16,6 +16,8 @@ class PlantDetailViewModel(
 
     private var mPlantId = plantId
 
+    var isToCreateNewPlant = false
+
     val thePlant: MutableLiveData<Plant> by lazy {
         MutableLiveData<Plant>()
     }
@@ -23,6 +25,12 @@ class PlantDetailViewModel(
     suspend fun getPlant(plantId: Int): Plant {
         return withContext(Dispatchers.IO) {
              repository.getPlant(plantId)
+        }
+    }
+
+    suspend fun deletePlant(){
+        return withContext(Dispatchers.IO) {
+            repository.deletePlant(thePlant.value!!)
         }
     }
 
@@ -38,9 +46,12 @@ class PlantDetailViewModel(
                 null,
                 null,
             )
+            isToCreateNewPlant = false
         } else {
             uiScope.launch {
                 thePlant.value = getPlant(mPlantId)
+
+                isToCreateNewPlant = true
             }
         }
     }

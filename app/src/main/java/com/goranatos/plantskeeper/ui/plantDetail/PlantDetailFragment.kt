@@ -2,16 +2,19 @@ package com.goranatos.plantskeeper.ui.plantDetail
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
@@ -75,7 +78,55 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             ).show()
         })
 
+
+        setHasOptionsMenu(true)
+
         return binding.root
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.plant_detail_menu, menu)
+
+        val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
+
+        deleteItemFromDB.setOnMenuItemClickListener {
+            deletePlantItemFromDB()
+            true
+        }
+
+
+        val savePlantToDB = menu?.findItem(R.id.save_plant_to_db)
+        savePlantToDB.setOnMenuItemClickListener {
+            //clickSavePlantToDB()
+            true
+        }
+
+        deleteItemFromDB.isVisible = !viewModel.isToCreateNewPlant
+
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun deletePlantItemFromDB() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.delete_plant_from_db))
+            .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
+            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                // Respond to neutral button press
+            }
+            .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
+                // Respond to positive button press
+                launch(Dispatchers.IO) {
+                    viewModel.deletePlant()
+
+                    Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
+                        .show()
+
+                    findNavController().navigateUp()
+                }
+            }
+            .show()
+
     }
 }
 
@@ -147,7 +198,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         setImageUriListener()
         setToWaterFromDateListener()
 
-        setHasOptionsMenu(true)
+
 
 
      /*   uiScope.launch {
@@ -523,57 +574,8 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
 //END WaterToggleGroup
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.plant_info_menu, menu)
 
 
-        val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
-
-        deleteItemFromDB.setOnMenuItemClickListener {
-            deletePlantItemFromDB()
-            true
-        }
-
-
-        val savePlantToDB = menu?.findItem(R.id.save_plant_to_db)
-      /*  savePlantToDB.setOnMenuItemClickListener {
-            clickSavePlantToDB()
-            true
-        }*/
-
-
-        // TODO: 12/6/2020 сделать название кнопки сохранить или изменить
-        if (viewModel.isCreateNewPlant) {
-            deleteItemFromDB.isVisible = false
-            //savePlantToDB.text = requireContext().getString(R.string.create)
-        } else {
-            //binding.buttonAddAndChange.text = getString(R.string.change)
-        }
-
-        return super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun deletePlantItemFromDB() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.delete_plant_from_db))
-            .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
-            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
-                // Respond to neutral button press
-            }
-            .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
-                // Respond to positive button press
-                launch(Dispatchers.IO) {
-                    viewModel.deletePlant(viewModel.thePlant.value!!)
-
-                    Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
-                        .show()
-
-                    findNavController().navigateUp()
-                }
-            }
-            .show()
-
-    }
 
 //Gallery And Photo functions
 
