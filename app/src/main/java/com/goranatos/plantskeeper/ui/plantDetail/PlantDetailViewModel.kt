@@ -2,11 +2,15 @@ package com.goranatos.plantskeeper.ui.plantDetail
 
 import android.net.Uri
 import android.view.View
+import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
+import com.goranatos.plantskeeper.internal.Time
 import kotlinx.coroutines.*
 
 class PlantDetailViewModel(
@@ -109,6 +113,18 @@ class PlantDetailViewModel(
     //OPTIONS MENU END
 
 
+    fun startDatePicker(title: String, fragmentManager: FragmentManager, textView: TextView){
+        val builder = MaterialDatePicker.Builder.datePicker()
+
+        builder.setTitleText(title)
+        val materialDatePicker = builder.build()
+
+        materialDatePicker.addOnPositiveButtonClickListener {
+            textView.text = Time.getFormattedDateString(it)
+        }
+
+        materialDatePicker.show(fragmentManager, "DATE_PICKER")
+    }
 
 
     /**

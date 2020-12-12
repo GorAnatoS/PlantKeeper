@@ -466,29 +466,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         binding.tvDateHibernateStartFromVal.setOnClickListener {
-            val builder = MaterialDatePicker.Builder.datePicker()
-
-            builder.setTitleText("Режим покоя начинается с")
-            val materialDatePicker = builder.build()
-
-            materialDatePicker.addOnPositiveButtonClickListener {
-                binding.tvDateHibernateStartFromVal.text = Time.getFormattedDateString(it)
-            }
-
-            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
+            viewModel.startDatePicker("Режим покоя начинается с", parentFragmentManager, binding.tvDateHibernateStartFromVal )
         }
 
         binding.tvDateHibernateFinishVal.setOnClickListener {
-            val builder = MaterialDatePicker.Builder.datePicker()
-
-            builder.setTitleText("Режим покоя заканчивается")
-            val materialDatePicker = builder.build()
-
-            materialDatePicker.addOnPositiveButtonClickListener {
-                binding.tvDateHibernateFinishVal.text = Time.getFormattedDateString(it)
-            }
-
-            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
+            viewModel.startDatePicker("Режим покоя заканчивается", parentFragmentManager, binding.tvDateHibernateFinishVal )
         }
     }
 
