@@ -1,6 +1,8 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
@@ -45,7 +47,7 @@ class PlantDetailViewModel(
     }
 
 
-    fun updatePlantName(name: String){
+    fun updatePlantName(name: String) {
         thePlant.value?.name = name
     }
 
@@ -71,6 +73,7 @@ class PlantDetailViewModel(
         }
     }
 
+
     fun onInsertOrUpdatePlant() {
         uiScope.launch {
             if (isToCreateNewPlant) {
@@ -83,5 +86,20 @@ class PlantDetailViewModel(
                  .show()*/
             }
         }
+    }
+
+    /**
+     * If plant.is_hibernate_on == 1 then is checked, 0 - unchecked
+     */
+    val isSwitchHibernateBtnVisible = Transformations.map(thePlant) {
+        it.is_hibernate_on != 0
+    }
+
+    /**
+     * If isSwitchHibernateBtnVisible returns View.VISIBLE for hibernateGroup.visibility
+     */
+    val hibernateGroupVisible = Transformations.map(isSwitchHibernateBtnVisible) {
+        if (it) View.VISIBLE
+        else View.GONE
     }
 }

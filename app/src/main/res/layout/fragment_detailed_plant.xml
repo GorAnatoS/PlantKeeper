@@ -216,17 +216,18 @@
                 android:text="Режим покоя"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription"
-                tools:checked="true" />
+                tools:checked="true"
+                android:checked="@{viewModel.isSwitchHibernateBtnVisible}"/>
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_hibernate_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_half"
-                android:visibility="gone"
                 app:constraint_referenced_ids="tvDateHibernateStartFromVal, tvDateHibernateFinishVal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:visibility="@{viewModel.hibernateGroupVisible}"
                 tools:visibility="visible" />
 
             <TextView

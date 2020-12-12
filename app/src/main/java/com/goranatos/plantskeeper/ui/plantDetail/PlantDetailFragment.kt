@@ -474,9 +474,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     private fun setHibernateSwitch() {
         binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.groupHibernateData.visibility = View.VISIBLE
+                viewModel.thePlant.value?.is_hibernate_on = 1
             } else {
-                binding.groupHibernateData.visibility = View.GONE
+                viewModel.thePlant.value?.is_hibernate_on = 0
             }
         }
 
@@ -505,8 +505,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
             materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
         }
-
-
     }
 
     //END HIBERNATE MODE settings

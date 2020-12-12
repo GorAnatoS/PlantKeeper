@@ -25,7 +25,7 @@ data class Plant(
     val water_need: String?, //для примера - 1\3 - одначает что частота полива 1 раз в день в обычное время и 1 раз в 3 дня в период спячки\зимнее --------- empty or null - not need
 
     @ColumnInfo(name = IS_HIBERNATE_MODE_ON)
-    val is_hibernate_on: Int = 0,
+    var is_hibernate_on: Int = 0,
 
     @ColumnInfo(name = HIBERNATE_MODE_DATE_START)
     val hibernate_mode_date_start: Long?,
