@@ -13,7 +13,7 @@ data class Plant(
     val id: Int,
 
     @ColumnInfo(name = NAME_COLUMN)
-    val name: String?,
+    var name: String?,
 
     @ColumnInfo(name = DESCRIPTION_COLUMN)
     val desc: String?,

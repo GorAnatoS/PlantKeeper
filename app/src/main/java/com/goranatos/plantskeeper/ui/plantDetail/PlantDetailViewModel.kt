@@ -45,6 +45,10 @@ class PlantDetailViewModel(
     }
 
 
+    fun updatePlantName(name: String){
+        thePlant.value?.name = name
+    }
+
     fun setPlant() {
         if (plantId == -1) {
             thePlant.value = Plant(

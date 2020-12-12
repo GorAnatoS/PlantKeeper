@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -81,12 +82,22 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             ).show()
         })
 
+        observeChanges()
 
         setHasOptionsMenu(true)
 
         return binding.root
     }
 
+    private fun observeChanges(){
+
+        binding.editTextTextPlantNameInputText.addTextChangedListener {
+            viewModel.updatePlantName(it.toString())
+        }
+
+
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_detail_menu, menu)
