@@ -11,6 +11,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.internal.Time
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import kotlinx.coroutines.*
 
 class PlantDetailViewModel(
@@ -113,6 +114,9 @@ class PlantDetailViewModel(
     //OPTIONS MENU END
 
 
+    /**
+     * Запускает MaterialDatePicker и менять textView на выборанную дату
+     */
     fun startDatePicker(title: String, fragmentManager: FragmentManager, textView: TextView){
         val builder = MaterialDatePicker.Builder.datePicker()
 
@@ -125,6 +129,16 @@ class PlantDetailViewModel(
 
         materialDatePicker.show(fragmentManager, "DATE_PICKER")
     }
+
+    /**
+     * Для запуска диалога по выбору изображения из коллекции
+     */
+
+    fun toggleSelectImageClicked(fragmentManager: FragmentManager) {
+        val newFragment = SelectPlantImageFromCollectionFragment()
+        newFragment.show(fragmentManager, "dialog")
+    }
+
 
 
     /**

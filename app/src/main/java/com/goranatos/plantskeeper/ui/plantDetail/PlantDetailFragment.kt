@@ -31,7 +31,6 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriCapturedImage
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.IMAGE_URI
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.TO_WATER_FROM_DATE_STRING
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
@@ -200,12 +199,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun setToggleButtons() {
 
-        binding.toggleTakeImage.setOnClickListener {
-            val fragmentManager = parentFragmentManager
-            val newFragment = SelectPlantImageFromCollectionFragment()
-
-            // The device is using a large layout, so show the fragment as a dialog
-            newFragment.show(fragmentManager, "dialog")
+        binding.toggleSelectImage.setOnClickListener {
+            viewModel.toggleSelectImageClicked(parentFragmentManager)
         }
 
         binding.toggleTakePhoto.setOnClickListener {
@@ -437,7 +432,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
 
     //START WaterToggleGroup
-
     private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
         binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             // Respond to button selection
@@ -452,8 +446,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             }
         }
     }
-
     //END WaterToggleGroup
+
 
     //START HIBERNATE MODE settings
     private fun setHibernateSwitch() {
@@ -473,7 +467,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             viewModel.startDatePicker("Режим покоя заканчивается", parentFragmentManager, binding.tvDateHibernateFinishVal )
         }
     }
-
     //END HIBERNATE MODE settings
 
 
