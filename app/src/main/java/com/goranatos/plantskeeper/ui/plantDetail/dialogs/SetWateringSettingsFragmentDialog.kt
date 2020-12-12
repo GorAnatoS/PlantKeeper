@@ -84,12 +84,14 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
     }
 
     override fun dismiss() {
-        super.dismiss()
 
         findNavController().currentBackStackEntry?.savedStateHandle?.set(
             TO_WATER_FROM_DATE_STRING,
             null
         )
+        super.dismiss()
+
+
     }
 
     private fun setHibernateMode() {

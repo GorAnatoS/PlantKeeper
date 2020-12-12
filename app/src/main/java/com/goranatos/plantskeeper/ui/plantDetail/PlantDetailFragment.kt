@@ -2,6 +2,7 @@ package com.goranatos.plantskeeper.ui.plantDetail
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -68,9 +69,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
                 REQUEST_CHOOSE_FROM_GALLERY -> {
                     val selectedUri = data!!.data
-
-                    viewModel.createUriDestinationForImageFile(requireContext())
-
+                    createUriDestinationForImageFile(requireContext())
 
                     if (selectedUri != null) {
                         openCropActivity(selectedUri, uriDestination)
@@ -84,13 +83,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
 
                 REQUEST_IMAGE_CAPTURE -> {
-                    viewModel.createUriDestinationForImageFile(requireContext())
-
+                    createUriDestinationForImageFile(requireContext())
                     openCropActivity(uriCapturedImage, uriDestination)
                 }
 
                 UCrop.REQUEST_CROP -> {
-
                     handleCropResult(data)
                 }
             }
@@ -143,29 +140,26 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             ).show()
         })
 
-        observeChanges()
+        uiSetup()
 
-        setHasOptionsMenu(true)
 
         return binding.root
     }
 
-    private fun observeChanges(){
-
+    private fun uiSetup() {
         setOnPlantNameEditTextChangedListener()
 
-        setToggleButtons()
+        setToggleGroupSelectImageForThePlant()
 
         setImageUriListener()
 
         setDatePickerForStartWatering()
-
         setToWaterFromDateListener()
-
         setToggleGroupToWaterAddOnButtonCheckedListener()
 
         setHibernateSwitch()
 
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -178,7 +172,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             true
         }
 
-
         val savePlantToDB = menu.findItem(R.id.save_plant_to_db)
         savePlantToDB.setOnMenuItemClickListener {
             onClickOptionMenuSavePlant()
@@ -190,14 +183,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun setOnPlantNameEditTextChangedListener() {
-        binding.editTextTextPlantNameInputText.addTextChangedListener {
-            viewModel.updatePlantName(it.toString())
-        }
-    }
-
-    private fun setToggleButtons() {
-
+    private fun setToggleGroupSelectImageForThePlant() {
         binding.toggleSelectImage.setOnClickListener {
             viewModel.toggleSelectImageClicked(parentFragmentManager)
         }
@@ -210,21 +196,16 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 .setItems(items) { dialog, which ->
                     // Respond to item chosen
                     when (which) {
-                        0 -> {
-                            chooseFromGallery()
-                        }
-                        1 -> {
-                            dispatchTakePictureIntentWithPermissionCheck()
-                        }
+                        0 -> chooseFromGallery()
+                        1 -> dispatchTakePictureIntentWithPermissionCheck()
                     }
                 }
                 .show()
         }
-
     }
 
-//Gallery And Photo functions
 
+    //FUNCTIONS FOR SELECTIONG IMAGE OF THE PLANT START
     @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun dispatchTakePictureIntent() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -248,11 +229,30 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
     }
 
+    @Throws(IOException::class)
+    fun createImageFile(context: Context): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            viewModel.thePlant.value?.image_path = absolutePath
+        }
+    }
 
+    fun createUriDestinationForImageFile(context: Context) {
+        uriDestination = createImageFile(context).toUri()
+        viewModel.thePlant.value?.image_path = uriDestination.toString()
+    }
 
+    // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
     private fun openCropActivity(sourceUri: Uri, destinationUri: Uri) {
         UCrop.of(sourceUri, destinationUri)
-           // .withMaxResultSize(maxWidth, maxHeight)
+            // .withMaxResultSize(maxWidth, maxHeight)
             .withAspectRatio(1f, 1f)
             .start(requireContext(), this)
     }
@@ -261,7 +261,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         val resultUri = UCrop.getOutput(data!!)
         binding.plantImage.setImageURI(resultUri)
     }
-
+    //FUNCTIONS FOR SELECTIONG IMAGE OF THE PLANT END
 
 
     override fun onRequestPermissionsResult(
@@ -291,8 +291,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         )
     }
 
-
-
+    //OPTIONS MENU START
     private fun deletePlantItemFromDB() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.delete_plant_from_db))
@@ -338,6 +337,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         hideKeyboard()
         findNavController().navigateUp()
     }
+    //OPTIONS MENU END
 
 
     // TODO: 12/8/2020 material change
@@ -374,6 +374,41 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
     }
 
+    /**
+     * Ожидаем, когда изменится uri изображения
+     */
+    private fun setImageUriListener() {
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
+            ?.observe(viewLifecycleOwner) { uri_string ->
+                binding.plantImage.setImageURI(Uri.parse(uri_string))
+
+                viewModel.thePlant.value?.image_path = uri_string
+            }
+    }
+
+    private fun setOnPlantNameEditTextChangedListener() {
+        binding.editTextTextPlantNameInputText.addTextChangedListener {
+            viewModel.updatePlantName(it.toString())
+        }
+    }
+
+    //START WaterToggleGroup
+    private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
+        binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
+            // Respond to button selection
+            if (isChecked) {
+                val fragmentManager = getParentFragmentManager()
+                val newFragment = SetWateringSettingsFragmentDialog()
+                newFragment.show(fragmentManager, "dialog")
+
+            } else {
+                //binding.tvToWaterFromDateVal.text = null
+                viewModel.thePlant.value?.water_need = null
+            }
+        }
+    }
+
+
     private fun setDatePickerForStartWatering() {
         binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
@@ -399,38 +434,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             TO_WATER_FROM_DATE_STRING
         )
             ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
-                binding.tvToWaterFromDateVal.text = to_water_from_date_string
+                //binding.tvToWaterFromDateVal.text = to_water_from_date_string
                 viewModel.thePlant.value?.water_need = to_water_from_date_string
             }
-    }
-
-    /**
-     * Ожидаем, когда изменится uri изображения
-     */
-    private fun setImageUriListener() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
-            ?.observe(viewLifecycleOwner) { uri_string ->
-                binding.plantImage.setImageURI(Uri.parse(uri_string))
-
-                viewModel.thePlant.value?.image_path = uri_string
-            }
-    }
-
-
-    //START WaterToggleGroup
-    private fun setToggleGroupToWaterAddOnButtonCheckedListener() {
-        binding.toggleGroupToWater.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
-            // Respond to button selection
-            if (isChecked) {
-                val fragmentManager = getParentFragmentManager()
-                val newFragment = SetWateringSettingsFragmentDialog()
-                newFragment.show(fragmentManager, "dialog")
-
-            } else {
-                //binding.tvToWaterFromDateVal.text = null
-                viewModel.thePlant.value?.water_need = null
-            }
-        }
     }
     //END WaterToggleGroup
 
@@ -446,19 +452,20 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         binding.tvDateHibernateStartFromVal.setOnClickListener {
-            viewModel.startDatePicker("Режим покоя начинается с", parentFragmentManager, binding.tvDateHibernateStartFromVal )
+            viewModel.startDatePicker(
+                "Режим покоя начинается с",
+                parentFragmentManager,
+                binding.tvDateHibernateStartFromVal
+            )
         }
 
         binding.tvDateHibernateFinishVal.setOnClickListener {
-            viewModel.startDatePicker("Режим покоя заканчивается", parentFragmentManager, binding.tvDateHibernateFinishVal )
+            viewModel.startDatePicker(
+                "Режим покоя заканчивается",
+                parentFragmentManager,
+                binding.tvDateHibernateFinishVal
+            )
         }
     }
     //END HIBERNATE MODE settings
-
-
-
 }
-
-// TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
-
-// TODO: 12/8/2020 !!!
