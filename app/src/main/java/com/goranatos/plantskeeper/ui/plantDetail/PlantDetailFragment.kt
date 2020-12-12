@@ -1,6 +1,8 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
+import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -15,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +32,21 @@ import java.util.*
  */
 
 class PlantDetailFragment : ScopedFragment(), DIAware {
+
+    companion object {
+
+        //Camera
+        const val REQUEST_IMAGE_CAPTURE = 631
+
+        //selectPicture
+        const val REQUEST_CHOOSE_FROM_GALLERY = 632
+
+        lateinit var uriDestination: Uri
+        lateinit var uriCapturedImage: Uri
+
+        private var formattedDateLong: Long = 0
+    }
+
     override val di by closestDI()
 
     private val args: PlantDetailFragmentArgs by navArgs()
@@ -91,9 +109,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun observeChanges(){
 
-        binding.editTextTextPlantNameInputText.addTextChangedListener {
-            viewModel.updatePlantName(it.toString())
-        }
+        setOnPlantNameEditTextChangedListener()
+
+        setToggleButtons()
 
 
 
@@ -119,6 +137,62 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         deleteItemFromDB.isVisible = !viewModel.isToCreateNewPlant
 
         return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun setOnPlantNameEditTextChangedListener() {
+        binding.editTextTextPlantNameInputText.addTextChangedListener {
+            viewModel.updatePlantName(it.toString())
+        }
+    }
+
+    private fun setToggleButtons() {
+
+        binding.toggleTakeImage.setOnClickListener {
+            val fragmentManager = parentFragmentManager
+            val newFragment = SelectPlantImageFromCollectionFragment()
+
+            // The device is using a large layout, so show the fragment as a dialog
+            newFragment.show(fragmentManager, "dialog")
+
+        }
+
+        binding.toggleTakePhoto.setOnClickListener {
+            val items = arrayOf(getString(R.string.from_gallery), getString(R.string.take_photo))
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(resources.getString(R.string.choose_photo))
+                .setItems(items) { dialog, which ->
+                    // Respond to item chosen
+                    when (which) {
+                        0 -> {
+                            chooseFromGallery()
+                        }
+                        1 -> {
+                            //dispatchTakePictureIntentWithPermissionCheck()
+                        }
+                    }
+                }
+                .show()
+        }
+
+    }
+
+    private fun chooseFromGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+            .setType("image/*")
+            .addCategory(Intent.CATEGORY_OPENABLE)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val mimeTypes = arrayOf("image/jpeg", "image/png")
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+        }
+
+        startActivityForResult(
+            Intent.createChooser(
+                intent,
+                getString(R.string.label_select_picture)
+            ), REQUEST_CHOOSE_FROM_GALLERY
+        )
     }
 
     private fun deletePlantItemFromDB() {
@@ -211,19 +285,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
 @RuntimePermissions
 class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
-    companion object {
 
-        //Camera
-        const val REQUEST_IMAGE_CAPTURE = 631
-
-        //selectPicture
-        const val REQUEST_CHOOSE_FROM_GALLERY = 632
-
-        lateinit var uriDestination: Uri
-        lateinit var uriCapturedImage: Uri
-
-        private var formattedDateLong: Long = 0
-    }
 
 
 
@@ -394,38 +456,6 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
             }
     }
 
-    private fun setToggleButtons() {
-
-        binding.toggleTakeImage.setOnClickListener {
-
-            val fragmentManager = getParentFragmentManager()
-            val newFragment = SelectPlantImageFromCollectionFragment()
-
-            // The device is using a large layout, so show the fragment as a dialog
-            newFragment.show(fragmentManager, "dialog")
-
-        }
-
-        binding.toggleTakePhoto.setOnClickListener {
-            val items = arrayOf(getString(R.string.from_gallery), getString(R.string.take_photo))
-
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(resources.getString(R.string.choose_photo))
-                .setItems(items) { dialog, which ->
-                    // Respond to item chosen
-                    when (which) {
-                        0 -> {
-                            chooseFromGallery()
-                        }
-                        1 -> {
-                            dispatchTakePictureIntentWithPermissionCheck()
-                        }
-                    }
-                }
-                .show()
-        }
-
-    }
 
 
 
@@ -588,23 +618,7 @@ class PlantAddAndInfoFragment : ScopedFragment(), DIAware {
         startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
     }
 
-    private fun chooseFromGallery() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-            .setType("image/*")
-            .addCategory(Intent.CATEGORY_OPENABLE)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val mimeTypes = arrayOf("image/jpeg", "image/png")
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-        }
-
-        startActivityForResult(
-            Intent.createChooser(
-                intent,
-                getString(R.string.label_select_picture)
-            ), REQUEST_CHOOSE_FROM_GALLERY
-        )
-    }
 
     private fun openCropActivity(sourceUri: Uri, destinationUri: Uri) {
         UCrop.of(sourceUri, destinationUri)
