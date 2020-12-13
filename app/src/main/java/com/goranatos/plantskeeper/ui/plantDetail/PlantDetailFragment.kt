@@ -63,9 +63,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     lateinit var binding: FragmentDetailedPlantBinding
 
-
     //special var for firstUse check
-    var isToShowFirstSetWaterSettings  = false
+    var isToShowFirstSetWaterSettings = false
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
@@ -139,15 +138,12 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 binding.tvToWaterFromDateVal.text = plant.water_need
             }
 
-
-
-            if (plant.is_hibernate_on != 0){
+            if (plant.is_hibernate_on != 0) {
                 binding.groupHibernateData.visibility = View.VISIBLE
                 isToShowFirstSetWaterSettings = true
             } else {
                 binding.groupHibernateData.visibility = View.GONE
             }
-
 
             Toast.makeText(
                 requireContext(),
@@ -157,7 +153,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         })
 
         uiSetup()
-
 
         return binding.root
     }
@@ -357,18 +352,19 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         hideKeyboard()
 
         val color = binding.editTextTextPlantName.editText?.currentHintTextColor
-        if (binding.editTextTextPlantName.editText?.text.isNullOrEmpty()) binding.editTextTextPlantName.editText?.setHintTextColor(
-            ContextCompat.getColor(requireContext(), R.color.errorColor)
-        )
-        else binding.editTextTextPlantName.editText?.setHintTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                color!!
+        if (binding.editTextTextPlantName.editText?.text.isNullOrEmpty())
+            binding.editTextTextPlantName.editText?.setHintTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.errorColor
+                )
             )
-        )
+        else
+            binding.editTextTextPlantName.editText?.setHintTextColor(
+                ContextCompat.getColor(requireContext(), color!!)
+            )
 
-        val mTimerTask =
-            MyTimerTask()
+        val mTimerTask = MyTimerTask()
         val mTimer = Timer()
         mTimer.schedule(mTimerTask, 850)
     }
@@ -405,9 +401,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
 
     var tempCheckedtoggleGroupToWater = false
+
     //START WaterToggleGroup
     private fun setToggleGroupWatering() {
-
 
         binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
             // Respond to button selection
@@ -433,9 +429,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         // Ожидаем, когда из диплога выберем следующую дату полива
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(TO_WATER_FROM_DATE_STRING)
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
+            TO_WATER_FROM_DATE_STRING
+        )
             ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
-
 
 
                 if (to_water_from_date_string == "uncheck") {
@@ -447,7 +444,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             }
     }
 
-    
+
     private fun setDatePickerForStartWatering() {
         //binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
