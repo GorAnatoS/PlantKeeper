@@ -66,16 +66,15 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         binding.buttonSave.setOnClickListener {
             isNotSaveResult = false
 
-            findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                TO_WATER_FROM_DATE_STRING,
-                saved_to_water_from_date
-            )
-
+            //я сохраняю данные при onDismiss
             dismiss()
         }
 
         binding.buttonCancel.setOnClickListener {
             dismiss()
+
+            isNotSaveResult = true
+
         }
 
         return binding.root
@@ -101,14 +100,21 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
+
 
         if (isNotSaveResult) {
             findNavController().currentBackStackEntry?.savedStateHandle?.set(
                 TO_WATER_FROM_DATE_STRING,
                 "uncheck"
             )
+        } else {
+            findNavController().currentBackStackEntry?.savedStateHandle?.set(
+                TO_WATER_FROM_DATE_STRING,
+                saved_to_water_from_date
+            )
         }
+
+        super.onDismiss(dialog)
     }
 
     // TODO: 12/8/2020 Проверять вводные значения!

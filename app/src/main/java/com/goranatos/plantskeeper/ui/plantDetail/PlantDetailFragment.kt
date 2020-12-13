@@ -134,9 +134,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
             if (plant?.water_need.isNullOrEmpty())
                 binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-            
-            else
+            else {
                 binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+                binding.tvToWaterFromDateVal.text = plant.water_need
+            }
 
 
 
@@ -435,6 +436,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(TO_WATER_FROM_DATE_STRING)
             ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
 
+
+
                 if (to_water_from_date_string == "uncheck") {
                     binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
                     return@observe
@@ -446,7 +449,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     
     private fun setDatePickerForStartWatering() {
-        binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
+        //binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")

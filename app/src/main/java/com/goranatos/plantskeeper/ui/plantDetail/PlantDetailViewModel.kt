@@ -153,4 +153,8 @@ class PlantDetailViewModel(
         !it.water_need.isNullOrEmpty()
     }
 
+    val toStartWaterFromDate = Transformations.map(thePlant) {
+        it.water_need
+    }
+
 }
