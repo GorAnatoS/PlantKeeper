@@ -22,7 +22,7 @@
             app:layout_constraintTop_toBottomOf="@+id/switchWater">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tvHibernateTitle"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,16 +30,14 @@
                 android:layout_marginTop="8dp"
                 android:text="Настройка режима покоя"
                 app:layout_constraintBottom_toBottomOf="@+id/switchHibernate"
-                app:layout_constraintEnd_toStartOf="@+id/switchHibernate"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
             <TextView
-                android:id="@+id/tvDateStartFrom"
+                android:id="@+id/tvHibernateDateStartFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -50,10 +48,10 @@
                 android:textSize="14sp"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tvHibernateTitle" />
 
             <TextView
-                android:id="@+id/tvDateStartFromVal"
+                android:id="@+id/tvHibernateDateStartFromVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -63,29 +61,27 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDateStartFrom"
-                app:layout_constraintStart_toEndOf="@+id/tvDateStartFrom"
-                app:layout_constraintTop_toTopOf="@+id/tvDateStartFrom" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvHibernateDateStartFrom"
+                app:layout_constraintStart_toEndOf="@+id/tvHibernateDateStartFrom"
+                app:layout_constraintTop_toTopOf="@+id/tvHibernateDateStartFrom" />
 
 
             <TextView
-                android:id="@+id/tvDateFinish"
+                android:id="@+id/tvHibernateDateFinish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:text="Конец"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateStartFrom" />
+                app:layout_constraintTop_toBottomOf="@+id/tvHibernateDateStartFrom" />
 
 
             <TextView
-                android:id="@+id/tvDateFinishVal"
+                android:id="@+id/tvHibernateDateFinishVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -94,9 +90,39 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:drawableStartCompat="@drawable/ic_baseline_pause_24"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDateFinish"
-                app:layout_constraintStart_toStartOf="@+id/tvDateStartFromVal"
-                app:layout_constraintTop_toTopOf="@+id/tvDateFinish" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvHibernateDateFinish"
+                app:layout_constraintStart_toStartOf="@+id/tvHibernateDateStartFromVal"
+                app:layout_constraintTop_toTopOf="@+id/tvHibernateDateFinish" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_cancel"
+                app:layout_constraintTop_toBottomOf="@+id/tvHibernateDateFinish" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/cancel"
+                app:layout_constraintBottom_toBottomOf="@+id/button_save"
+                app:layout_constraintEnd_toStartOf="@+id/button_save"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button_save" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

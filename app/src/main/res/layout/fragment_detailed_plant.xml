@@ -193,6 +193,26 @@
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupToHibernate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal">
+
+                <Button
+                    android:id="@+id/toggleButtonToHibernate"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Режим покоя" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
             <TextView
                 android:id="@+id/tvToWaterFromDateVal"
                 android:layout_width="wrap_content"

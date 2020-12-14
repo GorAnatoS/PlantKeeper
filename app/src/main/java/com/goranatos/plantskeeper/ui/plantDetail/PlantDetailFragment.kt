@@ -32,6 +32,7 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriCapturedImage
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.IMAGE_URI
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernateSettingsFragmentDialog
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.TO_WATER_FROM_DATE_STRING
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
@@ -477,7 +478,30 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
 
     //START HIBERNATE MODE settings
+    var tempCheckedToggleGroupToHibernate = false
     private fun setHibernateSwitch() {
+
+        //NEW
+        binding.toggleGroupToHibernate.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) {
+                tempCheckedToggleGroupToHibernate = true
+                onHibernateModeOn()
+            } else {
+                tempCheckedToggleGroupToHibernate = false
+                onHibernateModeOff()
+            }
+        }
+
+        binding.toggleButtonToHibernate.setOnClickListener {
+            //Проверка на чек при старте, чтобы не было
+            if (tempCheckedToggleGroupToHibernate) {
+                val fragmentManager = parentFragmentManager
+                val newFragment = SetHibernateSettingsFragmentDialog()
+                newFragment.show(fragmentManager, "dialog")
+            }
+        }
+        //END NEW
+
         binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 onHibernateModeOn()
