@@ -14,13 +14,15 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.IncludeHibernateSettingsBinding
 import com.goranatos.plantskeeper.internal.Time
+import java.util.*
 
 
 /**
  * Created by qsufff on 12/7/2020.
  */
 
-const val TO_HIBERNATE_FROM_DATE_STRING = "to_hibernate_from_date_string"
+const val TO_HIBERNATE_FROM_DATE_LONG = "to_hibernate_from_date_long"
+const val TO_HIBERNATE_TILL_DATE_LONG = "to_hibernate_till_date_long"
 
 class SetHibernateSettingsFragmentDialog : DialogFragment() {
 
@@ -30,8 +32,8 @@ class SetHibernateSettingsFragmentDialog : DialogFragment() {
 
     var isNotSaveResult = true
 
-    var saved_to_hibernate_from_date: String = ""
-    var saved_to_hibernate_till_date: String = ""
+    var saved_to_hibernate_from_date_long = 0L
+    var saved_to_hibernate_till_date_long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,35 +48,51 @@ class SetHibernateSettingsFragmentDialog : DialogFragment() {
                 false
             )
 
-        saved_to_hibernate_from_date = Time.getFormattedDateString()
-        binding.tvHibernateDateStartFromVal.text = saved_to_hibernate_from_date
-        binding.tvHibernateDateFinishVal.text = saved_to_hibernate_till_date
+        saved_to_hibernate_from_date_long = Time.getCurrentTimeInMs()
+        binding.tvHibernateDateStartFromVal.text = Time.getFormattedDateString(saved_to_hibernate_from_date_long)
+
+        val calendar : Calendar = Calendar.getInstance()
+        calendar.add(Calendar.MONTH, 4)
+        saved_to_hibernate_till_date_long = calendar.timeInMillis
+        binding.tvHibernateDateFinishVal.text = Time.getFormattedDateString(saved_to_hibernate_till_date_long)
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Режим покоя начинается с")
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            saved_to_hibernate_from_date = Time.getFormattedDateString(it)
-            binding.tvHibernateDateStartFromVal.text = saved_to_hibernate_from_date
+            saved_to_hibernate_from_date_long = it
+            binding.tvHibernateDateStartFromVal.text = Time.getFormattedDateString(saved_to_hibernate_from_date_long)
         }
 
         binding.tvHibernateDateStartFromVal.setOnClickListener {
             materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
         }
 
+        ////////////////////
+
+        val builder2 = MaterialDatePicker.Builder.datePicker()
+        builder2.setTitleText("Режим покоя заканчивается")
+        val materialDatePicker2 = builder2.build()
+
+        materialDatePicker2.addOnPositiveButtonClickListener {
+            saved_to_hibernate_till_date_long = it
+            binding.tvHibernateDateFinishVal.text = Time.getFormattedDateString(saved_to_hibernate_till_date_long)
+        }
+
+        binding.tvHibernateDateFinishVal.setOnClickListener {
+            materialDatePicker2.show(parentFragmentManager, "DATE_PICKER")
+        }
+
         binding.buttonSave.setOnClickListener {
             isNotSaveResult = false
-
             //я сохраняю данные при onDismiss
             dismiss()
         }
 
         binding.buttonCancel.setOnClickListener {
             dismiss()
-
             isNotSaveResult = true
-
         }
 
         return binding.root
@@ -91,13 +109,22 @@ class SetHibernateSettingsFragmentDialog : DialogFragment() {
 
         if (isNotSaveResult) {
             findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                TO_HIBERNATE_FROM_DATE_STRING,
-                "uncheck"
+                TO_HIBERNATE_FROM_DATE_LONG,
+                0L
+            )
+            findNavController().currentBackStackEntry?.savedStateHandle?.set(
+                TO_HIBERNATE_TILL_DATE_LONG,
+                0L
             )
         } else {
             findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                TO_HIBERNATE_FROM_DATE_STRING,
-                saved_to_hibernate_from_date
+                TO_HIBERNATE_FROM_DATE_LONG,
+                saved_to_hibernate_from_date_long
+            )
+
+            findNavController().currentBackStackEntry?.savedStateHandle?.set(
+                TO_HIBERNATE_TILL_DATE_LONG,
+                saved_to_hibernate_till_date_long
             )
         }
 

@@ -163,6 +163,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.tvDateHibernateStartFromVal.text =
             Time.getFormattedDateString(plant.hibernate_mode_date_start!!)
 
+        binding.tvDateHibernateFinishVal.text =
+            Time.getFormattedDateString(plant.hibernate_mode_date_finish!!)
+
         Toast.makeText(
             requireContext(),
             viewModel.thePlant.value.toString() + "\n\n",
@@ -511,24 +514,35 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         // Ожидаем, когда из диплога выберем начало и конец режима сна
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
-            TO_HIBERNATE_FROM_DATE_STRING
-        )
-            ?.observe(viewLifecycleOwner) { to_hibernate_from_date_string ->
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Long>(TO_HIBERNATE_FROM_DATE_LONG)
+            ?.observe(viewLifecycleOwner) { to_hibernate_from_date_long ->
 
-                if (to_hibernate_from_date_string == "uncheck") {
+                if (to_hibernate_from_date_long == 0L) {
                     binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
 
                     onHibernateModeOff()
                     return@observe
                 }
 
-                viewModel.setHibernateModeDateStart(
-                    Time.formattedDateStringToFormattedDateLong(
-                        to_hibernate_from_date_string
-                    )
-                )
-                binding.tvDateHibernateStartFromVal.text = to_hibernate_from_date_string
+                viewModel.setHibernateModeDateStart(to_hibernate_from_date_long)
+                binding.tvDateHibernateStartFromVal.text = Time.getFormattedDateString(to_hibernate_from_date_long)
+
+                onHibernateModeOn()
+            }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Long>(
+            TO_HIBERNATE_TILL_DATE_LONG)
+            ?.observe(viewLifecycleOwner) { saved_to_hibernate_till_date_long ->
+
+                if (saved_to_hibernate_till_date_long == 0L) {
+                    binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
+
+                    onHibernateModeOff()
+                    return@observe
+                }
+
+                viewModel.setHibernateModeDateFinish(saved_to_hibernate_till_date_long)
+                binding.tvDateHibernateFinishVal.text = Time.getFormattedDateString(saved_to_hibernate_till_date_long)
 
                 onHibernateModeOn()
             }

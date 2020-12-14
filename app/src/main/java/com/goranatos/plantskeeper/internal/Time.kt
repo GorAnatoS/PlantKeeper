@@ -10,8 +10,9 @@ import java.util.*
  */
 class Time {
     companion object {
+        private val date: Date = Calendar.getInstance().time
+
         fun formattedDateStringToFormattedDateLong(string: String): Long {
-            val date = Calendar.getInstance().time
             val formatter =
                 SimpleDateFormat.getDateInstance() //or use getDateInstance()
             var formatedDateString = formatter.format(date)
@@ -20,7 +21,6 @@ class Time {
         }
 
         fun getFormattedDateString(): String {
-            val date = Calendar.getInstance().time
             val formatter =
                 SimpleDateFormat.getDateInstance()
             var formatedDateString = formatter.format(date)
@@ -28,13 +28,15 @@ class Time {
         }
 
         fun getFormattedDateString(ms: Long): String {
-            val date = Calendar.getInstance().time
             val formatter =
                 SimpleDateFormat.getDateInstance()
             var formatedDateString = formatter.format(ms)
 
             return formatedDateString
         }
+
+        fun getCurrentTimeInMs(): Long = date.time
+
 
 
     }
