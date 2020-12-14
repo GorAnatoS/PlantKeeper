@@ -19,6 +19,7 @@ const val IMAGE_COLUMN = "image"
 const val IMAGE_PATH_COLUMN = "image_path"
 
 //поливать и т.п. 1 раз во сколько дней?
+const val IS_WATER_NEED_ON_COLUMN = "is_water_need_on"
 const val WATER_NEED_COLUMN = "watering_need"
 const val FERTILIZE_NEED_COLUMN = "fertilization_need"
 const val SPRAY_NEED_COLUMN = "spraying_need"
