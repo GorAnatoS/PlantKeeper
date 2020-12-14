@@ -21,7 +21,6 @@
             app:layout_constraintStart_toStartOf="@+id/switchWater"
             app:layout_constraintTop_toBottomOf="@+id/switchWater">
 
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvTitle"
                 style="@style/TextAppearance.AppCompat.Medium"
@@ -30,11 +29,13 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Настройка режима покоя"
+                app:layout_constraintBottom_toBottomOf="@+id/switchHibernate"
                 app:layout_constraintEnd_toStartOf="@+id/switchHibernate"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
 
             <TextView
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:gravity="center"
                 android:text="Начало"
                 android:textAlignment="center"
                 android:textSize="14sp"
@@ -56,9 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="01.10"
+                android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDateStartFrom"
                 app:layout_constraintStart_toEndOf="@+id/tvDateStartFrom"
                 app:layout_constraintTop_toTopOf="@+id/tvDateStartFrom" />
@@ -79,16 +83,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDateStartFrom" />
 
+
             <TextView
                 android:id="@+id/tvDateFinishVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="1.04"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_baseline_pause_24"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDateFinish"
-                app:layout_constraintEnd_toEndOf="@+id/tvDateStartFromVal"
                 app:layout_constraintStart_toStartOf="@+id/tvDateStartFromVal"
                 app:layout_constraintTop_toTopOf="@+id/tvDateFinish" />
 
