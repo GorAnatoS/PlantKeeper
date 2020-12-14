@@ -19,7 +19,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
@@ -31,10 +30,7 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_IMAGE_CAPTURE
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriCapturedImage
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.IMAGE_URI
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernateSettingsFragmentDialog
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.TO_WATER_FROM_DATE_STRING
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.*
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
@@ -66,6 +62,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     //special var for firstUse check
     var isToShowFirstSetWaterSettings = false
+    var isToShowFirstSetHibernateSettings = false
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
@@ -151,11 +148,20 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             onWaterNeedOff()
         }
 
-        if (plant.is_hibernate_on != 0) {
-            binding.groupHibernateData.visibility = View.VISIBLE
-        } else {
-            binding.groupHibernateData.visibility = View.GONE
+        if (plant.water_need != null) {
+            binding.tvToWaterFromDateVal.text = plant.water_need
         }
+
+        if (plant.is_hibernate_on != 0) {
+            binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
+            onHibernateModeOn()
+        } else {
+            binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
+            onHibernateModeOff()
+        }
+
+        binding.tvDateHibernateStartFromVal.text =
+            Time.getFormattedDateString(plant.hibernate_mode_date_start!!)
 
         Toast.makeText(
             requireContext(),
@@ -163,6 +169,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             Toast.LENGTH_SHORT
         ).show()
     }
+
 
     private fun uiSetup() {
         setOnPlantNameEditTextChangedListener()
@@ -264,7 +271,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     fun createUriDestinationForImageFile(context: Context) {
         uriDestination = createImageFile(context).toUri()
-        viewModel.thePlant.value?.image_path = uriDestination.toString()
+        viewModel.setPlantImageUriString(uriDestination.toString())
     }
 
     // TODO: 12/5/2020 Внешний вид кропа изменить под стиль прилоржения*
@@ -406,24 +413,22 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
     }
 
-    var tempCheckedtoggleGroupToWater = false
-
     //START WaterToggleGroup
+    var tempCheckedToggleGroupToWater = false
     private fun setToggleGroupWatering() {
-
         binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
-                tempCheckedtoggleGroupToWater = true
+                tempCheckedToggleGroupToWater = true
                 onWaterNeedOn()
             } else {
-                tempCheckedtoggleGroupToWater = false
+                tempCheckedToggleGroupToWater = false
                 onWaterNeedOff()
             }
         }
 
         binding.toggleButtonToWater.setOnClickListener {
             //Проверка на чек при старте, чтобы не было
-            if (tempCheckedtoggleGroupToWater) {
+            if (tempCheckedToggleGroupToWater) {
                 val fragmentManager = parentFragmentManager
                 val newFragment = SetWateringSettingsFragmentDialog()
                 newFragment.show(fragmentManager, "dialog")
@@ -435,15 +440,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             TO_WATER_FROM_DATE_STRING
         )
             ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
-
                 if (to_water_from_date_string == "uncheck") {
                     binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-
                     onWaterNeedOff()
-
                     return@observe
                 }
-
                 viewModel.setWaterNeed(to_water_from_date_string)
                 binding.tvToWaterFromDateVal.text = to_water_from_date_string
                 onWaterNeedOn()
@@ -451,6 +452,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
 
     private fun setDatePickerForStartWatering() {
+/*
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
         val materialDatePicker = builder.build()
@@ -459,9 +461,12 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(it)
             viewModel.setWaterNeed(Time.getFormattedDateString(it))
         }
+*/
 
+        // TODO: 12/14/2020  
         binding.tvToWaterFromDateVal.setOnClickListener {
-            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
+//            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
+            viewModel.setDatePickerForStartWatering(parentFragmentManager)
         }
     }
 
@@ -480,14 +485,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     //START HIBERNATE MODE settings
     var tempCheckedToggleGroupToHibernate = false
     private fun setHibernateSwitch() {
-
-        //NEW
         binding.toggleGroupToHibernate.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
-                tempCheckedToggleGroupToHibernate = true
                 onHibernateModeOn()
             } else {
-                tempCheckedToggleGroupToHibernate = false
                 onHibernateModeOff()
             }
         }
@@ -500,41 +501,52 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 newFragment.show(fragmentManager, "dialog")
             }
         }
-        //END NEW
-
-        binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                onHibernateModeOn()
-            } else {
-                onHibernateModeOff()
-            }
-        }
 
         binding.tvDateHibernateStartFromVal.setOnClickListener {
-            viewModel.startDatePicker(
-                "Режим покоя начинается с",
-                parentFragmentManager,
-                binding.tvDateHibernateStartFromVal
-            )
+            viewModel.setStartDatePickerForHibernateMode(parentFragmentManager)
         }
 
         binding.tvDateHibernateFinishVal.setOnClickListener {
-            viewModel.startDatePicker(
-                "Режим покоя заканчивается",
-                parentFragmentManager,
-                binding.tvDateHibernateFinishVal
-            )
+            viewModel.setFinishDatePickerForHibernateMode(parentFragmentManager)
         }
+
+        // Ожидаем, когда из диплога выберем начало и конец режима сна
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
+            TO_HIBERNATE_FROM_DATE_STRING
+        )
+            ?.observe(viewLifecycleOwner) { to_hibernate_from_date_string ->
+
+                if (to_hibernate_from_date_string == "uncheck") {
+                    binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
+
+                    onHibernateModeOff()
+                    return@observe
+                }
+
+                viewModel.setHibernateModeDateStart(
+                    Time.formattedDateStringToFormattedDateLong(
+                        to_hibernate_from_date_string
+                    )
+                )
+                binding.tvDateHibernateStartFromVal.text = to_hibernate_from_date_string
+
+                onHibernateModeOn()
+            }
     }
 
     private fun onHibernateModeOn() {
-        viewModel.setHibernateModeOn()
+        tempCheckedToggleGroupToHibernate = true
         binding.groupHibernateData.visibility = View.VISIBLE
+
+        viewModel.setHibernateModeOn()
     }
 
     private fun onHibernateModeOff() {
-        viewModel.setHibernateModeOff()
+        tempCheckedToggleGroupToHibernate = false
         binding.groupHibernateData.visibility = View.GONE
+
+        viewModel.setHibernateModeOff()
+
     }
     //END HIBERNATE MODE settings
 }

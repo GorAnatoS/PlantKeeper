@@ -3,6 +3,7 @@ package com.goranatos.plantskeeper.ui.plantDetail
 import android.net.Uri
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -35,9 +36,13 @@ class PlantDetailViewModel(
 
     var isToCreateNewPlant = false
 
-    val thePlant: MutableLiveData<Plant> by lazy {
+    private val _thePlant: MutableLiveData<Plant> by lazy {
         MutableLiveData<Plant>()
     }
+    val thePlant: LiveData<Plant>
+        get() = _thePlant
+
+
 
     suspend fun getPlant(plantId: Int): Plant {
         return withContext(Dispatchers.IO) {
@@ -47,30 +52,30 @@ class PlantDetailViewModel(
 
     suspend fun deletePlant() {
         return withContext(Dispatchers.IO) {
-            repository.deletePlant(thePlant.value!!)
+            repository.deletePlant(_thePlant.value!!)
         }
     }
 
     suspend fun insertPlant() {
         return withContext(Dispatchers.IO) {
-            repository.insertPlant(thePlant.value!!)
+            repository.insertPlant(_thePlant.value!!)
         }
     }
 
     suspend fun updatePlant() {
         return withContext(Dispatchers.IO) {
-            repository.updatePlant(thePlant.value!!)
+            repository.updatePlant(_thePlant.value!!)
         }
     }
 
 
     fun updatePlantName(name: String) {
-        thePlant.value?.name = name
+        _thePlant.value?.name = name
     }
 
     fun setPlant() {
         if (plantId == -1) {
-            thePlant.value = Plant(
+            _thePlant.value = Plant(
                 0,
                 null,
                 null,
@@ -84,7 +89,7 @@ class PlantDetailViewModel(
             isToCreateNewPlant = true
         } else {
             uiScope.launch {
-                thePlant.value = getPlant(plantId)
+                _thePlant.value = getPlant(plantId)
 
                 isToCreateNewPlant = false
 
@@ -92,40 +97,56 @@ class PlantDetailViewModel(
         }
     }
 
-    fun setWaterNeedModeOn(){
-        thePlant.value?.is_water_need_on = 1
+    fun setWaterNeedModeOn() {
+        _thePlant.value?.is_water_need_on = 1
     }
-    fun setWaterNeedModeOff(){
-        thePlant.value?.is_water_need_on = 0
+
+    fun setWaterNeedModeOff() {
+        _thePlant.value?.is_water_need_on = 0
     }
-    fun setWaterNeed(to_water_from_date_string : String){
-        thePlant.value?.water_need = to_water_from_date_string
+
+    fun setWaterNeed(to_water_from_date_string: String) {
+        _thePlant.value?.water_need = to_water_from_date_string
+        updateThePlant()
     }
-    fun setHibernateModeOn(){
-        thePlant.value?.is_hibernate_on = 1
+
+    fun setHibernateModeOn() {
+        _thePlant.value?.is_hibernate_on = 1
     }
-    fun setHibernateModeOff(){
-        thePlant.value?.is_hibernate_on = 0
+
+    fun setHibernateModeOff() {
+        _thePlant.value?.is_hibernate_on = 0
     }
-    fun setPlantImageUriString(uri_string: String){
-        thePlant.value?.image_path = uri_string
+
+    fun setHibernateModeDateStart(to_hibernate_from_date_long: Long) {
+        _thePlant.value?.hibernate_mode_date_start = to_hibernate_from_date_long
+        updateThePlant()
     }
-    fun setPlantName(plant_name: String){
-        thePlant.value?.name = plant_name
+
+    fun setHibernateModeDateFinish(to_hibernate_till_date_long: Long) {
+        _thePlant.value?.hibernate_mode_date_finish = to_hibernate_till_date_long
+        updateThePlant()
     }
 
 
+    fun setPlantImageUriString(uri_string: String) {
+        _thePlant.value?.image_path = uri_string
+    }
+
+    fun setPlantName(plant_name: String) {
+        _thePlant.value?.name = plant_name
+    }
+
+    fun updateThePlant(){
+        _thePlant.value = _thePlant.value
+    }
 
     fun onInsertOrUpdatePlant() {
         uiScope.launch {
             if (isToCreateNewPlant) {
                 insertPlant()
-                /* Snackbar.make(requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT)
-                 .show()*/
             } else {
                 updatePlant()
-                /*Snackbar.make(requireView(), getString(R.string.changed), Snackbar.LENGTH_SHORT)
-                 .show()*/
             }
         }
     }
@@ -137,7 +158,7 @@ class PlantDetailViewModel(
     /**
      * Запускает MaterialDatePicker и менять textView на выборанную дату
      */
-    fun startDatePicker(title: String, fragmentManager: FragmentManager, textView: TextView){
+    fun startDatePicker(title: String, fragmentManager: FragmentManager, textView: TextView) {
         val builder = MaterialDatePicker.Builder.datePicker()
 
         builder.setTitleText(title)
@@ -150,6 +171,7 @@ class PlantDetailViewModel(
         materialDatePicker.show(fragmentManager, "DATE_PICKER")
     }
 
+
     /**
      * Для запуска диалога по выбору изображения из коллекции
      */
@@ -159,22 +181,58 @@ class PlantDetailViewModel(
         newFragment.show(fragmentManager, "dialog")
     }
 
-    /**
-     * If plant.is_hibernate_on == 1 then is checked, 0 - unchecked
-     */
-    val isSwitchHibernateBtnVisible = Transformations.map(thePlant) {
-        it.is_hibernate_on != 0
+    fun setDatePickerForStartWatering(fragmentManager: FragmentManager) {
+        val builder = MaterialDatePicker.Builder.datePicker()
+        builder.setTitleText("Поливать с")
+        val materialDatePicker = builder.build()
+
+        materialDatePicker.addOnPositiveButtonClickListener {
+            setWaterNeed(Time.getFormattedDateString(it))
+        }
+
+        materialDatePicker.show(fragmentManager, "DATE_PICKER")
     }
 
-    /**
-     * Если у растения поле water_need не установлено или пусто, то значит кнопка отжата. Иначе - наоборот
-     */
-    val isToggleToWaterChecked = Transformations.map(thePlant) {
-        !it.water_need.isNullOrEmpty()
+    fun setStartDatePickerForHibernateMode(fragmentManager: FragmentManager) {
+        val builder = MaterialDatePicker.Builder.datePicker()
+        builder.setTitleText("Режим покоя начинается с")
+        val materialDatePicker = builder.build()
+
+        materialDatePicker.addOnPositiveButtonClickListener {
+            setHibernateModeDateStart(it)
+        }
+
+        materialDatePicker.show(fragmentManager, "DATE_PICKER")
     }
 
-    val toStartWaterFromDate = Transformations.map(thePlant) {
-        it.water_need
+    fun setFinishDatePickerForHibernateMode(fragmentManager: FragmentManager) {
+        val builder = MaterialDatePicker.Builder.datePicker()
+        builder.setTitleText("Режим покоя заканчивается")
+        val materialDatePicker = builder.build()
+
+        materialDatePicker.addOnPositiveButtonClickListener {
+            setHibernateModeDateFinish(it)
+        }
+
+        materialDatePicker.show(fragmentManager, "DATE_PICKER")
     }
 
 }
+
+///**
+// * If plant.is_hibernate_on == 1 then is checked, 0 - unchecked
+// */
+//val isSwitchHibernateBtnVisible = Transformations.map(_thePlant) {
+//    it.is_hibernate_on != 0
+//}
+//
+///**
+// * Если у растения поле water_need не установлено или пусто, то значит кнопка отжата. Иначе - наоборот
+// */
+//val isToggleToWaterChecked = Transformations.map(_thePlant) {
+//    !it.water_need.isNullOrEmpty()
+//}
+//
+//val toStartWaterFromDate = Transformations.map(_thePlant) {
+//    it.water_need
+//}

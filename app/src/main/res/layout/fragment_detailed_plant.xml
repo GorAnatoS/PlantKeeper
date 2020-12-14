@@ -219,7 +219,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="@{viewModel.toStartWaterFromDate}"
+
                 tools:text="01.04"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
@@ -227,18 +227,7 @@
                 app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
                 app:layout_constraintStart_toStartOf="@+id/toggleGroupToWater"
                 app:layout_constraintTop_toBottomOf="@+id/toggleGroupToWater"/>
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchIsHibernateOn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:checked="@{viewModel.isSwitchHibernateBtnVisible}"
-                android:text="Режим покоя"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPlantDescription"
-                tools:checked="true" />
+<!--            android:text="@{viewModel.toStartWaterFromDate}"-->
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_hibernate_data"
@@ -254,15 +243,14 @@
                 android:id="@+id/tvDateHibernateStartFromVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="01.10"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-                app:layout_constraintStart_toStartOf="@+id/switchIsHibernateOn"
-                app:layout_constraintTop_toBottomOf="@+id/switchIsHibernateOn" />
+                app:layout_constraintStart_toStartOf="@+id/toggleGroupToHibernate"
+                app:layout_constraintTop_toBottomOf="@+id/toggleGroupToHibernate" />
 
             <TextView
                 android:id="@+id/tvDateHibernateFinishVal"
