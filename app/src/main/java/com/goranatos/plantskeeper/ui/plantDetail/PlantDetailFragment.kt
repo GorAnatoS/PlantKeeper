@@ -29,7 +29,6 @@ import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_CHOOSE_FROM_GALLERY
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_IMAGE_CAPTURE
-import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.formattedDateLong
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriCapturedImage
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.IMAGE_URI
@@ -142,12 +141,13 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         if (plant.is_water_need_on != 0) {
-            binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
             isToShowFirstSetWaterSettings = true
-            binding.tvToWaterFromDateVal.visibility = View.VISIBLE
+
+            binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+            onWaterNeedOn()
         } else {
             binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-            binding.tvToWaterFromDateVal.visibility = View.GONE
+            onWaterNeedOff()
         }
 
         if (plant.is_hibernate_on != 0) {
@@ -257,7 +257,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
-            viewModel.thePlant.value?.image_path = absolutePath
+            viewModel.setPlantImageUriString(absolutePath)
         }
     }
 
@@ -395,14 +395,13 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
             ?.observe(viewLifecycleOwner) { uri_string ->
                 binding.plantImage.setImageURI(Uri.parse(uri_string))
-
-                viewModel.thePlant.value?.image_path = uri_string
+                viewModel.setPlantImageUriString(uri_string)
             }
     }
 
     private fun setOnPlantNameEditTextChangedListener() {
         binding.editTextTextPlantNameInputText.addTextChangedListener {
-            viewModel.updatePlantName(it.toString())
+            viewModel.setPlantName(it.toString())
         }
     }
 
@@ -414,11 +413,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
                 tempCheckedtoggleGroupToWater = true
-                viewModel.thePlant.value?.is_water_need_on = 1
+                onWaterNeedOn()
             } else {
-                viewModel.thePlant.value?.is_water_need_on = 0
-                binding.tvToWaterFromDateVal.visibility = View.GONE
                 tempCheckedtoggleGroupToWater = false
+                onWaterNeedOff()
             }
         }
 
@@ -440,29 +438,25 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 if (to_water_from_date_string == "uncheck") {
                     binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
 
-                    viewModel.thePlant.value?.is_water_need_on = 0
-                    binding.tvToWaterFromDateVal.visibility = View.GONE
+                    onWaterNeedOff()
 
                     return@observe
                 }
 
-                viewModel.thePlant.value?.water_need = to_water_from_date_string
-                viewModel.thePlant.value?.is_water_need_on = 1
-                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
+                viewModel.setWaterNeed(to_water_from_date_string)
+                binding.tvToWaterFromDateVal.text = to_water_from_date_string
+                onWaterNeedOn()
             }
     }
 
-
     private fun setDatePickerForStartWatering() {
-        //binding.tvToWaterFromDateVal.text = Time.getFormattedDateString()
-
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
             binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(it)
-            formattedDateLong = it
+            viewModel.setWaterNeed(Time.getFormattedDateString(it))
         }
 
         binding.tvToWaterFromDateVal.setOnClickListener {
@@ -470,7 +464,15 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
     }
 
+    private fun onWaterNeedOn() {
+        binding.tvToWaterFromDateVal.visibility = View.VISIBLE
+        viewModel.setWaterNeedModeOn()
+    }
 
+    private fun onWaterNeedOff() {
+        binding.tvToWaterFromDateVal.visibility = View.GONE
+        viewModel.setWaterNeedModeOff()
+    }
     //END WaterToggleGroup
 
 
@@ -478,11 +480,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     private fun setHibernateSwitch() {
         binding.switchIsHibernateOn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                viewModel.thePlant.value?.is_hibernate_on = 1
-                binding.groupHibernateData.visibility = View.VISIBLE
+                onHibernateModeOn()
             } else {
-                viewModel.thePlant.value?.is_hibernate_on = 0
-                binding.groupHibernateData.visibility = View.GONE
+                onHibernateModeOff()
             }
         }
 
@@ -501,6 +501,16 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 binding.tvDateHibernateFinishVal
             )
         }
+    }
+
+    private fun onHibernateModeOn() {
+        viewModel.setHibernateModeOn()
+        binding.groupHibernateData.visibility = View.VISIBLE
+    }
+
+    private fun onHibernateModeOff() {
+        viewModel.setHibernateModeOff()
+        binding.groupHibernateData.visibility = View.GONE
     }
     //END HIBERNATE MODE settings
 }

@@ -28,7 +28,6 @@ class PlantDetailViewModel(
         lateinit var uriDestination: Uri
         lateinit var uriCapturedImage: Uri
 
-        var formattedDateLong: Long = 0
     }
 
     private val viewModelJob = Job()
@@ -93,6 +92,29 @@ class PlantDetailViewModel(
         }
     }
 
+    fun setWaterNeedModeOn(){
+        thePlant.value?.is_water_need_on = 1
+    }
+    fun setWaterNeedModeOff(){
+        thePlant.value?.is_water_need_on = 0
+    }
+    fun setWaterNeed(to_water_from_date_string : String){
+        thePlant.value?.water_need = to_water_from_date_string
+    }
+    fun setHibernateModeOn(){
+        thePlant.value?.is_hibernate_on = 1
+    }
+    fun setHibernateModeOff(){
+        thePlant.value?.is_hibernate_on = 0
+    }
+    fun setPlantImageUriString(uri_string: String){
+        thePlant.value?.image_path = uri_string
+    }
+    fun setPlantName(plant_name: String){
+        thePlant.value?.name = plant_name
+    }
+
+
 
     fun onInsertOrUpdatePlant() {
         uiScope.launch {
@@ -109,9 +131,6 @@ class PlantDetailViewModel(
     }
 
     //OPTIONS MENU START
-
-
-
     //OPTIONS MENU END
 
 
