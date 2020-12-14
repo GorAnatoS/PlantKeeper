@@ -135,8 +135,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         if (plant.is_water_need_on != 0) {
-//            isToShowFirstSetWaterSettings = true
-
             binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
             onWaterNeedOn()
         } else {
@@ -172,16 +170,12 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun uiSetup() {
         setOnPlantNameEditTextChangedListener()
-
-        setToggleGroupSelectImageForThePlant()
-
         setImageUriListener()
 
-        setDatePickerForStartWatering()
+        setSelectImageForThePlantToggleGroup()
 
-        setToggleGroupWatering()
-
-        setHibernateSwitch()
+        setWaterToggleGroup()
+        setHibernateToggleGroup()
 
         setHasOptionsMenu(true)
     }
@@ -207,7 +201,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun setToggleGroupSelectImageForThePlant() {
+    private fun setSelectImageForThePlantToggleGroup() {
         binding.toggleSelectImage.setOnClickListener {
             viewModel.toggleSelectImageClicked(parentFragmentManager)
         }
@@ -229,7 +223,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
 
 
-    //FUNCTIONS FOR SELECTIONG IMAGE OF THE PLANT START
+    //FUNCTIONS FOR SELECTION IMAGE OF THE PLANT START
     @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun dispatchTakePictureIntent() {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -414,7 +408,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     //START WaterToggleGroup
     var tempCheckedToggleGroupToWater = false
-    private fun setToggleGroupWatering() {
+    private fun setWaterToggleGroup() {
         binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
                 tempCheckedToggleGroupToWater = true
@@ -434,6 +428,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             }
         }
 
+        binding.tvToWaterFromDateVal.setOnClickListener {
+            viewModel.setDatePickerForStartWatering(parentFragmentManager)
+        }
+
         // Ожидаем, когда из диплога выберем следующую дату полива
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
             TO_WATER_FROM_DATE_STRING
@@ -450,25 +448,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             }
     }
 
-    private fun setDatePickerForStartWatering() {
-/*
-        val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setTitleText("Поливать с")
-        val materialDatePicker = builder.build()
-
-        materialDatePicker.addOnPositiveButtonClickListener {
-            binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(it)
-            viewModel.setWaterNeed(Time.getFormattedDateString(it))
-        }
-*/
-
-        // TODO: 12/14/2020  
-        binding.tvToWaterFromDateVal.setOnClickListener {
-//            materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
-            viewModel.setDatePickerForStartWatering(parentFragmentManager)
-        }
-    }
-
     private fun onWaterNeedOn() {
         binding.tvToWaterFromDateVal.visibility = View.VISIBLE
         viewModel.setWaterNeedModeOn()
@@ -483,7 +462,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     //START HIBERNATE MODE settings
     var tempCheckedToggleGroupToHibernate = false
-    private fun setHibernateSwitch() {
+    private fun setHibernateToggleGroup() {
         binding.toggleGroupToHibernate.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
                 onHibernateModeOn()
