@@ -218,7 +218,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-
                 tools:text="01.04"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
@@ -227,6 +226,35 @@
                 app:layout_constraintStart_toStartOf="@+id/toggleGroupToWater"
                 app:layout_constraintTop_toBottomOf="@+id/toggleGroupToWater"/>
 <!--            android:text="@{viewModel.toStartWaterFromDate}"-->
+
+            <TextView
+                android:id="@+id/tvWateringFrequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                tools:text=" 1 "
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_baseline_cached_24"
+                app:layout_constraintStart_toStartOf="@+id/toggleGroupToWater"
+                app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal"/>
+
+            <TextView
+                android:id="@+id/tvWateringFrequencyInHibernate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
+                app:layout_constraintStart_toEndOf="@+id/tvWateringFrequency"
+                app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
+                tools:text=" 1 " />
+
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_hibernate_data"
@@ -256,15 +284,15 @@
                 android:id="@+id/tvDateHibernateFinishVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:text="01.04"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:drawableStartCompat="@drawable/ic_baseline_pause_24"
-                app:layout_constraintStart_toStartOf="@+id/tvDateHibernateStartFromVal"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateHibernateStartFromVal" />
+                app:layout_constraintStart_toEndOf="@+id/tvDateHibernateStartFromVal"
+                app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
