@@ -142,8 +142,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             onWaterNeedOff()
         }
 
-        if (plant.water_need != null) {
-            binding.tvToWaterFromDateVal.text = plant.water_need
+        if (plant.long_to_water_from_date != null) {
+            binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(plant.long_to_water_from_date!!)
         }
 
         if (plant.is_hibernate_on != 0) {
@@ -155,10 +155,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         binding.tvDateHibernateStartFromVal.text =
-            Time.getFormattedDateString(plant.hibernate_mode_date_start!!)
+            plant.long_to_hibernate_from_date?.let { Time.getFormattedDateString(it) }
 
         binding.tvDateHibernateFinishVal.text =
-            Time.getFormattedDateString(plant.hibernate_mode_date_finish!!)
+            plant.long_to_hibernate_till_date?.let { Time.getFormattedDateString(it) }
 
         Toast.makeText(
             requireContext(),
@@ -433,17 +433,17 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         // Ожидаем, когда из диплога выберем следующую дату полива
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Long>(
             TO_WATER_FROM_DATE_STRING
         )
-            ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
-                if (to_water_from_date_string == "uncheck") {
+            ?.observe(viewLifecycleOwner) { long_to_water_from_date ->
+                if (long_to_water_from_date == 0L) {
                     binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
                     onWaterNeedOff()
                     return@observe
                 }
-                viewModel.setWaterNeed(to_water_from_date_string)
-                binding.tvToWaterFromDateVal.text = to_water_from_date_string
+                viewModel.setWaterNeed(long_to_water_from_date)
+                binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(long_to_water_from_date)
                 onWaterNeedOn()
             }
     }

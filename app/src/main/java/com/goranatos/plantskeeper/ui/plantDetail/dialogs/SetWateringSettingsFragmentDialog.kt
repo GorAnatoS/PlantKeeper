@@ -28,9 +28,9 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
     lateinit var binding: IncludePlantWateringSettingsBinding
 
-    var isNotSaveResult = true
+    var long_saved_to_water_from_date: Long = 0L
 
-    var saved_to_water_from_date: String = ""
+    var isNotSaveResult = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,16 +47,16 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
         setHibernateMode()
 
-        saved_to_water_from_date = Time.getFormattedDateString()
-        binding.tvToWaterFromDateVal.text = saved_to_water_from_date
+        long_saved_to_water_from_date = Time.getCurrentTimeInMs()
+        binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(long_saved_to_water_from_date)
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            saved_to_water_from_date = Time.getFormattedDateString(it)
-            binding.tvToWaterFromDateVal.text = saved_to_water_from_date
+            long_saved_to_water_from_date = it
+            binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(long_saved_to_water_from_date)
         }
 
         binding.tvToWaterFromDateVal.setOnClickListener {
@@ -105,12 +105,12 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         if (isNotSaveResult) {
             findNavController().currentBackStackEntry?.savedStateHandle?.set(
                 TO_WATER_FROM_DATE_STRING,
-                "uncheck"
+                0L
             )
         } else {
             findNavController().currentBackStackEntry?.savedStateHandle?.set(
                 TO_WATER_FROM_DATE_STRING,
-                saved_to_water_from_date
+                long_saved_to_water_from_date
             )
         }
 

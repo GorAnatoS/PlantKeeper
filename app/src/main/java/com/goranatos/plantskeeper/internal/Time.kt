@@ -1,6 +1,5 @@
 package com.goranatos.plantskeeper.internal
 
-import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,24 +14,20 @@ class Time {
         fun formattedDateStringToFormattedDateLong(string: String): Long {
             val formatter =
                 SimpleDateFormat.getDateInstance() //or use getDateInstance()
-            var formatedDateString = formatter.format(date)
-            var formatedDateLong = formatter.parse(formatedDateString).time
-            return formatedDateLong
+            val formatedDateString = formatter.format(date)
+            return formatter.parse(formatedDateString).time
         }
 
         fun getFormattedDateString(): String {
             val formatter =
                 SimpleDateFormat.getDateInstance()
-            var formatedDateString = formatter.format(date)
-            return formatedDateString
+            return formatter.format(date)
         }
 
         fun getFormattedDateString(ms: Long): String {
             val formatter =
                 SimpleDateFormat.getDateInstance()
-            var formatedDateString = formatter.format(ms)
-
-            return formatedDateString
+            return formatter.format(ms)
         }
 
         fun getCurrentTimeInMs(): Long = date.time

@@ -25,15 +25,14 @@ data class Plant(
     var is_water_need_on: Int = 0, //0-нет, 1-да
 
     @ColumnInfo(name = WATER_NEED_COLUMN)
-    var water_need: String?, //для примера - 1\3 - одначает что частота полива 1 раз в день в обычное время и 1 раз в 3 дня в период спячки\зимнее --------- empty or null - not need
-
+    var long_to_water_from_date: Long?, //для примера - 1\3 - одначает что частота полива 1 раз в день в обычное время и 1 раз в 3 дня в период спячки\зимнее --------- empty or null - not need
 
     @ColumnInfo(name = IS_HIBERNATE_MODE_ON)
     var is_hibernate_on: Int = 0,
     @ColumnInfo(name = HIBERNATE_MODE_DATE_START)
-    var hibernate_mode_date_start: Long?,
+    var long_to_hibernate_from_date: Long?,
     @ColumnInfo(name = HIBERNATE_MODE_DATE_FINISH)
-    var hibernate_mode_date_finish: Long?,
+    var long_to_hibernate_till_date: Long?,
 
 // TODO: 12/7/2020 + дата начинать полив с х числа + дата начало периода спячки + дата конец периода спячки + режим спячки есть ? булеан 
 )

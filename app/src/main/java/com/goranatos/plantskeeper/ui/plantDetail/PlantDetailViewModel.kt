@@ -5,7 +5,6 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.data.entity.Plant
@@ -105,8 +104,8 @@ class PlantDetailViewModel(
         _thePlant.value?.is_water_need_on = 0
     }
 
-    fun setWaterNeed(to_water_from_date_string: String) {
-        _thePlant.value?.water_need = to_water_from_date_string
+    fun setWaterNeed(long_to_water_from_date: Long) {
+        _thePlant.value?.long_to_water_from_date = long_to_water_from_date
         updateThePlant()
     }
 
@@ -119,12 +118,12 @@ class PlantDetailViewModel(
     }
 
     fun setHibernateModeDateStart(to_hibernate_from_date_long: Long) {
-        _thePlant.value?.hibernate_mode_date_start = to_hibernate_from_date_long
+        _thePlant.value?.long_to_hibernate_from_date = to_hibernate_from_date_long
         updateThePlant()
     }
 
     fun setHibernateModeDateFinish(to_hibernate_till_date_long: Long) {
-        _thePlant.value?.hibernate_mode_date_finish = to_hibernate_till_date_long
+        _thePlant.value?.long_to_hibernate_till_date = to_hibernate_till_date_long
         updateThePlant()
     }
 
@@ -187,7 +186,7 @@ class PlantDetailViewModel(
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            setWaterNeed(Time.getFormattedDateString(it))
+            setWaterNeed(it)
         }
 
         materialDatePicker.show(fragmentManager, "DATE_PICKER")
