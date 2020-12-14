@@ -60,10 +60,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     lateinit var binding: FragmentDetailedPlantBinding
 
-    //special var for firstUse check
-    var isToShowFirstSetWaterSettings = false
-    var isToShowFirstSetHibernateSettings = false
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
@@ -139,7 +135,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         if (plant.is_water_need_on != 0) {
-            isToShowFirstSetWaterSettings = true
+//            isToShowFirstSetWaterSettings = true
 
             binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
             onWaterNeedOn()

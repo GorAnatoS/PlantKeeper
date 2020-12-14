@@ -199,9 +199,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal">
+                app:layout_constraintStart_toEndOf="@+id/toggleGroupToWater"
+                app:layout_constraintTop_toTopOf="@+id/toggleGroupToWater">
 
                 <Button
                     android:id="@+id/toggleButtonToHibernate"
@@ -243,6 +242,7 @@
                 android:id="@+id/tvDateHibernateStartFromVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="01.10"
                 android:textAlignment="center"
