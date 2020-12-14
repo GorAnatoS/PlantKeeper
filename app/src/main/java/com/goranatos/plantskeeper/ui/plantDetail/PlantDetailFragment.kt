@@ -23,6 +23,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
 import com.goranatos.plantskeeper.internal.Time
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
@@ -119,42 +120,47 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.viewModel = viewModel
 
         viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
-
-            binding.groupContent.visibility = View.VISIBLE
-            binding.groupLoading.visibility = View.GONE
-
-            if (plant?.image_path != null) {
-                binding.plantImage.setImageURI(Uri.parse(plant.image_path))
-            }
-
-            if (plant?.desc != null) {
-                binding.editTextTextPlantDescription.setText(plant.desc.toString())
-            }
-
-            if (plant?.water_need.isNullOrEmpty())
-                binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-            else {
-                binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
-                binding.tvToWaterFromDateVal.text = plant.water_need
-            }
-
-            if (plant.is_hibernate_on != 0) {
-                binding.groupHibernateData.visibility = View.VISIBLE
-                isToShowFirstSetWaterSettings = true
-            } else {
-                binding.groupHibernateData.visibility = View.GONE
-            }
-
-            Toast.makeText(
-                requireContext(),
-                viewModel.thePlant.value.toString() + "\n\n",
-                Toast.LENGTH_SHORT
-            ).show()
+            setUIforPlant(plant)
         })
 
         uiSetup()
 
         return binding.root
+    }
+
+    //При получении Растения настраиваем элементы UI
+    private fun setUIforPlant(plant: Plant) {
+        binding.groupContent.visibility = View.VISIBLE
+        binding.groupLoading.visibility = View.GONE
+
+        if (plant.image_path != null) {
+            binding.plantImage.setImageURI(Uri.parse(plant.image_path))
+        }
+
+        if (plant.desc != null) {
+            binding.editTextTextPlantDescription.setText(plant.desc.toString())
+        }
+
+        if (plant.is_water_need_on != 0) {
+            binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+            isToShowFirstSetWaterSettings = true
+            binding.tvToWaterFromDateVal.visibility = View.VISIBLE
+        } else {
+            binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+            binding.tvToWaterFromDateVal.visibility = View.GONE
+        }
+
+        if (plant.is_hibernate_on != 0) {
+            binding.groupHibernateData.visibility = View.VISIBLE
+        } else {
+            binding.groupHibernateData.visibility = View.GONE
+        }
+
+        Toast.makeText(
+            requireContext(),
+            viewModel.thePlant.value.toString() + "\n\n",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun uiSetup() {
@@ -406,25 +412,22 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     private fun setToggleGroupWatering() {
 
         binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
-            // Respond to button selection
             if (isChecked) {
                 tempCheckedtoggleGroupToWater = true
+                viewModel.thePlant.value?.is_water_need_on = 1
             } else {
-                //binding.tvToWaterFromDateVal.text = null
-                viewModel.thePlant.value?.water_need = null
+                viewModel.thePlant.value?.is_water_need_on = 0
                 binding.tvToWaterFromDateVal.visibility = View.GONE
                 tempCheckedtoggleGroupToWater = false
             }
         }
 
         binding.toggleButtonToWater.setOnClickListener {
+            //Проверка на чек при старте, чтобы не было
             if (tempCheckedtoggleGroupToWater) {
-
-                val fragmentManager = getParentFragmentManager()
+                val fragmentManager = parentFragmentManager
                 val newFragment = SetWateringSettingsFragmentDialog()
                 newFragment.show(fragmentManager, "dialog")
-
-                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
             }
         }
 
@@ -434,13 +437,18 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         )
             ?.observe(viewLifecycleOwner) { to_water_from_date_string ->
 
-
                 if (to_water_from_date_string == "uncheck") {
                     binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+
+                    viewModel.thePlant.value?.is_water_need_on = 0
+                    binding.tvToWaterFromDateVal.visibility = View.GONE
+
                     return@observe
                 }
 
                 viewModel.thePlant.value?.water_need = to_water_from_date_string
+                viewModel.thePlant.value?.is_water_need_on = 1
+                binding.tvToWaterFromDateVal.visibility = View.VISIBLE
             }
     }
 

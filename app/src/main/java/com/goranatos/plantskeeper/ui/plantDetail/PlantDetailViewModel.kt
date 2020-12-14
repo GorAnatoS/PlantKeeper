@@ -76,6 +76,7 @@ class PlantDetailViewModel(
                 null,
                 null,
                 "android.resource://com.goranatos.plantskeeper/drawable/ic_plant1",
+                0,
                 null,
                 0,
                 null,

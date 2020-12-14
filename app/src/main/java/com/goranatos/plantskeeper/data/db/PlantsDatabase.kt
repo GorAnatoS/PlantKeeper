@@ -39,28 +39,12 @@ const val START_REPLANT_FROM_COLUMN = "to_replant_from"
 const val START_CUT_FROM_COLUMN = "to_cut_from"
 const val START_TURN_FROM_COLUMN = "to_turn_from"
 
-const val DATABASE_VERSION = 3
+const val DATABASE_VERSION = 4
 
 @Database(entities = [Plant::class], version = DATABASE_VERSION)
 abstract class PlantsDatabase : RoomDatabase() {
 
     abstract fun plantsDatabaseDao(): PlantsDatabaseDao
-
-    //MIGRATION
-/*
-    val MIGRATION_1_2: Migration = object : Migration(1, 2) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL(
-                "ALTER TABLE Plants_database "
-                        + " ADD COLUMN is_hibernate_mode_on BOOLEAN"
-            )
-
-            *//*database.execSQL(
-                "ALTER TABLE $TABLE_NAME "
-                        + " ADD COLUMN $IS_HIBERNATE_MODE_ON BOOLEAN"
-            )*//*
-        }
-    }*/
 
     companion object {
 
@@ -104,6 +88,14 @@ abstract class PlantsDatabase : RoomDatabase() {
                         }
                     }
 
+                    val MIGRATION_3_4 : Migration = object : Migration(3, 4) {
+                        override fun migrate(database: SupportSQLiteDatabase) {
+                            database.execSQL(
+                                "ALTER TABLE $TABLE_NAME ADD COLUMN $IS_HIBERNATE_MODE_ON INTEGER DEFAULT 0 NOT NULL"
+                            )
+                        }
+                    }
+
 
                     instance = Room.databaseBuilder(
                         context.applicationContext,
@@ -111,6 +103,7 @@ abstract class PlantsDatabase : RoomDatabase() {
                         DATABASE_NAME)
                         .addMigrations(MIGRATION_1_2)
                         .addMigrations(MIGRATION_2_3)
+                        .addMigrations(MIGRATION_3_4)
                         .build()
                 }
 
