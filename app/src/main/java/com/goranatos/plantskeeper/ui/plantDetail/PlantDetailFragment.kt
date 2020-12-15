@@ -331,8 +331,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     private fun onClickOptionMenuSavePlant() {
         if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
             binding.editTextTextPlantName.error = "Назовите растение"
-            resetWrongInput()
             return
+        } else {
+            binding.editTextTextPlantName.isErrorEnabled = false
         }
 
         viewModel.onInsertOrUpdatePlant()
@@ -347,20 +348,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         findNavController().navigateUp()
     }
     //OPTIONS MENU END
-
-    private fun resetWrongInput() {
-        val mTimerTask = MyTimerTaskCheckPlantName()
-        val mTimer = Timer()
-        mTimer.schedule(mTimerTask, 1000)
-    }
-
-    internal inner class MyTimerTaskCheckPlantName : TimerTask() {
-        override fun run() {
-            activity?.runOnUiThread {
-               binding.editTextTextPlantName.error = null
-            }
-        }
-    }
 
     /**
      * Ожидаем, когда изменится uri изображения
