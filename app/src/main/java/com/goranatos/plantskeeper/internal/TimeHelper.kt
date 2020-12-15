@@ -7,7 +7,7 @@ import java.util.*
 /**
  Класс для работы с временными функциями
  */
-class Time {
+class TimeHelper {
     companion object {
         private val date: Date = Calendar.getInstance().time
 
@@ -31,8 +31,6 @@ class Time {
         }
 
         fun getCurrentTimeInMs(): Long = date.time
-
-
 
     }
 }

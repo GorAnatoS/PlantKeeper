@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
-import com.goranatos.plantskeeper.internal.Time
+import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageFromCollectionFragment
 import kotlinx.coroutines.*
 
@@ -165,7 +165,7 @@ class PlantDetailViewModel(
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            textView.text = Time.getFormattedDateString(it)
+            textView.text = TimeHelper.getFormattedDateString(it)
         }
 
         materialDatePicker.show(fragmentManager, "DATE_PICKER")

@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.IncludePlantWateringSettingsBinding
-import com.goranatos.plantskeeper.internal.Time
+import com.goranatos.plantskeeper.internal.TimeHelper
 
 
 /**
@@ -54,8 +54,8 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         setHibernateMode()
         setEditTextListeners()
 
-        long_saved_to_water_from_date = Time.getCurrentTimeInMs()
-        binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(long_saved_to_water_from_date)
+        long_saved_to_water_from_date = TimeHelper.getCurrentTimeInMs()
+        binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(long_saved_to_water_from_date)
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
@@ -63,7 +63,7 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
         materialDatePicker.addOnPositiveButtonClickListener {
             long_saved_to_water_from_date = it
-            binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(long_saved_to_water_from_date)
+            binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(long_saved_to_water_from_date)
         }
 
         binding.tvToWaterFromDateVal.setOnClickListener {

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.IncludeHibernateSettingsBinding
-import com.goranatos.plantskeeper.internal.Time
+import com.goranatos.plantskeeper.internal.TimeHelper
 import java.util.*
 
 
@@ -48,13 +48,13 @@ class SetHibernateSettingsFragmentDialog : DialogFragment() {
                 false
             )
 
-        saved_to_hibernate_from_date_long = Time.getCurrentTimeInMs()
-        binding.tvHibernateDateStartFromVal.text = Time.getFormattedDateString(saved_to_hibernate_from_date_long)
+        saved_to_hibernate_from_date_long = TimeHelper.getCurrentTimeInMs()
+        binding.tvHibernateDateStartFromVal.text = TimeHelper.getFormattedDateString(saved_to_hibernate_from_date_long)
 
         val calendar : Calendar = Calendar.getInstance()
         calendar.add(Calendar.MONTH, 4)
         saved_to_hibernate_till_date_long = calendar.timeInMillis
-        binding.tvHibernateDateFinishVal.text = Time.getFormattedDateString(saved_to_hibernate_till_date_long)
+        binding.tvHibernateDateFinishVal.text = TimeHelper.getFormattedDateString(saved_to_hibernate_till_date_long)
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Режим покоя начинается с")
@@ -62,7 +62,7 @@ class SetHibernateSettingsFragmentDialog : DialogFragment() {
 
         materialDatePicker.addOnPositiveButtonClickListener {
             saved_to_hibernate_from_date_long = it
-            binding.tvHibernateDateStartFromVal.text = Time.getFormattedDateString(saved_to_hibernate_from_date_long)
+            binding.tvHibernateDateStartFromVal.text = TimeHelper.getFormattedDateString(saved_to_hibernate_from_date_long)
         }
 
         binding.tvHibernateDateStartFromVal.setOnClickListener {
@@ -77,7 +77,7 @@ class SetHibernateSettingsFragmentDialog : DialogFragment() {
 
         materialDatePicker2.addOnPositiveButtonClickListener {
             saved_to_hibernate_till_date_long = it
-            binding.tvHibernateDateFinishVal.text = Time.getFormattedDateString(saved_to_hibernate_till_date_long)
+            binding.tvHibernateDateFinishVal.text = TimeHelper.getFormattedDateString(saved_to_hibernate_till_date_long)
         }
 
         binding.tvHibernateDateFinishVal.setOnClickListener {

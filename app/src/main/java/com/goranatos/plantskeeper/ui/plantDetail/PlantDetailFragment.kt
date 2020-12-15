@@ -24,7 +24,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.FragmentDetailedPlantBinding
-import com.goranatos.plantskeeper.internal.Time
+import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_CHOOSE_FROM_GALLERY
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_IMAGE_CAPTURE
@@ -143,7 +143,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         if (plant.long_to_water_from_date != null) {
-            binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(plant.long_to_water_from_date!!)
+            binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
         }
 
         if (plant.is_hibernate_on != 0) {
@@ -155,10 +155,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
 
         binding.tvDateHibernateStartFromVal.text =
-            plant.long_to_hibernate_from_date?.let { Time.getFormattedDateString(it) }
+            plant.long_to_hibernate_from_date?.let { TimeHelper.getFormattedDateString(it) }
 
         binding.tvDateHibernateFinishVal.text =
-            plant.long_to_hibernate_till_date?.let { Time.getFormattedDateString(it) }
+            plant.long_to_hibernate_till_date?.let { TimeHelper.getFormattedDateString(it) }
 
         Toast.makeText(
             requireContext(),
@@ -443,7 +443,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                     return@observe
                 }
                 viewModel.setWaterNeed(long_to_water_from_date)
-                binding.tvToWaterFromDateVal.text = Time.getFormattedDateString(long_to_water_from_date)
+                binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(long_to_water_from_date)
                 onWaterNeedOn()
             }
     }
@@ -500,7 +500,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
 
                 viewModel.setHibernateModeDateStart(to_hibernate_from_date_long)
-                binding.tvDateHibernateStartFromVal.text = Time.getFormattedDateString(to_hibernate_from_date_long)
+                binding.tvDateHibernateStartFromVal.text = TimeHelper.getFormattedDateString(to_hibernate_from_date_long)
 
                 onHibernateModeOn()
             }
@@ -517,7 +517,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
 
                 viewModel.setHibernateModeDateFinish(saved_to_hibernate_till_date_long)
-                binding.tvDateHibernateFinishVal.text = Time.getFormattedDateString(saved_to_hibernate_till_date_long)
+                binding.tvDateHibernateFinishVal.text = TimeHelper.getFormattedDateString(saved_to_hibernate_till_date_long)
 
                 onHibernateModeOn()
             }
