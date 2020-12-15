@@ -371,12 +371,12 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 ContextCompat.getColor(requireContext(), color!!)
             )
 
-        val mTimerTask = MyTimerTask()
+        val mTimerTask = MyTimerTaskCheckPlantName()
         val mTimer = Timer()
         mTimer.schedule(mTimerTask, 850)
     }
 
-    internal inner class MyTimerTask : TimerTask() {
+    internal inner class MyTimerTaskCheckPlantName : TimerTask() {
         override fun run() {
             activity?.runOnUiThread {
                 binding.editTextTextPlantName.editText?.setHintTextColor(

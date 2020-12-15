@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -16,6 +17,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.databinding.IncludePlantWateringSettingsBinding
 import com.goranatos.plantskeeper.internal.TimeHelper
+import java.util.*
 
 
 /**
@@ -71,10 +73,15 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         }
 
         binding.buttonSave.setOnClickListener {
-            isNotSaveResult = false
-            //я сохраняю данные при onDismiss
-            
-            dismiss()
+            if (areCheckedInputsOk()) {
+                isNotSaveResult = false
+                //я сохраняю данные при onDismiss
+                dismiss()
+            } else {
+                val mTimerTask = MyTimerTaskCheckFrequency()
+                val mTimer = Timer()
+                mTimer.schedule(mTimerTask, 850)
+            }
         }
 
         binding.buttonCancel.setOnClickListener {
@@ -119,10 +126,16 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         binding.groupWateringInHibernateMode.visibility = View.GONE
     }
 
-    fun checkInputs(): Boolean{
-        if (binding.etWateringFrequencyNormal.editableText.isNullOrEmpty()) return false
+    private fun areCheckedInputsOk(): Boolean{
+        if (binding.etWateringFrequencyNormal.editableText.isNullOrEmpty()) {
+            binding.etWateringFrequencyNormal.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
+            return false
+        }
         if (binding.switchHibernate.isChecked){
-            if (binding.etWateringFrequencyInHibernate.editableText.isNullOrEmpty()) return false
+            if (binding.etWateringFrequencyInHibernate.editableText.isNullOrEmpty()) {
+                binding.etWateringFrequencyInHibernate.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
+                return false
+            }
         }
         return true
     }
@@ -154,5 +167,13 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
     }
 
     // TODO: 12/8/2020 Проверять вводные значения!
+    internal inner class MyTimerTaskCheckFrequency : TimerTask() {
+        override fun run() {
+            activity?.runOnUiThread {
+                binding.etWateringFrequencyNormal.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+                binding.etWateringFrequencyInHibernate.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+            }
+        }
+    }
 }
 // TODO: 12/15/2020 textChecker in another class + Timer 

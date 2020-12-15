@@ -79,32 +79,20 @@
             android:id="@+id/group_watering_normal_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnce, etWateringFrequencyNormal, textViewDays" />
+            app:constraint_referenced_ids="textViewToWaterOnce, textViewDays, etLayoutWateringFrequencyNormal" />
 
         <TextView
             android:id="@+id/textViewToWaterOnce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="Поливать один раз в "
-            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyNormal"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/tvToStartWaterFrom"
-            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyNormal" />
-
-
-        <EditText
-            android:id="@+id/etWateringFrequencyNormal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:ems="3"
-            android:gravity="center"
-            android:hint="2"
-            android:inputType="numberSigned"
-            app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnce"
-            app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal" />
+            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyNormal"
+            app:layout_constraintEnd_toStartOf="@+id/etLayoutWateringFrequencyNormal"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyNormal" />
 
         <TextView
             android:id="@+id/textViewDays"
@@ -112,16 +100,38 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="дня"
-            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyNormal"
-            app:layout_constraintStart_toEndOf="@+id/etWateringFrequencyNormal"
-            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyNormal" />
+            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyNormal"
+            app:layout_constraintStart_toEndOf="@+id/etLayoutWateringFrequencyNormal"
+            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyNormal" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayoutWateringFrequencyNormal"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:hint="@string/int_2_days"
+            app:layout_constraintEnd_toStartOf="@+id/textViewDays"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnce"
+            app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etWateringFrequencyNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:gravity="center"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_watering_in_hibernate_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnceHibernate, etWateringFrequencyInHibernate, textViewDaysHibernate" />
+            app:constraint_referenced_ids="textViewToWaterOnceHibernate, textViewDaysHibernate, etLayoutWateringFrequencyInHibernate" />
 
 
         <TextView
@@ -131,23 +141,9 @@
             android:drawableStart="@drawable/ic_baseline_ac_unit_24"
             android:gravity="center"
             android:text=" Поливать один раз в "
-            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyInHibernate"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/tvToStartWaterFrom"
-            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyInHibernate" />
-
-        <EditText
-            android:id="@+id/etWateringFrequencyInHibernate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:ems="3"
-            android:gravity="center"
-            android:hint="2"
-            android:inputType="numberSigned"
-            app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnceHibernate"
-            app:layout_constraintTop_toBottomOf="@+id/etWateringFrequencyNormal" />
+            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
+            app:layout_constraintStart_toStartOf="@+id/textViewToWaterOnce"
+            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate" />
 
         <TextView
             android:id="@+id/textViewDaysHibernate"
@@ -155,35 +151,57 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="дня"
-            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyInHibernate"
-            app:layout_constraintStart_toEndOf="@+id/etWateringFrequencyInHibernate"
-            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyInHibernate" />
+            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
+            app:layout_constraintStart_toEndOf="@+id/etLayoutWateringFrequencyInHibernate"
+            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayoutWateringFrequencyInHibernate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/int_2_days"
+            app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnceHibernate"
+            app:layout_constraintTop_toBottomOf="@+id/etLayoutWateringFrequencyNormal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etWateringFrequencyInHibernate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:gravity="center"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:text="@string/cancel"
-            app:layout_constraintBottom_toBottomOf="@+id/button_save"
             app:layout_constraintEnd_toStartOf="@+id/button_save"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button_save" />
+            app:layout_constraintTop_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
             android:text="@string/save"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/button_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button_cancel"
-            app:layout_constraintTop_toBottomOf="@+id/etWateringFrequencyInHibernate" />
+            app:layout_constraintTop_toTopOf="@+id/button_cancel" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

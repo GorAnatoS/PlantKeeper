@@ -68,4 +68,5 @@
     <string name="mtrl_picker_invalid_format_example" tools:override="true">Пример: %1$s</string>
     <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ок</string>
     <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]" translatable="false">Отменить</string>
+    <string name="int_2_days">2</string>
 </resources>
