@@ -128,12 +128,13 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
     private fun areCheckedInputsOk(): Boolean{
         if (binding.etWateringFrequencyNormal.editableText.isNullOrEmpty()) {
-            binding.etWateringFrequencyNormal.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
+            binding.etLayoutWateringFrequencyNormal.error = "Ошибка"
+
             return false
         }
         if (binding.switchHibernate.isChecked){
             if (binding.etWateringFrequencyInHibernate.editableText.isNullOrEmpty()) {
-                binding.etWateringFrequencyInHibernate.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.errorColor))
+                binding.etLayoutWateringFrequencyInHibernate.error = "Ошибка"
                 return false
             }
         }
@@ -170,8 +171,8 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
     internal inner class MyTimerTaskCheckFrequency : TimerTask() {
         override fun run() {
             activity?.runOnUiThread {
-                binding.etWateringFrequencyNormal.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
-                binding.etWateringFrequencyInHibernate.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+                binding.etLayoutWateringFrequencyNormal.error = null
+                binding.etLayoutWateringFrequencyInHibernate.error = null
             }
         }
     }

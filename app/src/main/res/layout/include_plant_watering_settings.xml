@@ -75,11 +75,24 @@
             app:layout_constraintTop_toTopOf="@+id/tvToStartWaterFrom" />
 
 
+        <TextView
+            android:id="@+id/tvToWaterOnceAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="Поливать один раз во сколько дней:"
+            app:layout_constraintEnd_toStartOf="@+id/etLayoutWateringFrequencyNormal"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvToStartWaterFrom" />
+
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_watering_normal_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnce, textViewDays, etLayoutWateringFrequencyNormal" />
+            app:constraint_referenced_ids="textViewToWaterOnce, etLayoutWateringFrequencyNormal" />
 
         <TextView
             android:id="@+id/textViewToWaterOnce"
@@ -87,21 +100,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="center"
-            android:text="Поливать один раз в "
+            android:text="Нормальный режим:"
             app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyNormal"
-            app:layout_constraintEnd_toStartOf="@+id/etLayoutWateringFrequencyNormal"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyNormal" />
-
-        <TextView
-            android:id="@+id/textViewDays"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="дня"
-            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyNormal"
-            app:layout_constraintStart_toEndOf="@+id/etLayoutWateringFrequencyNormal"
             app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyNormal" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -110,18 +111,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:hint="@string/int_2_days"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDays"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnce"
-            app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal">
+            app:layout_constraintTop_toBottomOf="@+id/tvToWaterOnceAt"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etWateringFrequencyNormal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
+                android:maxLength="3"
+                android:inputType="number"
                 android:gravity="center"
                 android:maxLines="1" />
 
@@ -131,30 +132,18 @@
             android:id="@+id/group_watering_in_hibernate_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnceHibernate, textViewDaysHibernate, etLayoutWateringFrequencyInHibernate" />
+            app:constraint_referenced_ids="textViewToWaterOnceHibernate, etLayoutWateringFrequencyInHibernate" />
 
 
         <TextView
             android:id="@+id/textViewToWaterOnceHibernate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_ac_unit_24"
             android:gravity="center"
-            android:text=" Поливать один раз в "
+            android:text="Режим покоя:"
             app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
             app:layout_constraintStart_toStartOf="@+id/textViewToWaterOnce"
-            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate" />
-
-        <TextView
-            android:id="@+id/textViewDaysHibernate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="дня"
-            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
-            app:layout_constraintStart_toEndOf="@+id/etLayoutWateringFrequencyInHibernate"
-            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate" />
-
+            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etLayoutWateringFrequencyInHibernate"
@@ -162,8 +151,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            app:errorEnabled="true"
             android:layout_marginTop="16dp"
-            android:hint="@string/int_2_days"
             app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnceHibernate"
             app:layout_constraintTop_toBottomOf="@+id/etLayoutWateringFrequencyNormal">
 
@@ -172,6 +161,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
+                android:maxLength="3"
+                android:inputType="number"
                 android:gravity="center"
                 android:maxLines="1" />
 
