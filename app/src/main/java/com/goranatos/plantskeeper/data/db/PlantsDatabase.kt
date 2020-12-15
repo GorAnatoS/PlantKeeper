@@ -13,14 +13,15 @@ const val DATABASE_NAME = "Plants_database.db"
 const val TABLE_NAME = "Plants_database"
 
 const val ID_COLUMN = "id"
-const val NAME_COLUMN = "name"
-const val DESCRIPTION_COLUMN = "description"
-const val IMAGE_COLUMN = "image"
-const val IMAGE_PATH_COLUMN = "image_path"
+const val STRING_NAME_COLUMN = "string_name"
+const val STRING_DESCRIPTION_COLUMN = "string_description"
+const val STRING_IMAGE_PATH_COLUMN = "string_image_path"
 
 //поливать и т.п. 1 раз во сколько дней?
 const val IS_WATER_NEED_ON_COLUMN = "is_water_need_on"
-const val WATER_NEED_COLUMN = "watering_need"
+const val LONG_TO_WATER_FROM_DATE_COLUMN = "long_to_water_from_date"
+const val STRING_WATERING_FREQUENCY_COLUMN = "watering_frequency_string"
+
 const val FERTILIZE_NEED_COLUMN = "fertilization_need"
 const val SPRAY_NEED_COLUMN = "spraying_need"
 const val REPLANT_NEED_COLUMN = "replanting_need"
@@ -28,18 +29,10 @@ const val CUT_NEED_COLUMN = "cutting_need"
 const val TURN_NEED_COLUMN = "turning_need"
 
 const val IS_HIBERNATE_MODE_ON = "is_hibernate_mode_on"
-const val HIBERNATE_MODE_DATE_START = "hibernate_mode_start_date"
-const val HIBERNATE_MODE_DATE_FINISH = "hibernate_mode_finish_date"
+const val LONG_TO_HIBERNATE_FROM_DATE_COLUMN = "to_hibernate_from_date"
+const val LONG_TO_HIBERNATE_TILL_DATE_COLUMN = "to_hibernate_till_date"
 
-//начать поливать... с какого числа
-const val START_WATER_FROM_COLUMN = "to_water_from"
-const val START_FERTILIZE_FROM_COLUMN = "to_fertilize_from"
-const val START_SPRAY_FROM_COLUMN = "to_spray_from"
-const val START_REPLANT_FROM_COLUMN = "to_replant_from"
-const val START_CUT_FROM_COLUMN = "to_cut_from"
-const val START_TURN_FROM_COLUMN = "to_turn_from"
-
-const val DATABASE_VERSION = 4
+const val DATABASE_VERSION = 1
 
 @Database(entities = [Plant::class], version = DATABASE_VERSION)
 abstract class PlantsDatabase : RoomDatabase() {
@@ -66,7 +59,7 @@ abstract class PlantsDatabase : RoomDatabase() {
 
                 if (instance == null) {
 
-                    //MIGRATIONS
+/*                    //MIGRATIONS
                     val MIGRATION_1_2 : Migration = object : Migration(1, 2) {
                         override fun migrate(database: SupportSQLiteDatabase) {
                             database.execSQL(
@@ -79,7 +72,7 @@ abstract class PlantsDatabase : RoomDatabase() {
                     val MIGRATION_2_3 : Migration = object : Migration(2, 3) {
                         override fun migrate(database: SupportSQLiteDatabase) {
                             database.execSQL(
-                                "ALTER TABLE $TABLE_NAME ADD COLUMN $HIBERNATE_MODE_DATE_START INTEGER"
+                                "ALTER TABLE $TABLE_NAME ADD COLUMN $LONG_TO_HIBERNATE_FROM_DATE_COLUMN INTEGER"
                             )
 
                             database.execSQL(
@@ -94,16 +87,16 @@ abstract class PlantsDatabase : RoomDatabase() {
                                 "ALTER TABLE $TABLE_NAME ADD COLUMN $IS_HIBERNATE_MODE_ON INTEGER DEFAULT 0 NOT NULL"
                             )
                         }
-                    }
+                    }*/
 
 
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         PlantsDatabase::class.java,
                         DATABASE_NAME)
-                        .addMigrations(MIGRATION_1_2)
+                     /*   .addMigrations(MIGRATION_1_2)
                         .addMigrations(MIGRATION_2_3)
-                        .addMigrations(MIGRATION_3_4)
+                        .addMigrations(MIGRATION_3_4)*/
                         .build()
                 }
 

@@ -79,7 +79,7 @@
             android:id="@+id/group_watering_normal_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnce, editTextNumberSignedDays, textViewDays" />
+            app:constraint_referenced_ids="textViewToWaterOnce, etWateringFrequencyNormal, textViewDays" />
 
         <TextView
             android:id="@+id/textViewToWaterOnce"
@@ -87,14 +87,14 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Поливать один раз в "
-            app:layout_constraintBottom_toBottomOf="@+id/editTextNumberSignedDays"
+            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyNormal"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/tvToStartWaterFrom"
-            app:layout_constraintTop_toTopOf="@+id/editTextNumberSignedDays" />
+            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyNormal" />
 
 
         <EditText
-            android:id="@+id/editTextNumberSignedDays"
+            android:id="@+id/etWateringFrequencyNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -112,16 +112,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="дня"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextNumberSignedDays"
-            app:layout_constraintStart_toEndOf="@+id/editTextNumberSignedDays"
-            app:layout_constraintTop_toTopOf="@+id/editTextNumberSignedDays" />
+            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyNormal"
+            app:layout_constraintStart_toEndOf="@+id/etWateringFrequencyNormal"
+            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyNormal" />
 
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_watering_in_hibernate_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnceHibernate, editTextNumberSignedDaysHibernate, textViewDaysHibernate" />
+            app:constraint_referenced_ids="textViewToWaterOnceHibernate, etWateringFrequencyInHibernate, textViewDaysHibernate" />
 
 
         <TextView
@@ -131,13 +131,13 @@
             android:drawableStart="@drawable/ic_baseline_ac_unit_24"
             android:gravity="center"
             android:text=" Поливать один раз в "
-            app:layout_constraintBottom_toBottomOf="@+id/editTextNumberSignedDaysHibernate"
+            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyInHibernate"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/tvToStartWaterFrom"
-            app:layout_constraintTop_toTopOf="@+id/editTextNumberSignedDaysHibernate" />
+            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyInHibernate" />
 
         <EditText
-            android:id="@+id/editTextNumberSignedDaysHibernate"
+            android:id="@+id/etWateringFrequencyInHibernate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -147,7 +147,7 @@
             android:hint="2"
             android:inputType="numberSigned"
             app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnceHibernate"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNumberSignedDays" />
+            app:layout_constraintTop_toBottomOf="@+id/etWateringFrequencyNormal" />
 
         <TextView
             android:id="@+id/textViewDaysHibernate"
@@ -155,9 +155,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="дня"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextNumberSignedDaysHibernate"
-            app:layout_constraintStart_toEndOf="@+id/editTextNumberSignedDaysHibernate"
-            app:layout_constraintTop_toTopOf="@+id/editTextNumberSignedDaysHibernate" />
+            app:layout_constraintBottom_toBottomOf="@+id/etWateringFrequencyInHibernate"
+            app:layout_constraintStart_toEndOf="@+id/etWateringFrequencyInHibernate"
+            app:layout_constraintTop_toTopOf="@+id/etWateringFrequencyInHibernate" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_cancel"
@@ -184,6 +184,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button_cancel"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNumberSignedDaysHibernate" />
+            app:layout_constraintTop_toBottomOf="@+id/etWateringFrequencyInHibernate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
