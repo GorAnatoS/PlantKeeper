@@ -383,7 +383,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             //Проверка на чек при старте, чтобы не было
             if (tempCheckedToggleGroupToWater) {
                 val fragmentManager = parentFragmentManager
-                val newFragment = SetWateringSettingsFragmentDialog()
+                val newFragment = SetWateringSettingsFragmentDialog(viewModel.thePlant.value!!)
                 newFragment.show(fragmentManager, "dialog")
             }
         }
@@ -435,7 +435,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             //Проверка на чек при старте, чтобы не было
             if (tempCheckedToggleGroupToHibernate) {
                 val fragmentManager = parentFragmentManager
-                val newFragment = SetHibernateSettingsFragmentDialog()
+                val newFragment = SetHibernateSettingsFragmentDialog(viewModel.thePlant.value!!)
                 newFragment.show(fragmentManager, "dialog")
             }
         }

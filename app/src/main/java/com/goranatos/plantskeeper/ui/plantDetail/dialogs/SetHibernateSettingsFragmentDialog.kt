@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.IncludeHibernateSettingsBinding
 import com.goranatos.plantskeeper.internal.TimeHelper
 import java.util.*
@@ -24,7 +25,7 @@ import java.util.*
 const val TO_HIBERNATE_FROM_DATE_LONG = "to_hibernate_from_date_long"
 const val TO_HIBERNATE_TILL_DATE_LONG = "to_hibernate_till_date_long"
 
-class SetHibernateSettingsFragmentDialog : DialogFragment() {
+class SetHibernateSettingsFragmentDialog(val plant: Plant) : DialogFragment() {
 
     lateinit var myDialog: Dialog
 

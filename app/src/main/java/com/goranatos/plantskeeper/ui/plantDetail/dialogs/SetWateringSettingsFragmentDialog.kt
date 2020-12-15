@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.IncludePlantWateringSettingsBinding
 import com.goranatos.plantskeeper.internal.TimeHelper
 import java.util.*
@@ -26,7 +27,7 @@ import java.util.*
 
 const val TO_WATER_FROM_DATE_STRING = "to_water_from_date_string"
 
-class SetWateringSettingsFragmentDialog : DialogFragment() {
+class SetWateringSettingsFragmentDialog(val plant: Plant) : DialogFragment() {
     lateinit var myDialog: Dialog
 
     lateinit var binding: IncludePlantWateringSettingsBinding
@@ -56,8 +57,7 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         setHibernateMode()
         setEditTextListeners()
 
-        long_saved_to_water_from_date = TimeHelper.getCurrentTimeInMs()
-        binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(long_saved_to_water_from_date)
+        binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
 
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
@@ -100,9 +100,6 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
 
 
     private fun setHibernateMode() {
-        binding.groupWateringInHibernateMode.visibility = View.GONE
-        binding.switchHibernate.isChecked = false
-
         binding.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 setHibernateModeOn()
@@ -110,6 +107,8 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
                 setHibernateModeOff()
             }
         }
+
+        binding.switchHibernate.isChecked = plant.is_hibernate_on == 1
     }
 
     private fun setHibernateModeOn(){
@@ -154,7 +153,6 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-
         if (isNotSaveResult) {
             findNavController().currentBackStackEntry?.savedStateHandle?.set(
                 TO_WATER_FROM_DATE_STRING,
