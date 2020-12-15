@@ -20,42 +20,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="Настройка полива"
-            app:layout_constraintBottom_toBottomOf="@+id/switchHibernate"
             app:layout_constraintEnd_toStartOf="@+id/switchHibernate"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/switchHibernate" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchHibernate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:checked="true"
             android:drawableStart="@drawable/ic_baseline_ac_unit_24"
             android:gravity="center"
             android:text=" период покоя"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
 
         <TextView
             android:id="@+id/tvToStartWaterFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="Следующий полив"
             android:textAlignment="center"
             android:textSize="14sp"
             android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switchHibernate" />
 
         <TextView
@@ -77,12 +74,12 @@
 
         <TextView
             android:id="@+id/tvToWaterOnceAt"
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
-            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:text="Поливать один раз во сколько дней:"
             app:layout_constraintEnd_toStartOf="@+id/etLayoutWateringFrequencyNormal"
             app:layout_constraintHorizontal_bias="0.0"
@@ -114,17 +111,16 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnce"
-            app:layout_constraintTop_toBottomOf="@+id/tvToWaterOnceAt"
-            app:errorEnabled="true">
+            app:layout_constraintTop_toBottomOf="@+id/tvToWaterOnceAt">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etWateringFrequencyNormal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
-                android:maxLength="3"
-                android:inputType="number"
                 android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -140,11 +136,12 @@
             android:id="@+id/textViewToWaterOnceHibernate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="Режим покоя:"
             app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
-            app:layout_constraintStart_toStartOf="@+id/textViewToWaterOnce"
-            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etLayoutWateringFrequencyInHibernate"
@@ -152,7 +149,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            app:errorEnabled="true"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnceHibernate"
             app:layout_constraintTop_toBottomOf="@+id/etLayoutWateringFrequencyNormal">

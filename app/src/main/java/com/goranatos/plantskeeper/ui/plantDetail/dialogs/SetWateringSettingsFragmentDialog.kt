@@ -77,10 +77,6 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
                 isNotSaveResult = false
                 //я сохраняю данные при onDismiss
                 dismiss()
-            } else {
-                val mTimerTask = MyTimerTaskCheckFrequency()
-                val mTimer = Timer()
-                mTimer.schedule(mTimerTask, 850)
             }
         }
 
@@ -126,19 +122,29 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         binding.groupWateringInHibernateMode.visibility = View.GONE
     }
 
-    private fun areCheckedInputsOk(): Boolean{
+    private fun areCheckedInputsOk(): Boolean {
+        var isOk = true
+
         if (binding.etWateringFrequencyNormal.editableText.isNullOrEmpty()) {
+            binding.etLayoutWateringFrequencyNormal.isErrorEnabled = true
             binding.etLayoutWateringFrequencyNormal.error = "Ошибка"
 
-            return false
+            isOk = false
+        } else {
+            binding.etLayoutWateringFrequencyNormal.isErrorEnabled = false
+            binding.etLayoutWateringFrequencyNormal.error = null
         }
         if (binding.switchHibernate.isChecked){
             if (binding.etWateringFrequencyInHibernate.editableText.isNullOrEmpty()) {
+                binding.etLayoutWateringFrequencyInHibernate.isErrorEnabled = true
                 binding.etLayoutWateringFrequencyInHibernate.error = "Ошибка"
-                return false
+                isOk = false
+            } else {
+                binding.etLayoutWateringFrequencyInHibernate.isErrorEnabled = false
+                binding.etLayoutWateringFrequencyInHibernate.error = null
             }
         }
-        return true
+        return isOk
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -166,15 +172,5 @@ class SetWateringSettingsFragmentDialog : DialogFragment() {
         Toast.makeText(requireContext(), str_watering_frequency + "\n\n $asd", Toast.LENGTH_LONG).show()
         super.onDismiss(dialog)
     }
-
-    // TODO: 12/8/2020 Проверять вводные значения!
-    internal inner class MyTimerTaskCheckFrequency : TimerTask() {
-        override fun run() {
-            activity?.runOnUiThread {
-                binding.etLayoutWateringFrequencyNormal.error = null
-                binding.etLayoutWateringFrequencyInHibernate.error = null
-            }
-        }
-    }
 }
-// TODO: 12/15/2020 textChecker in another class + Timer 
+
