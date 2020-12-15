@@ -16,7 +16,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvTitle"
-            style="@style/TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -82,6 +82,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:gravity="center"
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:text="Поливать один раз во сколько дней:"
             app:layout_constraintEnd_toStartOf="@+id/etLayoutWateringFrequencyNormal"
             app:layout_constraintHorizontal_bias="0.0"

@@ -330,13 +330,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun onClickOptionMenuSavePlant() {
         if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
-            showWrongInput()
-            Snackbar.make(
-                requireView(),
-                getString(R.string.give_a_name_to_a_plant),
-                Snackbar.LENGTH_SHORT
-            ).show()
-
+            binding.editTextTextPlantName.error = "Назовите растение"
+            resetWrongInput()
             return
         }
 
@@ -353,38 +348,16 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
     //OPTIONS MENU END
 
-
-    // TODO: 12/8/2020 material change
-    private fun showWrongInput() {
-        hideKeyboard()
-
-        val color = binding.editTextTextPlantName.editText?.currentHintTextColor
-        if (binding.editTextTextPlantName.editText?.text.isNullOrEmpty())
-            binding.editTextTextPlantName.editText?.setHintTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.errorColor
-                )
-            )
-        else
-            binding.editTextTextPlantName.editText?.setHintTextColor(
-                ContextCompat.getColor(requireContext(), color!!)
-            )
-
+    private fun resetWrongInput() {
         val mTimerTask = MyTimerTaskCheckPlantName()
         val mTimer = Timer()
-        mTimer.schedule(mTimerTask, 850)
+        mTimer.schedule(mTimerTask, 1000)
     }
 
     internal inner class MyTimerTaskCheckPlantName : TimerTask() {
         override fun run() {
             activity?.runOnUiThread {
-                binding.editTextTextPlantName.editText?.setHintTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.textColor
-                    )
-                )
+               binding.editTextTextPlantName.error = null
             }
         }
     }
