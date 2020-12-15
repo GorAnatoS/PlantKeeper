@@ -18,6 +18,7 @@ import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.IncludePlantWateringSettingsBinding
 import com.goranatos.plantskeeper.internal.TimeHelper
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
 import java.util.*
 
 
@@ -27,14 +28,15 @@ import java.util.*
 
 const val TO_WATER_FROM_DATE_STRING = "to_water_from_date_string"
 
-class SetWateringSettingsFragmentDialog(val plant: Plant) : DialogFragment() {
+class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) : DialogFragment() {
+
+    lateinit var plant: Plant
+
     lateinit var myDialog: Dialog
 
     lateinit var binding: IncludePlantWateringSettingsBinding
 
-    var long_saved_to_water_from_date: Long = 0L
-
-    var isNotSaveResult = true
+    var isToSaveResult = false
 
     var str_watering_frequency = ""
     var str_is_watering_in_hibernate_on = "N"
@@ -54,38 +56,63 @@ class SetWateringSettingsFragmentDialog(val plant: Plant) : DialogFragment() {
                 false
             )
 
+        plant = viewModel.thePlant.value!!
+
         setHibernateMode()
         setEditTextListeners()
 
-        binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
+        setTvToWaterFromDate()
 
+        setToWaterFromDate()
+
+        setSaveBtn()
+
+        setCancelBtn()
+
+        return binding.root
+    }
+
+    private fun setTvToWaterFromDate() {
+        if (plant.long_to_water_from_date == null) {
+            plant.long_to_water_from_date = TimeHelper.getCurrentTimeInMs()
+            binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
+        } else {
+            binding.tvToWaterFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
+        }
+    }
+
+    private fun setCancelBtn() {
+        binding.buttonCancel.setOnClickListener {
+            dismiss()
+            isToSaveResult = false
+        }
+    }
+
+    private fun setSaveBtn() {
+        binding.buttonSave.setOnClickListener {
+            if (areCheckedInputsOk()) {
+                isToSaveResult = true
+                //я сохраняю данные при onDismiss
+                dismiss()
+            }
+        }
+    }
+
+    private fun setToWaterFromDate() {
         val builder = MaterialDatePicker.Builder.datePicker()
         builder.setTitleText("Поливать с")
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            long_saved_to_water_from_date = it
-            binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(long_saved_to_water_from_date)
+            plant.long_to_water_from_date = it
+            binding.tvToWaterFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
         }
 
         binding.tvToWaterFromDateVal.setOnClickListener {
             materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
         }
-
-        binding.buttonSave.setOnClickListener {
-            if (areCheckedInputsOk()) {
-                isNotSaveResult = false
-                //я сохраняю данные при onDismiss
-                dismiss()
-            }
-        }
-
-        binding.buttonCancel.setOnClickListener {
-            dismiss()
-            isNotSaveResult = true
-        }
-
-        return binding.root
     }
 
     private fun setEditTextListeners(){
@@ -133,6 +160,7 @@ class SetWateringSettingsFragmentDialog(val plant: Plant) : DialogFragment() {
             binding.etLayoutWateringFrequencyNormal.isErrorEnabled = false
             binding.etLayoutWateringFrequencyNormal.error = null
         }
+
         if (binding.switchHibernate.isChecked){
             if (binding.etWateringFrequencyInHibernate.editableText.isNullOrEmpty()) {
                 binding.etLayoutWateringFrequencyInHibernate.isErrorEnabled = true
@@ -143,6 +171,7 @@ class SetWateringSettingsFragmentDialog(val plant: Plant) : DialogFragment() {
                 binding.etLayoutWateringFrequencyInHibernate.error = null
             }
         }
+
         return isOk
     }
 
@@ -153,16 +182,8 @@ class SetWateringSettingsFragmentDialog(val plant: Plant) : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        if (isNotSaveResult) {
-            findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                TO_WATER_FROM_DATE_STRING,
-                0L
-            )
-        } else {
-            findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                TO_WATER_FROM_DATE_STRING,
-                long_saved_to_water_from_date
-            )
+        if (isToSaveResult) {
+            viewModel.updateThePlant(plant)
         }
 
         str_watering_frequency = "$str_watering_frequency_normal|$str_watering_frequency_in_hibernate|$str_is_watering_in_hibernate_on"

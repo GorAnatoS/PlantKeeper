@@ -383,7 +383,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             //Проверка на чек при старте, чтобы не было
             if (tempCheckedToggleGroupToWater) {
                 val fragmentManager = parentFragmentManager
-                val newFragment = SetWateringSettingsFragmentDialog(viewModel.thePlant.value!!)
+                val newFragment = SetWateringSettingsFragmentDialog(viewModel)
                 newFragment.show(fragmentManager, "dialog")
             }
         }
@@ -391,21 +391,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.tvToWaterFromDateVal.setOnClickListener {
             viewModel.setDatePickerForStartWatering(parentFragmentManager)
         }
-
-        // Ожидаем, когда из диплога выберем следующую дату полива
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Long>(
-            TO_WATER_FROM_DATE_STRING
-        )
-            ?.observe(viewLifecycleOwner) { long_to_water_from_date ->
-                if (long_to_water_from_date == 0L) {
-                    binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-                    onWaterNeedOff()
-                    return@observe
-                }
-                viewModel.setWaterNeed(long_to_water_from_date)
-                binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(long_to_water_from_date)
-                onWaterNeedOn()
-            }
     }
 
     private fun onWaterNeedOn() {

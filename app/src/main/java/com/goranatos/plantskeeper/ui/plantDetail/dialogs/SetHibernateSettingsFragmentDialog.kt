@@ -24,8 +24,6 @@ import java.util.*
 
 class SetHibernateSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) : DialogFragment() {
 
-
-
     lateinit var plant: Plant
 
     lateinit var myDialog: Dialog
@@ -78,25 +76,27 @@ class SetHibernateSettingsFragmentDialog(private val viewModel: PlantDetailViewM
     }
 
     private fun setTvHibernateDateStartFromVal() {
-        if (plant.long_to_hibernate_from_date != null || plant.long_to_hibernate_from_date != 0L) {
+        if (plant.long_to_hibernate_from_date != null) {
             binding.tvHibernateDateStartFromVal.text =
                 TimeHelper.getFormattedDateString(plant.long_to_hibernate_from_date!!)
         } else {
+            plant.long_to_hibernate_from_date = TimeHelper.getCurrentTimeInMs()
             binding.tvHibernateDateStartFromVal.text =
-                TimeHelper.getFormattedDateString(TimeHelper.getCurrentTimeInMs())
+                TimeHelper.getFormattedDateString(plant.long_to_hibernate_from_date!!)
         }
     }
 
     private fun setTvHibernateDateFinishVal() {
-        if (plant.long_to_hibernate_till_date != null || plant.long_to_hibernate_till_date != 0L) {
+        if (plant.long_to_hibernate_till_date != null) {
             binding.tvHibernateDateFinishVal.text =
                 TimeHelper.getFormattedDateString(plant.long_to_hibernate_till_date!!)
         } else {
             val calendar: Calendar = Calendar.getInstance()
             calendar.add(Calendar.MONTH, 4)
+            plant.long_to_hibernate_till_date = calendar.timeInMillis
 
             binding.tvHibernateDateFinishVal.text =
-                TimeHelper.getFormattedDateString(calendar.timeInMillis)
+                TimeHelper.getFormattedDateString(plant.long_to_hibernate_till_date!!)
         }
     }
 
