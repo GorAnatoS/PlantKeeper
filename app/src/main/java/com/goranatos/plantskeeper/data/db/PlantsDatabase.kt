@@ -21,11 +21,9 @@ const val STRING_IMAGE_PATH_COLUMN = "string_image_path"
 const val IS_WATER_NEED_ON_COLUMN = "is_water_need_on"
 const val LONG_TO_WATER_FROM_DATE_COLUMN = "long_to_water_from_date"
 
-const val STRING_WATERING_FREQUENCY_COLUMN = "watering_frequency_string" // = watering_frequency_normal , watering_frequency_in_hibernate, is_hibernate_in_watering_on
-
 const val INT_WATERING_FREQUENCY_NORMAL_COLUMN = "watering_frequency_normal"
 const val INT_WATERING_FREQUENCY_IN_HIBERNATE_COLUMN = "watering_frequency_in_hibernate"
-const val IS_HIBERNATE_IN_WATERING_ON_COLUMN = "is_hibernate_in_watering_on"
+const val IS_WATERING_HIBERNATE_MODE_ON_COLUMN = "is_watering_hibernate_mode_on"
 
 const val FERTILIZE_NEED_COLUMN = "fertilization_need"
 const val SPRAY_NEED_COLUMN = "spraying_need"

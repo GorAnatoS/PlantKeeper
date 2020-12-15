@@ -65,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
-                            android:text="@{viewModel.thePlant.name}" />
+                            android:text="@{viewModel.thePlant.str_name}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -240,6 +240,16 @@
                 app:drawableStartCompat="@drawable/ic_baseline_cached_24"
                 app:layout_constraintStart_toStartOf="@+id/toggleGroupToWater"
                 app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal"/>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_on_watering_hibernate_mode_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_half"
+                app:constraint_referenced_ids="tvWateringFrequencyInHibernate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvWateringFrequencyInHibernate"

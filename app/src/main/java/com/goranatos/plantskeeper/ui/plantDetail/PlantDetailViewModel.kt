@@ -69,7 +69,7 @@ class PlantDetailViewModel(
 
 
     fun updatePlantName(name: String) {
-        _thePlant.value?.name = name
+        _thePlant.value?.str_name = name
     }
 
     fun setPlant() {
@@ -79,6 +79,8 @@ class PlantDetailViewModel(
                 null,
                 null,
                 "android.resource://com.goranatos.plantskeeper/drawable/ic_plant1",
+                0,
+                null,
                 0,
                 null,
                 null,
@@ -111,11 +113,11 @@ class PlantDetailViewModel(
     }
 
     fun setHibernateModeOn() {
-        _thePlant.value?.is_hibernate_on = 1
+        _thePlant.value?.is_hibernate_mode_on = 1
     }
 
     fun setHibernateModeOff() {
-        _thePlant.value?.is_hibernate_on = 0
+        _thePlant.value?.is_hibernate_mode_on = 0
     }
 
     fun setHibernateModeDateStart(to_hibernate_from_date_long: Long) {
@@ -130,11 +132,11 @@ class PlantDetailViewModel(
 
 
     fun setPlantImageUriString(uri_string: String) {
-        _thePlant.value?.image_path = uri_string
+        _thePlant.value?.string_uri_image_path = uri_string
     }
 
     fun setPlantName(plant_name: String) {
-        _thePlant.value?.name = plant_name
+        _thePlant.value?.str_name = plant_name
     }
 
     fun updateThePlant(){

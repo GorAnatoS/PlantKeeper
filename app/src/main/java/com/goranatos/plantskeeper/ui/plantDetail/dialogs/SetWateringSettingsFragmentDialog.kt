@@ -7,26 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.IncludePlantWateringSettingsBinding
 import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
-import java.util.*
 
 
 /**
  * Created by qsufff on 12/7/2020.
  */
-
-const val TO_WATER_FROM_DATE_STRING = "to_water_from_date_string"
 
 class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) : DialogFragment() {
 
@@ -38,10 +34,6 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
 
     var isToSaveResult = false
 
-    var str_watering_frequency = ""
-    var str_is_watering_in_hibernate_on = "N"
-    var str_watering_frequency_normal = ""
-    var str_watering_frequency_in_hibernate = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +51,7 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         plant = viewModel.thePlant.value!!
 
         setHibernateMode()
+
         setEditTextListeners()
 
         setTvToWaterFromDate()
@@ -116,12 +109,22 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
     }
 
     private fun setEditTextListeners(){
+        plant.int_watering_frequency_normal?.let {
+            binding.etWateringFrequencyNormal.setText(it.toString(), TextView.BufferType.EDITABLE)
+        }
+
+        plant.int_watering_frequency_in_hibernate?.let {
+            binding.etWateringFrequencyInHibernate.setText(it.toString(), TextView.BufferType.EDITABLE)
+        }
+
         binding.etWateringFrequencyNormal.addTextChangedListener{
-            str_watering_frequency_normal = it.toString()
+            if (!it.isNullOrEmpty())
+                plant.int_watering_frequency_normal = it.toString().toInt()
         }
 
         binding.etWateringFrequencyInHibernate.addTextChangedListener{
-            str_watering_frequency_in_hibernate = it.toString()
+            if (!it.isNullOrEmpty())
+                plant.int_watering_frequency_in_hibernate = it.toString().toInt()
         }
     }
 
@@ -129,22 +132,22 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
     private fun setHibernateMode() {
         binding.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                setHibernateModeOn()
+                setWateringHibernateModeOn()
             } else {
-                setHibernateModeOff()
+                setWateringHibernateModeOff()
             }
         }
 
-        binding.switchHibernate.isChecked = plant.is_hibernate_on == 1
+        binding.switchHibernate.isChecked = plant.is_watering_hibernate_mode_on == 1
     }
 
-    private fun setHibernateModeOn(){
-        str_is_watering_in_hibernate_on = "Y"
+    private fun setWateringHibernateModeOn(){
+        plant.is_watering_hibernate_mode_on = 1
         binding.groupWateringInHibernateMode.visibility = View.VISIBLE
     }
 
-    private fun setHibernateModeOff(){
-        str_is_watering_in_hibernate_on = "N"
+    private fun setWateringHibernateModeOff(){
+        plant.is_watering_hibernate_mode_on = 0
         binding.groupWateringInHibernateMode.visibility = View.GONE
     }
 
@@ -186,9 +189,6 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
             viewModel.updateThePlant(plant)
         }
 
-        str_watering_frequency = "$str_watering_frequency_normal|$str_watering_frequency_in_hibernate|$str_is_watering_in_hibernate_on"
-        var asd = str_watering_frequency.split("|")
-        Toast.makeText(requireContext(), str_watering_frequency + "\n\n $asd", Toast.LENGTH_LONG).show()
         super.onDismiss(dialog)
     }
 }

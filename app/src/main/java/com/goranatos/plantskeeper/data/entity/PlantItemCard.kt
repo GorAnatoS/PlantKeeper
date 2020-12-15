@@ -21,16 +21,16 @@ class PlantItemCard(private val content: Plant, val plantItemCardListener: OnPla
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
         viewHolder.apply {
-            viewHolder.containerView.tvTitle.text = content.name
+            viewHolder.containerView.tvTitle.text = content.str_name
 
-            if (content.image_path.isNullOrEmpty()){
+            if (content.string_uri_image_path.isNullOrEmpty()){
 
             } else {
-                viewHolder.containerView.imageViewPlant.setImageURI(Uri.parse(content.image_path))
+                viewHolder.containerView.imageViewPlant.setImageURI(Uri.parse(content.string_uri_image_path))
             }
             //при нажатии на карточку открываем подробное описание растения
             itemView.setOnClickListener{
-                plantItemCardListener.onPlantItemCardClicked(content.id)
+                plantItemCardListener.onPlantItemCardClicked(content.int_id)
             }
         }
 

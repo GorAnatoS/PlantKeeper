@@ -11,7 +11,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.*
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
@@ -126,27 +125,44 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.groupContent.visibility = View.VISIBLE
         binding.groupLoading.visibility = View.GONE
 
-        if (plant.image_path != null) {
-            binding.plantImage.setImageURI(Uri.parse(plant.image_path))
+        if (plant.string_uri_image_path != null) {
+            binding.plantImage.setImageURI(Uri.parse(plant.string_uri_image_path))
         }
 
-        if (plant.desc != null) {
-            binding.editTextTextPlantDescription.setText(plant.desc.toString())
+        if (plant.str_desc != null) {
+            binding.editTextTextPlantDescription.setText(plant.str_desc.toString())
         }
 
         if (plant.is_water_need_on != 0) {
             binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
             onWaterNeedOn()
+
+            if (plant.is_watering_hibernate_mode_on != 0){
+                binding.groupOnWateringHibernateModeOn.visibility = View.VISIBLE
+            } else {
+                binding.groupOnWateringHibernateModeOn.visibility = View.GONE
+            }
+
         } else {
             binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
             onWaterNeedOff()
         }
 
+        plant.int_watering_frequency_normal?.let {
+            binding.tvWateringFrequency.text = it.toString()
+        }
+
+        plant.int_watering_frequency_in_hibernate?.let {
+            binding.tvWateringFrequencyInHibernate.text = it.toString()
+        }
+
+
+
         if (plant.long_to_water_from_date != null) {
             binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
         }
 
-        if (plant.is_hibernate_on != 0) {
+        if (plant.is_hibernate_mode_on != 0) {
             binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
             onHibernateModeOn()
         } else {
@@ -395,11 +411,17 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun onWaterNeedOn() {
         binding.tvToWaterFromDateVal.visibility = View.VISIBLE
+        binding.tvWateringFrequency.visibility = View.VISIBLE
+        binding.tvWateringFrequencyInHibernate.visibility = View.VISIBLE
+
         viewModel.setWaterNeedModeOn()
     }
 
     private fun onWaterNeedOff() {
         binding.tvToWaterFromDateVal.visibility = View.GONE
+        binding.tvWateringFrequency.visibility = View.GONE
+        binding.tvWateringFrequencyInHibernate.visibility = View.GONE
+
         viewModel.setWaterNeedModeOff()
     }
     //END WaterToggleGroup

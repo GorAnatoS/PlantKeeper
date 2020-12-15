@@ -10,16 +10,16 @@ data class Plant(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID_COLUMN)
-    val id: Int,
+    val int_id: Int,
 
     @ColumnInfo(name = STRING_NAME_COLUMN)
-    var name: String?,
+    var str_name: String?,
 
     @ColumnInfo(name = STRING_DESCRIPTION_COLUMN)
-    val desc: String?,
+    val str_desc: String?,
 
     @ColumnInfo(name = STRING_IMAGE_PATH_COLUMN)
-    var image_path: String?,
+    var string_uri_image_path: String?,
 
     @ColumnInfo(name = IS_WATER_NEED_ON_COLUMN)
     var is_water_need_on: Int = 0,
@@ -27,24 +27,23 @@ data class Plant(
     @ColumnInfo(name = LONG_TO_WATER_FROM_DATE_COLUMN)
     var long_to_water_from_date: Long?,
 
-    @ColumnInfo(name = IS_HIBERNATE_IN_WATERING_ON_COLUMN)
-    var is_hibernate_in_watering_on: Int = 0,
+    @ColumnInfo(name = IS_WATERING_HIBERNATE_MODE_ON_COLUMN)
+    var is_watering_hibernate_mode_on: Int = 0,
     @ColumnInfo(name = INT_WATERING_FREQUENCY_NORMAL_COLUMN)
-    var watering_frequency_normal: Int = -1,
+    var int_watering_frequency_normal: Int?,
     @ColumnInfo(name = INT_WATERING_FREQUENCY_IN_HIBERNATE_COLUMN)
-    var watering_frequency_in_hibernate: Int = -1,
-
+    var int_watering_frequency_in_hibernate: Int?,
 
     @ColumnInfo(name = IS_HIBERNATE_MODE_ON)
-    var is_hibernate_on: Int = 0,
+    var is_hibernate_mode_on: Int = 0,
     @ColumnInfo(name = LONG_TO_HIBERNATE_FROM_DATE_COLUMN)
     var long_to_hibernate_from_date: Long?,
     @ColumnInfo(name = LONG_TO_HIBERNATE_TILL_DATE_COLUMN)
     var long_to_hibernate_till_date: Long?,
-
-
-// TODO: 12/7/2020 + дата начинать полив с х числа + дата начало периода спячки + дата конец периода спячки + режим спячки есть ? булеан 
 )
+
+//Где Is - 0 значит нет, 1 - да
+//null - значит не установлено значение
 
 enum class IS(val value: Int) {
     YES(0),
