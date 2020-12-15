@@ -435,7 +435,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             //Проверка на чек при старте, чтобы не было
             if (tempCheckedToggleGroupToHibernate) {
                 val fragmentManager = parentFragmentManager
-                val newFragment = SetHibernateSettingsFragmentDialog(viewModel.thePlant.value!!)
+                val newFragment = SetHibernateSettingsFragmentDialog(viewModel)
                 newFragment.show(fragmentManager, "dialog")
             }
         }
@@ -448,39 +448,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             viewModel.setFinishDatePickerForHibernateMode(parentFragmentManager)
         }
 
-        // Ожидаем, когда из диплога выберем начало и конец режима сна
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Long>(TO_HIBERNATE_FROM_DATE_LONG)
-            ?.observe(viewLifecycleOwner) { to_hibernate_from_date_long ->
-
-                if (to_hibernate_from_date_long == 0L) {
-                    binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
-
-                    onHibernateModeOff()
-                    return@observe
-                }
-
-                viewModel.setHibernateModeDateStart(to_hibernate_from_date_long)
-                binding.tvDateHibernateStartFromVal.text = TimeHelper.getFormattedDateString(to_hibernate_from_date_long)
-
-                onHibernateModeOn()
-            }
-
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Long>(
-            TO_HIBERNATE_TILL_DATE_LONG)
-            ?.observe(viewLifecycleOwner) { saved_to_hibernate_till_date_long ->
-
-                if (saved_to_hibernate_till_date_long == 0L) {
-                    binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
-
-                    onHibernateModeOff()
-                    return@observe
-                }
-
-                viewModel.setHibernateModeDateFinish(saved_to_hibernate_till_date_long)
-                binding.tvDateHibernateFinishVal.text = TimeHelper.getFormattedDateString(saved_to_hibernate_till_date_long)
-
-                onHibernateModeOn()
-            }
     }
 
     private fun onHibernateModeOn() {

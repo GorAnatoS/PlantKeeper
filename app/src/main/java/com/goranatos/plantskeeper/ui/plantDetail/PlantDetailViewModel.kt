@@ -140,6 +140,9 @@ class PlantDetailViewModel(
     fun updateThePlant(){
         _thePlant.value = _thePlant.value
     }
+    fun updateThePlant(plant: Plant){
+        _thePlant.value = plant
+    }
 
     fun onInsertOrUpdatePlant() {
         uiScope.launch {
