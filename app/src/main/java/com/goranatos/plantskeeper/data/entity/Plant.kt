@@ -27,10 +27,13 @@ data class Plant(
     @ColumnInfo(name = LONG_TO_WATER_FROM_DATE_COLUMN)
     var long_to_water_from_date: Long?,
 
-    @ColumnInfo(name = STRING_WATERING_FREQUENCY_COLUMN)
-    var string_watering_frequency: String?, //для примера - 1\3 - одначает что частота полива 1 раз в день в обычное время и 1 раз в 3 дня в период спячки\зимнее --------- empty or null - not need
-    //123/123/Y
-    //1/1/N 1/null/N null/null/n
+    @ColumnInfo(name = IS_HIBERNATE_IN_WATERING_ON_COLUMN)
+    var is_hibernate_in_watering_on: Int = 0,
+    @ColumnInfo(name = INT_WATERING_FREQUENCY_NORMAL_COLUMN)
+    var watering_frequency_normal: Int = -1,
+    @ColumnInfo(name = INT_WATERING_FREQUENCY_IN_HIBERNATE_COLUMN)
+    var watering_frequency_in_hibernate: Int = -1,
+
 
     @ColumnInfo(name = IS_HIBERNATE_MODE_ON)
     var is_hibernate_on: Int = 0,
