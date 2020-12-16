@@ -156,8 +156,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.tvWateringFrequencyInHibernate.text = it.toString()
         }
 
-
-
         if (plant.long_to_water_from_date != null) {
             binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
         }
@@ -189,7 +187,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun uiSetup() {
         setOnPlantNameEditTextChangedListener()
-        setImageUriListener()
 
         setSelectImageForThePlantToggleGroup()
 
@@ -222,7 +219,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun setSelectImageForThePlantToggleGroup() {
         binding.toggleSelectImage.setOnClickListener {
-            viewModel.toggleSelectImageClicked(parentFragmentManager)
+            val newFragment = SelectPlantImageUriFromCollectionDialogFragment(viewModel)
+            newFragment.show(parentFragmentManager, "dialog")
         }
 
         binding.toggleTakePhoto.setOnClickListener {
@@ -367,17 +365,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         findNavController().navigateUp()
     }
     //OPTIONS MENU END
-
-    /**
-     * Ожидаем, когда изменится uri изображения
-     */
-    private fun setImageUriListener() {
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(IMAGE_URI)
-            ?.observe(viewLifecycleOwner) { uri_string ->
-                binding.plantImage.setImageURI(Uri.parse(uri_string))
-                viewModel.setPlantImageUriString(uri_string)
-            }
-    }
 
     private fun setOnPlantNameEditTextChangedListener() {
         binding.editTextTextPlantNameInputText.addTextChangedListener {

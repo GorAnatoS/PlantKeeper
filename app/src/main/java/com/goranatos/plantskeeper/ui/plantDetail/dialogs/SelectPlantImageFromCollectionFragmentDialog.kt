@@ -12,7 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.OnPlantImageItemClickedListener
+import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.entity.PlantImageItemCard
+import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.dialog_select_plant_image_from_collection.*
@@ -22,11 +24,11 @@ import kotlinx.android.synthetic.main.dialog_select_plant_image_from_collection.
  * Created by qsufff on 12/7/2020.
  */
 
-const val IMAGE_URI = "image_ur"
-
-class SelectPlantImageFromCollectionFragment : DialogFragment() {
+class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetailViewModel) : DialogFragment() {
 
     lateinit var myDialog: Dialog
+
+    lateinit var plant: Plant
 
     /** The system calls this to get the DialogFragment's layout, regardless
     of whether it's being displayed as a dialog or an embedded fragment. */
@@ -82,6 +84,8 @@ class SelectPlantImageFromCollectionFragment : DialogFragment() {
             )
 
         initRecycleView(myList.toPlantItemImageCard())
+
+        plant = viewModel.thePlant.value!!
     }
 
     private fun initRecycleView(items: List<PlantImageItemCard>) {
@@ -104,12 +108,11 @@ class SelectPlantImageFromCollectionFragment : DialogFragment() {
         }
     }
 
-    val onPlantImageItemClickedListener = object : OnPlantImageItemClickedListener {
+    private val onPlantImageItemClickedListener = object : OnPlantImageItemClickedListener {
         override fun onPlantImageClicked(uri: Uri) {
-            findNavController().currentBackStackEntry?.savedStateHandle?.set(
-                IMAGE_URI,
-                uri.toString()
-            )
+            plant.string_uri_image_path = uri.toString()
+            viewModel.updateThePlant(plant)
+
             myDialog.dismiss()
 
         }
