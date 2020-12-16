@@ -165,16 +165,19 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         if (plant.is_hibernate_mode_on != 0) {
             binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
             onHibernateModeOn()
+
+            binding.tvDateHibernateStartFromVal.text =
+                plant.long_to_hibernate_from_date?.let { TimeHelper.getFormattedDateString(it) }
+
+            binding.tvDateHibernateFinishVal.text =
+                plant.long_to_hibernate_till_date?.let { TimeHelper.getFormattedDateString(it) }
+
+
         } else {
             binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
             onHibernateModeOff()
         }
 
-        binding.tvDateHibernateStartFromVal.text =
-            plant.long_to_hibernate_from_date?.let { TimeHelper.getFormattedDateString(it) }
-
-        binding.tvDateHibernateFinishVal.text =
-            plant.long_to_hibernate_till_date?.let { TimeHelper.getFormattedDateString(it) }
 
         Toast.makeText(
             requireContext(),

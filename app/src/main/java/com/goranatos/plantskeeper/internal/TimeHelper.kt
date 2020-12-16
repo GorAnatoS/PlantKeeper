@@ -26,7 +26,7 @@ class TimeHelper {
 
         fun getFormattedDateString(ms: Long): String {
             val formatter =
-                SimpleDateFormat.getDateInstance()
+                SimpleDateFormat("MMM, d")//.getDateInstance()
             return formatter.format(ms)
         }
 
