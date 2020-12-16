@@ -111,6 +111,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         binding.viewModel = viewModel
 
+        binding.fragment = this
+
         viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
             setUIforPlant(plant)
         })
@@ -388,29 +390,15 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 onWaterNeedOff()
             }
         }
-
-        binding.toggleButtonToWater.setOnClickListener {
-            //Проверка на чек при старте, чтобы не было
-            if (tempCheckedToggleGroupToWater) {
-                startSetWateringSettingsFragmentDialog()
-            }
-        }
-
-        binding.tvToWaterFromDateVal.setOnClickListener {
-            startSetWateringSettingsFragmentDialog()
-        }
-        binding.tvWateringFrequency.setOnClickListener {
-            startSetWateringSettingsFragmentDialog()
-        }
-        binding.tvWateringFrequencyInHibernate.setOnClickListener{
-            startSetWateringSettingsFragmentDialog()
-        }
     }
 
-    private fun startSetWateringSettingsFragmentDialog() {
-        val fragmentManager = parentFragmentManager
-        val newFragment = SetWateringSettingsFragmentDialog(viewModel)
-        newFragment.show(fragmentManager, "dialog")
+    fun startSetWateringSettingsFragmentDialog() {
+        //Проверка на чек при старте, чтобы не было
+        if (tempCheckedToggleGroupToWater) {
+            val fragmentManager = parentFragmentManager
+            val newFragment = SetWateringSettingsFragmentDialog(viewModel)
+            newFragment.show(fragmentManager, "dialog")
+        }
     }
 
     private fun onWaterNeedOn() {
