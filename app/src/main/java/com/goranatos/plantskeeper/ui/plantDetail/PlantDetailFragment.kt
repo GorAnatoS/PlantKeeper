@@ -429,28 +429,15 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 onHibernateModeOff()
             }
         }
-
-        binding.toggleButtonToHibernate.setOnClickListener {
-            //Проверка на чек при старте, чтобы не было
-            if (tempCheckedToggleGroupToHibernate) {
-                startSetHibernateSettingsFragmentDialog()
-            }
-        }
-
-        binding.tvDateHibernateStartFromVal.setOnClickListener {
-            startSetHibernateSettingsFragmentDialog()
-        }
-
-        binding.tvDateHibernateFinishVal.setOnClickListener {
-            startSetHibernateSettingsFragmentDialog()
-        }
-
     }
 
-    private fun startSetHibernateSettingsFragmentDialog() {
-        val fragmentManager = parentFragmentManager
-        val newFragment = SetHibernateSettingsFragmentDialog(viewModel)
-        newFragment.show(fragmentManager, "dialog")
+    fun startSetHibernateSettingsFragmentDialog() {
+        //Проверка на чек при старте, чтобы не было
+        if (tempCheckedToggleGroupToHibernate) {
+            val fragmentManager = parentFragmentManager
+            val newFragment = SetHibernateSettingsFragmentDialog(viewModel)
+            newFragment.show(fragmentManager, "dialog")
+        }
     }
 
     private fun onHibernateModeOn() {

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.OnPlantImageItemClickedListener
@@ -111,7 +110,7 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
     private val onPlantImageItemClickedListener = object : OnPlantImageItemClickedListener {
         override fun onPlantImageClicked(uri: Uri) {
             plant.string_uri_image_path = uri.toString()
-            viewModel.updateThePlant(plant)
+            viewModel.updateThePlantOutside(plant)
 
             myDialog.dismiss()
 

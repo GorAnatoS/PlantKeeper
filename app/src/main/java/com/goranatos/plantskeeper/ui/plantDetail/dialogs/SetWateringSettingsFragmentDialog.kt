@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -186,10 +185,10 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
 
     override fun onDismiss(dialog: DialogInterface) {
         if (isToSaveResult) {
-            viewModel.updateThePlant(plant)
+            viewModel.updateThePlantOutside(plant)
         } else {
             plant.is_water_need_on = 0
-            viewModel.updateThePlant(plant)
+            viewModel.updateThePlantOutside(plant)
         }
 
         super.onDismiss(dialog)

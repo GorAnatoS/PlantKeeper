@@ -40,8 +40,6 @@ class PlantDetailViewModel(
     val thePlant: LiveData<Plant>
         get() = _thePlant
 
-
-
     suspend fun getPlant(plantId: Int): Plant {
         return withContext(Dispatchers.IO) {
             repository.getPlant(plantId)
@@ -64,11 +62,6 @@ class PlantDetailViewModel(
         return withContext(Dispatchers.IO) {
             repository.updatePlant(_thePlant.value!!)
         }
-    }
-
-
-    fun updatePlantName(name: String) {
-        _thePlant.value?.str_name = name
     }
 
     fun setPlant() {
@@ -106,11 +99,6 @@ class PlantDetailViewModel(
         _thePlant.value?.is_water_need_on = 0
     }
 
-    fun setWaterNeed(long_to_water_from_date: Long) {
-        _thePlant.value?.long_to_water_from_date = long_to_water_from_date
-        updateThePlant()
-    }
-
     fun setHibernateModeOn() {
         _thePlant.value?.is_hibernate_mode_on = 1
     }
@@ -119,16 +107,10 @@ class PlantDetailViewModel(
         _thePlant.value?.is_hibernate_mode_on = 0
     }
 
-    fun setHibernateModeDateStart(to_hibernate_from_date_long: Long) {
-        _thePlant.value?.long_to_hibernate_from_date = to_hibernate_from_date_long
-        updateThePlant()
-    }
-
-    fun setHibernateModeDateFinish(to_hibernate_till_date_long: Long) {
-        _thePlant.value?.long_to_hibernate_till_date = to_hibernate_till_date_long
-        updateThePlant()
-    }
-
+//    fun setHibernateModeDateFinish(to_hibernate_till_date_long: Long) {
+//        _thePlant.value?.long_to_hibernate_till_date = to_hibernate_till_date_long
+//        updateThePlant()
+//    }
 
     fun setPlantImageUriString(uri_string: String) {
         _thePlant.value?.string_uri_image_path = uri_string
@@ -138,10 +120,7 @@ class PlantDetailViewModel(
         _thePlant.value?.str_name = plant_name
     }
 
-    fun updateThePlant(){
-        _thePlant.value = _thePlant.value
-    }
-    fun updateThePlant(plant: Plant){
+    fun updateThePlantOutside(plant: Plant){
         _thePlant.value = plant
     }
 
@@ -157,23 +136,4 @@ class PlantDetailViewModel(
 
     //OPTIONS MENU START
     //OPTIONS MENU END
-
 }
-
-///**
-// * If plant.is_hibernate_on == 1 then is checked, 0 - unchecked
-// */
-//val isSwitchHibernateBtnVisible = Transformations.map(_thePlant) {
-//    it.is_hibernate_on != 0
-//}
-//
-///**
-// * Если у растения поле water_need не установлено или пусто, то значит кнопка отжата. Иначе - наоборот
-// */
-//val isToggleToWaterChecked = Transformations.map(_thePlant) {
-//    !it.water_need.isNullOrEmpty()
-//}
-//
-//val toStartWaterFromDate = Transformations.map(_thePlant) {
-//    it.water_need
-//}

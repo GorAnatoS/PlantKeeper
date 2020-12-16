@@ -138,10 +138,10 @@ class SetHibernateSettingsFragmentDialog(private val viewModel: PlantDetailViewM
 
     override fun onDismiss(dialog: DialogInterface) {
         if (isToSaveResult)
-            viewModel.updateThePlant(plant)
+            viewModel.updateThePlantOutside(plant)
         else {
             plant.is_hibernate_mode_on = 0
-            viewModel.updateThePlant(plant)
+            viewModel.updateThePlantOutside(plant)
         }
 
 
