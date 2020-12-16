@@ -187,6 +187,9 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
     override fun onDismiss(dialog: DialogInterface) {
         if (isToSaveResult) {
             viewModel.updateThePlant(plant)
+        } else {
+            plant.is_water_need_on = 0
+            viewModel.updateThePlant(plant)
         }
 
         super.onDismiss(dialog)
