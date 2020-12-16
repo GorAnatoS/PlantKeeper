@@ -158,69 +158,6 @@ class PlantDetailViewModel(
     //OPTIONS MENU START
     //OPTIONS MENU END
 
-
-    /**
-     * Запускает MaterialDatePicker и менять textView на выборанную дату
-     */
-    fun startDatePicker(title: String, fragmentManager: FragmentManager, textView: TextView) {
-        val builder = MaterialDatePicker.Builder.datePicker()
-
-        builder.setTitleText(title)
-        val materialDatePicker = builder.build()
-
-        materialDatePicker.addOnPositiveButtonClickListener {
-            textView.text = TimeHelper.getFormattedDateString(it)
-        }
-
-        materialDatePicker.show(fragmentManager, "DATE_PICKER")
-    }
-
-
-    /**
-     * Для запуска диалога по выбору изображения из коллекции
-     */
-
-//    fun toggleSelectImageClicked(fragmentManager: FragmentManager) {
-//        val newFragment = SelectPlantImageFromCollectionFragment()
-//        newFragment.show(fragmentManager, "dialog")
-//    }
-
-    fun setDatePickerForStartWatering(fragmentManager: FragmentManager) {
-        val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setTitleText("Поливать с")
-        val materialDatePicker = builder.build()
-
-        materialDatePicker.addOnPositiveButtonClickListener {
-            setWaterNeed(it)
-        }
-
-        materialDatePicker.show(fragmentManager, "DATE_PICKER")
-    }
-
-    fun setStartDatePickerForHibernateMode(fragmentManager: FragmentManager) {
-        val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setTitleText("Режим покоя начинается с")
-        val materialDatePicker = builder.build()
-
-        materialDatePicker.addOnPositiveButtonClickListener {
-            setHibernateModeDateStart(it)
-        }
-
-        materialDatePicker.show(fragmentManager, "DATE_PICKER")
-    }
-
-    fun setFinishDatePickerForHibernateMode(fragmentManager: FragmentManager) {
-        val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setTitleText("Режим покоя заканчивается")
-        val materialDatePicker = builder.build()
-
-        materialDatePicker.addOnPositiveButtonClickListener {
-            setHibernateModeDateFinish(it)
-        }
-
-        materialDatePicker.show(fragmentManager, "DATE_PICKER")
-    }
-
 }
 
 ///**

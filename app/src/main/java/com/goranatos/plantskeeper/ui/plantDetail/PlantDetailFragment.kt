@@ -219,8 +219,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     private fun setSelectImageForThePlantToggleGroup() {
         binding.toggleSelectImage.setOnClickListener {
-            val newFragment = SelectPlantImageUriFromCollectionDialogFragment(viewModel)
-            newFragment.show(parentFragmentManager, "dialog")
+            startSelectPlantImageUriFragmentDialog()
         }
 
         binding.toggleTakePhoto.setOnClickListener {
@@ -237,6 +236,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
                 .show()
         }
+    }
+
+    private fun startSelectPlantImageUriFragmentDialog() {
+        val newFragment = SelectPlantImageUriFromCollectionDialogFragment(viewModel)
+        newFragment.show(parentFragmentManager, "dialog")
     }
 
 
@@ -388,15 +392,25 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.toggleButtonToWater.setOnClickListener {
             //Проверка на чек при старте, чтобы не было
             if (tempCheckedToggleGroupToWater) {
-                val fragmentManager = parentFragmentManager
-                val newFragment = SetWateringSettingsFragmentDialog(viewModel)
-                newFragment.show(fragmentManager, "dialog")
+                startSetWateringSettingsFragmentDialog()
             }
         }
 
         binding.tvToWaterFromDateVal.setOnClickListener {
-            viewModel.setDatePickerForStartWatering(parentFragmentManager)
+            startSetWateringSettingsFragmentDialog()
         }
+        binding.tvWateringFrequency.setOnClickListener {
+            startSetWateringSettingsFragmentDialog()
+        }
+        binding.tvWateringFrequencyInHibernate.setOnClickListener{
+            startSetWateringSettingsFragmentDialog()
+        }
+    }
+
+    private fun startSetWateringSettingsFragmentDialog() {
+        val fragmentManager = parentFragmentManager
+        val newFragment = SetWateringSettingsFragmentDialog(viewModel)
+        newFragment.show(fragmentManager, "dialog")
     }
 
     private fun onWaterNeedOn() {
@@ -431,20 +445,24 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.toggleButtonToHibernate.setOnClickListener {
             //Проверка на чек при старте, чтобы не было
             if (tempCheckedToggleGroupToHibernate) {
-                val fragmentManager = parentFragmentManager
-                val newFragment = SetHibernateSettingsFragmentDialog(viewModel)
-                newFragment.show(fragmentManager, "dialog")
+                startSetHibernateSettingsFragmentDialog()
             }
         }
 
         binding.tvDateHibernateStartFromVal.setOnClickListener {
-            viewModel.setStartDatePickerForHibernateMode(parentFragmentManager)
+            startSetHibernateSettingsFragmentDialog()
         }
 
         binding.tvDateHibernateFinishVal.setOnClickListener {
-            viewModel.setFinishDatePickerForHibernateMode(parentFragmentManager)
+            startSetHibernateSettingsFragmentDialog()
         }
 
+    }
+
+    private fun startSetHibernateSettingsFragmentDialog() {
+        val fragmentManager = parentFragmentManager
+        val newFragment = SetHibernateSettingsFragmentDialog(viewModel)
+        newFragment.show(fragmentManager, "dialog")
     }
 
     private fun onHibernateModeOn() {
