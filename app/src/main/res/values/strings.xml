@@ -69,4 +69,8 @@
     <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ок</string>
     <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]" translatable="false">Отменить</string>
     <string name="int_2_days">2</string>
+    <string name="plant_notification_channel_id">plant_notification</string>
+    <string name="plant_notification_channel_name">plant_notification_channel</string>
+    <string name="plants_need_care">Растения нуждаются в уходе</string>
+    <string name="test">тест</string>
 </resources>

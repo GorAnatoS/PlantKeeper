@@ -1,15 +1,15 @@
 package com.goranatos.plantskeeper.ui.home
 
+import android.app.Application
 import androidx.lifecycle.*
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import kotlinx.coroutines.*
 
-class MyPlantsViewModel(private val repository: PlantsRepository) :
-    ViewModel() {
+class MyPlantsViewModel(private val repository: PlantsRepository, application: Application) :
+    AndroidViewModel(application) {
 
     val job = Job()
-    val uiScope = CoroutineScope(Dispatchers.Main + job)
 
     lateinit var allPlants: LiveData<List<Plant>>
 
@@ -36,5 +36,4 @@ class MyPlantsViewModel(private val repository: PlantsRepository) :
             allPlants = repository.getAllMyPlants().asLiveData()
         }
     }
-
 }

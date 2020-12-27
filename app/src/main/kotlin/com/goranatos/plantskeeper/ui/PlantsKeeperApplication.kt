@@ -25,7 +25,7 @@ class PlantsKeeperApplication : Application(), DIAware {
         bind() from singleton { PlantsDatabase(instance()) }
         bind() from singleton { instance<PlantsDatabase>().plantsDatabaseDao() }
         bind<PlantsRepository>() with singleton { PlantsRepositoryImpl(instance()) }
-        bind() from singleton { MyPlantsViewModelFactory(instance()) }
+        bind() from singleton { MyPlantsViewModelFactory(instance(), instance()) }
         bind() from factory { plantId: Int -> PlantDetailViewModelFactory(instance(), plantId) }
     }
 

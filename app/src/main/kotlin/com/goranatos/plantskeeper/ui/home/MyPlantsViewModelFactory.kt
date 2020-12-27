@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 
-class MyPlantsViewModelFactory(private val repository: PlantsRepository) : ViewModelProvider.NewInstanceFactory() {
+class MyPlantsViewModelFactory(private val repository: PlantsRepository, private val application: Application) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MyPlantsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MyPlantsViewModel(repository) as T
+            return MyPlantsViewModel(repository, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

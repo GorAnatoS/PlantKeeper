@@ -16,9 +16,6 @@ import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_my_plants.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
@@ -26,24 +23,20 @@ import org.kodein.di.instance
 class MyPlantsFragment : ScopedFragment(), DIAware {
 
     override val di by closestDI()
-    private lateinit var viewModel: MyPlantsViewModel
-    private val viewModelFactory: MyPlantsViewModelFactory by instance()
 
-    companion object {
-        var viewModelJob = Job()
-        val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    }
+    private lateinit var viewModel: MyPlantsViewModel
+
+    private val viewModelFactory: MyPlantsViewModelFactory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_my_plants, container, false)
     }
@@ -57,10 +50,11 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             else textViewEmptyDatabaseNotification.visibility = View.VISIBLE
         })
 
-        viewModel.navigateToThePlant.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 this.findNavController().navigate(
-                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId))
+                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId)
+                )
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
                 viewModel.doneNavigating()
