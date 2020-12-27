@@ -1,9 +1,14 @@
 package com.goranatos.plantskeeper.ui.home
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -13,6 +18,7 @@ import com.goranatos.plantskeeper.data.entity.OnPlantItemCardClickedListener
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.entity.PlantItemCard
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
+import com.goranatos.plantskeeper.util.sendNotification
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_my_plants.*
@@ -38,6 +44,13 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        // TODO: Step 1.7 call create channel
+        createChannel(
+            getString(R.string.plant_notification_channel_id),
+            getString(R.string.plant_notification_channel_name)
+        )
+
         return inflater.inflate(R.layout.fragment_my_plants, container, false)
     }
 
@@ -65,6 +78,19 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         fab.setOnClickListener { view ->
             viewModel.updateNavigateToPlantId(-1)
             viewModel.onItemClicked()
+
+            viewModel.setAlarm(true)
+
+//            // TODO: Step 1.9 add call to sendNotification
+//            val notificationManager = ContextCompat.getSystemService(
+//                requireContext(),
+//                NotificationManager::class.java
+//            ) as NotificationManager
+//
+//            notificationManager.sendNotification(
+//                getText(R.string.notification_ready).toString(),
+//                requireContext()
+//            )
         }
     }
 
@@ -90,5 +116,32 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             viewModel.updateNavigateToPlantId(id)
             viewModel.onItemClicked()
         }
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        // TODO: Step 1.6 START create a channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                // TODO: Step 2.4 change importance
+                NotificationManager.IMPORTANCE_HIGH
+            )// TODO: Step 2.6 disable badges for this channel
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.plants_notification_description)
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
+        }
+        // TODO: Step 1.6 END create a channel
     }
 }
