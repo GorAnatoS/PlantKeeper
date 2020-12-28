@@ -54,5 +54,4 @@ class SnoozeReceiver: BroadcastReceiver() {
         ) as NotificationManager
         notificationManager.cancelAll()
     }
-
 }

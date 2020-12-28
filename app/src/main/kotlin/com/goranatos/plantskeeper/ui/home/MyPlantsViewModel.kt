@@ -69,11 +69,9 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     val isAlarmOn: LiveData<Boolean>
         get() = _alarmOn
 
-
     private lateinit var timer: CountDownTimer
 
     init {
-
 
         _alarmOn.value = PendingIntent.getBroadcast(
             getApplication(),
@@ -88,8 +86,6 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
             notifyIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
-
 
         //If alarm is not null, resume the timer back for this alarm
         if (_alarmOn.value!!) {
@@ -116,15 +112,6 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     }
 
     /**
-     * Sets the desired interval for the alarm
-     *
-     * @param timerLengthSelection, interval timerLengthSelection value.
-     */
-    fun setTimeSelected(timerLengthSelection: Int) {
-        _timeSelection.value = timerLengthSelection
-    }
-
-    /**
      * Creates a new alarm, notification and timer
      */
     private fun startTimer(timerLengthSelection: Int) {
@@ -137,7 +124,6 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                 }
                 val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
 
-                // TODO: Step 1.15 call cancel notification
                 val notificationManager =
                     ContextCompat.getSystemService(
                         app,

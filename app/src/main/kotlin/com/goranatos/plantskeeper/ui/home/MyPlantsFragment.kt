@@ -80,17 +80,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             viewModel.onItemClicked()
 
             viewModel.setAlarm(true)
-
-//            // TODO: Step 1.9 add call to sendNotification
-//            val notificationManager = ContextCompat.getSystemService(
-//                requireContext(),
-//                NotificationManager::class.java
-//            ) as NotificationManager
-//
-//            notificationManager.sendNotification(
-//                getText(R.string.notification_ready).toString(),
-//                requireContext()
-//            )
         }
     }
 
@@ -119,14 +108,12 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     }
 
     private fun createChannel(channelId: String, channelName: String) {
-        // TODO: Step 1.6 START create a channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 channelId,
                 channelName,
-                // TODO: Step 2.4 change importance
                 NotificationManager.IMPORTANCE_HIGH
-            )// TODO: Step 2.6 disable badges for this channel
+            )
                 .apply {
                     setShowBadge(false)
                 }
@@ -142,6 +129,5 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             notificationManager.createNotificationChannel(notificationChannel)
 
         }
-        // TODO: Step 1.6 END create a channel
     }
 }
