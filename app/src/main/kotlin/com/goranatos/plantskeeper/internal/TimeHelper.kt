@@ -30,7 +30,16 @@ class TimeHelper {
             return formatter.format(ms)
         }
 
+        fun getFormattedDateTimeString(ms: Long): String {
+            val formatter =
+                SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
+            return formatter.format(ms)
+        }
+
         fun getCurrentTimeInMs(): Long = date.time
 
+        fun minutesFromMidnightToHourlyTime(persistedMinutesFromMidnight: Int): CharSequence? {
+            return "${persistedMinutesFromMidnight / 60}:${persistedMinutesFromMidnight % 60}"
+        }
     }
 }

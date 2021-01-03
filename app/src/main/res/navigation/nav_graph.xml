@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_myPlantsFragment_to_plantAddAndInfo"
             app:destination="@id/plantAddAndInfo" />
+        <action
+            android:id="@+id/action_myPlantsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/plantAddAndInfo"
@@ -23,6 +26,11 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.goranatos.plantskeeper.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 
 
 </navigation>

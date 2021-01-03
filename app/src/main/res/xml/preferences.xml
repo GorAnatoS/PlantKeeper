@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="notifications_category"
+        app:title="@string/notifications">
+
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="@string/enable_notifications" />
+
+    </PreferenceCategory>
+
+    <com.goranatos.plantskeeper.ui.settings.TimePickerPreference
+        android:defaultValue="90"
+        android:key="notification_time"
+        android:summary="@string/alarm_notification_time_summary"
+        android:title="@string/alarm_notification_time" />
+
+</PreferenceScreen>
+

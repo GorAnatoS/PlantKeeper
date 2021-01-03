@@ -6,16 +6,20 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.CountDownTimer
 import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
+import androidx.preference.PreferenceManager
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
+import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.receiver.AlarmReceiver
 import com.goranatos.plantskeeper.util.cancelNotifications
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import java.util.*
 
 class MyPlantsViewModel(private val repository: PlantsRepository, val app: Application) :
     AndroidViewModel(app) {
@@ -39,161 +43,63 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         _navigateToThePlant.value = true
     }
 
-    fun updateNavigateToPlantId(newId : Int){
+    fun updateNavigateToPlantId(newId: Int) {
         navigateToPlantId = newId
     }
 
-
-    private val REQUEST_CODE = 0
-    private val TRIGGER_TIME = "TRIGGER_AT"
-
-    private val minute: Long = 60_000L
-    private val second: Long = 1_000L
-
-    private val notifyPendingIntent: PendingIntent
-
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private var prefs =
-        app.getSharedPreferences("com.goranatos.plantskeeper", Context.MODE_PRIVATE)
+
+    private val sharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
+
     private val notifyIntent = Intent(app, AlarmReceiver::class.java)
 
-    private val _timeSelection = MutableLiveData<Int>()
-    val timeSelection: LiveData<Int>
-        get() = _timeSelection
-
-    private val _elapsedTime = MutableLiveData<Long>()
-    val elapsedTime: LiveData<Long>
-        get() = _elapsedTime
-
-    private var _alarmOn = MutableLiveData<Boolean>()
-    val isAlarmOn: LiveData<Boolean>
-        get() = _alarmOn
-
-    private lateinit var timer: CountDownTimer
 
     init {
-
-        _alarmOn.value = PendingIntent.getBroadcast(
-            getApplication(),
-            REQUEST_CODE,
-            notifyIntent,
-            PendingIntent.FLAG_NO_CREATE
-        ) != null
-
-        notifyPendingIntent = PendingIntent.getBroadcast(
-            getApplication(),
-            REQUEST_CODE,
-            notifyIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        //If alarm is not null, resume the timer back for this alarm
-        if (_alarmOn.value!!) {
-            createTimer()
-        }
-
         viewModelScope.launch(Dispatchers.IO) {
             allPlants = repository.getAllMyPlants().asLiveData()
         }
-
-
     }
 
-    /**
-     * Turns on or off the alarm
-     *
-     * @param isChecked, alarm status to be set.
-     */
-    fun setAlarm(isChecked: Boolean) {
-        when (isChecked) {
-            true -> startTimer(5000)
-            false -> cancelNotification()
-        }
-    }
+    fun setNotificationsForPlantList(plantList: List<Plant>?) {
 
-    /**
-     * Creates a new alarm, notification and timer
-     */
-    private fun startTimer(timerLengthSelection: Int) {
-        _alarmOn.value?.let {
-            if (!it) {
-                _alarmOn.value = true
-                val selectedInterval = when (timerLengthSelection) {
-                    0 -> second * 10 //For testing only
-                    else -> 1000
-                }
-                val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
+        val notificationManager =
+            ContextCompat.getSystemService(
+                app,
+                NotificationManager::class.java
+            ) as NotificationManager
+        notificationManager.cancelNotifications()
 
-                val notificationManager =
-                    ContextCompat.getSystemService(
-                        app,
-                        NotificationManager::class.java
-                    ) as NotificationManager
-                notificationManager.cancelNotifications()
+        plantList?.forEach { plant ->
+            if (plant.is_water_need_on == 1) {
+
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = plant.long_to_water_from_date!!
+
+                val r = TimeHelper.getFormattedDateTimeString( plant.long_to_water_from_date!!)
+
+                val prefMinute = sharedPreferences.getInt("notification_time", 9 * 60 + 30)
+
+                calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
+                calendar.set(Calendar.MINUTE, prefMinute % 60)
+                calendar.set(Calendar.SECOND, 0)
+
+                var triggerTime = calendar.timeInMillis
+
+                val notifyPendingIntent = PendingIntent.getBroadcast(
+                    getApplication(),
+                    plant.int_id,
+                    notifyIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
 
                 AlarmManagerCompat.setExactAndAllowWhileIdle(
                     alarmManager,
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    AlarmManager.RTC_WAKEUP,
                     triggerTime,
                     notifyPendingIntent
                 )
-
-                viewModelScope.launch {
-                    saveTime(triggerTime)
-                }
             }
         }
-        createTimer()
     }
-
-    /**
-     * Creates a new timer
-     */
-    private fun createTimer() {
-        viewModelScope.launch {
-            val triggerTime = loadTime()
-            timer = object : CountDownTimer(triggerTime, second) {
-                override fun onTick(millisUntilFinished: Long) {
-                    _elapsedTime.value = triggerTime - SystemClock.elapsedRealtime()
-                    if (_elapsedTime.value!! <= 0) {
-                        resetTimer()
-                    }
-                }
-
-                override fun onFinish() {
-                    resetTimer()
-                }
-            }
-            timer.start()
-        }
-    }
-
-    /**
-     * Cancels the alarm, notification and resets the timer
-     */
-    private fun cancelNotification() {
-        resetTimer()
-        alarmManager.cancel(notifyPendingIntent)
-    }
-
-    /**
-     * Resets the timer on screen and sets alarm value false
-     */
-    private fun resetTimer() {
-        timer.cancel()
-        _elapsedTime.value = 0
-        _alarmOn.value = false
-    }
-
-    private suspend fun saveTime(triggerTime: Long) =
-        withContext(Dispatchers.IO) {
-            prefs.edit().putLong(TRIGGER_TIME, triggerTime).apply()
-        }
-
-    private suspend fun loadTime(): Long =
-        withContext(Dispatchers.IO) {
-            prefs.getLong(TRIGGER_TIME, 0)
-        }
-
-
 }

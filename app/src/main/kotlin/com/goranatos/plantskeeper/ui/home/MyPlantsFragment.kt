@@ -2,23 +2,20 @@ package com.goranatos.plantskeeper.ui.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
+import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.OnPlantItemCardClickedListener
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.entity.PlantItemCard
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
-import com.goranatos.plantskeeper.util.sendNotification
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_my_plants.*
@@ -26,7 +23,7 @@ import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
 
-class MyPlantsFragment : ScopedFragment(), DIAware {
+class  MyPlantsFragment : ScopedFragment(), DIAware {
 
     override val di by closestDI()
 
@@ -45,12 +42,11 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         savedInstanceState: Bundle?
     ): View? {
 
-        // TODO: Step 1.7 call create channel
         createChannel(
             getString(R.string.plant_notification_channel_id),
             getString(R.string.plant_notification_channel_name)
         )
-
+        
         return inflater.inflate(R.layout.fragment_my_plants, container, false)
     }
 
@@ -59,8 +55,13 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
             initRecycleView(it.toPlantItemCards())
+
             if (it.isNotEmpty()) textViewEmptyDatabaseNotification.visibility = View.GONE
             else textViewEmptyDatabaseNotification.visibility = View.VISIBLE
+
+            viewModel.setNotificationsForPlantList(it)
+
+            //viewModel.setAlarm(true)
         })
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
@@ -71,7 +72,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
                 viewModel.doneNavigating()
-
             }
         })
 
@@ -79,8 +79,10 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             viewModel.updateNavigateToPlantId(-1)
             viewModel.onItemClicked()
 
-            viewModel.setAlarm(true)
+//            viewModel.setAlarm(true)
         }
+
+        setHasOptionsMenu(true)
     }
 
     private fun initRecycleView(items: List<PlantItemCard>) {
@@ -127,7 +129,22 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                 NotificationManager::class.java
             )
             notificationManager.createNotificationChannel(notificationChannel)
-
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+
+        val settingsOption = menu?.findItem(R.id.action_settings)
+
+        settingsOption.setOnMenuItemClickListener {
+            findNavController().navigate(
+                MyPlantsFragmentDirections.actionMyPlantsFragmentToSettingsFragment()
+            )
+            true
+        }
+
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
 }

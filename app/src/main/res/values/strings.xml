@@ -46,7 +46,6 @@
     <string name="are_you_sure_to_delete_the_plant_from_db">Вы точно уверены, что хотите удалить это растение из своей коллекции?</string>
     <string name="cancel">Отменить</string>
 
-
 <!--    MaterialDatePicker-->
     <string name="mtrl_picker_range_header_unselected" tools:override="true">Выберите дату</string>
     <string name="mtrl_picker_range_header_only_start_selected" tools:override="true">%s - Дата окончания</string>
@@ -77,4 +76,11 @@
     <string name="notification_title">notification title</string>
     <string name="snooze">snooze</string>
     <string name="notification_ready">notification is ready</string>
+
+    <string name="notifications">Уведомления</string>
+    <string name="enable_notifications">Включить уведомления</string>
+    <string name="notification_time">Показывать уведомление в</string>
+    <string name="alarm_notification_time">Время показа уведомления</string>
+    <string name="alarm_notification_time_summary">Во сколько будет показано уведомление</string>
+
 </resources>

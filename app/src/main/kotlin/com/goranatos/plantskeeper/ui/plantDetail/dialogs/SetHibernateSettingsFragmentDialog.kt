@@ -144,7 +144,6 @@ class SetHibernateSettingsFragmentDialog(private val viewModel: PlantDetailViewM
             viewModel.updateThePlantOutside(plant)
         }
 
-
         super.onDismiss(dialog)
     }
 }

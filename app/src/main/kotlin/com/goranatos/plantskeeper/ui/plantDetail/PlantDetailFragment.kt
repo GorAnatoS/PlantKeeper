@@ -456,3 +456,5 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
     //END HIBERNATE MODE settings
 }
+
+// TODO: 1/3/2021 если дата следующего полива раньше чем сегодня, что делать?

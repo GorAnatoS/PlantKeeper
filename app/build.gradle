@@ -68,6 +68,11 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'*/
 
 
+    //pref
+    def preference_version = "1.1.1"
+    // Kotlin
+    implementation "androidx.preference:preference-ktx:$preference_version"
+
     //data binding
     kapt "com.android.databinding:compiler:3.2.0-alpha10"
 
