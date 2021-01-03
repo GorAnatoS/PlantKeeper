@@ -27,19 +27,12 @@ import com.goranatos.plantskeeper.receiver.SnoozeReceiver
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.ui.MainActivity
 
-// Notification ID.
 private val NOTIFICATION_ID = 0
 private val REQUEST_CODE = 0
 private val FLAGS = 0
 
-/**
- * Builds and delivers the notification.
- *
- * @param context, activity context.
- */
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
-    // Create the content intent for the notification, which launches
-    // this activity
+
     val contentIntent = Intent(applicationContext, MainActivity::class.java)
 
     val contentPendingIntent = PendingIntent.getActivity(
@@ -49,16 +42,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
-    // TODO: Step 2.0 add style
-    val eggImage = BitmapFactory.decodeResource(
-        applicationContext.resources,
-        R.drawable.ic_baseline_local_florist_24
-    )
-    val bigPicStyle = NotificationCompat.BigPictureStyle()
-        .bigPicture(eggImage)
-        .bigLargeIcon(null)
-
-    // TODO: Step 2.2 add snooze action
     val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
     val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
         applicationContext,
@@ -66,8 +49,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         snoozeIntent,
         FLAGS)
 
-    // TODO: Step 1.2 get an instance of NotificationCompat.Builder
-    // Build the notification
     val builder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.plant_notification_channel_id)
@@ -80,12 +61,9 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
 
-        .setStyle(bigPicStyle)
-        .setLargeIcon(eggImage)
-
         .addAction(
-            R.drawable.ic_baseline_local_florist_24,
-            applicationContext.getString(R.string.snooze),
+            R.drawable.ic_baseline_snooze_24,
+            applicationContext.getString(R.string.notification_snooze),
             snoozePendingIntent
         )
 
@@ -93,10 +71,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     notify(NOTIFICATION_ID, builder.build())
 }
 
-/**
- * Cancels all notifications.
- *
- */
 fun NotificationManager.cancelNotifications() {
     cancelAll()
 }

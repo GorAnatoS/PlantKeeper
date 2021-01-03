@@ -24,8 +24,6 @@ import java.util.*
 class MyPlantsViewModel(private val repository: PlantsRepository, val app: Application) :
     AndroidViewModel(app) {
 
-    val job = Job()
-
     lateinit var allPlants: LiveData<List<Plant>>
 
     //create new plant
@@ -54,7 +52,6 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
     private val notifyIntent = Intent(app, AlarmReceiver::class.java)
 
-
     init {
         viewModelScope.launch(Dispatchers.IO) {
             allPlants = repository.getAllMyPlants().asLiveData()
@@ -75,8 +72,6 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = plant.long_to_water_from_date!!
-
-                val r = TimeHelper.getFormattedDateTimeString( plant.long_to_water_from_date!!)
 
                 val prefMinute = sharedPreferences.getInt("notification_time", 9 * 60 + 30)
 
