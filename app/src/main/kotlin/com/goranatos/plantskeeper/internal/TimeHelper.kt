@@ -1,7 +1,9 @@
 package com.goranatos.plantskeeper.internal
 
+import com.goranatos.plantskeeper.data.entity.Plant
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -40,6 +42,23 @@ class TimeHelper {
 
         fun minutesFromMidnightToHourlyTime(persistedMinutesFromMidnight: Int): CharSequence? {
             return "${persistedMinutesFromMidnight / 60}:${persistedMinutesFromMidnight % 60}"
+        }
+
+        fun getDaysTillWateringNotification(plant: Plant): Int {
+            if (plant.is_water_need_on == 1){
+
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = plant.long_to_water_from_date!!
+
+                val currentTime = System.currentTimeMillis()
+
+                val result = calendar.timeInMillis - currentTime
+
+                return TimeUnit.MILLISECONDS.toDays(result).toInt()
+
+            } else {
+                return -1
+            }
         }
     }
 }

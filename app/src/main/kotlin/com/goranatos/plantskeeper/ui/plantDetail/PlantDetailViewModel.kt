@@ -107,11 +107,6 @@ class PlantDetailViewModel(
         _thePlant.value?.is_hibernate_mode_on = 0
     }
 
-//    fun setHibernateModeDateFinish(to_hibernate_till_date_long: Long) {
-//        _thePlant.value?.long_to_hibernate_till_date = to_hibernate_till_date_long
-//        updateThePlant()
-//    }
-
     fun setPlantImageUriString(uri_string: String) {
         _thePlant.value?.string_uri_image_path = uri_string
     }
@@ -133,7 +128,4 @@ class PlantDetailViewModel(
             }
         }
     }
-
-    //OPTIONS MENU START
-    //OPTIONS MENU END
 }

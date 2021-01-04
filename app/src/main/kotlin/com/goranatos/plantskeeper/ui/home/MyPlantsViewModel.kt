@@ -19,6 +19,7 @@ import com.goranatos.plantskeeper.util.cancelNotifications
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class MyPlantsViewModel(private val repository: PlantsRepository, val app: Application) :
@@ -95,6 +96,12 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                     notifyPendingIntent
                 )
             }
+        }
+    }
+
+    suspend fun deletePlantWithId(plantId: Int) {
+        return withContext(Dispatchers.IO) {
+            repository.deletePlantWithId(plantId)
         }
     }
 }

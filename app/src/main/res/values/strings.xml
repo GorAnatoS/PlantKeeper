@@ -46,10 +46,24 @@
     <string name="are_you_sure_to_delete_the_plant_from_db">Вы точно уверены, что хотите удалить это растение из своей коллекции?</string>
     <string name="cancel">Отменить</string>
 
-    <string name="notification_title">Напоминание о цветах</string>
+    <string name="notification_title">Напоминание</string>
     <string name="notification_snooze">Напомнить через час</string>
 
-<!--    MaterialDatePicker-->
+    <string name="plants_notification_description">plants notification</string>
+    <string name="notification_ready">notification is ready</string>
+
+    <string name="notifications">Уведомления</string>
+    <string name="enable_notifications">Включить уведомления</string>
+    <string name="notification_time">Показывать уведомление в</string>
+    <string name="alarm_notification_time">Время показа уведомления</string>
+    <string name="alarm_notification_time_summary">Во сколько будет показано уведомление</string>
+    <string name="notification_watering_ready">Пора полить цветы!</string>
+
+<!--    contextual menu-->
+    <string name="contextual_action_edit">Редактировать</string>
+    <string name="contextual_action_delete">Удалить</string>
+
+    <!--    MaterialDatePicker-->
     <string name="mtrl_picker_range_header_unselected" tools:override="true">Выберите дату</string>
     <string name="mtrl_picker_range_header_only_start_selected" tools:override="true">%s - Дата окончания</string>
     <string name="mtrl_picker_range_header_only_end_selected" tools:override="true">Дата начала - %s</string>
@@ -75,16 +89,7 @@
     <string name="plant_notification_channel_name">plant_notification_channel</string>
     <string name="plants_need_care">Растения нуждаются в уходе</string>
     <string name="test">тест</string>
-    <string name="plants_notification_description">plants notification</string>
+    <string name="till_watering">Дней до полива:</string>
 
-
-    <string name="notification_ready">notification is ready</string>
-
-    <string name="notifications">Уведомления</string>
-    <string name="enable_notifications">Включить уведомления</string>
-    <string name="notification_time">Показывать уведомление в</string>
-    <string name="alarm_notification_time">Время показа уведомления</string>
-    <string name="alarm_notification_time_summary">Во сколько будет показано уведомление</string>
-    <string name="notification_watering_ready">Пора полить цветы!</string>
 
 </resources>

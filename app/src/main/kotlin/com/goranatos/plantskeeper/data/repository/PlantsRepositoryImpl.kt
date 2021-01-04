@@ -30,6 +30,10 @@ class PlantsRepositoryImpl(
         plantsDatabaseDao.delete(plant)
     }
 
+    override suspend fun deletePlantWithId(id: Int) {
+        plantsDatabaseDao.deletePlantWithId(id)
+    }
+
     override suspend fun getAllMyPlants(): Flow<List<Plant>> {
         return plantsDatabaseDao.getAllMyPlants()
     }

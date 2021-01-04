@@ -1,10 +1,8 @@
 package com.goranatos.plantskeeper.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.goranatos.plantskeeper.data.entity.Plant
 import kotlinx.coroutines.flow.Flow
-
 
 /**
  * Created by qsufff on 9/13/2020.
@@ -21,12 +19,11 @@ interface PlantsDatabaseDao {
     fun getAllMyPlants(): Flow<List<Plant>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
-    fun getPlant(id : Int): Plant
+    fun getPlant(id: Int): Plant
+
+    @Query("DELETE FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
+    fun deletePlantWithId(id: Int)
 
     @Delete
     fun delete(plant: Plant)
 }
-
-
-/*@Query("SELECT * FROM $TABLE_NAME WHERE $ID_COLUMN = :id")
-    fun getPlant(id : Int): LiveData<Plant>*/
