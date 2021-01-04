@@ -2,6 +2,7 @@ package com.goranatos.plantskeeper.internal
 
 import com.goranatos.plantskeeper.data.entity.Plant
 import java.text.SimpleDateFormat
+import java.time.Duration
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -49,10 +50,20 @@ class TimeHelper {
 
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = plant.long_to_water_from_date!!
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
 
+                val currentTimeCalendar = Calendar.getInstance()
                 val currentTime = System.currentTimeMillis()
+                currentTimeCalendar.timeInMillis = currentTime
+                currentTimeCalendar.set(Calendar.HOUR_OF_DAY, 0)
+                currentTimeCalendar.set(Calendar.MINUTE, 0)
+                currentTimeCalendar.set(Calendar.SECOND, 0)
+                currentTimeCalendar.set(Calendar.MILLISECOND, 0)
 
-                val result = calendar.timeInMillis - currentTime
+                val result = calendar.timeInMillis - currentTimeCalendar.timeInMillis
 
                 return TimeUnit.MILLISECONDS.toDays(result).toInt()
 

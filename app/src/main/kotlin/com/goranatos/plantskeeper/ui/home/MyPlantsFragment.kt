@@ -87,7 +87,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
         binding.fab.setOnClickListener { view ->
 
-
             viewModel.updateNavigateToPlantId(-1)
             viewModel.onItemClicked()
         }
