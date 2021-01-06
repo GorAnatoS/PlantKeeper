@@ -41,6 +41,12 @@ class TimeHelper {
 
         fun getCurrentTimeInMs(): Long = date.time
 
+        fun getNextWateringDate(): Long {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+            return calendar.timeInMillis
+        }
+
         fun minutesFromMidnightToHourlyTime(persistedMinutesFromMidnight: Int): CharSequence? {
             return "${persistedMinutesFromMidnight / 60}:${persistedMinutesFromMidnight % 60}"
         }
@@ -70,6 +76,13 @@ class TimeHelper {
             } else {
                 return -1
             }
+        }
+
+        fun longDatePlusDays(currentDate: Long, plusDays: Int): Long{
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = currentDate
+            calendar.add(Calendar.DAY_OF_YEAR, plusDays)
+            return calendar.timeInMillis
         }
     }
 }

@@ -66,7 +66,7 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
 
     private fun setTvToWaterFromDate() {
         if (plant.long_to_water_from_date == null) {
-            plant.long_to_water_from_date = TimeHelper.getCurrentTimeInMs()
+            plant.long_to_water_from_date = TimeHelper.getNextWateringDate()
             binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
         } else {
             binding.tvToWaterFromDateVal.text =

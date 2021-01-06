@@ -2,14 +2,15 @@ package com.goranatos.plantskeeper.ui.home
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.view.ContextMenu.ContextMenuInfo
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -20,6 +21,7 @@ import com.goranatos.plantskeeper.databinding.FragmentMyPlantsBinding
 import com.goranatos.plantskeeper.ui.base.ScopedFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.DIAware
@@ -113,13 +115,18 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
     private val onPlantItemCardClickedListener = object : OnPlantItemCardClickedListener {
         override fun onPlantItemCardClicked(id: Int) {
-
+            launch {
+                viewModel.setPlant(id)
+            }
+            val fragmentManager = parentFragmentManager
+            val newFragment = PlantInfoFragmentDialog(viewModel)
+            newFragment.show(fragmentManager, "dialog")
         }
     }
 
     private val onPlantItemCardLongClickedListener = object : OnPlantItemCardLongClickedListener {
         override fun onPlantItemCardLongClicked(id: Int, menuCode: Int) {
-            when (menuCode){
+            when (menuCode) {
                 PlantItemCardMenu.EDIT_MENU.menuCode -> {
                     viewModel.updateNavigateToPlantId(id)
                     viewModel.onItemClicked()
@@ -128,29 +135,19 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                 }
                 PlantItemCardMenu.DELETE_MENU.menuCode -> {
                     Toast.makeText(context, "DeletePlantMenuClicked", Toast.LENGTH_SHORT).show()
-                    deletePlantItemFromDB(id)
-
+                    deletePlantItemFromDB(
+                        id,
+                        requireContext(),
+                        viewModel.viewModelScope,
+                        viewModel,
+                        requireView()
+                    )
                 }
-                PlantItemCardMenu.NOT_SELECTED.menuCode -> {Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()}
+                PlantItemCardMenu.NOT_SELECTED.menuCode -> {
+                    Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
+                }
             }
         }
-    }
-
-    private fun deletePlantItemFromDB(plantId: Int) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.delete_plant_from_db))
-            .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
-            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
-            }
-            .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
-                launch(Dispatchers.IO) {
-                    viewModel.deletePlantWithId(plantId)
-
-                    Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
-                        .show()
-
-                }
-            }.show()
     }
 
     private fun createChannel(channelId: String, channelName: String) {
@@ -189,6 +186,35 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         }
 
         return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    companion object {
+        fun deletePlantItemFromDB(
+            plantId: Int,
+            context: Context,
+            viewModelScope: CoroutineScope,
+            viewModel: MyPlantsViewModel,
+            view: View
+        ) {
+            MaterialAlertDialogBuilder(context)
+                .setTitle(context.resources.getString(R.string.delete_plant_from_db))
+                .setMessage(context.resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
+                .setNeutralButton(context.resources.getString(R.string.cancel)) { dialog, which ->
+                }
+                .setPositiveButton(context.resources.getString(R.string.delete_item)) { dialog, which ->
+                    viewModelScope.launch(Dispatchers.IO) {
+                        viewModel.deletePlantWithId(plantId)
+
+                        Snackbar.make(
+                            view,
+                            context.getString(R.string.deleted),
+                            Snackbar.LENGTH_SHORT
+                        )
+                            .show()
+
+                    }
+                }.show()
+        }
     }
 
 }

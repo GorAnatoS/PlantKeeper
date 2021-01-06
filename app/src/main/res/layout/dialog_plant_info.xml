@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.goranatos.plantskeeper.ui.home.MyPlantsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/toggleEditPlant"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            app:icon="@drawable/ic_baseline_edit_24"
+            app:layout_constraintEnd_toStartOf="@+id/toggleDeletePlant"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleSelection="true" />
+
+        <Button
+            android:id="@+id/toggleDeletePlant"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:icon="@drawable/ic_baseline_delete_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/toggleEditPlant"
+            app:layout_constraintTop_toTopOf="@+id/toggleEditPlant"
+            app:singleSelection="true" />
+
+        <ImageView
+            android:id="@+id/imageViewPlant"
+            android:layout_width="wrap_content"
+            android:layout_height="128dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="Plant`s image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleEditPlant"
+            app:srcCompat="@drawable/ic_plant1" />
+
+        <CheckBox
+            android:id="@+id/checkBoxWatering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/watered"
+            app:layout_constraintBottom_toBottomOf="@+id/tvToWaterFromDateVal"
+            app:layout_constraintEnd_toEndOf="@+id/button_save"
+            app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal" />
+
+
+        <TextView
+            android:id="@+id/textViewPlantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.thePlant.str_name.toString()}"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewPlant"
+            app:layout_constraintStart_toStartOf="@+id/imageViewPlant"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant"
+            tools:text="Название цветка" />
+
+        <TextView
+            android:id="@+id/tvToWaterFromDateVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
+            app:layout_constraintStart_toStartOf="@+id/button_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlantName"
+            tools:text="Dec, 20" />
+        <!--            android:text="@{viewModel.toStartWaterFromDate}"-->
+
+        <TextView
+            android:id="@+id/tvWateringFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_baseline_cached_24"
+            app:layout_constraintStart_toEndOf="@+id/tvToWaterFromDateVal"
+            app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal"
+            tools:text=" 1 " />
+
+        <TextView
+            android:id="@+id/tvWateringFrequencyInHibernate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
+            app:layout_constraintStart_toEndOf="@+id/tvWateringFrequency"
+            app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
+            tools:text=" 1 " />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="@+id/button_save"
+            app:layout_constraintEnd_toStartOf="@+id/button_save"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_save" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+

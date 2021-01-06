@@ -15,17 +15,21 @@ import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.receiver.AlarmReceiver
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernateSettingsFragmentDialog
 import com.goranatos.plantskeeper.util.cancelNotifications
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.util.*
 
 class MyPlantsViewModel(private val repository: PlantsRepository, val app: Application) :
     AndroidViewModel(app) {
 
     lateinit var allPlants: LiveData<List<Plant>>
+
+    lateinit var thePlant: Plant
+
+    private val viewModelJob = Job()
+    val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
 
     //create new plant
     var navigateToPlantId = -1
@@ -56,6 +60,12 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     init {
         viewModelScope.launch(Dispatchers.IO) {
             allPlants = repository.getAllMyPlants().asLiveData()
+        }
+    }
+
+    suspend fun setPlant(plantId: Int){
+        return withContext(Dispatchers.IO) {
+            thePlant = repository.getPlant(plantId)
         }
     }
 
@@ -102,6 +112,18 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     suspend fun deletePlantWithId(plantId: Int) {
         return withContext(Dispatchers.IO) {
             repository.deletePlantWithId(plantId)
+        }
+    }
+
+    suspend fun updatePlant() {
+        return withContext(Dispatchers.IO) {
+            repository.updatePlant(thePlant)
+        }
+    }
+
+    fun updateThePlant(){
+        uiScope.launch {
+            updatePlant()
         }
     }
 }

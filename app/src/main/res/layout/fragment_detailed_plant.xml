@@ -249,16 +249,6 @@
                 app:layout_constraintStart_toStartOf="@+id/toggleGroupToWater"
                 app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal"/>
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_on_watering_hibernate_mode_on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="tvWateringFrequencyInHibernate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
             <TextView
                 android:id="@+id/tvWateringFrequencyInHibernate"
                 android:layout_width="wrap_content"
@@ -274,6 +264,15 @@
                 app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
                 tools:text=" 1 " />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_on_watering_hibernate_mode_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_half"
+                app:constraint_referenced_ids="tvWateringFrequencyInHibernate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_hibernate_data"
