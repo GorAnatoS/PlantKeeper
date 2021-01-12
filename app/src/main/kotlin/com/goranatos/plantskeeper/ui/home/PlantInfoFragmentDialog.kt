@@ -34,7 +34,6 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
     var isToSaveResult = false
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,8 +56,6 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         setPlantInfo()
 
         setSaveBtn()
-
-        setCancelBtn()
 
         setOnButtonsClicked()
 
@@ -109,27 +106,10 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     private fun setWateringNeedVisible() {
         if (plant.is_water_need_on == 1 && getDaysTillWateringNotification(plant) <= 0) {
             binding.checkBoxWatering.visibility = View.VISIBLE
-//            isWateringInfoVisible(false)
         } else {
-//            isWateringInfoVisible(true)
             binding.checkBoxWatering.visibility = View.GONE
             binding.buttonSave.visibility = View.INVISIBLE
             binding.buttonCancel.visibility = View.INVISIBLE
-        }
-    }
-
-//    fun isWateringInfoVisible(visible: Boolean) {
-//        if (visible) {
-//            binding.textViewWateringInfo.visibility = View.VISIBLE
-//        } else {
-//            binding.textViewWateringInfo.visibility = View.GONE
-//        }
-//    }
-
-    private fun setCancelBtn() {
-        binding.buttonCancel.setOnClickListener {
-            dismiss()
-            isToSaveResult = false
         }
     }
 
@@ -178,6 +158,4 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             requireView()
         )
     }
-
-
 }
