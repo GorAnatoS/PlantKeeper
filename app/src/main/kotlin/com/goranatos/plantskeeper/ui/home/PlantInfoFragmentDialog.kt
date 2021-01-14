@@ -109,7 +109,6 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         } else {
             binding.checkBoxWatering.visibility = View.GONE
             binding.buttonSave.visibility = View.INVISIBLE
-            binding.buttonCancel.visibility = View.INVISIBLE
         }
     }
 
@@ -144,12 +143,12 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         super.onDismiss(dialog)
     }
 
-    fun onEditButtonClicked() {
+    private fun onEditButtonClicked() {
         viewModel.updateNavigateToPlantId(viewModel.thePlant.int_id)
         viewModel.onItemClicked()
     }
 
-    fun onDeleteButtonClicked() {
+    private fun onDeleteButtonClicked() {
         deletePlantItemFromDB(
             plant.int_id,
             requireContext(),

@@ -29,7 +29,9 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.REQUEST_IMAGE_CAPTURE
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriCapturedImage
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.*
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageUriFromCollectionDialogFragment
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernateSettingsFragmentDialog
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
@@ -201,7 +203,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_detail_menu, menu)
 
-        val deleteItemFromDB = menu?.findItem(R.id.delete_item_from_db)
+        val deleteItemFromDB = menu.findItem(R.id.delete_item_from_db)
 
         deleteItemFromDB.setOnMenuItemClickListener {
             deletePlantItemFromDB()
@@ -257,7 +259,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         var pictureImagePath = storageDir.absolutePath + "/" + imageFileName
 
-        val file: File = File(pictureImagePath)
+        val file = File(pictureImagePath)
         val outputFileUri = FileProvider.getUriForFile(
             requireContext(),
             requireContext().applicationContext.packageName.toString() + ".provider",
@@ -352,7 +354,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
 
     private fun onClickOptionMenuSavePlant() {
-        if (binding.editTextTextPlantName.editText?.text.toString().isNullOrEmpty()) {
+        if (binding.editTextTextPlantName.editText?.text.toString().isEmpty()) {
             binding.editTextTextPlantName.error = "Назовите растение"
             return
         } else {

@@ -1,15 +1,11 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
 import android.net.Uri
-import android.widget.TextView
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
-import com.goranatos.plantskeeper.internal.TimeHelper
 import kotlinx.coroutines.*
 
 class PlantDetailViewModel(

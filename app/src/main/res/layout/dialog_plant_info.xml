@@ -58,13 +58,10 @@
             android:id="@+id/checkBoxWatering"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:text="@string/to_water_dialog_plant_info"
             app:layout_constraintBottom_toBottomOf="@+id/tvToWaterFromDateVal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tvWateringFrequencyInHibernate"
             app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal" />
 
 
@@ -92,7 +89,6 @@
             app:layout_constraintStart_toStartOf="@+id/toggleEditPlant"
             app:layout_constraintTop_toBottomOf="@+id/textViewPlantName"
             tools:text="Dec, 20" />
-        <!--            android:text="@{viewModel.toStartWaterFromDate}"-->
 
         <TextView
             android:id="@+id/tvWateringFrequency"
@@ -122,19 +118,26 @@
             app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
             tools:text=" 1 " />
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            app:layout_constraintGuide_percent="0.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

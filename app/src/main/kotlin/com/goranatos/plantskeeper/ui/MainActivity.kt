@@ -2,6 +2,10 @@ package com.goranatos.plantskeeper.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.goranatos.plantskeeper.R
 import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
@@ -13,7 +17,13 @@ class MainActivity : AppCompatActivity(), DIAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        findViewById<Toolbar>(R.id.toolbar)
+            .setupWithNavController(navController, appBarConfiguration)
+
     }
 }
 

@@ -2,7 +2,6 @@ package com.goranatos.plantskeeper.internal
 
 import com.goranatos.plantskeeper.data.entity.Plant
 import java.text.SimpleDateFormat
-import java.time.Duration
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -47,7 +46,7 @@ class TimeHelper {
             return calendar.timeInMillis
         }
 
-        fun minutesFromMidnightToHourlyTime(persistedMinutesFromMidnight: Int): CharSequence? {
+        fun minutesFromMidnightToHourlyTime(persistedMinutesFromMidnight: Int): CharSequence {
             return "${persistedMinutesFromMidnight / 60}:${persistedMinutesFromMidnight % 60}"
         }
 

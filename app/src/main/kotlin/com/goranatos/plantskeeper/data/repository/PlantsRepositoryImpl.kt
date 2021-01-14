@@ -1,9 +1,8 @@
 package com.goranatos.plantskeeper.data.repository
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.db.PlantsDatabaseDao
+import com.goranatos.plantskeeper.data.entity.Plant
 import kotlinx.coroutines.flow.Flow
 
 class PlantsRepositoryImpl(

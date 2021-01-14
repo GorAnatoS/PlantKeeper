@@ -176,7 +176,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
 
-        val settingsOption = menu?.findItem(R.id.action_settings)
+        val settingsOption = menu.findItem(R.id.action_settings)
 
         settingsOption.setOnMenuItemClickListener {
             findNavController().navigate(

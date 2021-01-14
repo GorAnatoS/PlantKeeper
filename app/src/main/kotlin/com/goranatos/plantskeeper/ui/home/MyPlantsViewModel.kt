@@ -6,16 +6,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
-import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.receiver.AlarmReceiver
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernateSettingsFragmentDialog
 import com.goranatos.plantskeeper.util.cancelNotifications
 import kotlinx.coroutines.*
 import java.util.*

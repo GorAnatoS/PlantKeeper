@@ -62,23 +62,23 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
         super.onViewCreated(view, savedInstanceState)
 
         val myList: MutableList<Uri> = mutableListOf(
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant1"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant2"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant3"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant4"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant5"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant6"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant7"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_plant8"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant1"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant2"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant3"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant4"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant5"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant6"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant7"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_plant8"),
 
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower1"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower2"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower3"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower4"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower5"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower6"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower7"),
-            Uri.parse("android.resource://" + requireContext().getPackageName() + "/drawable/ic_flower8"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower1"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower2"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower3"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower4"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower5"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower6"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower7"),
+            Uri.parse("android.resource://" + requireContext().packageName + "/drawable/ic_flower8"),
 
             )
 
