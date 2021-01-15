@@ -120,7 +120,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             isToSaveResult = true
             //я сохраняю данные при onDismiss
 
-            Toast.makeText(requireActivity().applicationContext, TimeHelper.isInHibernateRangeDate(plant.long_to_water_from_date!!, plant).toString(), Toast.LENGTH_LONG).show()
+
 
             dismiss()
         }
@@ -144,6 +144,8 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
                 viewModel.updateThePlant()
             }
+
+        Toast.makeText(requireActivity().applicationContext, TimeHelper.isInHibernateRangeDate(plant).toString(), Toast.LENGTH_LONG).show()
 
         super.onDismiss(dialog)
     }
