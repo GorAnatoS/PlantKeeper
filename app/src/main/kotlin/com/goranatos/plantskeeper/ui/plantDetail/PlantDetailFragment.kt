@@ -11,13 +11,17 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
@@ -90,6 +94,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -197,8 +206,32 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         setWaterToggleGroup()
         setHibernateToggleGroup()
 
-        setHasOptionsMenu(true)
+
+
+
     }
+
+//    val toolbar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
+//    toolbar.inflateMenu(R.menu.plant_detail_menu)
+//
+//    toolbar.menu.findItem(R.id.delete_item_from_db).isVisible = !viewModel.isToCreateNewPlant
+//
+//    toolbar.setOnMenuItemClickListener {
+//        when (it.itemId) {
+//            R.id.delete_item_from_db -> {
+//                deletePlantItemFromDB()
+//                true
+//            }
+//
+//            R.id.save_plant_to_db -> {
+//                onClickOptionMenuSavePlant()
+//                true
+//            }
+//            else -> {
+//                false
+//            }
+//        }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_detail_menu, menu)
@@ -208,6 +241,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         deleteItemFromDB.setOnMenuItemClickListener {
             deletePlantItemFromDB()
             true
+
         }
 
         val savePlantToDB = menu.findItem(R.id.save_plant_to_db)
@@ -336,21 +370,24 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
     //OPTIONS MENU START
     private fun deletePlantItemFromDB() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.delete_plant_from_db))
-            .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
-            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
-            }
-            .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
-                launch(Dispatchers.IO) {
-                    viewModel.deletePlant()
-
-                    Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
-                        .show()
-
-                    findNavController().navigateUp()
+        launch(Dispatchers.Main) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(resources.getString(R.string.delete_plant_from_db))
+                .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
+                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
                 }
-            }.show()
+                .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
+                    launch(Dispatchers.IO) {
+                        viewModel.deletePlant()
+
+                        Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
+                            .show()
+
+                        findNavController().navigateUp()
+                    }
+                }.show()
+        }
+
     }
 
     private fun onClickOptionMenuSavePlant() {

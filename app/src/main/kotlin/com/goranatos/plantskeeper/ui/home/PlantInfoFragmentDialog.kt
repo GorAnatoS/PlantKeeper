@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.DialogPlantInfoBinding
@@ -71,6 +73,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     private fun setOnButtonsClicked() {
         binding.toggleEditPlant.setOnClickListener {
             onEditButtonClicked()
+
             dismiss()
         }
 
@@ -116,6 +119,9 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         binding.buttonSave.setOnClickListener {
             isToSaveResult = true
             //я сохраняю данные при onDismiss
+
+            Toast.makeText(requireActivity().applicationContext, TimeHelper.isInHibernateRangeDate(plant.long_to_water_from_date!!, plant).toString(), Toast.LENGTH_LONG).show()
+
             dismiss()
         }
     }
@@ -137,7 +143,6 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
                 }
 
                 viewModel.updateThePlant()
-
             }
 
         super.onDismiss(dialog)

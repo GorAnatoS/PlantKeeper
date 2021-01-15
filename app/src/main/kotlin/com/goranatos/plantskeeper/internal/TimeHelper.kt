@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 
 /**
- Класс для работы с временными функциями
+Класс для работы с временными функциями
  */
 class TimeHelper {
     companion object {
@@ -51,7 +51,7 @@ class TimeHelper {
         }
 
         fun getDaysTillWateringNotification(plant: Plant): Int {
-            if (plant.is_water_need_on == 1){
+            if (plant.is_water_need_on == 1) {
 
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = plant.long_to_water_from_date!!
@@ -77,7 +77,36 @@ class TimeHelper {
             }
         }
 
-        fun longDatePlusDays(currentDate: Long, plusDays: Int): Long{
+        // TODO: 1/14/2021  
+        fun isInHibernateRangeDate(currentTimeMls: Long, plant: Plant): Boolean {
+            if (plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_till_date != null && plant.long_to_hibernate_till_date != null) {
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = currentTimeMls
+
+                val calendarTill = Calendar.getInstance()
+                calendarTill.timeInMillis = plant.long_to_hibernate_till_date!!
+
+                val calendarFrom = Calendar.getInstance()
+                calendarFrom.timeInMillis = plant.long_to_hibernate_from_date!!
+
+                val isDayOk =
+                    calendar.get(Calendar.DAY_OF_MONTH) <= calendarTill.get(Calendar.DAY_OF_MONTH) &&
+                            calendar.get(Calendar.DAY_OF_MONTH) >= calendarFrom.get(Calendar.DAY_OF_MONTH)
+                val isMonthOk =
+                    if (calendarFrom.get(Calendar.MONTH) <= calendarTill.get(Calendar.MONTH)) {
+                        calendar.get(Calendar.MONTH) <= calendarTill.get(Calendar.MONTH) &&
+                                calendar.get(Calendar.MONTH) >= calendarFrom.get(Calendar.MONTH)
+                    } else {
+                        calendar.get(Calendar.MONTH) <= calendarTill.get(Calendar.MONTH) ||
+                                calendar.get(Calendar.MONTH) >= calendarFrom.get(Calendar.MONTH)
+                    }
+
+                return isDayOk && isMonthOk
+
+            } else return false
+        }
+
+        fun longDatePlusDays(currentDate: Long, plusDays: Int): Long {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = currentDate
             calendar.add(Calendar.DAY_OF_YEAR, plusDays)

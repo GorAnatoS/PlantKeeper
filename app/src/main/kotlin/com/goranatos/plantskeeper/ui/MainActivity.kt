@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.goranatos.plantskeeper.R
 import org.kodein.di.DIAware
@@ -19,11 +20,13 @@ class MainActivity : AppCompatActivity(), DIAware {
         setContentView(R.layout.activity_main)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        findViewById<Toolbar>(R.id.toolbar)
-            .setupWithNavController(navController, appBarConfiguration)
-
+        navController.let {
+            val appBarConfiguration = AppBarConfiguration(navController.graph)
+            val toolbar = findViewById<Toolbar>(R.id.toolbar)
+            setSupportActionBar(toolbar)
+            toolbar.setupWithNavController(it, appBarConfiguration)
+        }
     }
 }
 
