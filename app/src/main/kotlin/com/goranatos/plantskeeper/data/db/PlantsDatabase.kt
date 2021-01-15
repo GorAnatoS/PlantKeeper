@@ -17,7 +17,7 @@ const val STRING_IMAGE_PATH_COLUMN = "string_image_path"
 
 //поливать и т.п. 1 раз во сколько дней?
 const val IS_WATER_NEED_ON_COLUMN = "is_water_need_on"
-const val LONG_TO_WATER_FROM_DATE_COLUMN = "long_to_water_from_date"
+const val LONG_NEXT_WATERING_DATE_COLUMN = "long_next_watering_date"
 
 const val INT_WATERING_FREQUENCY_NORMAL_COLUMN = "watering_frequency_normal"
 const val INT_WATERING_FREQUENCY_IN_HIBERNATE_COLUMN = "watering_frequency_in_hibernate"

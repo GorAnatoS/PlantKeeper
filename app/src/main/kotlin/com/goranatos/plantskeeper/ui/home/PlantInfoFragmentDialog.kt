@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.DialogPlantInfoBinding
@@ -85,8 +84,8 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
     private fun setPlantInfo() {
         if (plant.is_water_need_on == 1) {
-            if (plant.long_to_water_from_date != null) binding.tvToWaterFromDateVal.text =
-                TimeHelper.getFormattedDateString(plant.long_to_water_from_date!!)
+            if (plant.long_next_watering_date != null) binding.tvToWaterFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
             else binding.tvToWaterFromDateVal.visibility = View.GONE
 
             if (plant.int_watering_frequency_normal == null) binding.tvWateringFrequency.visibility =
@@ -120,8 +119,6 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             isToSaveResult = true
             //я сохраняю данные при onDismiss
 
-
-
             dismiss()
         }
     }
@@ -135,18 +132,25 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     override fun onDismiss(dialog: DialogInterface) {
         if (isToSaveResult)
             if (binding.checkBoxWatering.isChecked) {
-                plant.int_watering_frequency_normal?.let {
-                    viewModel.thePlant.long_to_water_from_date = longDatePlusDays(
-                        plant.long_to_water_from_date!!,
-                        plant.int_watering_frequency_normal!!
-                    )
+
+                if (TimeHelper.isDateInPlantHibernateRange(TimeHelper.getCurrentTimeInMs(), plant)){
+                    plant.int_watering_frequency_in_hibernate?.let {
+                        viewModel.thePlant.long_next_watering_date = longDatePlusDays(
+                            TimeHelper.getCurrentTimeInMs(),
+                            plant.int_watering_frequency_in_hibernate!!
+                        )
+                    }
+                } else {
+                    plant.int_watering_frequency_normal?.let {
+                        viewModel.thePlant.long_next_watering_date = longDatePlusDays(
+                            TimeHelper.getCurrentTimeInMs(),
+                            plant.int_watering_frequency_normal!!
+                        )
+                    }
                 }
 
                 viewModel.updateThePlant()
             }
-
-        Toast.makeText(requireActivity().applicationContext, TimeHelper.isInHibernateRangeDate(plant).toString(), Toast.LENGTH_LONG).show()
-
         super.onDismiss(dialog)
     }
 

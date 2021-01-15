@@ -79,7 +79,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
             if (plant.is_water_need_on == 1) {
 
                 val calendar = Calendar.getInstance()
-                calendar.timeInMillis = plant.long_to_water_from_date!!
+                calendar.timeInMillis = plant.long_next_watering_date!!
 
                 val prefMinute = sharedPreferences.getInt("notification_time", 9 * 60 + 30)
 

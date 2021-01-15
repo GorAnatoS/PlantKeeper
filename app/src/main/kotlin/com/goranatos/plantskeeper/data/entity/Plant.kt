@@ -24,8 +24,8 @@ data class Plant(
     @ColumnInfo(name = IS_WATER_NEED_ON_COLUMN)
     var is_water_need_on: Int = 0,
 
-    @ColumnInfo(name = LONG_TO_WATER_FROM_DATE_COLUMN)
-    var long_to_water_from_date: Long?,
+    @ColumnInfo(name = LONG_NEXT_WATERING_DATE_COLUMN)
+    var long_next_watering_date: Long?,
 
     @ColumnInfo(name = IS_WATERING_HIBERNATE_MODE_ON_COLUMN)
     var is_watering_hibernate_mode_on: Int = 0,
