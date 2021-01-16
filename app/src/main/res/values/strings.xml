@@ -92,6 +92,7 @@
     <string name="plants_need_care">Растения нуждаются в уходе</string>
     <string name="test">тест</string>
     <string name="till_watering">Дней до полива:</string>
+    <string name="till_fertilzing">Дней до внесения удобрений:</string>
 
 
 </resources>

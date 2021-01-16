@@ -56,6 +56,27 @@
             app:layout_constraintStart_toEndOf="@+id/tvTillWatering"
             app:layout_constraintTop_toTopOf="@+id/tvTillWatering" />
 
+        <TextView
+            android:id="@+id/tvTillFertilizing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/till_fertilzing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTillWatering" />\
+
+        <TextView
+            android:id="@+id/tvTillFertilizingVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="3"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTillFertilizing"
+            app:layout_constraintStart_toEndOf="@+id/tvTillFertilizing"
+            app:layout_constraintTop_toTopOf="@+id/tvTillFertilizing" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

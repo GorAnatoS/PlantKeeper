@@ -1,7 +1,5 @@
 package com.goranatos.plantskeeper.data.entity
 
-//import com.goranatos.plantskeeper.ui.home.MyPlantsFragmentDirections
-
 import android.net.Uri
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
@@ -47,7 +45,10 @@ class PlantItemCard(
             }
 
             itemView.setOnLongClickListener {
-                plantItemCardLongListener.onPlantItemCardLongClicked(content.int_id, PlantItemCardMenu.NOT_SELECTED.menuCode)
+                plantItemCardLongListener.onPlantItemCardLongClicked(
+                    content.int_id,
+                    PlantItemCardMenu.NOT_SELECTED.menuCode
+                )
 
                 val pop = PopupMenu(viewHolder.containerView.context, it)
                 pop.inflate(R.menu.plant_menu_on_long_click)
@@ -55,10 +56,16 @@ class PlantItemCard(
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.context_menu_edit_plant -> {
-                            plantItemCardLongListener.onPlantItemCardLongClicked(content.int_id, PlantItemCardMenu.EDIT_MENU.menuCode)
+                            plantItemCardLongListener.onPlantItemCardLongClicked(
+                                content.int_id,
+                                PlantItemCardMenu.EDIT_MENU.menuCode
+                            )
                         }
                         R.id.context_menu_delete_plant -> {
-                            plantItemCardLongListener.onPlantItemCardLongClicked(content.int_id, PlantItemCardMenu.DELETE_MENU.menuCode)
+                            plantItemCardLongListener.onPlantItemCardLongClicked(
+                                content.int_id,
+                                PlantItemCardMenu.DELETE_MENU.menuCode
+                            )
                         }
                     }
                     true
@@ -67,29 +74,44 @@ class PlantItemCard(
                 true
             }
 
+            var colorNormal = true
             if (content.is_water_need_on == 1) {
-                if (TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_watering_date!!) <= 0) viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_attention_color)
+                if (TimeHelper.getDaysTillEventNotification(
+                        System.currentTimeMillis(),
+                        content.long_next_watering_date!!
+                    ) <= 0
                 )
-                else viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(
-                        viewHolder.containerView.context,
-                        R.color.card_normal_color
-                    )
-                )
+                    colorNormal = false
 
                 viewHolder.containerView.tvTillWateringVal.text =
-                    TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_watering_date!!).toString()
+                    TimeHelper.getDaysTillEventNotification(
+                        System.currentTimeMillis(),
+                        content.long_next_watering_date!!
+                    ).toString()
             } else {
-                viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(
-                        viewHolder.containerView.context,
-                        R.color.card_normal_color
-                    )
-                )
-
                 viewHolder.containerView.tvTillWatering.visibility = View.GONE
                 viewHolder.containerView.tvTillWateringVal.visibility = View.GONE
+            }
+
+            if (content.is_fertilize_need_on == 1) {
+                if (TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_fertilizing_date!!) <= 0)
+                    colorNormal = false
+
+                viewHolder.containerView.tvTillFertilizingVal.text =
+                    TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_fertilizing_date!!).toString()
+            } else {
+                viewHolder.containerView.tvTillFertilizing.visibility = View.GONE
+                viewHolder.containerView.tvTillFertilizingVal.visibility = View.GONE
+            }
+
+            if (colorNormal) {
+                viewHolder.containerView.plantCardView.setCardBackgroundColor(
+                    getColor(viewHolder.containerView.context,R.color.card_normal_color)
+                )
+            } else {
+                viewHolder.containerView.plantCardView.setCardBackgroundColor(
+                    getColor(viewHolder.containerView.context, R.color.card_attention_color)
+                )
             }
         }
     }
@@ -97,7 +119,7 @@ class PlantItemCard(
     override fun getLayout() = R.layout.item_plant
 }
 
-enum class PlantItemCardMenu(val menuCode: Int){
+enum class PlantItemCardMenu(val menuCode: Int) {
     NOT_SELECTED(-1),
     EDIT_MENU(0),
     DELETE_MENU(1)

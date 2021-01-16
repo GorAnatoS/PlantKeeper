@@ -25,7 +25,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     lateinit var thePlant: Plant
 
     private val viewModelJob = Job()
-    val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
     //create new plant
@@ -78,6 +78,8 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         plantList?.forEach { plant ->
             if (plant.is_water_need_on == 1) {
 
+                val tag = "_watering"
+
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = plant.long_next_watering_date!!
 
@@ -87,7 +89,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                 calendar.set(Calendar.MINUTE, prefMinute % 60)
                 calendar.set(Calendar.SECOND, 0)
 
-                var triggerTime = calendar.timeInMillis
+                val triggerTime = calendar.timeInMillis
 
                 val notifyPendingIntent = PendingIntent.getBroadcast(
                     getApplication(),
@@ -112,14 +114,14 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         }
     }
 
-    suspend fun updatePlant() {
+    private suspend fun updatePlant() {
         return withContext(Dispatchers.IO) {
             repository.updatePlant(thePlant)
         }
     }
 
     fun updateThePlant(){
-        uiScope.launch {
+        viewModelScope.launch {
             updatePlant()
         }
     }

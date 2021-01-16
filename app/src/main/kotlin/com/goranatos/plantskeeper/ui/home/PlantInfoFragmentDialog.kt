@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.viewModelScope
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.DialogPlantInfoBinding
@@ -33,6 +32,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     lateinit var binding: DialogPlantInfoBinding
 
     var isToSaveResult = false
+    var isToShowSaveBtn = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,10 +54,11 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         setWateringNeedVisible()
         setFertilizingNeedVisible()
 
-        setPlantImage()
-        setPlantInfo()
+        if (!isToShowSaveBtn) binding.buttonSave.visibility = View.INVISIBLE
 
-        setSaveBtn()
+        setPlantImage()
+
+        setPlantInfo()
 
         setOnButtonsClicked()
 
@@ -73,12 +74,16 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     private fun setOnButtonsClicked() {
         binding.toggleEditPlant.setOnClickListener {
             onEditButtonClicked()
-
-            dismiss()
         }
 
         binding.toggleDeletePlant.setOnClickListener {
             onDeleteButtonClicked()
+        }
+
+        binding.buttonSave.setOnClickListener {
+            isToSaveResult = true
+            //я сохраняю данные при onDismiss
+
             dismiss()
         }
     }
@@ -140,9 +145,9 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             ) <= 0
         ) {
             binding.checkBoxWatered.visibility = View.VISIBLE
+            isToShowSaveBtn = true
         } else {
             binding.checkBoxWatered.visibility = View.GONE
-            binding.buttonSave.visibility = View.INVISIBLE
         }
     }
 
@@ -153,19 +158,9 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             ) <= 0
         ) {
             binding.checkBoxFertilized.visibility = View.VISIBLE
+            isToShowSaveBtn = true
         } else {
             binding.checkBoxFertilized.visibility = View.GONE
-            binding.buttonSave.visibility = View.INVISIBLE
-        }
-    }
-
-
-    private fun setSaveBtn() {
-        binding.buttonSave.setOnClickListener {
-            isToSaveResult = true
-            //я сохраняю данные при onDismiss
-
-            dismiss()
         }
     }
 
@@ -179,6 +174,8 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         if (isToSaveResult) {
             isWateredCheckBoxChecked()
             isFertilizedCheckBoxChecked()
+
+            viewModel.updateThePlant()
         }
         super.onDismiss(dialog)
     }
@@ -198,17 +195,15 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
                             plant.int_fertilizing_frequency_in_hibernate!!
                         )
                     }
-                } else {
-                    plant.int_fertilizing_frequency_normal?.let {
-                        viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
-                            TimeHelper.getCurrentTimeInMs(),
-                            plant.int_fertilizing_frequency_normal!!
-                        )
-                    }
+                }
+            } else {
+                plant.int_fertilizing_frequency_normal?.let {
+                    viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
+                        TimeHelper.getCurrentTimeInMs(),
+                        plant.int_fertilizing_frequency_normal!!
+                    )
                 }
             }
-
-            viewModel.updateThePlant()
         }
     }
 
@@ -227,23 +222,23 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
                             plant.int_watering_frequency_in_hibernate!!
                         )
                     }
-                } else {
-                    plant.int_watering_frequency_normal?.let {
-                        viewModel.thePlant.long_next_watering_date = longDatePlusDays(
-                            TimeHelper.getCurrentTimeInMs(),
-                            plant.int_watering_frequency_normal!!
-                        )
-                    }
+                }
+            } else {
+                plant.int_watering_frequency_normal?.let {
+                    viewModel.thePlant.long_next_watering_date = longDatePlusDays(
+                        TimeHelper.getCurrentTimeInMs(),
+                        plant.int_watering_frequency_normal!!
+                    )
                 }
             }
-
-            viewModel.updateThePlant()
         }
     }
 
     private fun onEditButtonClicked() {
         viewModel.updateNavigateToPlantId(viewModel.thePlant.int_id)
         viewModel.onItemClicked()
+
+        dismiss()
     }
 
     private fun onDeleteButtonClicked() {
@@ -254,5 +249,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             viewModel,
             requireView()
         )
+
+        dismiss()
     }
 }
