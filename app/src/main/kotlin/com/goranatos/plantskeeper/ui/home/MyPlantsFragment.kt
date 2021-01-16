@@ -130,11 +130,8 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                 PlantItemCardMenu.EDIT_MENU.menuCode -> {
                     viewModel.updateNavigateToPlantId(id)
                     viewModel.onItemClicked()
-
-                    Toast.makeText(context, "EditPlantMenuClicked", Toast.LENGTH_SHORT).show()
                 }
                 PlantItemCardMenu.DELETE_MENU.menuCode -> {
-                    Toast.makeText(context, "DeletePlantMenuClicked", Toast.LENGTH_SHORT).show()
                     deletePlantItemFromDB(
                         id,
                         requireContext(),
@@ -144,7 +141,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                     )
                 }
                 PlantItemCardMenu.NOT_SELECTED.menuCode -> {
-                    Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         }
