@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
-import com.goranatos.plantskeeper.databinding.IncludePlantWateringSettingsBinding
+import com.goranatos.plantskeeper.databinding.IncludePlantFertilizingSettingsBinding
 import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
 
@@ -23,16 +23,15 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
  * Created by qsufff on 12/7/2020.
  */
 
-class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) : DialogFragment() {
+class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) : DialogFragment() {
 
     lateinit var plant: Plant
 
     lateinit var myDialog: Dialog
 
-    lateinit var binding: IncludePlantWateringSettingsBinding
+    lateinit var binding: IncludePlantFertilizingSettingsBinding
 
     var isToSaveResult = false
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +41,7 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         binding =
             DataBindingUtil.inflate(
                 inflater,
-                R.layout.include_plant_watering_settings,
+                R.layout.include_plant_fertilizing_settings,
                 container,
                 false
             )
@@ -53,9 +52,9 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
 
         setEditTextListeners()
 
-        setTvToWaterFromDate()
+        setTvToFertilizeFromDate()
 
-        setToWaterFromDate()
+        setToFertilizeFromDate()
 
         setSaveBtn()
 
@@ -64,13 +63,13 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         return binding.root
     }
 
-    private fun setTvToWaterFromDate() {
-        if (plant.long_next_watering_date == null) {
-            plant.long_next_watering_date = TimeHelper.getNextDayDate()
-            binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+    private fun setTvToFertilizeFromDate() {
+        if (plant.long_next_fertilizing_date == null) {
+            plant.long_next_fertilizing_date = TimeHelper.getNextDayDate()
+            binding.tvToFertilizeFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
         } else {
-            binding.tvToWaterFromDateVal.text =
-                TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+            binding.tvToFertilizeFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
         }
     }
 
@@ -91,39 +90,39 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         }
     }
 
-    private fun setToWaterFromDate() {
+    private fun setToFertilizeFromDate() {
         val builder = MaterialDatePicker.Builder.datePicker()
-        builder.setTitleText("Поливать с")
+        builder.setTitleText("Следующий раз удобряем:")
         val materialDatePicker = builder.build()
 
         materialDatePicker.addOnPositiveButtonClickListener {
-            plant.long_next_watering_date = it
-            binding.tvToWaterFromDateVal.text =
-                TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+            plant.long_next_fertilizing_date = it
+            binding.tvToFertilizeFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
         }
 
-        binding.tvToWaterFromDateVal.setOnClickListener {
+        binding.tvToFertilizeFromDateVal.setOnClickListener {
             materialDatePicker.show(parentFragmentManager, "DATE_PICKER")
         }
     }
 
     private fun setEditTextListeners(){
-        plant.int_watering_frequency_normal?.let {
-            binding.etWateringFrequencyNormal.setText(it.toString(), TextView.BufferType.EDITABLE)
+        plant.int_fertilizing_frequency_normal?.let {
+            binding.etFertilizingFrequencyNormal.setText(it.toString(), TextView.BufferType.EDITABLE)
         }
 
-        plant.int_watering_frequency_in_hibernate?.let {
-            binding.etWateringFrequencyInHibernate.setText(it.toString(), TextView.BufferType.EDITABLE)
+        plant.int_fertilizing_frequency_in_hibernate?.let {
+            binding.etFertilizingFrequencyInHibernate.setText(it.toString(), TextView.BufferType.EDITABLE)
         }
 
-        binding.etWateringFrequencyNormal.addTextChangedListener{
+        binding.etFertilizingFrequencyNormal.addTextChangedListener{
             if (!it.isNullOrEmpty())
-                plant.int_watering_frequency_normal = it.toString().toInt()
+                plant.int_fertilizing_frequency_normal = it.toString().toInt()
         }
 
-        binding.etWateringFrequencyInHibernate.addTextChangedListener{
+        binding.etFertilizingFrequencyInHibernate.addTextChangedListener{
             if (!it.isNullOrEmpty())
-                plant.int_watering_frequency_in_hibernate = it.toString().toInt()
+                plant.int_fertilizing_frequency_in_hibernate = it.toString().toInt()
         }
     }
 
@@ -131,46 +130,46 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
     private fun setHibernateMode() {
         binding.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                setWateringHibernateModeOn()
+                setFertilizingHibernateModeOn()
             } else {
-                setWateringHibernateModeOff()
+                setFertilizingHibernateModeOff()
             }
         }
 
-        binding.switchHibernate.isChecked = plant.is_watering_hibernate_mode_on == 1
+        binding.switchHibernate.isChecked = plant.is_fertilizing_hibernate_mode_on == 1
     }
 
-    private fun setWateringHibernateModeOn(){
-        plant.is_watering_hibernate_mode_on = 1
-        binding.groupWateringInHibernateMode.visibility = View.VISIBLE
+    private fun setFertilizingHibernateModeOn(){
+        plant.is_fertilizing_hibernate_mode_on = 1
+        binding.groupFertilizingInHibernateMode.visibility = View.VISIBLE
     }
 
-    private fun setWateringHibernateModeOff(){
-        plant.is_watering_hibernate_mode_on = 0
-        binding.groupWateringInHibernateMode.visibility = View.GONE
+    private fun setFertilizingHibernateModeOff(){
+        plant.is_fertilizing_hibernate_mode_on = 0
+        binding.groupFertilizingInHibernateMode.visibility = View.GONE
     }
 
     private fun areCheckedInputsOk(): Boolean {
         var isOk = true
 
-        if (binding.etWateringFrequencyNormal.editableText.isNullOrEmpty()) {
-            binding.etLayoutWateringFrequencyNormal.isErrorEnabled = true
-            binding.etLayoutWateringFrequencyNormal.error = "Ошибка"
+        if (binding.etFertilizingFrequencyNormal.editableText.isNullOrEmpty()) {
+            binding.etLayoutFertilizingFrequencyNormal.isErrorEnabled = true
+            binding.etLayoutFertilizingFrequencyNormal.error = "Ошибка"
 
             isOk = false
         } else {
-            binding.etLayoutWateringFrequencyNormal.isErrorEnabled = false
-            binding.etLayoutWateringFrequencyNormal.error = null
+            binding.etLayoutFertilizingFrequencyNormal.isErrorEnabled = false
+            binding.etLayoutFertilizingFrequencyNormal.error = null
         }
 
         if (binding.switchHibernate.isChecked){
-            if (binding.etWateringFrequencyInHibernate.editableText.isNullOrEmpty()) {
-                binding.etLayoutWateringFrequencyInHibernate.isErrorEnabled = true
-                binding.etLayoutWateringFrequencyInHibernate.error = "Ошибка"
+            if (binding.etFertilizingFrequencyInHibernate.editableText.isNullOrEmpty()) {
+                binding.etLayoutFertilizingFrequencyInHibernate.isErrorEnabled = true
+                binding.etLayoutFertilizingFrequencyInHibernate.error = "Ошибка"
                 isOk = false
             } else {
-                binding.etLayoutWateringFrequencyInHibernate.isErrorEnabled = false
-                binding.etLayoutWateringFrequencyInHibernate.error = null
+                binding.etLayoutFertilizingFrequencyInHibernate.isErrorEnabled = false
+                binding.etLayoutFertilizingFrequencyInHibernate.error = null
             }
         }
 
@@ -187,11 +186,10 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         if (isToSaveResult) {
             viewModel.updateThePlantOutside(plant)
         } else {
-            plant.is_water_need_on = 0
+            plant.is_fertilize_need_on = 0
             viewModel.updateThePlantOutside(plant)
         }
 
         super.onDismiss(dialog)
     }
 }
-

@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.viewModelScope
@@ -16,7 +15,7 @@ import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.databinding.DialogPlantInfoBinding
 import com.goranatos.plantskeeper.internal.TimeHelper
-import com.goranatos.plantskeeper.internal.TimeHelper.Companion.getDaysTillWateringNotification
+import com.goranatos.plantskeeper.internal.TimeHelper.Companion.getDaysTillEventNotification
 import com.goranatos.plantskeeper.internal.TimeHelper.Companion.longDatePlusDays
 import com.goranatos.plantskeeper.ui.home.MyPlantsFragment.Companion.deletePlantItemFromDB
 
@@ -53,6 +52,8 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         plant = viewModel.thePlant
 
         setWateringNeedVisible()
+        setFertilizingNeedVisible()
+
         setPlantImage()
         setPlantInfo()
 
@@ -83,7 +84,9 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     }
 
     private fun setPlantInfo() {
+        //WATERING
         if (plant.is_water_need_on == 1) {
+
             if (plant.long_next_watering_date != null) binding.tvToWaterFromDateVal.text =
                 TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
             else binding.tvToWaterFromDateVal.visibility = View.GONE
@@ -103,16 +106,59 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             binding.tvWateringFrequencyInHibernate.visibility =
                 View.INVISIBLE
         }
+
+
+        //FERTILIZING
+        if (plant.is_fertilize_need_on == 1) {
+
+            if (plant.long_next_fertilizing_date != null) binding.tvToFertilizeFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
+            else binding.tvToFertilizeFromDateVal.visibility = View.GONE
+
+            if (plant.int_fertilizing_frequency_normal == null) binding.tvFertilizingFrequency.visibility =
+                View.GONE
+            else binding.tvFertilizingFrequency.text =
+                plant.int_fertilizing_frequency_normal.toString()
+
+            if (plant.int_fertilizing_frequency_in_hibernate == null) binding.tvFertilizingFrequencyInHibernate.visibility =
+                View.GONE
+            else binding.tvFertilizingFrequencyInHibernate.text =
+                plant.int_fertilizing_frequency_in_hibernate.toString()
+        } else {
+            binding.tvToFertilizeFromDateVal.visibility = View.INVISIBLE
+            binding.tvFertilizingFrequency.visibility =
+                View.INVISIBLE
+            binding.tvFertilizingFrequencyInHibernate.visibility =
+                View.INVISIBLE
+        }
     }
 
     private fun setWateringNeedVisible() {
-        if (plant.is_water_need_on == 1 && getDaysTillWateringNotification(plant) <= 0) {
-            binding.checkBoxWatering.visibility = View.VISIBLE
+        if (plant.is_water_need_on == 1 && getDaysTillEventNotification(
+                System.currentTimeMillis(),
+                plant.long_next_watering_date!!
+            ) <= 0
+        ) {
+            binding.checkBoxWatered.visibility = View.VISIBLE
         } else {
-            binding.checkBoxWatering.visibility = View.GONE
+            binding.checkBoxWatered.visibility = View.GONE
             binding.buttonSave.visibility = View.INVISIBLE
         }
     }
+
+    private fun setFertilizingNeedVisible() {
+        if (plant.is_fertilize_need_on == 1 && getDaysTillEventNotification(
+                System.currentTimeMillis(),
+                plant.long_next_fertilizing_date!!
+            ) <= 0
+        ) {
+            binding.checkBoxFertilized.visibility = View.VISIBLE
+        } else {
+            binding.checkBoxFertilized.visibility = View.GONE
+            binding.buttonSave.visibility = View.INVISIBLE
+        }
+    }
+
 
     private fun setSaveBtn() {
         binding.buttonSave.setOnClickListener {
@@ -130,10 +176,51 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        if (isToSaveResult)
-            if (binding.checkBoxWatering.isChecked) {
+        if (isToSaveResult) {
+            isWateredCheckBoxChecked()
+            isFertilizedCheckBoxChecked()
+        }
+        super.onDismiss(dialog)
+    }
 
-                if (TimeHelper.isDateInPlantHibernateRange(TimeHelper.getCurrentTimeInMs(), plant)){
+    private fun isFertilizedCheckBoxChecked() {
+        if (binding.checkBoxFertilized.isChecked) {
+            if (plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null && plant.long_next_fertilizing_date != null) {
+                if (TimeHelper.isDateInPlantHibernateRange(
+                        TimeHelper.getCurrentTimeInMs(),
+                        plant.long_to_hibernate_from_date!!,
+                        plant.long_to_hibernate_till_date!!
+                    )
+                ) {
+                    plant.int_fertilizing_frequency_in_hibernate?.let {
+                        viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
+                            TimeHelper.getCurrentTimeInMs(),
+                            plant.int_fertilizing_frequency_in_hibernate!!
+                        )
+                    }
+                } else {
+                    plant.int_fertilizing_frequency_normal?.let {
+                        viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
+                            TimeHelper.getCurrentTimeInMs(),
+                            plant.int_fertilizing_frequency_normal!!
+                        )
+                    }
+                }
+            }
+
+            viewModel.updateThePlant()
+        }
+    }
+
+    private fun isWateredCheckBoxChecked() {
+        if (binding.checkBoxWatered.isChecked) {
+            if (plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null && plant.long_next_watering_date != null) {
+                if (TimeHelper.isDateInPlantHibernateRange(
+                        TimeHelper.getCurrentTimeInMs(),
+                        plant.long_to_hibernate_from_date!!,
+                        plant.long_to_hibernate_till_date!!
+                    )
+                ) {
                     plant.int_watering_frequency_in_hibernate?.let {
                         viewModel.thePlant.long_next_watering_date = longDatePlusDays(
                             TimeHelper.getCurrentTimeInMs(),
@@ -148,10 +235,10 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
                         )
                     }
                 }
-
-                viewModel.updateThePlant()
             }
-        super.onDismiss(dialog)
+
+            viewModel.updateThePlant()
+        }
     }
 
     private fun onEditButtonClicked() {

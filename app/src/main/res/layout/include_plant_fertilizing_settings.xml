@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/waterGroup"
+        android:id="@+id/fertilizeGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -19,7 +19,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Настройка полива"
+            android:layout_marginEnd="16dp"
+            android:text="Настройка внесения удобрений"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,13 +41,13 @@
 
 
         <TextView
-            android:id="@+id/tvToStartWaterFrom"
+            android:id="@+id/tvToStartFertilizeFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Следующий полив"
+            android:text="Следующее внесение удобрений"
             android:textAlignment="center"
             android:textSize="14sp"
             android:visibility="visible"
@@ -52,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/switchHibernate" />
 
         <TextView
-            android:id="@+id/tvToWaterFromDateVal"
+            android:id="@+id/tvToFertilizeFromDateVal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -63,54 +66,54 @@
             android:textSize="14sp"
             android:visibility="visible"
             app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-            app:layout_constraintBottom_toBottomOf="@+id/tvToStartWaterFrom"
-            app:layout_constraintStart_toEndOf="@+id/tvToStartWaterFrom"
-            app:layout_constraintTop_toTopOf="@+id/tvToStartWaterFrom" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvToStartFertilizeFrom"
+            app:layout_constraintStart_toEndOf="@+id/tvToStartFertilizeFrom"
+            app:layout_constraintTop_toTopOf="@+id/tvToStartFertilizeFrom" />
 
 
         <TextView
-            android:id="@+id/tvToWaterOnceAt"
+            android:id="@+id/tvToFertilizeOnceAt"
             style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="28dp"
             android:gravity="center"
             android:text="Удобрять раз в (дни):"
-            app:layout_constraintEnd_toStartOf="@+id/etLayoutWateringFrequencyNormal"
+            app:layout_constraintEnd_toStartOf="@+id/etLayoutFertilizingFrequencyNormal"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvToStartWaterFrom" />
+            app:layout_constraintTop_toBottomOf="@+id/tvToStartFertilizeFrom" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_watering_normal_mode"
+            android:id="@+id/group_fertilize_normal_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnce, etLayoutWateringFrequencyNormal" />
+            app:constraint_referenced_ids="textViewToFertilizeOnce, etLayoutFertilizingFrequencyNormal" />
 
         <TextView
-            android:id="@+id/textViewToWaterOnce"
+            android:id="@+id/textViewToFertilizeOnce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="Нормальный режим:"
-            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyNormal"
+            app:layout_constraintBottom_toBottomOf="@+id/etLayoutFertilizingFrequencyNormal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyNormal" />
+            app:layout_constraintTop_toTopOf="@+id/etLayoutFertilizingFrequencyNormal" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etLayoutWateringFrequencyNormal"
+            android:id="@+id/etLayoutFertilizingFrequencyNormal"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnce"
-            app:layout_constraintTop_toBottomOf="@+id/tvToWaterOnceAt">
+            app:layout_constraintStart_toEndOf="@+id/textViewToFertilizeOnce"
+            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeOnceAt">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etWateringFrequencyNormal"
+                android:id="@+id/etFertilizingFrequencyNormal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
@@ -122,35 +125,35 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_watering_in_hibernate_mode"
+            android:id="@+id/group_fertilizing_in_hibernate_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="textViewToWaterOnceHibernate, etLayoutWateringFrequencyInHibernate" />
+            app:constraint_referenced_ids="textViewToFertilizeOnceHibernate, etLayoutFertilizingFrequencyInHibernate" />
 
 
         <TextView
-            android:id="@+id/textViewToWaterOnceHibernate"
+            android:id="@+id/textViewToFertilizeOnceHibernate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="Режим покоя:"
-            app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
+            app:layout_constraintBottom_toBottomOf="@+id/etLayoutFertilizingFrequencyInHibernate"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate" />
+            app:layout_constraintTop_toTopOf="@+id/etLayoutFertilizingFrequencyInHibernate" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etLayoutWateringFrequencyInHibernate"
+            android:id="@+id/etLayoutFertilizingFrequencyInHibernate"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/textViewToWaterOnceHibernate"
-            app:layout_constraintTop_toBottomOf="@+id/etLayoutWateringFrequencyNormal">
+            app:layout_constraintStart_toEndOf="@+id/textViewToFertilizeOnceHibernate"
+            app:layout_constraintTop_toBottomOf="@+id/etLayoutFertilizingFrequencyNormal">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etWateringFrequencyInHibernate"
+                android:id="@+id/etFertilizingFrequencyInHibernate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
@@ -173,7 +176,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate" />
+            app:layout_constraintTop_toBottomOf="@+id/etLayoutFertilizingFrequencyInHibernate" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"

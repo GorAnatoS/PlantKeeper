@@ -40,7 +40,7 @@ class TimeHelper {
 
         fun getCurrentTimeInMs(): Long = date.time
 
-        fun getNextWateringDate(): Long {
+        fun getNextDayDate(): Long {
             val calendar = Calendar.getInstance()
             calendar.add(Calendar.DAY_OF_YEAR, 1)
             return calendar.timeInMillis
@@ -50,31 +50,24 @@ class TimeHelper {
             return "${persistedMinutesFromMidnight / 60}:${persistedMinutesFromMidnight % 60}"
         }
 
-        fun getDaysTillWateringNotification(plant: Plant): Int {
-            if (plant.is_water_need_on == 1) {
+        fun getDaysTillEventNotification(dateFrom: Long, dateTill: Long): Int {
+            val calendarEventDate = Calendar.getInstance()
+            calendarEventDate.timeInMillis = dateTill
+            calendarEventDate.set(Calendar.HOUR_OF_DAY, 0)
+            calendarEventDate.set(Calendar.MINUTE, 0)
+            calendarEventDate.set(Calendar.SECOND, 0)
+            calendarEventDate.set(Calendar.MILLISECOND, 0)
 
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = plant.long_next_watering_date!!
-                calendar.set(Calendar.HOUR_OF_DAY, 0)
-                calendar.set(Calendar.MINUTE, 0)
-                calendar.set(Calendar.SECOND, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
+            val currentTimeCalendar = Calendar.getInstance()
+            currentTimeCalendar.timeInMillis = dateFrom
+            currentTimeCalendar.set(Calendar.HOUR_OF_DAY, 0)
+            currentTimeCalendar.set(Calendar.MINUTE, 0)
+            currentTimeCalendar.set(Calendar.SECOND, 0)
+            currentTimeCalendar.set(Calendar.MILLISECOND, 0)
 
-                val currentTimeCalendar = Calendar.getInstance()
-                val currentTime = System.currentTimeMillis()
-                currentTimeCalendar.timeInMillis = currentTime
-                currentTimeCalendar.set(Calendar.HOUR_OF_DAY, 0)
-                currentTimeCalendar.set(Calendar.MINUTE, 0)
-                currentTimeCalendar.set(Calendar.SECOND, 0)
-                currentTimeCalendar.set(Calendar.MILLISECOND, 0)
+            val result = calendarEventDate.timeInMillis - currentTimeCalendar.timeInMillis
 
-                val result = calendar.timeInMillis - currentTimeCalendar.timeInMillis
-
-                return TimeUnit.MILLISECONDS.toDays(result).toInt()
-
-            } else {
-                return -1
-            }
+            return TimeUnit.MILLISECONDS.toDays(result).toInt()
         }
 
         // TODO: 1/14/2021  
@@ -97,12 +90,41 @@ class TimeHelper {
                     calendarTill.set(Calendar.YEAR, date.get(Calendar.YEAR) + 1)
                 }
 
-                calendarFrom.set(Calendar.DAY_OF_YEAR, calendarFrom.get(Calendar.DAY_OF_YEAR)-1)
-                calendarTill.set(Calendar.DAY_OF_YEAR, calendarTill.get(Calendar.DAY_OF_YEAR)+1)
+                calendarFrom.set(Calendar.DAY_OF_YEAR, calendarFrom.get(Calendar.DAY_OF_YEAR) - 1)
+                calendarTill.set(Calendar.DAY_OF_YEAR, calendarTill.get(Calendar.DAY_OF_YEAR) + 1)
 
                 return date.before(calendarTill) && date.after(calendarFrom)
 
             } else return false
+        }
+
+        fun isDateInPlantHibernateRange(
+            dateInMs: Long,
+            rangeDateFromMs: Long,
+            rangeDateTillMs: Long
+        ): Boolean {
+
+            val calendarDate = Calendar.getInstance()
+            calendarDate.timeInMillis = dateInMs
+
+            val calendarFrom = Calendar.getInstance()
+            calendarFrom.timeInMillis = rangeDateFromMs
+
+            val calendarTill = Calendar.getInstance()
+            calendarTill.timeInMillis = rangeDateTillMs
+
+            calendarFrom.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR))
+
+            if (calendarFrom.before(calendarTill)) {
+                calendarTill.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR))
+            } else {
+                calendarTill.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR) + 1)
+            }
+
+            calendarFrom.set(Calendar.DAY_OF_YEAR, calendarFrom.get(Calendar.DAY_OF_YEAR) - 1)
+            calendarTill.set(Calendar.DAY_OF_YEAR, calendarTill.get(Calendar.DAY_OF_YEAR) + 1)
+
+            return calendarDate.before(calendarTill) && calendarDate.after(calendarFrom)
         }
 
         fun longDatePlusDays(date: Long, plusDays: Int): Long {

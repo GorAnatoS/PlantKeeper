@@ -19,11 +19,19 @@ const val STRING_IMAGE_PATH_COLUMN = "string_image_path"
 const val IS_WATER_NEED_ON_COLUMN = "is_water_need_on"
 const val LONG_NEXT_WATERING_DATE_COLUMN = "long_next_watering_date"
 
-const val INT_WATERING_FREQUENCY_NORMAL_COLUMN = "watering_frequency_normal"
-const val INT_WATERING_FREQUENCY_IN_HIBERNATE_COLUMN = "watering_frequency_in_hibernate"
+const val INT_WATERING_FREQUENCY_NORMAL_COLUMN = "int_watering_frequency_normal"
+const val INT_WATERING_FREQUENCY_IN_HIBERNATE_COLUMN = "int_watering_frequency_in_hibernate"
 const val IS_WATERING_HIBERNATE_MODE_ON_COLUMN = "is_watering_hibernate_mode_on"
 
-const val FERTILIZE_NEED_COLUMN = "fertilization_need"
+
+const val IS_FERTILIZE_NEED_ON_COLUMN = "is_fertilize_need_on"
+const val LONG_NEXT_FERTILIZING_DATE_COLUMN = "long_next_fertilizing_date"
+
+const val INT_FERTILIZING_FREQUENCY_NORMAL_COLUMN = "int_fertilizing_frequency_normal"
+const val INT_FERTILIZING_FREQUENCY_IN_HIBERNATE_COLUMN = "int_fertilizing_frequency_in_hibernate"
+const val IS_FERTILIZING_HIBERNATE_MODE_ON_COLUMN = "is_fertilizing_hibernate_mode_on"
+
+
 const val SPRAY_NEED_COLUMN = "spraying_need"
 const val REPLANT_NEED_COLUMN = "replanting_need"
 const val CUT_NEED_COLUMN = "cutting_need"

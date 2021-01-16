@@ -39,6 +39,7 @@
     <string name="download">Загрузка</string>
     <string name="to_water">Поливать</string>
     <string name="to_water_dialog_plant_info">полить</string>
+    <string name="to_fertilize_dialog_plant_info">удобрить</string>
     <string name="to_fertilize">Удобрять</string>
     <string name="from_gallery">Из галереи</string>
     <string name="take_photo">Сделать фото</string>

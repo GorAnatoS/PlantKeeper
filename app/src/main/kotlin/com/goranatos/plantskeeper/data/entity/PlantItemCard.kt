@@ -68,7 +68,7 @@ class PlantItemCard(
             }
 
             if (content.is_water_need_on == 1) {
-                if (TimeHelper.getDaysTillWateringNotification(content) <= 0) viewHolder.containerView.plantCardView.setCardBackgroundColor(
+                if (TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_watering_date!!) <= 0) viewHolder.containerView.plantCardView.setCardBackgroundColor(
                     getColor(viewHolder.containerView.context, R.color.card_attention_color)
                 )
                 else viewHolder.containerView.plantCardView.setCardBackgroundColor(
@@ -79,7 +79,7 @@ class PlantItemCard(
                 )
 
                 viewHolder.containerView.tvTillWateringVal.text =
-                    TimeHelper.getDaysTillWateringNotification(content).toString()
+                    TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_watering_date!!).toString()
             } else {
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(
                     getColor(

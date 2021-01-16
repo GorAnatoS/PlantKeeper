@@ -30,6 +30,7 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriCapturedImage
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageUriFromCollectionDialogFragment
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetFertilizingSettingsFragmentDialog
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernateSettingsFragmentDialog
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
@@ -134,6 +135,21 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.groupContent.visibility = View.VISIBLE
         binding.groupLoading.visibility = View.GONE
 
+        if (plant.is_hibernate_mode_on != 0) {
+            binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
+            onHibernateModeOn()
+
+            binding.tvDateHibernateStartFromVal.text =
+                plant.long_to_hibernate_from_date?.let { TimeHelper.getFormattedDateString(it) }
+
+            binding.tvDateHibernateFinishVal.text =
+                plant.long_to_hibernate_till_date?.let { TimeHelper.getFormattedDateString(it) }
+
+        } else {
+            binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
+            onHibernateModeOff()
+        }
+
         if (plant.string_uri_image_path != null) {
             binding.plantImage.setImageURI(Uri.parse(plant.string_uri_image_path))
         }
@@ -142,6 +158,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.editTextTextPlantDescription.setText(plant.str_desc.toString())
         }
 
+        //WATER
         if (plant.is_water_need_on != 0) {
             binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
             onWaterNeedOn()
@@ -168,31 +185,37 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         if (plant.long_next_watering_date != null) {
             binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
         }
+        //END WATER
 
-        if (plant.is_hibernate_mode_on != 0) {
-            binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
-            onHibernateModeOn()
+        //START FERTILIZE
+        if (plant.is_fertilize_need_on != 0) {
+            binding.toggleGroupToFertilize.check(binding.toggleButtonToFertilize.id)
+            onFertilizeNeedOn()
 
-            binding.tvDateHibernateStartFromVal.text =
-                plant.long_to_hibernate_from_date?.let { TimeHelper.getFormattedDateString(it) }
-
-            binding.tvDateHibernateFinishVal.text =
-                plant.long_to_hibernate_till_date?.let { TimeHelper.getFormattedDateString(it) }
-
+            if (plant.is_fertilizing_hibernate_mode_on != 0){
+                binding.groupOnFertilizingHibernateModeOn.visibility = View.VISIBLE
+            } else {
+                binding.groupOnFertilizingHibernateModeOn.visibility = View.GONE
+            }
 
         } else {
-            binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
-            onHibernateModeOff()
+            binding.toggleGroupToFertilize.uncheck(binding.toggleButtonToFertilize.id)
+            onFertilizeNeedOff()
         }
 
+        plant.int_fertilizing_frequency_normal?.let {
+            binding.tvFertilizingFrequency.text = it.toString()
+        }
 
-        Toast.makeText(
-            requireContext(),
-            viewModel.thePlant.value.toString() + "\n\n",
-            Toast.LENGTH_SHORT
-        ).show()
+        plant.int_fertilizing_frequency_in_hibernate?.let {
+            binding.tvFertilizingFrequencyInHibernate.text = it.toString()
+        }
+
+        if (plant.long_next_fertilizing_date != null) {
+            binding.tvToFertilizeFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
+        }
+        //END FERTILIZE
     }
-
 
     private fun uiSetup() {
         setOnPlantNameEditTextChangedListener()
@@ -200,34 +223,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         setSelectImageForThePlantToggleGroup()
 
         setWaterToggleGroup()
+        setFertilizeToggleGroup()
         setHibernateToggleGroup()
-
-
-
-
     }
-
-//    val toolbar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
-//    toolbar.inflateMenu(R.menu.plant_detail_menu)
-//
-//    toolbar.menu.findItem(R.id.delete_item_from_db).isVisible = !viewModel.isToCreateNewPlant
-//
-//    toolbar.setOnMenuItemClickListener {
-//        when (it.itemId) {
-//            R.id.delete_item_from_db -> {
-//                deletePlantItemFromDB()
-//                true
-//            }
-//
-//            R.id.save_plant_to_db -> {
-//                onClickOptionMenuSavePlant()
-//                true
-//            }
-//            else -> {
-//                false
-//            }
-//        }
-//    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_detail_menu, menu)
@@ -452,6 +450,46 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         viewModel.setWaterNeedModeOff()
     }
     //END WaterToggleGroup
+
+    //START FERTILIZING PART
+    var tempCheckedToggleGroupToFertilize = false
+    private fun setFertilizeToggleGroup() {
+        binding.toggleGroupToFertilize.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) {
+                tempCheckedToggleGroupToFertilize = true
+                onFertilizeNeedOn()
+            } else {
+                tempCheckedToggleGroupToFertilize = false
+                onFertilizeNeedOff()
+            }
+        }
+    }
+
+    fun startSetFertilizingSettingsFragmentDialog() {
+        //Проверка на чек при старте, чтобы не было
+        if (tempCheckedToggleGroupToFertilize) {
+            val fragmentManager = parentFragmentManager
+            val newFragment = SetFertilizingSettingsFragmentDialog(viewModel)
+            newFragment.show(fragmentManager, "dialog")
+        }
+    }
+
+    private fun onFertilizeNeedOn() {
+        binding.tvToFertilizeFromDateVal.visibility = View.VISIBLE
+        binding.tvFertilizingFrequency.visibility = View.VISIBLE
+        binding.tvFertilizingFrequencyInHibernate.visibility = View.VISIBLE
+
+        viewModel.setFertilizeNeedModeOn()
+    }
+
+    private fun onFertilizeNeedOff() {
+        binding.tvToFertilizeFromDateVal.visibility = View.GONE
+        binding.tvFertilizingFrequency.visibility = View.GONE
+        binding.tvFertilizingFrequencyInHibernate.visibility = View.GONE
+
+        viewModel.setFertilizeNeedModeOff()
+    }
+    //END FERTILIZING PART
 
 
     //START HIBERNATE MODE settings

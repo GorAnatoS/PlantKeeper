@@ -67,10 +67,18 @@ class PlantDetailViewModel(
                 null,
                 null,
                 "android.resource://com.goranatos.plantskeeper/drawable/ic_plant1",
+
+                0,
+                null,
+                null,
+
                 0,
                 null,
                 0,
                 null,
+                null,
+
+                0,
                 null,
                 0,
                 null,
@@ -93,6 +101,14 @@ class PlantDetailViewModel(
 
     fun setWaterNeedModeOff() {
         _thePlant.value?.is_water_need_on = 0
+    }
+
+    fun setFertilizeNeedModeOn() {
+        _thePlant.value?.is_fertilize_need_on = 1
+    }
+
+    fun setFertilizeNeedModeOff() {
+        _thePlant.value?.is_fertilize_need_on = 0
     }
 
     fun setHibernateModeOn() {
