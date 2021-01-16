@@ -194,6 +194,7 @@
                     android:id="@+id/toggleButtonToHibernate"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
+                    app:icon="@drawable/ic_baseline_bedtime_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
                     android:text="Режим покоя" />
@@ -267,6 +268,7 @@
                     android:id="@+id/toggleButtonToWater"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
+                    app:icon="@drawable/ic_baseline_invert_colors_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
                     android:text="Поливать" />
@@ -346,6 +348,7 @@
                     android:id="@+id/toggleButtonToFertilize"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
+                    app:icon="@drawable/ic_baseline_scatter_plot_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
                     android:text="Удобрять" />

@@ -104,12 +104,19 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
                 View.GONE
             else binding.tvWateringFrequencyInHibernate.text =
                 plant.int_watering_frequency_in_hibernate.toString()
+
+            if (plant.is_watering_hibernate_mode_on == 0){
+                binding.tvWateringFrequencyInHibernate.visibility = View.INVISIBLE
+            }
+
         } else {
             binding.tvToWaterFromDateVal.visibility = View.INVISIBLE
             binding.tvWateringFrequency.visibility =
                 View.INVISIBLE
             binding.tvWateringFrequencyInHibernate.visibility =
                 View.INVISIBLE
+
+            binding.tvToWaterIcon.visibility = View.INVISIBLE
         }
 
 
@@ -129,12 +136,18 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
                 View.GONE
             else binding.tvFertilizingFrequencyInHibernate.text =
                 plant.int_fertilizing_frequency_in_hibernate.toString()
+
+            if (plant.is_fertilizing_hibernate_mode_on == 0){
+                binding.tvFertilizingFrequencyInHibernate.visibility = View.INVISIBLE
+            }
         } else {
             binding.tvToFertilizeFromDateVal.visibility = View.INVISIBLE
             binding.tvFertilizingFrequency.visibility =
                 View.INVISIBLE
             binding.tvFertilizingFrequencyInHibernate.visibility =
                 View.INVISIBLE
+
+            binding.tvToFertilizeIcon.visibility = View.INVISIBLE
         }
     }
 
