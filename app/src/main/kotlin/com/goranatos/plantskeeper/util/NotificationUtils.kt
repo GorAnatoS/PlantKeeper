@@ -26,9 +26,9 @@ import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.receiver.SnoozeReceiver
 import com.goranatos.plantskeeper.ui.MainActivity
 
-private val NOTIFICATION_ID = 0
-private val REQUEST_CODE = 0
-private val FLAGS = 0
+private const val NOTIFICATION_ID = 0
+private const val REQUEST_CODE = 0
+private const val FLAGS = 0
 
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
 

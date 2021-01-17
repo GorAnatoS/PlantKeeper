@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="2"
+            android:text="@string/_2"
             app:layout_constraintBottom_toBottomOf="@+id/tvTillWatering"
             app:layout_constraintStart_toEndOf="@+id/tvTillWatering"
             app:layout_constraintTop_toTopOf="@+id/tvTillWatering" />
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="3"
+            android:text="@string/_3"
             app:layout_constraintBottom_toBottomOf="@+id/tvTillFertilizing"
             app:layout_constraintStart_toEndOf="@+id/tvTillFertilizing"
             app:layout_constraintTop_toTopOf="@+id/tvTillFertilizing" />

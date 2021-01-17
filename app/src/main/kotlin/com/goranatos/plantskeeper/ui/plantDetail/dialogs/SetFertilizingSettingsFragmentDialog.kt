@@ -27,11 +27,11 @@ class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailVie
 
     lateinit var plant: Plant
 
-    lateinit var myDialog: Dialog
+    private lateinit var myDialog: Dialog
 
     lateinit var binding: IncludePlantFertilizingSettingsBinding
 
-    var isToSaveResult = false
+    private var isToSaveResult = false
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -26,7 +26,7 @@ class PlantDetailViewModel(
     }
 
     private val viewModelJob = Job()
-    val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     var isToCreateNewPlant = false
 
@@ -36,7 +36,7 @@ class PlantDetailViewModel(
     val thePlant: LiveData<Plant>
         get() = _thePlant
 
-    suspend fun getPlant(plantId: Int): Plant {
+    private suspend fun getPlant(plantId: Int): Plant {
         return withContext(Dispatchers.IO) {
             repository.getPlant(plantId)
         }
@@ -48,13 +48,13 @@ class PlantDetailViewModel(
         }
     }
 
-    suspend fun insertPlant() {
+    private suspend fun insertPlant() {
         return withContext(Dispatchers.IO) {
             repository.insertPlant(_thePlant.value!!)
         }
     }
 
-    suspend fun updatePlant() {
+    private suspend fun updatePlant() {
         return withContext(Dispatchers.IO) {
             repository.updatePlant(_thePlant.value!!)
         }

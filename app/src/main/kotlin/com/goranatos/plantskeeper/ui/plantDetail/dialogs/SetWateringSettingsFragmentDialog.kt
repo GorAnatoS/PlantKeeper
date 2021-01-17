@@ -27,11 +27,11 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
 
     lateinit var plant: Plant
 
-    lateinit var myDialog: Dialog
+    private lateinit var myDialog: Dialog
 
     lateinit var binding: IncludePlantWateringSettingsBinding
 
-    var isToSaveResult = false
+    private var isToSaveResult = false
 
 
     override fun onCreateView(

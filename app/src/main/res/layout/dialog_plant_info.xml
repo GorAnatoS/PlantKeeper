@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="128dp"
             android:layout_marginTop="32dp"
-            android:contentDescription="Plant`s image"
+            android:contentDescription="@string/plant_s_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toggleEditPlant"

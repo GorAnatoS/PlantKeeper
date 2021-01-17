@@ -94,6 +94,27 @@
     <string name="till_watering">Дней до полива:</string>
     <string name="till_fertilzing">Дней до внесения удобрений:</string>
     <string name="notification_plants_need_care">Цветы нуждаются в уходе!</string>
+    <string name="plant_s_image">Название растения</string>
+    <string name="hibernate_mode">Режим покоя</string>
+    <string name="dec_20">Dec, 20</string>
+    <string name="hibernate_mode_settings">Настройка режима покоя</string>
+    <string name="start">Начало</string>
+    <string name="_01_10">01.10</string>
+    <string name="finish">Конец</string>
+    <string name="_01_04">01.04</string>
+    <string name="fertilizing_mode_settings">Настройка внесения удобрений</string>
+    <string name="sp_hibernate_mode">период покоя</string>
+    <string name="next_fertilization_date">Следующее внесение удобрений</string>
+    <string name="to_fertilize_once_at_in_days">Удобрять раз в (дни):</string>
+    <string name="fertilizing_settings_normal_mode">Нормальный режим:</string>
+    <string name="fertilizing_settings_hibernate_mode">Режим покоя:</string>
+    <string name="watering_mode_settings">Настройка полива</string>
+    <string name="next_watering">Следующий полив</string>
+    <string name="to_water_once_at_in_days">Поливать раз в (дни):</string>
+    <string name="watering_settings_normal_mode">Нормальный режим:</string>
+    <string name="watering_settings_hibernate_mode">Режим покоя:</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
 
 
 </resources>

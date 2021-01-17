@@ -15,7 +15,7 @@ import com.goranatos.plantskeeper.internal.TimeHelper.Companion.minutesFromMidni
  */
 class TimePickerPreferenceDialog : PreferenceDialogFragmentCompat() {
 
-    lateinit var timepicker: TimePicker
+    private lateinit var timepicker: TimePicker
 
     override fun onCreateDialogView(context: Context?): View {
         timepicker = TimePicker(context)

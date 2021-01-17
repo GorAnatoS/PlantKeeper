@@ -27,12 +27,12 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
     lateinit var plant: Plant
 
-    lateinit var myDialog: Dialog
+    private lateinit var myDialog: Dialog
 
     lateinit var binding: DialogPlantInfoBinding
 
-    var isToSaveResult = false
-    var isToShowSaveBtn = false
+    private var isToSaveResult = false
+    private var isToShowSaveBtn = false
 
     override fun onCreateView(
         inflater: LayoutInflater,

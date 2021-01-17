@@ -285,7 +285,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             Environment.DIRECTORY_PICTURES
         )
 
-        var pictureImagePath = storageDir.absolutePath + "/" + imageFileName
+        val pictureImagePath = storageDir.absolutePath + "/" + imageFileName
 
         val file = File(pictureImagePath)
         val outputFileUri = FileProvider.getUriForFile(
@@ -315,7 +315,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         }
     }
 
-    fun createUriDestinationForImageFile(context: Context) {
+    private fun createUriDestinationForImageFile(context: Context) {
         uriDestination = createImageFile(context).toUri()
         viewModel.setPlantImageUriString(uriDestination.toString())
     }
@@ -412,7 +412,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
 
     //START WaterToggleGroup
-    var tempCheckedToggleGroupToWater = false
+    private var tempCheckedToggleGroupToWater = false
     private fun setWaterToggleGroup() {
         binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
@@ -452,7 +452,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     //END WaterToggleGroup
 
     //START FERTILIZING PART
-    var tempCheckedToggleGroupToFertilize = false
+    private var tempCheckedToggleGroupToFertilize = false
     private fun setFertilizeToggleGroup() {
         binding.toggleGroupToFertilize.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
@@ -493,7 +493,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
 
     //START HIBERNATE MODE settings
-    var tempCheckedToggleGroupToHibernate = false
+    private var tempCheckedToggleGroupToHibernate = false
     private fun setHibernateToggleGroup() {
         binding.toggleGroupToHibernate.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {

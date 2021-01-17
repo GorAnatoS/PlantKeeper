@@ -132,12 +132,12 @@
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:minLines="1"
+
                 android:scrollbars="vertical"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardPlantLogo" />
+                app:layout_constraintTop_toBottomOf="@+id/toggleGroupToFertilize" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_loading"
@@ -197,7 +197,7 @@
                     app:icon="@drawable/ic_baseline_bedtime_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
-                    android:text="Режим покоя" />
+                    android:text="@string/hibernate_mode" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -229,7 +229,7 @@
                 android:layout_marginStart="16dp"
                 android:gravity="center"
                 android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
-                android:text="Dec, 20"
+                android:text="@string/dec_20"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
@@ -245,7 +245,7 @@
                 android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
-                android:text="Dec, 20"
+                android:text="@string/dec_20"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
@@ -271,7 +271,7 @@
                     app:icon="@drawable/ic_baseline_invert_colors_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
-                    android:text="Поливать" />
+                    android:text="@string/to_water" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -351,7 +351,7 @@
                     app:icon="@drawable/ic_baseline_scatter_plot_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
-                    android:text="Удобрять" />
+                    android:text="@string/to_fertilize" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 

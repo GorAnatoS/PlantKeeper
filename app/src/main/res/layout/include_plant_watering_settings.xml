@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Настройка полива"
+            android:text="@string/watering_mode_settings"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
             android:checked="true"
             android:drawableStart="@drawable/ic_baseline_ac_unit_24"
             android:gravity="center"
-            android:text=" период покоя"
+            android:text="@string/sp_hibernate_mode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -44,7 +44,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Следующий полив"
+            android:text="@string/next_watering"
             android:textAlignment="center"
             android:textSize="14sp"
             android:visibility="visible"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:text="01.10"
+            android:text="@string/_01_10"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"
@@ -76,7 +76,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Удобрять раз в (дни):"
+            android:text="@string/to_water_once_at_in_days"
             app:layout_constraintEnd_toStartOf="@+id/etLayoutWateringFrequencyNormal"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="center"
-            android:text="Нормальный режим:"
+            android:text="@string/watering_settings_normal_mode"
             app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyNormal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyNormal" />
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="center"
-            android:text="Режим покоя:"
+            android:text="@string/watering_settings_hibernate_mode"
             app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/etLayoutWateringFrequencyInHibernate" />

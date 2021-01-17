@@ -31,7 +31,7 @@ const val INT_FERTILIZING_FREQUENCY_NORMAL_COLUMN = "int_fertilizing_frequency_n
 const val INT_FERTILIZING_FREQUENCY_IN_HIBERNATE_COLUMN = "int_fertilizing_frequency_in_hibernate"
 const val IS_FERTILIZING_HIBERNATE_MODE_ON_COLUMN = "is_fertilizing_hibernate_mode_on"
 
-
+// TODO: 1/17/2021  
 const val SPRAY_NEED_COLUMN = "spraying_need"
 const val REPLANT_NEED_COLUMN = "replanting_need"
 const val CUT_NEED_COLUMN = "cutting_need"
@@ -59,7 +59,7 @@ abstract class PlantsDatabase : RoomDatabase() {
             INSTANCE ?: getInstance(context).also { INSTANCE = it }
         }
 
-        fun getInstance(
+        private fun getInstance(
             context: Context
         ): PlantsDatabase {
             synchronized(this) {

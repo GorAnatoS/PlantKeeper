@@ -27,11 +27,11 @@ class SetHibernateSettingsFragmentDialog(private val viewModel: PlantDetailViewM
 
     lateinit var plant: Plant
 
-    lateinit var myDialog: Dialog
+    private lateinit var myDialog: Dialog
 
     lateinit var binding: IncludeHibernateSettingsBinding
 
-    var isToSaveResult = false
+    private var isToSaveResult = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
