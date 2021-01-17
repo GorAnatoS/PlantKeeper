@@ -7,7 +7,7 @@
         app:title="@string/notifications">
 
         <SwitchPreferenceCompat
-            app:key="notifications"
+            app:key="is_to_show_notifications"
             app:title="@string/enable_notifications" />
 
     </PreferenceCategory>
