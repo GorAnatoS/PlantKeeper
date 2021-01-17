@@ -5,7 +5,6 @@
 
 
     <data>
-
         <variable
             name="viewModel"
             type="com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel" />
@@ -159,30 +158,54 @@
                 app:layout_constraintTop_toBottomOf="@+id/progressBar_loading"
                 app:layout_constraintVertical_bias="0.0" />
 
-
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleGroupToHibernate"
-                android:layout_width="wrap_content"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardPlantLogo">
 
-                <Button
-                    android:id="@+id/toggleButtonToHibernate"
-                    style="?attr/materialButtonOutlinedStyle"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipHibernatingMode"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
-                    app:icon="@drawable/ic_baseline_bedtime_24"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
                     android:text="@string/hibernate_mode" />
 
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipWateringMode"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/to_water" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFertilizingMode"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/to_fertilize" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+<!--            START HIBERNATE-->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_all_hibernate_data"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_half"
+                app:constraint_referenced_ids="toggleGroupToHibernate, tvDateHibernateStartFromVal, tvDateHibernateFinishVal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_hibernate_data"
+                android:id="@+id/group_hibernate_details"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_half"
@@ -191,16 +214,25 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_on_watering_hibernate_mode_on"
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroupToHibernate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="tvWateringFrequencyInHibernate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chipGroup">
 
+                <Button
+                    android:id="@+id/toggleButtonToHibernate"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
+                    android:text="@string/hibernate_mode"
+                    app:icon="@drawable/ic_baseline_bedtime_24" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <TextView
                 android:id="@+id/tvDateHibernateStartFromVal"
@@ -232,8 +264,30 @@
                 app:drawableStartCompat="@drawable/ic_baseline_pause_24"
                 app:layout_constraintStart_toEndOf="@+id/tvDateHibernateStartFromVal"
                 app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal" />
+            <!--FINISH HIBERNATE-->
 
 
+            <!--START WATERING-->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_all_watering_data"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_half"
+                app:constraint_referenced_ids="toggleGroupToWater, tvToWaterFromDateVal, tvWateringFrequency, tvWateringFrequencyInHibernate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_watering_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_half"
+                app:constraint_referenced_ids="tvToWaterFromDateVal, tvWateringFrequency, tvWateringFrequencyInHibernate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/toggleGroupToWater"
@@ -248,10 +302,10 @@
                     android:id="@+id/toggleButtonToWater"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
-                    app:icon="@drawable/ic_baseline_invert_colors_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
-                    android:text="@string/to_water" />
+                    android:text="@string/to_water"
+                    app:icon="@drawable/ic_baseline_invert_colors_24" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -270,7 +324,6 @@
                 app:layout_constraintStart_toEndOf="@+id/toggleGroupToWater"
                 app:layout_constraintTop_toTopOf="@+id/toggleGroupToWater"
                 tools:text="Dec, 20" />
-<!--            android:text="@{viewModel.toStartWaterFromDate}"-->
 
             <TextView
                 android:id="@+id/tvWateringFrequency"
@@ -302,15 +355,26 @@
                 app:layout_constraintStart_toEndOf="@+id/tvWateringFrequency"
                 app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
                 tools:text=" 1 " />
+            <!--END WATERING-->
 
-            <!--FERTILIZING-->
-
+            <!--START FERTILIZING-->
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_on_fertilizing_hibernate_mode_on"
+                android:id="@+id/group_all_fertilizing_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="tvFertilizingFrequencyInHibernate"
+                android:visibility="gone"
+                app:constraint_referenced_ids="toggleGroupToFertilize, tvToFertilizeFromDateVal, tvFertilizingFrequency, tvFertilizingFrequencyInHibernate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_fertilizing_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_half"
+                app:constraint_referenced_ids="tvToFertilizeFromDateVal, tvFertilizingFrequency, tvFertilizingFrequencyInHibernate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible" />
@@ -328,10 +392,10 @@
                     android:id="@+id/toggleButtonToFertilize"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
-                    app:icon="@drawable/ic_baseline_scatter_plot_24"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
-                    android:text="@string/to_fertilize" />
+                    android:text="@string/to_fertilize"
+                    app:icon="@drawable/ic_baseline_scatter_plot_24" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -388,7 +452,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:hint="@string/notes"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -407,7 +471,6 @@
                     android:minLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

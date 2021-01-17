@@ -130,25 +130,12 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         return binding.root
     }
 
+
+    var isFirstStart = true
     //При получении Растения настраиваем элементы UI
     private fun setUIforPlant(plant: Plant) {
         binding.groupContent.visibility = View.VISIBLE
         binding.groupLoading.visibility = View.GONE
-
-        if (plant.is_hibernate_mode_on != 0) {
-            binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
-            onHibernateModeOn()
-
-            binding.tvDateHibernateStartFromVal.text =
-                plant.long_to_hibernate_from_date?.let { TimeHelper.getFormattedDateString(it) }
-
-            binding.tvDateHibernateFinishVal.text =
-                plant.long_to_hibernate_till_date?.let { TimeHelper.getFormattedDateString(it) }
-
-        } else {
-            binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
-            onHibernateModeOff()
-        }
 
         if (plant.string_uri_image_path != null) {
             binding.plantImage.setImageURI(Uri.parse(plant.string_uri_image_path))
@@ -158,61 +145,64 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.editTextTextPlantDescription.setText(plant.str_desc.toString())
         }
 
+
+        //START_CHIPS
+        if (isFirstStart) {
+            binding.chipHibernatingMode.isChecked = plant.is_hibernate_mode_on == 1
+            binding.chipWateringMode.isChecked = plant.is_water_need_on == 1
+            binding.chipFertilizingMode.isChecked = plant.is_fertilize_need_on == 1
+
+            isFirstStart = false
+        }
+        //END CHIPS
+
+        //START HIBERNATE
+        if (plant.is_hibernate_mode_on == 1) {
+            binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
+            viewModel.setHibernateModeOn()
+        } else {
+            binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
+            viewModel.setHibernateModeOff()
+        }
+        //END HIBERNATE
+
         //START WATER
-        if (plant.is_water_need_on != 0) {
+        if (plant.is_water_need_on == 1) {
             binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
-            onWaterNeedOn()
-
-            if (plant.is_watering_hibernate_mode_on != 0){
-                binding.groupOnWateringHibernateModeOn.visibility = View.VISIBLE
-            } else {
-                binding.groupOnWateringHibernateModeOn.visibility = View.GONE
-            }
-
+            viewModel.setWaterNeedModeOn()
         } else {
             binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
-            onWaterNeedOff()
-        }
-
-        plant.int_watering_frequency_normal?.let {
-            binding.tvWateringFrequency.text = it.toString()
+            viewModel.setWaterNeedModeOff()
         }
 
         plant.int_watering_frequency_in_hibernate?.let {
             binding.tvWateringFrequencyInHibernate.text = it.toString()
         }
 
-        if (plant.long_next_watering_date != null) {
-            binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+        if (plant.is_watering_hibernate_mode_on == 1) {
+            binding.tvWateringFrequencyInHibernate.visibility = View.VISIBLE
+        } else {
+            binding.tvWateringFrequencyInHibernate.visibility = View.GONE
         }
         //END WATER
 
         //START FERTILIZE
-        if (plant.is_fertilize_need_on != 0) {
+        if (plant.is_fertilize_need_on == 1) {
             binding.toggleGroupToFertilize.check(binding.toggleButtonToFertilize.id)
-            onFertilizeNeedOn()
-
-            if (plant.is_fertilizing_hibernate_mode_on != 0){
-                binding.groupOnFertilizingHibernateModeOn.visibility = View.VISIBLE
-            } else {
-                binding.groupOnFertilizingHibernateModeOn.visibility = View.GONE
-            }
-
+            viewModel.setFertilizeNeedModeOn()
         } else {
             binding.toggleGroupToFertilize.uncheck(binding.toggleButtonToFertilize.id)
-            onFertilizeNeedOff()
-        }
-
-        plant.int_fertilizing_frequency_normal?.let {
-            binding.tvFertilizingFrequency.text = it.toString()
+            viewModel.setFertilizeNeedModeOff()
         }
 
         plant.int_fertilizing_frequency_in_hibernate?.let {
             binding.tvFertilizingFrequencyInHibernate.text = it.toString()
         }
 
-        if (plant.long_next_fertilizing_date != null) {
-            binding.tvToFertilizeFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
+        if (plant.is_fertilizing_hibernate_mode_on == 1) {
+            binding.tvFertilizingFrequencyInHibernate.visibility = View.VISIBLE
+        } else {
+            binding.tvFertilizingFrequencyInHibernate.visibility = View.GONE
         }
         //END FERTILIZE
     }
@@ -222,10 +212,201 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         setSelectImageForThePlantToggleGroup()
 
+        setChipsClickListeners()
+
         setWaterToggleGroup()
         setFertilizeToggleGroup()
         setHibernateToggleGroup()
     }
+
+    private fun setChipsClickListeners() {
+        binding.chipHibernatingMode.setOnCheckedChangeListener { _, isChecked ->
+            when (isChecked) {
+                true -> {
+                    binding.groupAllHibernateData.visibility = View.VISIBLE
+
+                    if (viewModel.thePlant.value?.is_hibernate_mode_on == 1) {
+                        binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
+                        binding.groupHibernateDetails.visibility = View.VISIBLE
+                    } else {
+                        binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
+                        binding.groupHibernateDetails.visibility = View.GONE
+                    }
+                }
+                false -> {
+                    binding.groupAllHibernateData.visibility = View.GONE
+                    binding.groupHibernateDetails.visibility = View.GONE
+                }
+            }
+        }
+
+        binding.chipWateringMode.setOnCheckedChangeListener { _, isChecked ->
+            when (isChecked) {
+                true -> {
+                    binding.groupAllWateringData.visibility = View.VISIBLE
+
+                    if (viewModel.thePlant.value?.is_water_need_on == 1) {
+                        binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
+                    } else {
+                        binding.toggleGroupToWater.uncheck(binding.toggleButtonToWater.id)
+                    }
+
+                    if (viewModel.thePlant.value?.is_watering_hibernate_mode_on == 1 && viewModel.thePlant.value?.is_water_need_on == 1){
+                        binding.tvWateringFrequencyInHibernate.visibility = View.VISIBLE
+                    } else binding.tvWateringFrequencyInHibernate.visibility = View.GONE
+                }
+                false -> {
+                    binding.groupAllWateringData.visibility = View.GONE
+                }
+            }
+        }
+
+        binding.chipFertilizingMode.setOnCheckedChangeListener { _, isChecked ->
+            when (isChecked) {
+                true -> {
+                    binding.groupAllFertilizingData.visibility = View.VISIBLE
+
+                    if (viewModel.thePlant.value?.is_fertilize_need_on == 1) {
+                        binding.toggleGroupToFertilize.check(binding.toggleButtonToFertilize.id)
+                    } else {
+                        binding.toggleGroupToFertilize.uncheck(binding.toggleButtonToFertilize.id)
+                    }
+
+                    if (viewModel.thePlant.value?.is_fertilizing_hibernate_mode_on == 1 && viewModel.thePlant.value?.is_fertilize_need_on == 1){
+                        binding.tvFertilizingFrequencyInHibernate.visibility = View.VISIBLE
+                    } else binding.tvFertilizingFrequencyInHibernate.visibility = View.GONE
+                }
+
+                false -> {
+                    binding.groupAllFertilizingData.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun setOnPlantNameEditTextChangedListener() {
+        binding.editTextTextPlantNameInputText.addTextChangedListener {
+            viewModel.setPlantName(it.toString())
+        }
+
+        binding.editTextTextPlantDescription.addTextChangedListener {
+            viewModel.setPlantDescription(it.toString())
+        }
+    }
+
+    //START WaterToggleGroup
+    private var tempCheckedToggleGroupToWater = false
+    private fun setWaterToggleGroup() {
+        binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) {
+                tempCheckedToggleGroupToWater = true
+
+                binding.groupWateringDetails.visibility = View.VISIBLE
+
+                if (viewModel.thePlant.value?.long_next_watering_date != null) {
+                    binding.tvToWaterFromDateVal.text =
+                        TimeHelper.getFormattedDateString(viewModel.thePlant.value?.long_next_watering_date!!)
+                }
+
+                viewModel.thePlant.value?.int_watering_frequency_normal?.let {
+                    binding.tvWateringFrequency.text = it.toString()
+                }
+
+                viewModel.setWaterNeedModeOn()
+            } else {
+                tempCheckedToggleGroupToWater = false
+
+                binding.groupWateringDetails.visibility = View.GONE
+
+                viewModel.setWaterNeedModeOff()
+            }
+        }
+    }
+
+    fun startSetWateringSettingsFragmentDialog() {
+        //Проверка на чек при старте, чтобы не было
+        if (tempCheckedToggleGroupToWater) {
+            val fragmentManager = parentFragmentManager
+            val newFragment = SetWateringSettingsFragmentDialog(viewModel)
+            newFragment.show(fragmentManager, "dialog")
+        }
+    }
+    //END WaterToggleGroup
+
+    //START FERTILIZING PART
+    private var tempCheckedToggleGroupToFertilize = false
+    private fun setFertilizeToggleGroup() {
+        binding.toggleGroupToFertilize.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) {
+                tempCheckedToggleGroupToFertilize = true
+
+                binding.groupFertilizingDetails.visibility = View.VISIBLE
+
+                if (viewModel.thePlant.value?.long_next_fertilizing_date != null) {
+                    binding.tvToFertilizeFromDateVal.text =
+                        TimeHelper.getFormattedDateString(viewModel.thePlant.value?.long_next_fertilizing_date!!)
+                }
+
+                viewModel.thePlant.value?.int_fertilizing_frequency_normal?.let {
+                    binding.tvFertilizingFrequency.text = it.toString()
+                }
+
+                viewModel.setFertilizeNeedModeOn()
+            } else {
+                tempCheckedToggleGroupToFertilize = false
+
+                binding.groupFertilizingDetails.visibility = View.GONE
+
+                viewModel.setFertilizeNeedModeOff()
+            }
+        }
+    }
+
+    fun startSetFertilizingSettingsFragmentDialog() {
+        //Проверка на чек при старте, чтобы не было
+        if (tempCheckedToggleGroupToFertilize) {
+            val fragmentManager = parentFragmentManager
+            val newFragment = SetFertilizingSettingsFragmentDialog(viewModel)
+            newFragment.show(fragmentManager, "dialog")
+        }
+    }
+    //END FERTILIZING PART
+
+    //START HIBERNATE MODE settings
+    private var tempCheckedToggleGroupToHibernate = false
+    private fun setHibernateToggleGroup() {
+        binding.toggleGroupToHibernate.addOnButtonCheckedListener { _, _, isChecked ->
+            if (isChecked) {
+                tempCheckedToggleGroupToHibernate = true
+
+                binding.groupHibernateDetails.visibility = View.VISIBLE
+
+                binding.tvDateHibernateStartFromVal.text =
+                    viewModel.thePlant.value?.long_to_hibernate_from_date?.let { TimeHelper.getFormattedDateString(it) }
+
+                binding.tvDateHibernateFinishVal.text =
+                    viewModel.thePlant.value?.long_to_hibernate_till_date?.let { TimeHelper.getFormattedDateString(it) }
+
+                viewModel.setHibernateModeOn()
+            } else {
+                tempCheckedToggleGroupToHibernate = false
+
+                binding.groupHibernateDetails.visibility = View.GONE
+
+                viewModel.setHibernateModeOff()
+            }
+        }
+    }
+
+    fun startSetHibernateSettingsFragmentDialog() {
+        //Проверка на чек при старте, чтобы не было
+        if (tempCheckedToggleGroupToHibernate) {
+            val fragmentManager = parentFragmentManager
+            val newFragment = SetHibernatingSettingsFragmentDialog(viewModel)
+            newFragment.show(fragmentManager, "dialog")
+        }
+    }
+    //END HIBERNATE MODE settings
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.plant_detail_menu, menu)
@@ -332,7 +513,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
     //FUNCTIONS FOR SELECTION IMAGE OF THE PLANT END
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -372,7 +552,11 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                     launch(Dispatchers.IO) {
                         viewModel.deletePlant()
 
-                        Snackbar.make(requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT)
+                        Snackbar.make(
+                            requireView(),
+                            getString(R.string.deleted),
+                            Snackbar.LENGTH_SHORT
+                        )
                             .show()
 
                         findNavController().navigateUp()
@@ -401,131 +585,4 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         findNavController().navigateUp()
     }
     //OPTIONS MENU END
-
-    private fun setOnPlantNameEditTextChangedListener() {
-        binding.editTextTextPlantNameInputText.addTextChangedListener {
-            viewModel.setPlantName(it.toString())
-        }
-
-        binding.editTextTextPlantDescription.addTextChangedListener {
-            viewModel.setPlantDescription(it.toString())
-        }
-    }
-
-    //START WaterToggleGroup
-    private var tempCheckedToggleGroupToWater = false
-    private fun setWaterToggleGroup() {
-        binding.toggleGroupToWater.addOnButtonCheckedListener { _, _, isChecked ->
-            if (isChecked) {
-                tempCheckedToggleGroupToWater = true
-                onWaterNeedOn()
-            } else {
-                tempCheckedToggleGroupToWater = false
-                onWaterNeedOff()
-            }
-        }
-    }
-
-    fun startSetWateringSettingsFragmentDialog() {
-        //Проверка на чек при старте, чтобы не было
-        if (tempCheckedToggleGroupToWater) {
-            val fragmentManager = parentFragmentManager
-            val newFragment = SetWateringSettingsFragmentDialog(viewModel)
-            newFragment.show(fragmentManager, "dialog")
-        }
-    }
-
-    private fun onWaterNeedOn() {
-        binding.tvToWaterFromDateVal.visibility = View.VISIBLE
-        binding.tvWateringFrequency.visibility = View.VISIBLE
-        binding.tvWateringFrequencyInHibernate.visibility = View.VISIBLE
-
-        viewModel.setWaterNeedModeOn()
-    }
-
-    private fun onWaterNeedOff() {
-        binding.tvToWaterFromDateVal.visibility = View.GONE
-        binding.tvWateringFrequency.visibility = View.GONE
-        binding.tvWateringFrequencyInHibernate.visibility = View.GONE
-
-        viewModel.setWaterNeedModeOff()
-    }
-    //END WaterToggleGroup
-
-    //START FERTILIZING PART
-    private var tempCheckedToggleGroupToFertilize = false
-    private fun setFertilizeToggleGroup() {
-        binding.toggleGroupToFertilize.addOnButtonCheckedListener { _, _, isChecked ->
-            if (isChecked) {
-                tempCheckedToggleGroupToFertilize = true
-                onFertilizeNeedOn()
-            } else {
-                tempCheckedToggleGroupToFertilize = false
-                onFertilizeNeedOff()
-            }
-        }
-    }
-
-    fun startSetFertilizingSettingsFragmentDialog() {
-        //Проверка на чек при старте, чтобы не было
-        if (tempCheckedToggleGroupToFertilize) {
-            val fragmentManager = parentFragmentManager
-            val newFragment = SetFertilizingSettingsFragmentDialog(viewModel)
-            newFragment.show(fragmentManager, "dialog")
-        }
-    }
-
-    private fun onFertilizeNeedOn() {
-        binding.tvToFertilizeFromDateVal.visibility = View.VISIBLE
-        binding.tvFertilizingFrequency.visibility = View.VISIBLE
-        binding.tvFertilizingFrequencyInHibernate.visibility = View.VISIBLE
-
-        viewModel.setFertilizeNeedModeOn()
-    }
-
-    private fun onFertilizeNeedOff() {
-        binding.tvToFertilizeFromDateVal.visibility = View.GONE
-        binding.tvFertilizingFrequency.visibility = View.GONE
-        binding.tvFertilizingFrequencyInHibernate.visibility = View.GONE
-
-        viewModel.setFertilizeNeedModeOff()
-    }
-    //END FERTILIZING PART
-
-
-    //START HIBERNATE MODE settings
-    private var tempCheckedToggleGroupToHibernate = false
-    private fun setHibernateToggleGroup() {
-        binding.toggleGroupToHibernate.addOnButtonCheckedListener { _, _, isChecked ->
-            if (isChecked) {
-                onHibernateModeOn()
-            } else {
-                onHibernateModeOff()
-            }
-        }
-    }
-
-    fun startSetHibernateSettingsFragmentDialog() {
-        //Проверка на чек при старте, чтобы не было
-        if (tempCheckedToggleGroupToHibernate) {
-            val fragmentManager = parentFragmentManager
-            val newFragment = SetHibernatingSettingsFragmentDialog(viewModel)
-            newFragment.show(fragmentManager, "dialog")
-        }
-    }
-
-    private fun onHibernateModeOn() {
-        tempCheckedToggleGroupToHibernate = true
-        binding.groupHibernateData.visibility = View.VISIBLE
-
-        viewModel.setHibernateModeOn()
-    }
-
-    private fun onHibernateModeOff() {
-        tempCheckedToggleGroupToHibernate = false
-        binding.groupHibernateData.visibility = View.GONE
-
-        viewModel.setHibernateModeOff()
-    }
-    //END HIBERNATE MODE settings
 }

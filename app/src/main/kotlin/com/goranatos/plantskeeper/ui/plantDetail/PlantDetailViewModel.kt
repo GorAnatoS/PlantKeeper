@@ -1,8 +1,10 @@
 package com.goranatos.plantskeeper.ui.plantDetail
 
 import android.net.Uri
+import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
