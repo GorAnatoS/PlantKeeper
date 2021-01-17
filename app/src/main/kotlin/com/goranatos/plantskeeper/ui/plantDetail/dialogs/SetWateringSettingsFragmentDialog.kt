@@ -18,7 +18,6 @@ import com.goranatos.plantskeeper.databinding.IncludePlantWateringSettingsBindin
 import com.goranatos.plantskeeper.internal.TimeHelper
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
 
-
 /**
  * Created by qsufff on 12/7/2020.
  */
@@ -32,7 +31,6 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
     lateinit var binding: IncludePlantWateringSettingsBinding
 
     private var isToSaveResult = false
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -129,7 +127,7 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
 
 
     private fun setHibernateMode() {
-        binding.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.switchHibernate.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 setWateringHibernateModeOn()
             } else {
@@ -194,4 +192,3 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         super.onDismiss(dialog)
     }
 }
-

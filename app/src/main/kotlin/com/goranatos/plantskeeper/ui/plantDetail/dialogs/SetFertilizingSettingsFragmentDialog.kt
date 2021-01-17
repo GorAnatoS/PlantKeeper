@@ -128,7 +128,7 @@ class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailVie
 
 
     private fun setHibernateMode() {
-        binding.switchHibernate.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.switchHibernate.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 setFertilizingHibernateModeOn()
             } else {

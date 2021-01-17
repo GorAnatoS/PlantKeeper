@@ -85,8 +85,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             }
         })
 
-        binding.fab.setOnClickListener { view ->
-
+        binding.fab.setOnClickListener {
             viewModel.updateNavigateToPlantId(-1)
             viewModel.onItemClicked()
         }
@@ -193,9 +192,9 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             MaterialAlertDialogBuilder(context)
                 .setTitle(context.resources.getString(R.string.delete_plant_from_db))
                 .setMessage(context.resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
-                .setNeutralButton(context.resources.getString(R.string.cancel)) { dialog, which ->
+                .setNeutralButton(context.resources.getString(R.string.cancel)) { _, _ ->
                 }
-                .setPositiveButton(context.resources.getString(R.string.delete_item)) { dialog, which ->
+                .setPositiveButton(context.resources.getString(R.string.delete_item)) { _, _ ->
                     viewModelScope.launch(Dispatchers.IO) {
                         viewModel.deletePlantWithId(plantId)
 

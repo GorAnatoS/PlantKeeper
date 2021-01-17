@@ -31,7 +31,7 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel.Companion.uriDestination
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SelectPlantImageUriFromCollectionDialogFragment
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetFertilizingSettingsFragmentDialog
-import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernateSettingsFragmentDialog
+import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetHibernatingSettingsFragmentDialog
 import com.goranatos.plantskeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
 import com.goranatos.plantskeeper.util.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
@@ -259,7 +259,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(resources.getString(R.string.choose_photo))
-                .setItems(items) { dialog, which ->
+                .setItems(items) { _, which ->
                     // Respond to item chosen
                     when (which) {
                         0 -> chooseFromGallery()
@@ -368,9 +368,9 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(resources.getString(R.string.delete_plant_from_db))
                 .setMessage(resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
-                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                .setNeutralButton(resources.getString(R.string.cancel)) { _, _ ->
                 }
-                .setPositiveButton(resources.getString(R.string.delete_item)) { dialog, which ->
+                .setPositiveButton(resources.getString(R.string.delete_item)) { _, _ ->
                     launch(Dispatchers.IO) {
                         viewModel.deletePlant()
 
@@ -508,7 +508,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         //Проверка на чек при старте, чтобы не было
         if (tempCheckedToggleGroupToHibernate) {
             val fragmentManager = parentFragmentManager
-            val newFragment = SetHibernateSettingsFragmentDialog(viewModel)
+            val newFragment = SetHibernatingSettingsFragmentDialog(viewModel)
             newFragment.show(fragmentManager, "dialog")
         }
     }

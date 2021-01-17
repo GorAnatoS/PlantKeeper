@@ -22,7 +22,7 @@ import java.util.*
  * Created by qsufff on 12/7/2020.
  */
 
-class SetHibernateSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) :
+class SetHibernatingSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) :
     DialogFragment() {
 
     lateinit var plant: Plant
