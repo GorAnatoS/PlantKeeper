@@ -93,6 +93,7 @@
     <string name="test">тест</string>
     <string name="till_watering">Дней до полива:</string>
     <string name="till_fertilzing">Дней до внесения удобрений:</string>
+    <string name="notification_plants_need_care">Цветы нуждаются в уходе!</string>
 
 
 </resources>

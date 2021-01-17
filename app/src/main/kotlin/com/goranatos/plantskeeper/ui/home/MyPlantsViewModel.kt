@@ -60,7 +60,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         }
     }
 
-    suspend fun setPlant(plantId: Int){
+    suspend fun setPlant(plantId: Int) {
         return withContext(Dispatchers.IO) {
             thePlant = repository.getPlant(plantId)
         }
@@ -75,6 +75,9 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
             ) as NotificationManager
         notificationManager.cancelNotifications()
 
+        val collectionOfDates = mutableListOf<Long>()
+
+        //Добавляю в список из времени и фильтрую на повторы, чтобы потом запускать pendingIntents
         plantList?.forEach { plant ->
             if (plant.is_water_need_on == 1 && plant.long_next_watering_date != null) {
                 val calendar = Calendar.getInstance()
@@ -88,19 +91,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
                 val triggerTime = calendar.timeInMillis
 
-                val notifyPendingIntent = PendingIntent.getBroadcast(
-                    getApplication(),
-                    plant.int_id,
-                    notifyIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
-
-                AlarmManagerCompat.setExactAndAllowWhileIdle(
-                    alarmManager,
-                    AlarmManager.RTC_WAKEUP,
-                    triggerTime,
-                    notifyPendingIntent
-                )
+                if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(triggerTime)
             }
 
             if (plant.is_fertilize_need_on == 1 && plant.long_next_fertilizing_date != null) {
@@ -115,20 +106,24 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
                 val triggerTime = calendar.timeInMillis
 
-                val notifyPendingIntent = PendingIntent.getBroadcast(
-                    getApplication(),
-                    plant.int_id,
-                    notifyIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
-
-                AlarmManagerCompat.setExactAndAllowWhileIdle(
-                    alarmManager,
-                    AlarmManager.RTC_WAKEUP,
-                    triggerTime,
-                    notifyPendingIntent
-                )
+                if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(triggerTime)
             }
+        }
+
+        collectionOfDates.forEach {
+            val notifyPendingIntent = PendingIntent.getBroadcast(
+                getApplication(),
+                it.toInt(),
+                notifyIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+            AlarmManagerCompat.setExactAndAllowWhileIdle(
+                alarmManager,
+                AlarmManager.RTC_WAKEUP,
+                it,
+                notifyPendingIntent
+            )
         }
     }
 
@@ -144,7 +139,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         }
     }
 
-    fun updateThePlant(){
+    fun updateThePlant() {
         viewModelScope.launch {
             updatePlant()
         }

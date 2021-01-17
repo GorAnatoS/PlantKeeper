@@ -35,7 +35,7 @@ class AlarmReceiver: BroadcastReceiver() {
         ) as NotificationManager
 
         notificationManager.sendNotification(
-            context.getText(R.string.notification_watering_ready).toString(),
+            context.getText(R.string.notification_plants_need_care).toString(),
             context
         )
     }
