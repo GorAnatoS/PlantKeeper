@@ -235,7 +235,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
                 false -> {
                     binding.groupAllHibernateData.visibility = View.GONE
-                    binding.groupHibernateDetails.visibility = View.GONE
+                    viewModel.setHibernateModeOff()
                 }
             }
         }
@@ -257,6 +257,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
                 false -> {
                     binding.groupAllWateringData.visibility = View.GONE
+                    viewModel.setWaterNeedModeOff()
                 }
             }
         }
@@ -279,6 +280,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
                 false -> {
                     binding.groupAllFertilizingData.visibility = View.GONE
+                    viewModel.setFertilizeNeedModeOff()
                 }
             }
         }

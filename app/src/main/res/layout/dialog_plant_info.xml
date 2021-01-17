@@ -46,6 +46,8 @@
         <ImageView
             android:id="@+id/imageViewPlant"
             android:layout_width="wrap_content"
+            android:minHeight="128dp"
+            android:minWidth="128dp"
             android:layout_height="128dp"
             android:layout_marginTop="32dp"
             android:contentDescription="@string/plant_s_image"
