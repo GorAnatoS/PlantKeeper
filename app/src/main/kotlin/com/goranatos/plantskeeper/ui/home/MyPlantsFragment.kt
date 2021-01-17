@@ -212,5 +212,4 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                 }.show()
         }
     }
-
 }
