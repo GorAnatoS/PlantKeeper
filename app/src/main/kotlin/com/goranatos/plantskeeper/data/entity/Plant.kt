@@ -15,7 +15,7 @@ data class Plant(
     var str_name: String?,
 
     @ColumnInfo(name = STRING_DESCRIPTION_COLUMN)
-    val str_desc: String?,
+    var str_desc: String?,
 
     @ColumnInfo(name = STRING_IMAGE_PATH_COLUMN)
     var string_uri_image_path: String?,

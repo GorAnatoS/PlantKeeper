@@ -127,6 +127,10 @@ class PlantDetailViewModel(
         _thePlant.value?.str_name = plant_name
     }
 
+    fun setPlantDescription(plant_description: String) {
+        _thePlant.value?.str_desc = plant_description
+    }
+
     fun updateThePlantOutside(plant: Plant){
         _thePlant.value = plant
     }

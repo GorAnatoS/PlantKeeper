@@ -31,12 +31,6 @@ const val INT_FERTILIZING_FREQUENCY_NORMAL_COLUMN = "int_fertilizing_frequency_n
 const val INT_FERTILIZING_FREQUENCY_IN_HIBERNATE_COLUMN = "int_fertilizing_frequency_in_hibernate"
 const val IS_FERTILIZING_HIBERNATE_MODE_ON_COLUMN = "is_fertilizing_hibernate_mode_on"
 
-// TODO: 1/17/2021  
-const val SPRAY_NEED_COLUMN = "spraying_need"
-const val REPLANT_NEED_COLUMN = "replanting_need"
-const val CUT_NEED_COLUMN = "cutting_need"
-const val TURN_NEED_COLUMN = "turning_need"
-
 const val IS_HIBERNATE_MODE_ON = "is_hibernate_mode_on"
 const val LONG_TO_HIBERNATE_FROM_DATE_COLUMN = "to_hibernate_from_date"
 const val LONG_TO_HIBERNATE_TILL_DATE_COLUMN = "to_hibernate_till_date"

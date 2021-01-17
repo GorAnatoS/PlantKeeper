@@ -3,7 +3,9 @@ package com.goranatos.plantskeeper.ui.home
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -169,12 +171,20 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
 
-        val settingsOption = menu.findItem(R.id.action_settings)
+        val settingsOption = menu.findItem(R.id.action_option)
 
         settingsOption.setOnMenuItemClickListener {
             findNavController().navigate(
                 MyPlantsFragmentDirections.actionMyPlantsFragmentToSettingsFragment()
             )
+            true
+        }
+
+        val feedbackOption = menu.findItem(R.id.feedback_option)
+        feedbackOption.setOnMenuItemClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(getString(R.string.google_plat_application_page))
+            startActivity(intent)
             true
         }
 

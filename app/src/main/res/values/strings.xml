@@ -93,5 +93,8 @@
     <string name="_2">2</string>
     <string name="my_plants">Мои растения</string>
     <string name="settings">Настройки</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="google_plat_application_page" translatable="false">market://details?id=com.goranatos.plantskeeper</string>
+    <string name="about_application">О приложении</string>
 
 </resources>

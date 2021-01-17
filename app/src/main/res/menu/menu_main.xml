@@ -2,9 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.goranatos.plantskeeper.ui.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:id="@+id/action_option"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_baseline_settings_24"/>
+
+    <item
+        android:id="@+id/feedback_option"
+        android:icon="@drawable/ic_baseline_feedback_24"
+        android:title="@string/feedback" />
+
+    <item
+        android:visible="false"
+        android:id="@+id/about_option"
+        android:title="@string/about_application" />
+
 </menu>

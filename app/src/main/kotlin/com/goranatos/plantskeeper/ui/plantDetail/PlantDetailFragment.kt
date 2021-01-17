@@ -158,7 +158,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.editTextTextPlantDescription.setText(plant.str_desc.toString())
         }
 
-        //WATER
+        //START WATER
         if (plant.is_water_need_on != 0) {
             binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
             onWaterNeedOn()
@@ -235,7 +235,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         deleteItemFromDB.setOnMenuItemClickListener {
             deletePlantItemFromDB()
             true
-
         }
 
         val savePlantToDB = menu.findItem(R.id.save_plant_to_db)
@@ -274,7 +273,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         val newFragment = SelectPlantImageUriFromCollectionDialogFragment(viewModel)
         newFragment.show(parentFragmentManager, "dialog")
     }
-
 
     //FUNCTIONS FOR SELECTION IMAGE OF THE PLANT START
     @NeedsPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -332,7 +330,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         val resultUri = UCrop.getOutput(data!!)
         binding.plantImage.setImageURI(resultUri)
     }
-    //FUNCTIONS FOR SELECTIONG IMAGE OF THE PLANT END
+    //FUNCTIONS FOR SELECTION IMAGE OF THE PLANT END
 
 
     override fun onRequestPermissionsResult(
@@ -381,7 +379,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                     }
                 }.show()
         }
-
     }
 
     private fun onClickOptionMenuSavePlant() {
@@ -408,6 +405,10 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     private fun setOnPlantNameEditTextChangedListener() {
         binding.editTextTextPlantNameInputText.addTextChangedListener {
             viewModel.setPlantName(it.toString())
+        }
+
+        binding.editTextTextPlantDescription.addTextChangedListener {
+            viewModel.setPlantDescription(it.toString())
         }
     }
 
@@ -525,9 +526,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.groupHibernateData.visibility = View.GONE
 
         viewModel.setHibernateModeOff()
-
     }
     //END HIBERNATE MODE settings
 }
-
-// TODO: 1/3/2021 если дата следующего полива раньше чем сегодня, что делать?

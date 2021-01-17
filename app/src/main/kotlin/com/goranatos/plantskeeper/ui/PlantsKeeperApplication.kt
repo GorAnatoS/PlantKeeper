@@ -31,8 +31,6 @@ class PlantsKeeperApplication : Application(), DIAware {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidThreeTen.init(this)
-        // TODO: 11/22/2020 night mode off
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 }

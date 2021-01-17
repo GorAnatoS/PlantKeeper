@@ -119,26 +119,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <EditText
-                android:id="@+id/editTextTextPlantDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_half"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="@dimen/margin_half"
-                android:ems="10"
-                android:gravity="top|left"
-                android:hint="@string/notes"
-                android:inputType="textMultiLine"
-                android:lines="5"
-                android:minLines="1"
-
-                android:scrollbars="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toggleGroupToFertilize" />
-
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_loading"
                 android:layout_width="wrap_content"
@@ -403,7 +383,35 @@
                 app:layout_constraintTop_toTopOf="@+id/tvFertilizingFrequency"
                 tools:text=" 1 " />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginTop="16dp"
+                android:hint="@string/notes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toggleGroupToFertilize">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextTextPlantDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxEms="1000"
+                    android:maxLength="1000"
+                    android:maxLines="5"
+                    android:minLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </ScrollView>
 </layout>

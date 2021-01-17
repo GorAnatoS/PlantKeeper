@@ -70,34 +70,6 @@ class TimeHelper {
             return TimeUnit.MILLISECONDS.toDays(result).toInt()
         }
 
-        // TODO: 1/14/2021  
-        fun isDateInPlantHibernateRange(dateInMs: Long, plant: Plant): Boolean {
-            if (plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_till_date != null && plant.long_to_hibernate_till_date != null && plant.long_next_watering_date != null) {
-                val date = Calendar.getInstance()
-                date.timeInMillis = dateInMs
-
-                val calendarTill = Calendar.getInstance()
-                calendarTill.timeInMillis = plant.long_to_hibernate_till_date!!
-
-                val calendarFrom = Calendar.getInstance()
-                calendarFrom.timeInMillis = plant.long_to_hibernate_from_date!!
-
-                calendarFrom.set(Calendar.YEAR, date.get(Calendar.YEAR))
-
-                if (calendarFrom.before(calendarTill)) {
-                    calendarTill.set(Calendar.YEAR, date.get(Calendar.YEAR))
-                } else {
-                    calendarTill.set(Calendar.YEAR, date.get(Calendar.YEAR) + 1)
-                }
-
-                calendarFrom.set(Calendar.DAY_OF_YEAR, calendarFrom.get(Calendar.DAY_OF_YEAR) - 1)
-                calendarTill.set(Calendar.DAY_OF_YEAR, calendarTill.get(Calendar.DAY_OF_YEAR) + 1)
-
-                return date.before(calendarTill) && date.after(calendarFrom)
-
-            } else return false
-        }
-
         fun isDateInPlantHibernateRange(
             dateInMs: Long,
             rangeDateFromMs: Long,
