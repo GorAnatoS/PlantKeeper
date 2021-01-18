@@ -113,4 +113,6 @@
     <string name="pref_option_notification_time" translatable="false">pref_option_notification_time</string>
     <string name="pref_option_settings_feedback" translatable="false">pref_option_settings_feedback</string>
 
+    <string name="to_change_app_lang_restart_application">To change application`s lang restart your application</string>
+
 </resources>

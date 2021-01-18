@@ -70,7 +70,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     }
 
     fun setNotificationsForPlantList(plantList: List<Plant>?) {
-        
+
         val isToShowNotifications = sharedPreferences.getBoolean(
             SharedPreferencesRepository.PREF_OPTION_IS_TO_SHOW_NOTIFICATIONS,
             false

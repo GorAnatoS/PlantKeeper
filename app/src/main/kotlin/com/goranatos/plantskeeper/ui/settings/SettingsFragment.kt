@@ -15,11 +15,23 @@
  */
 package com.goranatos.plantskeeper.ui.settings
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.ui.MainActivity
+import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_ENGLISH
+import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_ENGLISH_COUNTRY
+import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_RUSSIAN
+import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_RUSSIAN_COUNTRY
+import com.yariksoffice.lingver.Lingver
 
 
 /**
@@ -29,29 +41,82 @@ import com.goranatos.plantskeeper.R
 class SettingsFragment : PreferenceFragmentCompat() {
     private val DIALOG_FRAGMENT_TAG = "TimePickerDialog"
 
-    /**
-     * Called during onCreate(Bundle) to supply the preferences for this
-     * fragment. This calls setPreferenceFromResource to get the preferences
-     * from the XML file.
-     *
-     * @param savedInstanceState If the fragment is being re-created from
-     * a previous saved state, this is the state.
-     * @param rootKey            If non-null, this preference fragment
-     * should be rooted with this key.
-     */
+    private lateinit var startedAppLanguage: String
+    private var finishedAppLanguage: String = ""
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            callback
+        )
+
+        val toolbar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun onBackPressed() {
+        findNavController().navigateUp()
+        restartAppIfNeeded()
+    }
+
+    private fun restartAppIfNeeded() {
+        if (finishedAppLanguage.isNotEmpty() && finishedAppLanguage != startedAppLanguage) {
+
+            when (finishedAppLanguage) {
+                "ru" -> setNewLocale(
+                    requireContext(),
+                    LANGUAGE_RUSSIAN,
+                    LANGUAGE_RUSSIAN_COUNTRY
+                )
+                "en" -> setNewLocale(
+                    requireContext(),
+                    LANGUAGE_ENGLISH,
+                    LANGUAGE_ENGLISH_COUNTRY
+                )
+            }
+
+            val i = Intent(context, MainActivity::class.java)
+            startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+    }
+
+    private fun setNewLocale(context: Context, language: String, country: String) {
+        Lingver.getInstance().setLocale(context, language, country)
+    }
+
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
         rootKey: String?
     ) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(
+            getString(R.string.pref_option_choose_language), getString(
+                R.string.en
+            )
+        )
+            ?.also { startedAppLanguage = it }
+
         val chooseLanguagePreference =
             findPreference<ListPreference>(getString(R.string.pref_option_choose_language))
         chooseLanguagePreference?.title = chooseLanguagePreference?.entry
         chooseLanguagePreference?.setOnPreferenceChangeListener { preference, newValue ->
             if (preference is ListPreference) {
+                finishedAppLanguage = newValue.toString()
+
                 val index = preference.findIndexOfValue(newValue.toString())
                 val entry = preference.entries[index]
+
                 preference.title = entry
             }
             true
@@ -68,4 +133,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             super.onDisplayPreferenceDialog(preference)
         }
     }
+}
+
+object LANGUAGE_PREFS {
+    const val LANGUAGE_ENGLISH = "en"
+    const val LANGUAGE_ENGLISH_COUNTRY = "US"
+    const val LANGUAGE_RUSSIAN = "ru"
+    const val LANGUAGE_RUSSIAN_COUNTRY = "RU"
 }
