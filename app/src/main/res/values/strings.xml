@@ -115,5 +115,14 @@
     <string name="pref_option_settings_feedback" translatable="false">pref_option_settings_feedback</string>
 
     <string name="to_change_app_lang_restart_application">To change application`s lang restart your application</string>
+    <string name="settings_night_mode">Application theme</string>
+    <string name="pref_option_choose_theme" translatable="false">pref_option_choose_theme</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_default">Default</string>
+
+    <string name="theme_light" translatable="false">Light</string>
+    <string name="theme_dark" translatable="false">Dark</string>
+    <string name="theme_default" translatable="false">Default</string>
 
 </resources>

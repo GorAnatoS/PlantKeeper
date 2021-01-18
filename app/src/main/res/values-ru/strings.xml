@@ -97,5 +97,9 @@
     <string name="current_lang">Русский</string>
 
     <string name="to_change_app_lang_restart_application">Для изменения языка - перезагрузите приложение</string>
+    <string name="settings_night_mode">Тема</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Темная</string>
+    <string name="settings_theme_default">Стандартная</string>
 
 </resources>
