@@ -1,0 +1,98 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">PlantsKeeper</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="name">Название</string>
+    <string name="add_new_plant">Добавить новое растение</string>
+    <string name="empty_db_text">@string/add_new_plant</string>
+
+    <string name="added">Добавлено</string>
+    <string name="changed">Изменено</string>
+    <string name="deleted">Удалено</string>
+    <string name="delete_item">удалить</string>
+    <string name="save">сохранить</string>
+    <string name="notes">Заметки</string>
+    <string name="label_select_picture">Выбрать изображение</string>
+    <string name="toast_cannot_retrieve_selected_image">Не могу загрузить выбранное изображение</string>
+
+    <string name="download">Загрузка</string>
+    <string name="to_water">Поливать</string>
+    <string name="to_water_dialog_plant_info">полить</string>
+    <string name="to_fertilize_dialog_plant_info">удобрить</string>
+    <string name="to_fertilize">Удобрять</string>
+    <string name="from_gallery">Из галереи</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="choose_photo">Выбрать фотографию</string>
+    <string name="delete_plant_from_db">Удалить растение?</string>
+    <string name="are_you_sure_to_delete_the_plant_from_db">Вы точно уверены, что хотите удалить это растение из своей коллекции?</string>
+    <string name="cancel">Отменить</string>
+
+    <string name="notification_title">Напоминание</string>
+    <string name="notification_snooze_60_min">Напомнить через час</string>
+
+    <string name="notifications">Уведомления</string>
+    <string name="enable_notifications">Включить уведомления</string>
+    <string name="alarm_notification_time">Время показа уведомления</string>
+    <string name="alarm_notification_time_summary">Во сколько будет показано уведомление</string>
+
+    <!--    contextual menu-->
+    <string name="contextual_action_edit">Редактировать</string>
+    <string name="contextual_action_delete">Удалить</string>
+
+    <!--    MaterialDatePicker-->
+    <string name="mtrl_picker_range_header_unselected" tools:override="true">Выберите дату</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:override="true">%s - Дата окончания</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:override="true">Дата начала - %s</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:override="true">Дата начала</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:override="true">Дата начала</string>
+    <string name="mtrl_picker_text_input_date_format" tools:override="true">dd.MM.yyyy</string>
+    <string name="mtrl_picker_out_of_range" tools:override="true">Вы вышли за границу\nдопустимых значений: %1$s</string>
+    <string name="mtrl_picker_invalid_format" tools:override="true">Неверный формат даты.\Используйте: %1$s</string>
+    <string name="mtrl_picker_save" tools:override="true">Сохранить</string>
+    <string name="mtrl_picker_date_header_title" tools:override="true">Выберите дату</string>
+    <string name="mtrl_picker_date_header_unselected" tools:override="true">Выбранная дата</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:override="true">Дата</string>
+    <string name="mtrl_picker_text_input_year_abbr" tools:override="true">г</string>
+    <string name="mtrl_picker_text_input_month_abbr" tools:override="true">м</string>
+    <string name="mtrl_picker_text_input_day_abbr" tools:override="true">д</string>
+    <string name="mtrl_picker_invalid_range" tools:override="true">Неверный диапазон.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:override="true">Формат: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:override="true">Пример: %1$s</string>
+    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ок</string>
+    <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]" translatable="false">Отменить</string>
+
+    <string name="days_till_watering">Дней до полива:</string>
+    <string name="days_till_fertilizing">Дней до внесения удобрений:</string>
+    <string name="notification_plants_need_care">Цветы нуждаются в уходе!</string>
+    <string name="plant_s_name">Название растения</string>
+    <string name="hibernate_mode">Режим покоя</string>
+    <string name="dec_20">Dec, 20</string>
+    <string name="hibernate_mode_settings">Настройка режима покоя</string>
+    <string name="begin">Начало</string>
+    <string name="end">Конец</string>
+    <string name="fertilizing_mode_settings">Настройка внесения удобрений</string>
+    <string name="sp_hibernate_mode">период покоя</string>
+    <string name="next_fertilization_date">Следующее внесение удобрений</string>
+    <string name="to_fertilize_once_at_in_days">Удобрять раз в (дни):</string>
+    <string name="fertilizing_settings_normal_mode">Нормальный режим:</string>
+    <string name="fertilizing_settings_hibernate_mode">Режим покоя:</string>
+    <string name="watering_mode_settings">Настройка полива</string>
+    <string name="next_watering">Следующий полив</string>
+    <string name="to_water_once_at_in_days">Поливать раз в (дни):</string>
+    <string name="watering_settings_normal_mode">Нормальный режим:</string>
+    <string name="watering_settings_hibernate_mode">Режим покоя:</string>
+    <string name="my_plants">Мои растения</string>
+    <string name="settings">Настройки</string>
+    <string name="settings_feedback">Обратная связь</string>
+    <string name="about_application">О приложении</string>
+    <string name="watering_mode">режим полива</string>
+    <string name="help">Помощь</string>
+    <string name="settings_feedback_summary">Сообщить об ошибках или предложить новые функции</string>
+    <string name="application_language">Язык приложения</string>
+    <string name="settings_language_russian">Русский</string>
+    <string name="choose_application_language">Выбрать язык приложения</string>
+
+    <string name="russian_lang">Русский</string>
+    <string name="english_lang">Английский</string>
+
+</resources>

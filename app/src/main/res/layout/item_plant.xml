@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/till_watering"
+            android:text="@string/days_till_watering"
             app:layout_constraintStart_toStartOf="@+id/tvTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/till_fertilizing"
+            android:text="@string/days_till_fertilizing"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvTillWatering" />\

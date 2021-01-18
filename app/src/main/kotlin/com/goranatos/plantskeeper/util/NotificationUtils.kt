@@ -62,7 +62,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 
         .addAction(
             R.drawable.ic_baseline_snooze_24,
-            applicationContext.getString(R.string.notification_snooze),
+            applicationContext.getString(R.string.notification_snooze_60_min),
             snoozePendingIntent
         )
 
