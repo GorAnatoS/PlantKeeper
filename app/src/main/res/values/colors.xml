@@ -6,7 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="errorColor">@color/pink_900</color>
     <color name="colorAccent">#16697A</color>
 
@@ -19,6 +19,24 @@
     <color name="circle_icon_content_color">@color/teal_200</color>
     <color name="card_attention_color">#B2EBF2</color>
     <color name="card_normal_color">@color/white</color>
+
+    <color name="text_color_action_on_click">#257181</color>
+
+    <!--new colors-->
+    <color name="amazon_primary_light">#8DDBDB</color>
+    <color name="amazon_primary_dark">#65CBCD</color>
+    <color name="amazon_on_primary">#060A09</color>
+    <color name="amazon_secondary_light">#F0C663</color>
+    <color name="amazon_secondary_dark">#EF9833</color>
+    <color name="amazon_on_secondary">#0F0800</color>
+
+    <color name="amazon_chip_bg_light">#E8ECED</color>
+    <color name="amazon_chip_on_light_text_color">#0A272D</color>
+
+    <color name="amazon_chip_bg_dark">#D5E7E9</color>
+    <color name="amazon_chip_on_dark_text_color">#0C1615</color>
+
+
 </resources>
 
 <!--    100% — FF
