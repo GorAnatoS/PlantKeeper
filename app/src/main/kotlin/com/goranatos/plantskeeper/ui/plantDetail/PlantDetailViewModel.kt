@@ -84,6 +84,8 @@ class PlantDetailViewModel(
                 null,
                 null,
             )
+
+            _thePlant.value = _thePlant.value
             isToCreateNewPlant = true
         } else {
             uiScope.launch {

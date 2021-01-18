@@ -115,17 +115,29 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(PlantDetailViewModel::class.java)
 
-        viewModel.setPlant()
-
         binding.viewModel = viewModel
 
         binding.fragment = this
+
+        uiSetup()
 
         viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
             setUIforPlant(plant)
         })
 
-        uiSetup()
+        viewModel.setPlant()
+
+        if (viewModel.isToCreateNewPlant) {
+            binding.chipHibernatingMode.isChecked =
+                viewModel.thePlant.value?.is_hibernate_mode_on == 1
+            binding.chipWateringMode.isChecked = viewModel.thePlant.value?.is_water_need_on == 1
+            binding.chipFertilizingMode.isChecked =
+                viewModel.thePlant.value?.is_fertilize_need_on == 1
+
+            binding.materialCardHibernateGroup.visibility = View.GONE
+            binding.materialCardWaterGroup.visibility = View.GONE
+            binding.materialCardFertilizingGroup.visibility = View.GONE
+        }
 
         return binding.root
     }
@@ -224,7 +236,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.chipHibernatingMode.setOnCheckedChangeListener { _, isChecked ->
             when (isChecked) {
                 true -> {
-                    binding.groupAllHibernateData.visibility = View.VISIBLE
+                    binding.materialCardHibernateGroup.visibility = View.VISIBLE
 
                     if (viewModel.thePlant.value?.is_hibernate_mode_on == 1) {
                         binding.toggleGroupToHibernate.check(binding.toggleButtonToHibernate.id)
@@ -235,7 +247,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                     }
                 }
                 false -> {
-                    binding.groupAllHibernateData.visibility = View.GONE
+                    binding.materialCardHibernateGroup.visibility = View.GONE
                     viewModel.setHibernateModeOff()
                 }
             }
@@ -244,7 +256,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.chipWateringMode.setOnCheckedChangeListener { _, isChecked ->
             when (isChecked) {
                 true -> {
-                    binding.groupAllWateringData.visibility = View.VISIBLE
+                    binding.materialCardWaterGroup.visibility = View.VISIBLE
 
                     if (viewModel.thePlant.value?.is_water_need_on == 1) {
                         binding.toggleGroupToWater.check(binding.toggleButtonToWater.id)
@@ -257,7 +269,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                     } else binding.tvWateringFrequencyInHibernate.visibility = View.GONE
                 }
                 false -> {
-                    binding.groupAllWateringData.visibility = View.GONE
+                    binding.materialCardWaterGroup.visibility = View.GONE
                     viewModel.setWaterNeedModeOff()
                 }
             }
@@ -266,7 +278,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         binding.chipFertilizingMode.setOnCheckedChangeListener { _, isChecked ->
             when (isChecked) {
                 true -> {
-                    binding.groupAllFertilizingData.visibility = View.VISIBLE
+                    binding.materialCardFertilizingGroup.visibility = View.VISIBLE
 
                     if (viewModel.thePlant.value?.is_fertilize_need_on == 1) {
                         binding.toggleGroupToFertilize.check(binding.toggleButtonToFertilize.id)
@@ -280,7 +292,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 }
 
                 false -> {
-                    binding.groupAllFertilizingData.visibility = View.GONE
+                    binding.materialCardFertilizingGroup.visibility = View.GONE
                     viewModel.setFertilizeNeedModeOff()
                 }
             }

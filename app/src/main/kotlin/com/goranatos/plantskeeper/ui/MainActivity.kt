@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity(), DIAware {
 //поворот
 //сделать полив по сезонам +
 
+// TODO: 1/18/2021 Ночная тема 
+
 //help
 
 //about_application option

@@ -158,306 +158,352 @@
                 app:layout_constraintTop_toBottomOf="@+id/progressBar_loading"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
-                android:layout_width="0dp"
+            <!--START CHIPS-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardChipGroup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="16dp"
+                android:layout_margin="@dimen/margin_half"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardPlantLogo">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipHibernatingMode"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hibernate_mode" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/margin_half">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipWateringMode"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/to_water" />
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipFertilizingMode"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/to_fertilize" />
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipHibernatingMode"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hibernate_mode" />
 
-            </com.google.android.material.chip.ChipGroup>
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipWateringMode"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/to_water" />
 
-<!--            START HIBERNATE-->
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_all_hibernate_data"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipFertilizingMode"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/to_fertilize" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <!--END CHIPS-->
+
+            <!--START HIBERNATE-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardHibernateGroup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="toggleGroupToHibernate, tvDateHibernateStartFromVal, tvDateHibernateFinishVal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_hibernate_details"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="tvDateHibernateStartFromVal, tvDateHibernateFinishVal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleGroupToHibernate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chipGroup">
-
-                <Button
-                    android:id="@+id/toggleButtonToHibernate"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
-                    android:text="@string/hibernate_mode"
-                    app:icon="@drawable/ic_baseline_bedtime_24" />
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <TextView
-                android:id="@+id/tvDateHibernateStartFromVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
-                android:text="@string/dec_20"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-                app:layout_constraintBottom_toBottomOf="@+id/toggleGroupToHibernate"
-                app:layout_constraintStart_toEndOf="@+id/toggleGroupToHibernate"
-                app:layout_constraintTop_toTopOf="@+id/toggleGroupToHibernate" />
-
-            <TextView
-                android:id="@+id/tvDateHibernateFinishVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_half"
                 android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
-                android:text="@string/dec_20"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_pause_24"
-                app:layout_constraintStart_toEndOf="@+id/tvDateHibernateStartFromVal"
-                app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal" />
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardChipGroup">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/margin_half">
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/group_hibernate_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_half"
+                        android:visibility="gone"
+                        app:constraint_referenced_ids="tvDateHibernateStartFromVal, tvDateHibernateFinishVal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGroupToHibernate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <Button
+                            android:id="@+id/toggleButtonToHibernate"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
+                            android:text="@string/hibernate_mode"
+                            app:icon="@drawable/ic_baseline_bedtime_24" />
+
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <TextView
+                        android:id="@+id/tvDateHibernateStartFromVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
+                        android:text="@string/dec_20"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/toggleGroupToHibernate"
+                        app:layout_constraintStart_toEndOf="@+id/toggleGroupToHibernate"
+                        app:layout_constraintTop_toTopOf="@+id/toggleGroupToHibernate" />
+
+                    <TextView
+                        android:id="@+id/tvDateHibernateFinishVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetHibernateSettingsFragmentDialog()}"
+                        android:text="@string/dec_20"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_pause_24"
+                        app:layout_constraintStart_toEndOf="@+id/tvDateHibernateStartFromVal"
+                        app:layout_constraintTop_toTopOf="@+id/tvDateHibernateStartFromVal" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
             <!--FINISH HIBERNATE-->
 
-
             <!--START WATERING-->
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_all_watering_data"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardWaterGroup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="toggleGroupToWater, tvToWaterFromDateVal, tvWateringFrequency, tvWateringFrequencyInHibernate"
+                android:layout_margin="@dimen/margin_half"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_watering_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="tvToWaterFromDateVal, tvWateringFrequency, tvWateringFrequencyInHibernate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleGroupToWater"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toggleGroupToHibernate">
+                app:layout_constraintTop_toBottomOf="@+id/materialCardHibernateGroup">
 
-                <Button
-                    android:id="@+id/toggleButtonToWater"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
-                    android:text="@string/to_water"
-                    app:icon="@drawable/ic_baseline_invert_colors_24" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/margin_half">
 
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/group_watering_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_half"
+                        app:constraint_referenced_ids="tvToWaterFromDateVal, tvWateringFrequency, tvWateringFrequencyInHibernate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tvToWaterFromDateVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-                app:layout_constraintBottom_toBottomOf="@+id/toggleGroupToWater"
-                app:layout_constraintStart_toEndOf="@+id/toggleGroupToWater"
-                app:layout_constraintTop_toTopOf="@+id/toggleGroupToWater"
-                tools:text="Dec, 20" />
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGroupToWater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvWateringFrequency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_cached_24"
-                app:layout_constraintBottom_toBottomOf="@+id/tvToWaterFromDateVal"
-                app:layout_constraintStart_toEndOf="@+id/tvToWaterFromDateVal"
-                app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal"
-                tools:text=" 1 " />
+                        <Button
+                            android:id="@+id/toggleButtonToWater"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
+                            android:text="@string/to_water"
+                            app:icon="@drawable/ic_baseline_invert_colors_24" />
 
-            <TextView
-                android:id="@+id/tvWateringFrequencyInHibernate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
-                app:layout_constraintStart_toEndOf="@+id/tvWateringFrequency"
-                app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
-                tools:text=" 1 " />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <TextView
+                        android:id="@+id/tvToWaterFromDateVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/toggleGroupToWater"
+                        app:layout_constraintStart_toEndOf="@+id/toggleGroupToWater"
+                        app:layout_constraintTop_toTopOf="@+id/toggleGroupToWater"
+                        tools:text="Dec, 20" />
+
+                    <TextView
+                        android:id="@+id/tvWateringFrequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_cached_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvToWaterFromDateVal"
+                        app:layout_constraintStart_toEndOf="@+id/tvToWaterFromDateVal"
+                        app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal"
+                        tools:text=" 1 " />
+
+                    <TextView
+                        android:id="@+id/tvWateringFrequencyInHibernate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetWateringSettingsFragmentDialog()}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
+                        app:layout_constraintStart_toEndOf="@+id/tvWateringFrequency"
+                        app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
+                        tools:text=" 1 " />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
             <!--END WATERING-->
 
             <!--START FERTILIZING-->
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_all_fertilizing_data"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardFertilizingGroup"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                android:visibility="gone"
-                app:constraint_referenced_ids="toggleGroupToFertilize, tvToFertilizeFromDateVal, tvFertilizingFrequency, tvFertilizingFrequencyInHibernate"
+                android:layout_margin="@dimen/margin_half"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_fertilizing_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_half"
-                app:constraint_referenced_ids="tvToFertilizeFromDateVal, tvFertilizingFrequency, tvFertilizingFrequencyInHibernate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleGroupToFertilize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toggleGroupToWater">
+                app:layout_constraintTop_toBottomOf="@+id/materialCardWaterGroup">
 
-                <Button
-                    android:id="@+id/toggleButtonToFertilize"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
-                    android:text="@string/to_fertilize"
-                    app:icon="@drawable/ic_baseline_scatter_plot_24" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/margin_half">
 
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/group_fertilizing_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_half"
+                        app:constraint_referenced_ids="tvToFertilizeFromDateVal, tvFertilizingFrequency, tvFertilizingFrequencyInHibernate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/tvToFertilizeFromDateVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-                app:layout_constraintBottom_toBottomOf="@+id/toggleGroupToFertilize"
-                app:layout_constraintStart_toEndOf="@+id/toggleGroupToFertilize"
-                app:layout_constraintTop_toTopOf="@+id/toggleGroupToFertilize"
-                tools:text="Dec, 20" />
-            <!--            android:text="@{viewModel.toStartWaterFromDate}"-->
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/toggleGroupToFertilize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvFertilizingFrequency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_cached_24"
-                app:layout_constraintBottom_toBottomOf="@+id/tvToFertilizeFromDateVal"
-                app:layout_constraintStart_toEndOf="@+id/tvToFertilizeFromDateVal"
-                app:layout_constraintTop_toTopOf="@+id/tvToFertilizeFromDateVal"
-                tools:text=" 1 " />
+                        <Button
+                            android:id="@+id/toggleButtonToFertilize"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
+                            android:text="@string/to_fertilize"
+                            app:icon="@drawable/ic_baseline_scatter_plot_24" />
 
-            <TextView
-                android:id="@+id/tvFertilizingFrequencyInHibernate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
-                app:layout_constraintStart_toEndOf="@+id/tvFertilizingFrequency"
-                app:layout_constraintTop_toTopOf="@+id/tvFertilizingFrequency"
-                tools:text=" 1 " />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                    <TextView
+                        android:id="@+id/tvToFertilizeFromDateVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/toggleGroupToFertilize"
+                        app:layout_constraintStart_toEndOf="@+id/toggleGroupToFertilize"
+                        app:layout_constraintTop_toTopOf="@+id/toggleGroupToFertilize"
+                        tools:text="Dec, 20" />
+                    <!--            android:text="@{viewModel.toStartWaterFromDate}"-->
+
+                    <TextView
+                        android:id="@+id/tvFertilizingFrequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_cached_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvToFertilizeFromDateVal"
+                        app:layout_constraintStart_toEndOf="@+id/tvToFertilizeFromDateVal"
+                        app:layout_constraintTop_toTopOf="@+id/tvToFertilizeFromDateVal"
+                        tools:text=" 1 " />
+
+                    <TextView
+                        android:id="@+id/tvFertilizingFrequencyInHibernate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> fragment.startSetFertilizingSettingsFragmentDialog()}"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
+                        app:layout_constraintStart_toEndOf="@+id/tvFertilizingFrequency"
+                        app:layout_constraintTop_toTopOf="@+id/tvFertilizingFrequency"
+                        tools:text=" 1 " />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/filledTextField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/margin_normal"
                 android:hint="@string/notes"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toggleGroupToFertilize">
+                app:layout_constraintTop_toBottomOf="@+id/materialCardFertilizingGroup">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextTextPlantDescription"
