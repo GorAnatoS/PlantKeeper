@@ -68,6 +68,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
     fun setNotificationsForPlantList(plantList: List<Plant>?) {
 
+        // TODO: 1/18/2021
         val isToShowNotifications = sharedPreferences.getBoolean("is_to_show_notifications", false)
 
         if (isToShowNotifications) {
@@ -86,7 +87,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                 if (plant.is_water_need_on == 1 && plant.long_next_watering_date != null) {
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = plant.long_next_watering_date!!
-
+// TODO: 1/18/2021
                     val prefMinute = sharedPreferences.getInt("notification_time", 9 * 60 + 30)
 
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
@@ -101,7 +102,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                 if (plant.is_fertilize_need_on == 1 && plant.long_next_fertilizing_date != null) {
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = plant.long_next_fertilizing_date!!
-
+// TODO: 1/18/2021
                     val prefMinute = sharedPreferences.getInt("notification_time", 9 * 60 + 30)
 
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)

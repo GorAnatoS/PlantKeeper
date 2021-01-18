@@ -99,5 +99,9 @@
     <string name="watering_mode">режим полива</string>
     <string name="help">Помощь</string>
     <string name="settings_feedback_summary">Сообщить об ошибках или предложить новые функции</string>
+    <string name="application_language">Язык приложения</string>
+    <string name="settings_language_russian">Русский</string>
+    <string name="choose_application_language">Выбрать язык приложения</string>
+    <string name="pref_option_choose_language">pref_option_choose_language</string>
 
 </resources>

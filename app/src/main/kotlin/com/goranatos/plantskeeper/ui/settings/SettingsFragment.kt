@@ -15,12 +15,13 @@
  */
 package com.goranatos.plantskeeper.ui.settings
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceScreen
 import com.goranatos.plantskeeper.R
+
 
 /**
  * A subclass of PreferenceFragmentCompat to supply preferences in a
@@ -44,15 +45,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
         rootKey: String?
     ) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
+
+        val chooseLanguagePreference = findPreference<ListPreference>(getString(R.string.pref_option_choose_language))
+        chooseLanguagePreference?.title = chooseLanguagePreference?.entry
+        chooseLanguagePreference?.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference) {
+                val index = preference.findIndexOfValue(newValue.toString())
+                val entry = preference.entries[index]
+                preference.title = entry
+            }
+            true
+        }
+
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference?) {
-        if(preference is TimePickerPreference) {
-            val timepickerdialog = TimePickerPreferenceDialog.newInstance(preference.key)
-            timepickerdialog.setTargetFragment(this, 0)
-            timepickerdialog.show(parentFragmentManager, DIALOG_FRAGMENT_TAG)
-        }
-        else {
+        if (preference is TimePickerPreference) {
+            val timePickerDialog = TimePickerPreferenceDialog.newInstance(preference.key)
+            timePickerDialog.setTargetFragment(this, 0)
+            timePickerDialog.show(parentFragmentManager, DIALOG_FRAGMENT_TAG)
+        } else {
             super.onDisplayPreferenceDialog(preference)
         }
     }

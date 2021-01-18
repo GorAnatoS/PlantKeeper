@@ -3,23 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        app:key="notifications_category"
+        app:key="settings_notifications_category"
         app:title="@string/notifications">
 
         <SwitchPreferenceCompat
-            app:key="is_to_show_notifications"
+            app:key="pref_option_is_to_show_notifications"
             app:title="@string/enable_notifications" />
+
+        <com.goranatos.plantskeeper.ui.settings.TimePickerPreference
+            android:defaultValue="90"
+            android:key="notification_time"
+            android:summary="@string/alarm_notification_time_summary"
+            android:title="@string/alarm_notification_time" />
 
     </PreferenceCategory>
 
-    <com.goranatos.plantskeeper.ui.settings.TimePickerPreference
-        android:defaultValue="90"
-        android:key="notification_time"
-        android:summary="@string/alarm_notification_time_summary"
-        android:title="@string/alarm_notification_time" />
+    <PreferenceCategory
+        app:key="settings_language_category"
+        app:title="@string/application_language">
+
+        <ListPreference
+            android:key="@string/pref_option_choose_language"
+            android:defaultValue="@string/settings_language_russian"
+            android:entries="@array/pref_language_option_labels"
+            android:entryValues="@array/pref_language_option_values"
+            android:title="@string/choose_application_language" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory
-        app:key="help_category"
+        app:key="settings_help_category"
         app:title="@string/help">
 
         <Preference
