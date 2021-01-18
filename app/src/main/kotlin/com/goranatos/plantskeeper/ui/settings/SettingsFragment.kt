@@ -17,10 +17,9 @@ package com.goranatos.plantskeeper.ui.settings
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.widget.Toolbar
-import androidx.navigation.fragment.findNavController
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -38,41 +37,22 @@ import com.yariksoffice.lingver.Lingver
  * A subclass of PreferenceFragmentCompat to supply preferences in a
  * Fragment for the SettingsActivity to display.
  */
+
+const val IS_GO_TO_SETTINGS_AFTER_RESTART = "is_go_to_settings_after_restart"
+
 class SettingsFragment : PreferenceFragmentCompat() {
     private val DIALOG_FRAGMENT_TAG = "TimePickerDialog"
 
-    private lateinit var startedAppLanguage: String
-    private var finishedAppLanguage: String = ""
+    private var beginAppLanguage: String = ""
+    private var endAppLanguage: String = ""
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    private var beginAppTheme: String = ""
+    private var endAppTheme: String = ""
 
-        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                onBackPressed()
-            }
-        }
+    private fun checkIsLanguageChangeNeeded() {
+        if (endAppLanguage.isNotEmpty() && endAppLanguage != beginAppLanguage) {
 
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            callback
-        )
-
-        val toolbar = requireActivity().findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-    }
-
-    private fun onBackPressed() {
-        findNavController().navigateUp()
-        restartAppIfNeeded()
-    }
-
-    private fun restartAppIfNeeded() {
-        if (finishedAppLanguage.isNotEmpty() && finishedAppLanguage != startedAppLanguage) {
-
-            when (finishedAppLanguage) {
+            when (endAppLanguage) {
                 "ru" -> setNewLocale(
                     requireContext(),
                     LANGUAGE_RUSSIAN,
@@ -86,6 +66,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
 
             val i = Intent(context, MainActivity::class.java)
+            i.putExtra(IS_GO_TO_SETTINGS_AFTER_RESTART, true)
             startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
         }
     }
@@ -102,10 +83,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(
             getString(R.string.pref_option_choose_language), getString(
-                R.string.en
+                R.string.empty_string
             )
         )
-            ?.also { startedAppLanguage = it }
+            ?.also { beginAppLanguage = it }
 
         val chooseLanguagePreference =
             findPreference<ListPreference>(getString(R.string.pref_option_choose_language))
@@ -118,14 +99,68 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         chooseLanguagePreference?.setOnPreferenceChangeListener { preference, newValue ->
             if (preference is ListPreference) {
-                finishedAppLanguage = newValue.toString()
+                endAppLanguage = newValue.toString()
 
                 val index = preference.findIndexOfValue(newValue.toString())
                 val entry = preference.entries[index]
 
                 preference.title = entry
+
+                checkIsLanguageChangeNeeded()
             }
             true
+        }
+
+
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(
+            getString(R.string.pref_option_choose_theme), getString(
+                R.string.empty_string
+            )
+        )
+            ?.also { beginAppTheme = it }
+
+        val chooseThemePreference =
+            findPreference<ListPreference>(getString(R.string.pref_option_choose_theme))
+
+        when (requireContext().resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                beginAppTheme = getString(R.string.settings_theme_dark)
+                chooseThemePreference?.title = beginAppTheme
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                beginAppTheme = getString(R.string.settings_theme_light)
+                chooseThemePreference?.title = beginAppTheme
+            }
+        }
+
+        chooseThemePreference?.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference) {
+                endAppTheme = newValue.toString()
+
+                val index = preference.findIndexOfValue(newValue.toString())
+                val entry = preference.entries[index]
+
+                preference.title = entry
+
+                changeApplicationThemeIfNeeded()
+            }
+            true
+        }
+    }
+
+    private fun changeApplicationThemeIfNeeded() {
+        if (endAppTheme.isNotEmpty() && endAppTheme != beginAppTheme) {
+            when (endAppTheme) {
+                getString(R.string.theme_light) -> AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
+                getString(R.string.theme_dark) -> AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+                )
+                getString(R.string.theme_default) -> AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                )
+            }
         }
     }
 

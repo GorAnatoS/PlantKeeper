@@ -37,8 +37,8 @@
 
         <ListPreference
             android:defaultValue="@string/settings_theme_light"
-            android:entries="@array/pref_language_option_labels"
-            android:entryValues="@array/pref_language_option_values"
+            android:entries="@array/pref_theme_option_labels"
+            android:entryValues="@array/pref_theme_option_values"
             android:key="@string/pref_option_choose_theme"
             android:title="@string/settings_theme_light" />
 

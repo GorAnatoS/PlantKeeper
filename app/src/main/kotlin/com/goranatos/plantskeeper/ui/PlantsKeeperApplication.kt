@@ -1,6 +1,7 @@
 package com.goranatos.plantskeeper.ui
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.goranatos.plantskeeper.R
@@ -34,19 +35,40 @@ class PlantsKeeperApplication : Application(), DIAware {
         bind() from factory { plantId: Int -> PlantDetailViewModelFactory(instance(), plantId) }
     }
 
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        sharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(applicationContext)
+
+        setApplicationTheme()
+
         setApplicationLanguage()
+    }
+
+    private fun setApplicationTheme() {
+        when (sharedPreferences.getString(
+            getString(R.string.pref_option_choose_theme),
+            getString(R.string.theme_default)
+        )) {
+            getString(R.string.theme_light) -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO
+            )
+            getString(R.string.theme_dark) -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES
+            )
+            getString(R.string.theme_default) -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            )
+        }
     }
 
     @Suppress("UNUSED_VARIABLE")
     fun setApplicationLanguage() {
-        val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(applicationContext)
-
         when (sharedPreferences.getString(
             getString(R.string.pref_option_choose_language),
             getString(R.string.en)
@@ -54,22 +76,11 @@ class PlantsKeeperApplication : Application(), DIAware {
             "ru" -> {
                 val store = PreferenceLocaleStore(this, Locale(LANGUAGE_PREFS.LANGUAGE_RUSSIAN))
                 val lingver = Lingver.init(this, store)
-
-                Lingver.getInstance().setLocale(
-                    this, LANGUAGE_PREFS.LANGUAGE_RUSSIAN,
-                    LANGUAGE_PREFS.LANGUAGE_RUSSIAN_COUNTRY
-                )
-
             }
 
             "en" -> {
                 val store = PreferenceLocaleStore(this, Locale(LANGUAGE_PREFS.LANGUAGE_ENGLISH))
                 val lingver = Lingver.init(this, store)
-
-                Lingver.getInstance().setLocale(
-                    this, LANGUAGE_PREFS.LANGUAGE_ENGLISH,
-                    LANGUAGE_PREFS.LANGUAGE_ENGLISH_COUNTRY
-                )
             }
         }
     }

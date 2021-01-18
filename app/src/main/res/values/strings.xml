@@ -106,6 +106,7 @@
 
     <string name="ru" translatable="false">ru</string>
     <string name="en" translatable="false">en</string>
+    <string name="empty_string" translatable="false" />
     <string name="russian_lang">Russian</string>
     <string name="english_lang">English</string>
     <string name="current_lang">English</string>

@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.goranatos.plantskeeper.R
+import com.goranatos.plantskeeper.ui.home.MyPlantsFragmentDirections
+import com.goranatos.plantskeeper.ui.settings.IS_GO_TO_SETTINGS_AFTER_RESTART
 import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
 
@@ -25,6 +27,12 @@ class MainActivity : AppCompatActivity(), DIAware {
             val toolbar = findViewById<Toolbar>(R.id.toolbar)
             setSupportActionBar(toolbar)
             toolbar.setupWithNavController(it, appBarConfiguration)
+        }
+
+        if (intent.getBooleanExtra(IS_GO_TO_SETTINGS_AFTER_RESTART, false)) {
+            val navController = findNavController(R.id.nav_host_fragment)
+            if (navController.currentDestination?.id != R.id.settingsFragment)
+                navController.navigate(MyPlantsFragmentDirections.actionMyPlantsFragmentToSettingsFragment())
         }
     }
 }
