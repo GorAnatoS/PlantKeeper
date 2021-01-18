@@ -49,3 +49,5 @@ class MainActivity : AppCompatActivity(), DIAware {
 //const val REPLANT_NEED_COLUMN = "replanting_need"
 //const val CUT_NEED_COLUMN = "cutting_need"
 //const val TURN_NEED_COLUMN = "turning_need"
+
+// TODO: 1/18/2021 TEST OPEN APP PAGE 

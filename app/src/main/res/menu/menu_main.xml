@@ -7,15 +7,4 @@
         android:id="@+id/action_option"
         android:title="@string/action_settings"
         android:icon="@drawable/ic_baseline_settings_24"/>
-
-    <item
-        android:id="@+id/feedback_option"
-        android:icon="@drawable/ic_baseline_feedback_24"
-        android:title="@string/feedback" />
-
-    <item
-        android:visible="false"
-        android:id="@+id/about_option"
-        android:title="@string/about_application" />
-
 </menu>

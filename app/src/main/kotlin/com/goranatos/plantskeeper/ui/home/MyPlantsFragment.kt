@@ -180,14 +180,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             true
         }
 
-        val feedbackOption = menu.findItem(R.id.feedback_option)
-        feedbackOption.setOnMenuItemClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getString(R.string.google_plat_application_page))
-            startActivity(intent)
-            true
-        }
-
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
