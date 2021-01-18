@@ -109,4 +109,8 @@
     <string name="russian_lang">Russian</string>
     <string name="english_lang">English</string>
 
+    <string name="pref_option_is_to_show_notifications" translatable="false">pref_option_is_to_show_notifications</string>
+    <string name="pref_option_notification_time" translatable="false">pref_option_notification_time</string>
+    <string name="pref_option_settings_feedback" translatable="false">pref_option_settings_feedback</string>
+
 </resources>

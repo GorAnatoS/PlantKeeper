@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity(), DIAware {
             setSupportActionBar(toolbar)
             toolbar.setupWithNavController(it, appBarConfiguration)
         }
+
+
     }
 }
 

@@ -8,11 +8,15 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.preference.PreferenceManager
 import com.goranatos.plantskeeper.data.entity.Plant
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.receiver.AlarmReceiver
+import com.goranatos.plantskeeper.util.SharedPreferencesRepository
 import com.goranatos.plantskeeper.util.cancelNotifications
 import kotlinx.coroutines.*
 import java.util.*
@@ -26,7 +30,6 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
     private val viewModelJob = Job()
     val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
 
     //create new plant
     var navigateToPlantId = -1
@@ -67,9 +70,11 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     }
 
     fun setNotificationsForPlantList(plantList: List<Plant>?) {
-
-        // TODO: 1/18/2021
-        val isToShowNotifications = sharedPreferences.getBoolean("is_to_show_notifications", false)
+        
+        val isToShowNotifications = sharedPreferences.getBoolean(
+            SharedPreferencesRepository.PREF_OPTION_IS_TO_SHOW_NOTIFICATIONS,
+            false
+        )
 
         if (isToShowNotifications) {
 
@@ -87,8 +92,11 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                 if (plant.is_water_need_on == 1 && plant.long_next_watering_date != null) {
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = plant.long_next_watering_date!!
-// TODO: 1/18/2021
-                    val prefMinute = sharedPreferences.getInt("notification_time", 9 * 60 + 30)
+
+                    val prefMinute = sharedPreferences.getInt(
+                        SharedPreferencesRepository.PREF_OPTION_NOTIFICATION_TIME,
+                        9 * 60 + 30
+                    )
 
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
                     calendar.set(Calendar.MINUTE, prefMinute % 60)
@@ -102,8 +110,11 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                 if (plant.is_fertilize_need_on == 1 && plant.long_next_fertilizing_date != null) {
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = plant.long_next_fertilizing_date!!
-// TODO: 1/18/2021
-                    val prefMinute = sharedPreferences.getInt("notification_time", 9 * 60 + 30)
+
+                    val prefMinute = sharedPreferences.getInt(
+                        SharedPreferencesRepository.PREF_OPTION_NOTIFICATION_TIME,
+                        9 * 60 + 30
+                    )
 
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
                     calendar.set(Calendar.MINUTE, prefMinute % 60)

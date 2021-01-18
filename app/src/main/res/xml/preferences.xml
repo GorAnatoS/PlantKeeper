@@ -7,12 +7,12 @@
         app:title="@string/notifications">
 
         <SwitchPreferenceCompat
-            app:key="pref_option_is_to_show_notifications"
+            app:key="@string/pref_option_is_to_show_notifications"
             app:title="@string/enable_notifications" />
 
         <com.goranatos.plantskeeper.ui.settings.TimePickerPreference
             android:defaultValue="90"
-            android:key="notification_time"
+            android:key="@string/pref_option_notification_time"
             android:summary="@string/alarm_notification_time_summary"
             android:title="@string/alarm_notification_time" />
 
@@ -36,7 +36,7 @@
         app:title="@string/help">
 
         <Preference
-            app:key="settings_feedback"
+            app:key="@string/pref_option_settings_feedback"
             app:summary="@string/settings_feedback_summary"
             app:title="@string/settings_feedback">
             <intent
