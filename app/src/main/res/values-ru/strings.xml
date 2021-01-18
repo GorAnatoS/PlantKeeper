@@ -94,6 +94,7 @@
 
     <string name="russian_lang">Русский</string>
     <string name="english_lang">Английский</string>
+    <string name="current_lang">Русский</string>
 
     <string name="to_change_app_lang_restart_application">Для изменения языка - перезагрузите приложение</string>
 

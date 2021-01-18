@@ -109,7 +109,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val chooseLanguagePreference =
             findPreference<ListPreference>(getString(R.string.pref_option_choose_language))
-        chooseLanguagePreference?.title = chooseLanguagePreference?.entry
+
+        if (chooseLanguagePreference?.entry == null) {
+            chooseLanguagePreference?.title = getString(R.string.current_lang)
+        } else {
+            chooseLanguagePreference.title = chooseLanguagePreference.entry
+        }
+
         chooseLanguagePreference?.setOnPreferenceChangeListener { preference, newValue ->
             if (preference is ListPreference) {
                 finishedAppLanguage = newValue.toString()
@@ -121,7 +127,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
-
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference?) {
