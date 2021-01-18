@@ -25,7 +25,7 @@ import androidx.core.content.ContextCompat
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.util.sendNotification
 
-class AlarmReceiver: BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 

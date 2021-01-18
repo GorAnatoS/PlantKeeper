@@ -23,7 +23,8 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
  * Created by qsufff on 12/7/2020.
  */
 
-class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) : DialogFragment() {
+class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) :
+    DialogFragment() {
 
     lateinit var plant: Plant
 
@@ -66,7 +67,8 @@ class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailVie
     private fun setTvToFertilizeFromDate() {
         if (plant.long_next_fertilizing_date == null) {
             plant.long_next_fertilizing_date = TimeHelper.getNextDayDate()
-            binding.tvToFertilizeFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
+            binding.tvToFertilizeFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
         } else {
             binding.tvToFertilizeFromDateVal.text =
                 TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
@@ -106,21 +108,27 @@ class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailVie
         }
     }
 
-    private fun setEditTextListeners(){
+    private fun setEditTextListeners() {
         plant.int_fertilizing_frequency_normal?.let {
-            binding.etFertilizingFrequencyNormal.setText(it.toString(), TextView.BufferType.EDITABLE)
+            binding.etFertilizingFrequencyNormal.setText(
+                it.toString(),
+                TextView.BufferType.EDITABLE
+            )
         }
 
         plant.int_fertilizing_frequency_in_hibernate?.let {
-            binding.etFertilizingFrequencyInHibernate.setText(it.toString(), TextView.BufferType.EDITABLE)
+            binding.etFertilizingFrequencyInHibernate.setText(
+                it.toString(),
+                TextView.BufferType.EDITABLE
+            )
         }
 
-        binding.etFertilizingFrequencyNormal.addTextChangedListener{
+        binding.etFertilizingFrequencyNormal.addTextChangedListener {
             if (!it.isNullOrEmpty())
                 plant.int_fertilizing_frequency_normal = it.toString().toInt()
         }
 
-        binding.etFertilizingFrequencyInHibernate.addTextChangedListener{
+        binding.etFertilizingFrequencyInHibernate.addTextChangedListener {
             if (!it.isNullOrEmpty())
                 plant.int_fertilizing_frequency_in_hibernate = it.toString().toInt()
         }
@@ -139,12 +147,12 @@ class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailVie
         binding.switchHibernate.isChecked = plant.is_fertilizing_hibernate_mode_on == 1
     }
 
-    private fun setFertilizingHibernateModeOn(){
+    private fun setFertilizingHibernateModeOn() {
         plant.is_fertilizing_hibernate_mode_on = 1
         binding.groupFertilizingInHibernateMode.visibility = View.VISIBLE
     }
 
-    private fun setFertilizingHibernateModeOff(){
+    private fun setFertilizingHibernateModeOff() {
         plant.is_fertilizing_hibernate_mode_on = 0
         binding.groupFertilizingInHibernateMode.visibility = View.GONE
     }
@@ -162,7 +170,7 @@ class SetFertilizingSettingsFragmentDialog(private val viewModel: PlantDetailVie
             binding.etLayoutFertilizingFrequencyNormal.error = null
         }
 
-        if (binding.switchHibernate.isChecked){
+        if (binding.switchHibernate.isChecked) {
             if (binding.etFertilizingFrequencyInHibernate.editableText.isNullOrEmpty()) {
                 binding.etLayoutFertilizingFrequencyInHibernate.isErrorEnabled = true
                 binding.etLayoutFertilizingFrequencyInHibernate.error = "Ошибка"

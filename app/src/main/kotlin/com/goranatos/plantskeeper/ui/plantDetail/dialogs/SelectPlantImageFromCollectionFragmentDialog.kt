@@ -23,7 +23,8 @@ import kotlinx.android.synthetic.main.dialog_select_plant_image_from_collection.
  * Created by qsufff on 12/7/2020.
  */
 
-class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetailViewModel) : DialogFragment() {
+class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetailViewModel) :
+    DialogFragment() {
 
     lateinit var myDialog: Dialog
 

@@ -7,7 +7,6 @@ import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.data.repository.PlantsRepositoryImpl
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModelFactory
-import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.*
 import org.kodein.di.android.x.androidXModule
 

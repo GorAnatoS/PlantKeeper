@@ -49,6 +49,6 @@ data class Plant(
     @ColumnInfo(name = INT_FERTILIZING_FREQUENCY_IN_HIBERNATE_COLUMN)
     var int_fertilizing_frequency_in_hibernate: Int?,
 
-)
+    )
 //0 - значит нет, 1 - да
 

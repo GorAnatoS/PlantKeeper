@@ -96,10 +96,11 @@ abstract class PlantsDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         PlantsDatabase::class.java,
-                        DATABASE_NAME)
-                     /*   .addMigrations(MIGRATION_1_2)
-                        .addMigrations(MIGRATION_2_3)
-                        .addMigrations(MIGRATION_3_4)*/
+                        DATABASE_NAME
+                    )
+                        /*   .addMigrations(MIGRATION_1_2)
+                           .addMigrations(MIGRATION_2_3)
+                           .addMigrations(MIGRATION_3_4)*/
                         .build()
                 }
 

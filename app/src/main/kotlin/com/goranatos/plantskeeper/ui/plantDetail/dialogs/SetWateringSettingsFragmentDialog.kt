@@ -22,7 +22,8 @@ import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModel
  * Created by qsufff on 12/7/2020.
  */
 
-class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) : DialogFragment() {
+class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) :
+    DialogFragment() {
 
     lateinit var plant: Plant
 
@@ -65,7 +66,8 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
     private fun setTvToWaterFromDate() {
         if (plant.long_next_watering_date == null) {
             plant.long_next_watering_date = TimeHelper.getNextDayDate()
-            binding.tvToWaterFromDateVal.text = TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+            binding.tvToWaterFromDateVal.text =
+                TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
         } else {
             binding.tvToWaterFromDateVal.text =
                 TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
@@ -105,21 +107,24 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         }
     }
 
-    private fun setEditTextListeners(){
+    private fun setEditTextListeners() {
         plant.int_watering_frequency_normal?.let {
             binding.etWateringFrequencyNormal.setText(it.toString(), TextView.BufferType.EDITABLE)
         }
 
         plant.int_watering_frequency_in_hibernate?.let {
-            binding.etWateringFrequencyInHibernate.setText(it.toString(), TextView.BufferType.EDITABLE)
+            binding.etWateringFrequencyInHibernate.setText(
+                it.toString(),
+                TextView.BufferType.EDITABLE
+            )
         }
 
-        binding.etWateringFrequencyNormal.addTextChangedListener{
+        binding.etWateringFrequencyNormal.addTextChangedListener {
             if (!it.isNullOrEmpty())
                 plant.int_watering_frequency_normal = it.toString().toInt()
         }
 
-        binding.etWateringFrequencyInHibernate.addTextChangedListener{
+        binding.etWateringFrequencyInHibernate.addTextChangedListener {
             if (!it.isNullOrEmpty())
                 plant.int_watering_frequency_in_hibernate = it.toString().toInt()
         }
@@ -138,12 +143,12 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
         binding.switchHibernate.isChecked = plant.is_watering_hibernate_mode_on == 1
     }
 
-    private fun setWateringHibernateModeOn(){
+    private fun setWateringHibernateModeOn() {
         plant.is_watering_hibernate_mode_on = 1
         binding.groupWateringInHibernateMode.visibility = View.VISIBLE
     }
 
-    private fun setWateringHibernateModeOff(){
+    private fun setWateringHibernateModeOff() {
         plant.is_watering_hibernate_mode_on = 0
         binding.groupWateringInHibernateMode.visibility = View.GONE
     }
@@ -161,7 +166,7 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
             binding.etLayoutWateringFrequencyNormal.error = null
         }
 
-        if (binding.switchHibernate.isChecked){
+        if (binding.switchHibernate.isChecked) {
             if (binding.etWateringFrequencyInHibernate.editableText.isNullOrEmpty()) {
                 binding.etLayoutWateringFrequencyInHibernate.isErrorEnabled = true
                 binding.etLayoutWateringFrequencyInHibernate.error = "Ошибка"

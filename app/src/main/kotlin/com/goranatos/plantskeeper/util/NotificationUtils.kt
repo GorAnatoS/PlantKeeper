@@ -1,4 +1,3 @@
-
 /*
  * Copyright (C) 2019 Google Inc.
  *
@@ -46,15 +45,18 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         applicationContext,
         REQUEST_CODE,
         snoozeIntent,
-        FLAGS)
+        FLAGS
+    )
 
     val builder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.plant_notification_channel_id)
     )
         .setSmallIcon(R.drawable.ic_baseline_local_florist_24)
-        .setContentTitle(applicationContext
-            .getString(R.string.notification_title))
+        .setContentTitle(
+            applicationContext
+                .getString(R.string.notification_title)
+        )
         .setContentText(messageBody)
 
         .setContentIntent(contentPendingIntent)

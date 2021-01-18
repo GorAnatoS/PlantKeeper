@@ -1,6 +1,5 @@
 package com.goranatos.plantskeeper.internal
 
-import com.goranatos.plantskeeper.data.entity.Plant
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit

@@ -94,11 +94,18 @@ class PlantItemCard(
             }
 
             if (content.is_fertilize_need_on == 1) {
-                if (TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_fertilizing_date!!) <= 0)
+                if (TimeHelper.getDaysTillEventNotification(
+                        System.currentTimeMillis(),
+                        content.long_next_fertilizing_date!!
+                    ) <= 0
+                )
                     colorNormal = false
 
                 viewHolder.containerView.tvTillFertilizingVal.text =
-                    TimeHelper.getDaysTillEventNotification(System.currentTimeMillis(), content.long_next_fertilizing_date!!).toString()
+                    TimeHelper.getDaysTillEventNotification(
+                        System.currentTimeMillis(),
+                        content.long_next_fertilizing_date!!
+                    ).toString()
             } else {
                 viewHolder.containerView.tvTillFertilizing.visibility = View.GONE
                 viewHolder.containerView.tvTillFertilizingVal.visibility = View.GONE
@@ -106,7 +113,7 @@ class PlantItemCard(
 
             if (colorNormal) {
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context,R.color.card_normal_color)
+                    getColor(viewHolder.containerView.context, R.color.card_normal_color)
                 )
             } else {
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(

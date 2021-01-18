@@ -36,7 +36,7 @@ class TimePickerPreferenceDialog : PreferenceDialogFragmentCompat() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onDialogClosed(positiveResult: Boolean) {
         // Save settings
-        if(positiveResult) {
+        if (positiveResult) {
             val minutesAfterMidnight = (timepicker.hour * 60) + timepicker.minute
             (preference as TimePickerPreference).persistMinutesFromMidnight(minutesAfterMidnight)
             preference.summary = minutesFromMidnightToHourlyTime(minutesAfterMidnight)

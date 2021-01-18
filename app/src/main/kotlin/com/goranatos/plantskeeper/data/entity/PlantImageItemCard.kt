@@ -18,7 +18,10 @@ interface OnPlantImageItemClickedListener {
 }
 
 
-class PlantImageItemCard(private val uri: Uri, private val plantImageItemListener: OnPlantImageItemClickedListener) : Item() {
+class PlantImageItemCard(
+    private val uri: Uri,
+    private val plantImageItemListener: OnPlantImageItemClickedListener
+) : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
 
@@ -26,7 +29,7 @@ class PlantImageItemCard(private val uri: Uri, private val plantImageItemListene
 
             viewHolder.itemView.imageViewPlant.setImageURI(uri)
 
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 plantImageItemListener.onPlantImageClicked(uri)
             }
         }

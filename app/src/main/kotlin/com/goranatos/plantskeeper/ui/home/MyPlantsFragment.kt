@@ -3,9 +3,7 @@ package com.goranatos.plantskeeper.ui.home
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.*

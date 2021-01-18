@@ -19,7 +19,6 @@ import android.os.Bundle
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceScreen
 import com.goranatos.plantskeeper.R
 
 
@@ -46,7 +45,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     ) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        val chooseLanguagePreference = findPreference<ListPreference>(getString(R.string.pref_option_choose_language))
+        val chooseLanguagePreference =
+            findPreference<ListPreference>(getString(R.string.pref_option_choose_language))
         chooseLanguagePreference?.title = chooseLanguagePreference?.entry
         chooseLanguagePreference?.setOnPreferenceChangeListener { preference, newValue ->
             if (preference is ListPreference) {
