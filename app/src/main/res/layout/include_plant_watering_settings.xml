@@ -39,6 +39,7 @@
         <TextView
             android:id="@+id/tvToStartWaterFrom"
             android:layout_width="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -91,6 +92,7 @@
             android:id="@+id/textViewToWaterOnce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="@string/watering_settings_normal_mode"
@@ -133,6 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="center"
+            style="@style/TextAppearance.MaterialComponents.Body2"
             android:text="@string/watering_settings_hibernate_mode"
             app:layout_constraintBottom_toBottomOf="@+id/etLayoutWateringFrequencyInHibernate"
             app:layout_constraintStart_toStartOf="parent"

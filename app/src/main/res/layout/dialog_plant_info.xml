@@ -60,6 +60,7 @@
             android:id="@+id/textViewPlantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_marginTop="8dp"
             android:text="@{viewModel.thePlant.str_name.toString()}"
             app:layout_constraintEnd_toEndOf="@+id/imageViewPlant"

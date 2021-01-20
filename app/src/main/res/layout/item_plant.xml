@@ -17,7 +17,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvTitle"
-            style="@style/TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_2x"
@@ -40,6 +40,7 @@
         <TextView
             android:id="@+id/tvTillWatering"
             android:layout_width="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/days_till_watering"
@@ -59,6 +60,7 @@
         <TextView
             android:id="@+id/tvTillFertilizing"
             android:layout_width="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_height="wrap_content"
             android:text="@string/days_till_fertilizing"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewPlant"
