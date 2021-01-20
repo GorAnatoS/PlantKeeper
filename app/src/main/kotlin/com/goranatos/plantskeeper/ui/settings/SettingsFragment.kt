@@ -20,10 +20,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
+import androidx.preference.*
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.ui.MainActivity
 import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_ENGLISH
@@ -46,8 +43,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var beginAppLanguage: String = ""
     private var endAppLanguage: String = ""
 
-    private var beginAppTheme: String = ""
-    private var endAppTheme: String = ""
+    private var beginAppTheme = false
+    private var endAppTheme = false
 
     private fun checkIsLanguageChangeNeeded() {
         if (endAppLanguage.isNotEmpty() && endAppLanguage != beginAppLanguage) {
@@ -112,53 +109,43 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
 
-        PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(
-            getString(R.string.pref_option_choose_theme), getString(
-                R.string.empty_string
-            )
-        )
-            ?.also { beginAppTheme = it }
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+            getString(R.string.pref_option_is_dark_theme_enabled), false
+        ).also { beginAppTheme = it }
 
         val chooseThemePreference =
-            findPreference<ListPreference>(getString(R.string.pref_option_choose_theme))
+            findPreference<SwitchPreferenceCompat>(getString(R.string.pref_option_is_dark_theme_enabled))
 
         when (requireContext().resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
             Configuration.UI_MODE_NIGHT_YES -> {
-                beginAppTheme = getString(R.string.settings_theme_dark)
-                chooseThemePreference?.title = beginAppTheme
+                beginAppTheme = true
+                chooseThemePreference?.isChecked = beginAppTheme
             }
             Configuration.UI_MODE_NIGHT_NO -> {
-                beginAppTheme = getString(R.string.settings_theme_light)
-                chooseThemePreference?.title = beginAppTheme
+                beginAppTheme = false
+                chooseThemePreference?.isChecked = beginAppTheme
             }
         }
 
         chooseThemePreference?.setOnPreferenceChangeListener { preference, newValue ->
-            if (preference is ListPreference) {
-                endAppTheme = newValue.toString()
 
-                val index = preference.findIndexOfValue(newValue.toString())
-                val entry = preference.entries[index]
+            endAppTheme = newValue as Boolean
 
-                preference.title = entry
+            changeApplicationThemeIfNeeded()
 
-                changeApplicationThemeIfNeeded()
-            }
             true
         }
     }
 
+
     private fun changeApplicationThemeIfNeeded() {
-        if (endAppTheme.isNotEmpty() && endAppTheme != beginAppTheme) {
+        if (endAppTheme != beginAppTheme) {
             when (endAppTheme) {
-                getString(R.string.theme_light) -> AppCompatDelegate.setDefaultNightMode(
+                false -> AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_NO
                 )
-                getString(R.string.theme_dark) -> AppCompatDelegate.setDefaultNightMode(
+                true -> AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_YES
-                )
-                getString(R.string.theme_default) -> AppCompatDelegate.setDefaultNightMode(
-                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 )
             }
         }

@@ -1,14 +1,14 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PlantsKeeper</string>
-    <string name="action_settings">Настройки</string>
+    <resources xmlns:tools="http://schemas.android.com/tools">
+        <string name="app_name">PlantsKeeper</string>
+        <string name="action_settings">Настройки</string>
 
-    <string name="name">Название</string>
-    <string name="add_new_plant">Добавить новое растение</string>
-    <string name="empty_db_text">@string/add_new_plant</string>
+        <string name="name">Название</string>
+        <string name="add_new_plant">Новое растение</string>
+        <string name="empty_db_text">@string/add_new_plant</string>
 
-    <string name="added">Добавлено</string>
-    <string name="changed">Изменено</string>
-    <string name="deleted">Удалено</string>
+        <string name="added">Добавлено</string>
+        <string name="changed">Изменено</string>
+        <string name="deleted">Удалено</string>
     <string name="delete_item">удалить</string>
     <string name="save">сохранить</string>
     <string name="notes">Заметки</string>
@@ -93,13 +93,14 @@
     <string name="choose_application_language">Выбрать язык приложения</string>
 
     <string name="russian_lang">Русский</string>
-    <string name="english_lang">Английский</string>
-    <string name="current_lang">Русский</string>
+        <string name="english_lang">Английский</string>
+        <string name="current_lang">Русский</string>
 
-    <string name="to_change_app_lang_restart_application">Для изменения языка - перезагрузите приложение</string>
-    <string name="settings_night_mode">Тема</string>
-    <string name="settings_theme_light">Светлая</string>
-    <string name="settings_theme_dark">Темная</string>
-    <string name="settings_theme_default">Стандартная</string>
+        <string name="to_change_app_lang_restart_application">Для изменения языка - перезагрузите приложение</string>
+        <string name="settings_night_mode">Тема</string>
+        <string name="settings_theme_light">Светлая</string>
+        <string name="settings_theme_dark">Темная</string>
+        <string name="settings_theme_default">Стандартная</string>
+        <string name="enable_dark_theme">Включить темную тему</string>
 
-</resources>
+    </resources>

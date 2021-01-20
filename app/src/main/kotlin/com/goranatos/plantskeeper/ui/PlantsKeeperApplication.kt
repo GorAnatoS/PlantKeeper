@@ -40,10 +40,9 @@ class PlantsKeeperApplication : Application(), DIAware {
 
     override fun onCreate() {
         super.onCreate()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(applicationContext)
+            PreferenceManager.getDefaultSharedPreferences(this)
 
         setApplicationTheme()
 
@@ -51,18 +50,15 @@ class PlantsKeeperApplication : Application(), DIAware {
     }
 
     private fun setApplicationTheme() {
-        when (sharedPreferences.getString(
-            getString(R.string.pref_option_choose_theme),
-            getString(R.string.theme_default)
+        when (sharedPreferences.getBoolean(
+            getString(R.string.pref_option_is_dark_theme_enabled),
+            false
         )) {
-            getString(R.string.theme_light) -> AppCompatDelegate.setDefaultNightMode(
+            false -> AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_NO
             )
-            getString(R.string.theme_dark) -> AppCompatDelegate.setDefaultNightMode(
+            true -> AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_YES
-            )
-            getString(R.string.theme_default) -> AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             )
         }
     }

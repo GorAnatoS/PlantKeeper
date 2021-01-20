@@ -121,25 +121,28 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
         uiSetup()
 
-        viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
-            setUIforPlant(plant)
-        })
-
-        viewModel.setPlant()
-
+        hideRelatedToChipsMaterialCards()
         if (viewModel.isToCreateNewPlant) {
             binding.chipHibernatingMode.isChecked =
                 viewModel.thePlant.value?.is_hibernate_mode_on == 1
             binding.chipWateringMode.isChecked = viewModel.thePlant.value?.is_water_need_on == 1
             binding.chipFertilizingMode.isChecked =
                 viewModel.thePlant.value?.is_fertilize_need_on == 1
-
-            binding.materialCardHibernateGroup.visibility = View.GONE
-            binding.materialCardWaterGroup.visibility = View.GONE
-            binding.materialCardFertilizingGroup.visibility = View.GONE
         }
 
+        viewModel.thePlant.observe(viewLifecycleOwner, { plant ->
+            setUIforPlant(plant)
+        })
+
+        viewModel.setPlant()
+
         return binding.root
+    }
+
+    private fun hideRelatedToChipsMaterialCards() {
+        binding.materialCardHibernateGroup.visibility = View.GONE
+        binding.materialCardWaterGroup.visibility = View.GONE
+        binding.materialCardFertilizingGroup.visibility = View.GONE
     }
 
 

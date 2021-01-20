@@ -8,15 +8,15 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.PlantsKeeper.AppBarOverlay">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.PlantsKeeper.PopupOverlay" />
+            android:background="@color/toolbar_background_color"
+            android:theme="@style/Theme.PlantsKeeper.ActionBar"
+            app:titleTextColor="@color/toolbar_text_and_icons_color" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -1,16 +1,35 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.PlantsKeeper" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+<resources>
+
+    <style name="Theme.PlantsKeeper" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_color_variant</item>
+        <item name="colorOnPrimary">@color/on_primary_color</item>
+
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorSecondaryVariant">@color/secondary_color_variant</item>
+        <item name="colorOnSecondary">@color/on_secondary_color</item>
+
+        <item name="backgroundColor">@color/background_color</item>
+        <item name="colorOnBackground">@color/on_background_color</item>
+
+        <item name="colorSurface">@color/surface_color</item>
+        <item name="colorOnSurface">@color/on_surface_color</item>
+
+        <item name="colorError">@color/error_color</item>
+        <item name="colorOnError">@color/on_error_color</item>
+
+        <item name="android:textColor">@color/white_87_opacity</item>
+        <item name="android:editTextColor">@color/white_87_opacity</item>
+    </style>
+
+    <style name="Theme.PlantsKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="iconTint">@color/toolbar_text_and_icons_color</item>
+        <item name="colorControlNormal">@color/toolbar_text_and_icons_color</item>
+        <item name="android:textColor">@color/toolbar_text_and_icons_color</item>
+    </style>
+
+    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_background_color_state_list</item>
+        <item name="android:textColor">@color/chip_text_color_state_list</item>
     </style>
 </resources>

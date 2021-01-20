@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_87_opacity">#DE000000</color>
+
     <color name="white">#FFFFFF</color>
+    <color name="white_87_opacity">#DEFFFFFF</color>
+
+    <color name="grey">#121212</color>
+
     <color name="errorColor">@color/pink_900</color>
     <color name="colorAccent">#16697A</color>
 
@@ -15,30 +16,58 @@
     <color name="textColor">#FF000000</color>
     <color name="pink_900">#880e4f</color>
 
-    <color name="circle_icon_button_color">@color/purple_200</color>
-    <color name="circle_icon_content_color">@color/teal_200</color>
-    <color name="card_attention_color">#B2EBF2</color>
-    <color name="card_normal_color">@color/white</color>
-
     <color name="text_color_action_on_click">#257181</color>
 
+    <color name="card_attention_color">#4DF3CE78</color> <!--30% secondary color-->
+    <color name="card_normal_color">@color/surface_color</color>
+
+    <!--    dark-->
+    <color name="teal_100">#b2ebf2</color>
+    <color name="teal_100_dark">#81b9bf</color>
+
+    <color name="amber_200">#ffe082</color>
+    <color name="amber_200_dark">#caae53</color>
+
+    <color name="dark_surface">#252C2D</color>
+
+    <color name="toolbar_bg_dark">#202526</color>
+    <color name="toolbar_background_color">@color/primary_color</color>
+    <color name="toolbar_text_and_icons_color">@color/on_primary_color</color>
+
+    <color name="only_icon_button_color">#979797</color>
+    <!--    <color name="only_icon_button_color">#B1E3E8</color>-->
+
     <!--new colors-->
-    <color name="amazon_primary_light">#8DDBDB</color>
-    <color name="amazon_primary_dark">#65CBCD</color>
-    <color name="amazon_on_primary">#060A09</color>
-    <color name="amazon_secondary_light">#F0C663</color>
-    <color name="amazon_secondary_dark">#EF9833</color>
-    <color name="amazon_on_secondary">#0F0800</color>
+    <color name="primary_color">#86D9E1</color>
+    <color name="primary_color_variant">#65CBCD</color>
+    <color name="on_primary_color">#000604</color>
+    <color name="secondary_color">#F3CE78</color>
+    <color name="secondary_color_variant">#F2AB5B</color>
+    <color name="on_secondary_color">#150F00</color>
 
-    <color name="amazon_chip_bg_light">#E8ECED</color>
-    <color name="amazon_chip_on_light_text_color">#0A272D</color>
+    <color name="background_color">@color/white</color>
+    <color name="on_background_color">@color/on_primary_color</color>
 
-    <color name="amazon_chip_bg_dark">#D5E7E9</color>
-    <color name="amazon_chip_on_dark_text_color">#0C1615</color>
+    <color name="surface_color">#F7F7F7</color>
+    <color name="on_surface_color">@color/on_primary_color</color>
+    <color name="on_surface_hight_emphasis">#DE86D9E1</color>
+    <color name="on_surface_white_hight_emphasis">@color/white_87_opacity</color> <!---->
+    <color name="on_surface_black_hight_emphasis">@color/black_87_opacity</color> <!---->
+
+    <color name="error_color">#7C312E</color>
+    <color name="on_error_color">@color/white</color>
+
+    <color name="amazon_chip_bg_light">@color/surface_color</color>
+    <color name="amazon_chip_on_light_text_color">@color/on_surface_black_hight_emphasis</color>
+
+    <color name="amazon_chip_bg_dark">#2686D9E1</color>
+    <color name="amazon_chip_on_dark_text_color">@color/primary_color_variant</color>
+
+    <!--    dark-->
+    <color name="dark_primary_4dp_elevation">#202526</color>
 
 
 </resources>
-
 <!--    100% — FF
 99% — FC
 98% — FA

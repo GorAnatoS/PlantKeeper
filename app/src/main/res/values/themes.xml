@@ -1,17 +1,43 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.PlantsKeeper" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/amazon_primary_light</item>
-        <item name="colorPrimaryVariant">@color/amazon_primary_dark</item>
-        <item name="colorOnPrimary">@color/amazon_on_primary</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/amazon_secondary_light</item>
-        <item name="colorSecondaryVariant">@color/amazon_secondary_dark</item>
-        <item name="colorOnSecondary">@color/amazon_on_secondary</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    <style name="Theme.PlantsKeeper" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_color_variant</item>
+        <item name="colorOnPrimary">@color/on_primary_color</item>
 
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorSecondaryVariant">@color/secondary_color_variant</item>
+        <item name="colorOnSecondary">@color/on_secondary_color</item>
+
+        <item name="backgroundColor">@color/background_color</item>
+        <item name="colorOnBackground">@color/on_background_color</item>
+
+        <item name="colorSurface">@color/surface_color</item>
+        <item name="colorOnSurface">@color/on_surface_color</item>
+
+        <item name="colorError">@color/error_color</item>
+        <item name="colorOnError">@color/on_error_color</item>
+
+        <item name="colorAccent">@color/secondary_color_variant</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="actionOverflowButtonStyle">@style/Theme.PlantsKeeper.ActionOverflowButtonStyle
+        </item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+        <item name="toolbarStyle">@style/Theme.PlantsKeeper.Toolbar</item>
+
+        <item name="android:textColor">@color/black_87_opacity</item>
+        <item name="android:editTextColor">@color/black_87_opacity</item>
+    </style>
+
+    <style name="Theme.PlantsKeeper.ActionOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/on_primary_color</item>
+    </style>
+
+    <style name="Theme.PlantsKeeper.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextColor">@color/on_primary_color</item>
     </style>
 
     <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
@@ -24,8 +50,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.PlantsKeeper.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.PlantsKeeper.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="iconTint">@color/on_primary_color</item>
+        <item name="colorControlNormal">@color/on_primary_color</item>
+        <item name="android:textColor">@color/on_primary_color</item>
+    </style>
+
+    <style name="Theme.PlantsKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar" />
 
     <style name="Theme.PlantsKeeper.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 </resources>
+
