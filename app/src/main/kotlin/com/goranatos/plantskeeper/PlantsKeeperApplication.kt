@@ -79,5 +79,16 @@ class PlantsKeeperApplication : Application(), DIAware {
         }
     }
 }
+// TODO: 11/22/2020 Для релиза первой версии
+//Добавить firebase crashlitics
+//Иконка приложения
+
+// TODO: 11/22/2020 In second version add
+//help
+//about_application option
+//const val SPRAY_NEED_COLUMN = "spraying_need"
+//const val REPLANT_NEED_COLUMN = "replanting_need"
+//const val CUT_NEED_COLUMN = "cutting_need"
+//const val TURN_NEED_COLUMN = "turning_need"
 
 //passwords: 1-strong, 2 - usual

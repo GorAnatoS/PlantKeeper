@@ -36,28 +36,3 @@ class MainActivity : AppCompatActivity(), DIAware {
         }
     }
 }
-
-// TODO: 11/22/2020 что надо
-//название цветка +
-//примечание
-//картинка +
-//необходимый полив раз в +
-//необходима подкормка раз в
-//необходима опрыскивание
-//пересадка
-//обрезанj,htие
-//поворот
-//сделать полив по сезонам +
-
-// TODO: 1/18/2021 Ночная тема 
-
-//help
-
-//about_application option
-// TODO: 1/17/2021 Добавить в будущих версиях
-//const val SPRAY_NEED_COLUMN = "spraying_need"
-//const val REPLANT_NEED_COLUMN = "replanting_need"
-//const val CUT_NEED_COLUMN = "cutting_need"
-//const val TURN_NEED_COLUMN = "turning_need"
-
-// TODO: 1/18/2021 TEST OPEN APP PAGE
