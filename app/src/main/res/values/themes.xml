@@ -18,7 +18,7 @@
         <item name="colorError">@color/error</item>
         <item name="colorOnError">@color/on_error</item>
 
-        <item name="colorAccent">@color/secondary</item>
+        <item name="colorAccent">@color/secondary_variant</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="actionOverflowButtonStyle">@style/Theme.PlantsKeeper.ActionOverflowButtonStyle
