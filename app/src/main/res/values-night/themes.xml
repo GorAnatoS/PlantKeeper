@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Theme.PlantsKeeper" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.PlantKeeper" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
@@ -22,7 +22,7 @@
         <item name="android:editTextColor">@color/white_87_opacity</item>
     </style>
 
-    <style name="Theme.PlantsKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+    <style name="Theme.PlantKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="iconTint">@color/toolbar_text_and_icons</item>
         <item name="colorControlNormal">@color/toolbar_text_and_icons</item>
         <item name="android:textColor">@color/toolbar_text_and_icons</item>

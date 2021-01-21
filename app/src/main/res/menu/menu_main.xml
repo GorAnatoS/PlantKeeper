@@ -1,10 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.goranatos.plantskeeper.ui.MainActivity">
+    tools:context="com.goranatos.plantkeeper.ui.MainActivity">
 
     <item
         android:id="@+id/action_option"
         android:title="@string/action_settings"
-        android:icon="@drawable/ic_baseline_settings_24"/>
+        android:icon="@drawable/ic_baseline_settings_24" />
 </menu>

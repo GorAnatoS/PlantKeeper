@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.goranatos.plantskeeper.ui.home.MyPlantsViewModel" />
+            type="com.goranatos.plantkeeper.ui.home.MyPlantsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

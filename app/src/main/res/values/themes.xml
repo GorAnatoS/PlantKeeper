@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.PlantsKeeper" parent="Theme.MaterialComponents.Light">
+    <style name="Theme.PlantKeeper" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
@@ -21,22 +21,22 @@
         <item name="colorAccent">@color/secondary_variant</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="actionOverflowButtonStyle">@style/Theme.PlantsKeeper.ActionOverflowButtonStyle
+        <item name="actionOverflowButtonStyle">@style/Theme.PlantKeeper.ActionOverflowButtonStyle
         </item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
-        <item name="toolbarStyle">@style/Theme.PlantsKeeper.Toolbar</item>
+        <item name="toolbarStyle">@style/Theme.PlantKeeper.Toolbar</item>
 
         <item name="android:textColor">@color/black_87_opacity</item>
         <item name="android:editTextColor">@color/black_87_opacity</item>
     </style>
 
-    <style name="Theme.PlantsKeeper.ActionOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+    <style name="Theme.PlantKeeper.ActionOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:tint">@color/on_primary</item>
     </style>
 
-    <style name="Theme.PlantsKeeper.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+    <style name="Theme.PlantKeeper.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextColor">@color/on_primary</item>
     </style>
 
@@ -45,19 +45,19 @@
         <item name="android:textColor">@color/chip_text_color_state_list</item>
     </style>
 
-    <style name="Theme.PlantsKeeper.NoActionBar">
+    <style name="Theme.PlantKeeper.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.PlantsKeeper.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="Theme.PlantKeeper.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="iconTint">@color/on_primary</item>
         <item name="colorControlNormal">@color/on_primary</item>
         <item name="android:textColor">@color/on_primary</item>
     </style>
 
-    <style name="Theme.PlantsKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar" />
+    <style name="Theme.PlantKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar" />
 
-    <style name="Theme.PlantsKeeper.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.PlantKeeper.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
 

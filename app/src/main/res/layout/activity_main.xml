@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/toolbar_background"
-            android:theme="@style/Theme.PlantsKeeper.ActionBar"
+            android:theme="@style/Theme.PlantKeeper.ActionBar"
             app:titleTextColor="@color/toolbar_text_and_icons" />
 
     </com.google.android.material.appbar.AppBarLayout>
