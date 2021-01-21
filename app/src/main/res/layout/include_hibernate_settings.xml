@@ -13,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:minWidth="@dimen/customMinWidth"
             android:id="@+id/hibernateGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,7 +31,6 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/hibernate_mode_settings"
                 app:layout_constraintBottom_toBottomOf="@+id/switchHibernate"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:text="@string/_01_10"
                 android:gravity="center"
                 android:textAlignment="center"
@@ -88,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/_01_04"
+                style="@style/TextAppearance.MaterialComponents.Body1"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"

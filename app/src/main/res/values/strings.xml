@@ -36,7 +36,7 @@
     <string name="notifications">Notifications</string>
     <string name="enable_notifications">Enable notifications</string>
     <string name="alarm_notification_time">Alarm notification time</string>
-    <string name="alarm_notification_time_summary">Alarm will apper at</string>
+    <string name="alarm_notification_time_summary">Alarm will appear at</string>
 
     <!--    contextual menu-->
     <string name="contextual_action_edit">Edit</string>
@@ -67,13 +67,13 @@
     <string name="plant_notification_channel_id" translatable="false">plant_notification</string>
     <string name="plant_notification_channel_name" translatable="false">plant_notification_channel</string>
 
-    <string name="days_till_watering">Days till watering:</string>
-    <string name="days_till_fertilizing">Days till fertilizing:</string>
+    <string name="days_till_watering">&#160;Days till watering:</string>
+    <string name="days_till_fertilizing">&#160;Days till fertilizing:</string>
     <string name="notification_plants_need_care">The plants need care of!</string>
     <string name="plant_s_name">Plant`s name</string>
     <string name="hibernate_mode">Hibernate mode</string>
     <string name="dec_20">Dec, 20</string>
-    <string name="hibernate_mode_settings">Настройка режима покоя</string>
+    <string name="hibernate_mode_settings">Hibernate mode settings</string>
     <string name="begin">Begin</string>
     <string name="_01_10" translatable="false">01.10</string>
     <string name="end">End</string>
@@ -127,4 +127,8 @@
     <string name="theme_default" translatable="false">Default</string>
     <string name="enable_dark_theme">Enable dark theme</string>
 
+    <string name="whitespace" translatable="false">&#160;</string>
+    <string name="application_settings">Application settings</string>
+
+    <string name="start_with_space_string" translatable="false">&#160; %1$s</string>
 </resources>

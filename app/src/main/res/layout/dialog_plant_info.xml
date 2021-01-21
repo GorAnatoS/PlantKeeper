@@ -12,6 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
+        android:minWidth="300dp"
         android:layout_height="wrap_content">
 
         <Button
@@ -72,6 +73,7 @@
         <TextView
             android:id="@+id/tvToWaterIcon"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
@@ -83,6 +85,7 @@
 
         <TextView
             android:id="@+id/tvToWaterFromDateVal"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -97,9 +100,10 @@
 
         <TextView
             android:id="@+id/tvWateringFrequency"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_0_75x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
@@ -114,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:gravity="center"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
@@ -149,6 +154,7 @@
             android:id="@+id/tvToFertilizeFromDateVal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
@@ -161,9 +167,10 @@
 
         <TextView
             android:id="@+id/tvFertilizingFrequency"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_0_75x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
@@ -176,6 +183,7 @@
             android:id="@+id/tvFertilizingFrequencyInHibernate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_marginStart="4dp"
             android:gravity="center"
             android:textAlignment="center"

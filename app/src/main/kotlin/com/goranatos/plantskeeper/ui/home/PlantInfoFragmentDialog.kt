@@ -93,17 +93,25 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         if (plant.is_water_need_on == 1) {
 
             if (plant.long_next_watering_date != null) binding.tvToWaterFromDateVal.text =
-                TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+                getString(
+                    R.string.start_with_space_string,
+                    TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+                )
             else binding.tvToWaterFromDateVal.visibility = View.GONE
 
             if (plant.int_watering_frequency_normal == null) binding.tvWateringFrequency.visibility =
                 View.GONE
-            else binding.tvWateringFrequency.text = plant.int_watering_frequency_normal.toString()
+            else binding.tvWateringFrequency.text = getString(
+                R.string.start_with_space_string,
+                plant.int_watering_frequency_normal.toString()
+            )
 
             if (plant.int_watering_frequency_in_hibernate == null) binding.tvWateringFrequencyInHibernate.visibility =
                 View.GONE
-            else binding.tvWateringFrequencyInHibernate.text =
+            else binding.tvWateringFrequencyInHibernate.text = getString(
+                R.string.start_with_space_string,
                 plant.int_watering_frequency_in_hibernate.toString()
+            )
 
             if (plant.is_watering_hibernate_mode_on == 0) {
                 binding.tvWateringFrequencyInHibernate.visibility = View.INVISIBLE
@@ -124,18 +132,25 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         if (plant.is_fertilize_need_on == 1) {
 
             if (plant.long_next_fertilizing_date != null) binding.tvToFertilizeFromDateVal.text =
-                TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
+                getString(
+                    R.string.start_with_space_string,
+                    TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
+                )
             else binding.tvToFertilizeFromDateVal.visibility = View.GONE
 
             if (plant.int_fertilizing_frequency_normal == null) binding.tvFertilizingFrequency.visibility =
                 View.GONE
-            else binding.tvFertilizingFrequency.text =
+            else binding.tvFertilizingFrequency.text = getString(
+                R.string.start_with_space_string,
                 plant.int_fertilizing_frequency_normal.toString()
+            )
 
             if (plant.int_fertilizing_frequency_in_hibernate == null) binding.tvFertilizingFrequencyInHibernate.visibility =
                 View.GONE
-            else binding.tvFertilizingFrequencyInHibernate.text =
+            else binding.tvFertilizingFrequencyInHibernate.text = getString(
+                R.string.start_with_space_string,
                 plant.int_fertilizing_frequency_in_hibernate.toString()
+            )
 
             if (plant.is_fertilizing_hibernate_mode_on == 0) {
                 binding.tvFertilizingFrequencyInHibernate.visibility = View.INVISIBLE

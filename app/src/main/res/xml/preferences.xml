@@ -19,8 +19,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:key="settings_language_category"
-        app:title="@string/application_language">
+        app:key="settings_application"
+        app:title="@string/application_settings">
 
         <ListPreference
             android:key="@string/pref_option_choose_language"
@@ -28,12 +28,6 @@
             android:entries="@array/pref_language_option_labels"
             android:entryValues="@array/pref_language_option_values"
             android:title="@string/choose_application_language" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:key="settings_night_mode"
-        app:title="@string/settings_night_mode">
 
         <SwitchPreferenceCompat
             app:key="@string/pref_option_is_dark_theme_enabled"

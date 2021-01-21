@@ -51,28 +51,28 @@
     <string name="mtrl_picker_save" tools:override="true">Сохранить</string>
     <string name="mtrl_picker_date_header_title" tools:override="true">Выберите дату</string>
     <string name="mtrl_picker_date_header_unselected" tools:override="true">Выбранная дата</string>
-    <string name="mtrl_picker_text_input_date_hint" tools:override="true">Дата</string>
-    <string name="mtrl_picker_text_input_year_abbr" tools:override="true">г</string>
-    <string name="mtrl_picker_text_input_month_abbr" tools:override="true">м</string>
-    <string name="mtrl_picker_text_input_day_abbr" tools:override="true">д</string>
-    <string name="mtrl_picker_invalid_range" tools:override="true">Неверный диапазон.</string>
-    <string name="mtrl_picker_invalid_format_use" tools:override="true">Формат: %1$s</string>
-    <string name="mtrl_picker_invalid_format_example" tools:override="true">Пример: %1$s</string>
-    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ок</string>
-    <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]" translatable="false">Отменить</string>
+        <string name="mtrl_picker_text_input_date_hint" tools:override="true">Дата</string>
+        <string name="mtrl_picker_text_input_year_abbr" tools:override="true">г</string>
+        <string name="mtrl_picker_text_input_month_abbr" tools:override="true">м</string>
+        <string name="mtrl_picker_text_input_day_abbr" tools:override="true">д</string>
+        <string name="mtrl_picker_invalid_range" tools:override="true">Неверный диапазон.</string>
+        <string name="mtrl_picker_invalid_format_use" tools:override="true">Формат: %1$s</string>
+        <string name="mtrl_picker_invalid_format_example" tools:override="true">Пример: %1$s</string>
+        <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ок</string>
+        <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]" translatable="false">Отменить</string>
 
-    <string name="days_till_watering">Дней до полива:</string>
-    <string name="days_till_fertilizing">Дней до внесения удобрений:</string>
-    <string name="notification_plants_need_care">Цветы нуждаются в уходе!</string>
-    <string name="plant_s_name">Название растения</string>
-    <string name="hibernate_mode">Режим покоя</string>
-    <string name="dec_20">Dec, 20</string>
-    <string name="hibernate_mode_settings">Настройка режима покоя</string>
-    <string name="begin">Начало</string>
-    <string name="end">Конец</string>
-    <string name="fertilizing_mode_settings">Настройка внесения удобрений</string>
-    <string name="sp_hibernate_mode">период покоя</string>
-    <string name="next_fertilization_date">Следующее внесение удобрений</string>
+        <string name="days_till_watering">&#160;Дней до полива:</string>
+        <string name="days_till_fertilizing">&#160;Дней до внесения удобрений:</string>
+        <string name="notification_plants_need_care">Цветы нуждаются в уходе!</string>
+        <string name="plant_s_name">Название растения</string>
+        <string name="hibernate_mode">Режим покоя</string>
+        <string name="dec_20">Dec, 20</string>
+        <string name="hibernate_mode_settings">Настройка режима покоя</string>
+        <string name="begin">Начало</string>
+        <string name="end">Конец</string>
+        <string name="fertilizing_mode_settings">Настройка внесения удобрений</string>
+        <string name="sp_hibernate_mode">период покоя</string>
+        <string name="next_fertilization_date">Следующее внесение удобрений</string>
     <string name="to_fertilize_once_at_in_days">Удобрять раз в (дни):</string>
     <string name="fertilizing_settings_normal_mode">Нормальный режим:</string>
     <string name="fertilizing_settings_hibernate_mode">Режим покоя:</string>
@@ -102,5 +102,6 @@
         <string name="settings_theme_dark">Темная</string>
         <string name="settings_theme_default">Стандартная</string>
         <string name="enable_dark_theme">Включить темную тему</string>
+        <string name="application_settings">Настройки приложения</string>
 
     </resources>

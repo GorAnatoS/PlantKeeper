@@ -5,6 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fertilizeGroup"
+        android:minWidth="@dimen/customMinWidth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -57,6 +58,7 @@
         <TextView
             android:id="@+id/tvToFertilizeFromDateVal"
             android:layout_width="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center"

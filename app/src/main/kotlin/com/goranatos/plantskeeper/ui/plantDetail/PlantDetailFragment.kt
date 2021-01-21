@@ -322,12 +322,15 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 binding.groupWateringDetails.visibility = View.VISIBLE
 
                 if (viewModel.thePlant.value?.long_next_watering_date != null) {
-                    binding.tvToWaterFromDateVal.text =
+                    binding.tvToWaterFromDateVal.text = getString(
+                        R.string.start_with_space_string,
                         TimeHelper.getFormattedDateString(viewModel.thePlant.value?.long_next_watering_date!!)
+                    )
                 }
 
                 viewModel.thePlant.value?.int_watering_frequency_normal?.let {
-                    binding.tvWateringFrequency.text = it.toString()
+                    binding.tvWateringFrequency.text =
+                        getString(R.string.start_with_space_string, it.toString())
                 }
 
                 viewModel.setWaterNeedModeOn()
@@ -361,12 +364,15 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 binding.groupFertilizingDetails.visibility = View.VISIBLE
 
                 if (viewModel.thePlant.value?.long_next_fertilizing_date != null) {
-                    binding.tvToFertilizeFromDateVal.text =
+                    binding.tvToFertilizeFromDateVal.text = getString(
+                        R.string.start_with_space_string,
                         TimeHelper.getFormattedDateString(viewModel.thePlant.value?.long_next_fertilizing_date!!)
+                    )
                 }
 
                 viewModel.thePlant.value?.int_fertilizing_frequency_normal?.let {
-                    binding.tvFertilizingFrequency.text = it.toString()
+                    binding.tvFertilizingFrequency.text =
+                        getString(R.string.start_with_space_string, it.toString())
                 }
 
                 viewModel.setFertilizeNeedModeOn()
@@ -399,19 +405,22 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
                 binding.groupHibernateDetails.visibility = View.VISIBLE
 
-                binding.tvDateHibernateStartFromVal.text =
-                    viewModel.thePlant.value?.long_to_hibernate_from_date?.let {
-                        TimeHelper.getFormattedDateString(
-                            it
-                        )
-                    }
 
-                binding.tvDateHibernateFinishVal.text =
+                binding.tvDateHibernateStartFromVal.text =
+                    getString(R.string.start_with_space_string,
+                        viewModel.thePlant.value?.long_to_hibernate_from_date?.let {
+                            TimeHelper.getFormattedDateString(
+                                it
+                            )
+                        })
+
+                binding.tvDateHibernateFinishVal.text = getString(R.string.start_with_space_string,
                     viewModel.thePlant.value?.long_to_hibernate_till_date?.let {
                         TimeHelper.getFormattedDateString(
                             it
                         )
                     }
+                )
 
                 viewModel.setHibernateModeOn()
             } else {

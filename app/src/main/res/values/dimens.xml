@@ -5,4 +5,7 @@
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_list_horizontal">8dp</dimen>
     <dimen name="margin_2x">32dp</dimen>
+    <dimen name="margin_0_75x">12dp</dimen>
+
+    <dimen name="customMinWidth">300dp</dimen>
 </resources>
