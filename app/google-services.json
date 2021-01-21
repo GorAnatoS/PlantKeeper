@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "338779492972",
+    "project_id": "plantskeeper-forever",
+    "storage_bucket": "plantskeeper-forever.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338779492972:android:5a1b7cf7c7ee2bf6a9fe49",
+        "android_client_info": {
+          "package_name": "com.goranatos.plantskeeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338779492972-03hcfh3s00fh9shahkek62v6qfim3ktc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEbJV2F9kpiXkcteehvRtvesqw5HLQRvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338779492972-03hcfh3s00fh9shahkek62v6qfim3ktc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
