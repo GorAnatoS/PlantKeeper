@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.goranatos.plantskeeper">
+    package="com.goranatos.plantkeeper">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <queries>
@@ -18,8 +19,8 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:name=".PlantsKeeperApplication"
-        android:theme="@style/Theme.PlantsKeeper">
+        android:name="com.goranatos.plantkeeper.PlantKeeperApplication"
+        android:theme="@style/Theme.PlantKeeper">
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -32,9 +33,9 @@
         </provider>
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.goranatos.plantkeeper.ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.PlantsKeeper.NoActionBar">
+            android:theme="@style/Theme.PlantKeeper.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -47,13 +48,13 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <receiver
-            android:name=".receiver.AlarmReceiver"
+            android:name="com.goranatos.plantkeeper.receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
         </receiver>
 
         <receiver
-            android:name=".receiver.SnoozeReceiver"
+            android:name="com.goranatos.plantkeeper.receiver.SnoozeReceiver"
             android:enabled="true"
             android:exported="false">
         </receiver>

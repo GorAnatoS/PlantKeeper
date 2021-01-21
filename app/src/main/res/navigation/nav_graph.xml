@@ -6,7 +6,7 @@
     app:startDestination="@id/myPlantsFragment">
     <fragment
         android:id="@+id/myPlantsFragment"
-        android:name="com.goranatos.plantskeeper.ui.home.MyPlantsFragment"
+        android:name="com.goranatos.plantkeeper.ui.home.MyPlantsFragment"
         tools:layout="@layout/fragment_my_plants"
         android:label="@string/my_plants" >
         <action
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/plantAddAndInfo"
         tools:layout="@layout/fragment_detailed_plant"
-        android:name="com.goranatos.plantskeeper.ui.plantDetail.PlantDetailFragment"
+        android:name="com.goranatos.plantkeeper.ui.plantDetail.PlantDetailFragment"
         android:label="@string/add_new_plant" >
         <argument
             android:name="plantId"
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.goranatos.plantskeeper.ui.settings.SettingsFragment"
+        android:name="com.goranatos.plantkeeper.ui.settings.SettingsFragment"
         android:label="@string/settings" />
     
 </navigation>

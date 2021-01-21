@@ -10,7 +10,7 @@
             app:key="@string/pref_option_is_to_show_notifications"
             app:title="@string/enable_notifications" />
 
-        <com.goranatos.plantskeeper.ui.settings.TimePickerPreference
+        <com.goranatos.plantkeeper.ui.settings.TimePickerPreference
             android:defaultValue="90"
             android:key="@string/pref_option_notification_time"
             android:summary="@string/alarm_notification_time_summary"

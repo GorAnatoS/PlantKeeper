@@ -15,7 +15,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.goranatos.plantskeeper"
+        applicationId "com.goranatos.plantkeeper"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
