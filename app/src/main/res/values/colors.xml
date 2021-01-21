@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="black_87_opacity">#DE000000</color>
 
     <color name="white">#FFFFFF</color>
     <color name="white_87_opacity">#DEFFFFFF</color>
 
-    <color name="grey">#121212</color>
+    <color name="accent">#006064</color>
 
-    <color name="errorColor">@color/pink_900</color>
-    <color name="colorAccent">#006064</color>
-
-    <color name="black_54_opacity">#8A000000</color>
-
-    <color name="textColor">#FF000000</color>
     <color name="pink_900">#880e4f</color>
 
-    <color name="text_color_action_on_click">#257181</color>
-
-    <color name="card_attention_color">#4DF3CE78</color> <!--30% secondary color-->
-    <color name="card_normal_color">@color/surface_color</color>
+    <color name="card_attention">#4DF3CE78</color> <!--30% secondary color-->
+    <color name="card_normal">@color/surface</color>
 
     <!--    dark-->
     <color name="teal_100">#b2ebf2</color>
@@ -28,45 +20,41 @@
     <color name="amber_200">#ffe082</color>
     <color name="amber_200_dark">#caae53</color>
 
-    <color name="dark_surface">#252C2D</color>
+    <color name="toolbar_background_dark_theme">#202526</color>
+    <color name="toolbar_background">@color/primary</color>
+    <color name="toolbar_text_and_icons">@color/on_primary</color>
 
-    <color name="toolbar_bg_dark">#202526</color>
-    <color name="toolbar_background_color">@color/primary_color</color>
-    <color name="toolbar_text_and_icons_color">@color/on_primary_color</color>
-
-    <color name="only_icon_button_color">#979797</color>
+    <color name="only_icon_button">#979797</color>
     <!--    <color name="only_icon_button_color">#B1E3E8</color>-->
 
     <!--new colors-->
-    <color name="primary_color">#86D9E1</color>
-    <color name="primary_color_variant">#65CBCD</color>
-    <color name="on_primary_color">#000604</color>
-    <color name="secondary_color">#F3CE78</color>
-    <color name="secondary_color_variant">#F2AB5B</color>
-    <color name="on_secondary_color">#150F00</color>
+    <color name="primary">#86D9E1</color>
+    <color name="primary_variant">#65CBCD</color>
+    <color name="on_primary">#000604</color>
+    <color name="secondary">#F3CE78</color>
+    <color name="secondary_variant">#F2AB5B</color>
+    <color name="on_secondary">#150F00</color>
 
     <color name="background_color">@color/white</color>
-    <color name="on_background_color">@color/on_primary_color</color>
+    <color name="on_background_color">@color/on_primary</color>
 
-    <color name="surface_color">#F7F7F7</color>
-    <color name="on_surface_color">@color/on_primary_color</color>
-    <color name="on_surface_hight_emphasis">#DE86D9E1</color>
-    <color name="on_surface_white_hight_emphasis">@color/white_87_opacity</color> <!---->
-    <color name="on_surface_black_hight_emphasis">@color/black_87_opacity</color> <!---->
+    <color name="background">@color/white</color>
+    <color name="on_background">@color/on_primary</color>
 
-    <color name="error_color">#7C312E</color>
-    <color name="on_error_color">@color/white</color>
+    <color name="surface">#F7F7F7</color>
+    <color name="on_surface">@color/on_primary</color>
+    <color name="on_surface_high_emphasis">#DE86D9E1</color>
+    <color name="on_surface_white_high_emphasis">@color/white_87_opacity</color> <!---->
+    <color name="on_surface_black_high_emphasis">@color/black_87_opacity</color> <!---->
 
-    <color name="amazon_chip_bg_light">@color/surface_color</color>
-    <color name="amazon_chip_on_light_text_color">@color/on_surface_black_hight_emphasis</color>
+    <color name="error">@color/pink_900</color>
+    <color name="on_error">@color/white</color>
 
-    <color name="amazon_chip_bg_dark">#2686D9E1</color>
-    <color name="amazon_chip_on_dark_text_color">@color/primary_color_variant</color>
+    <color name="chip_background_unchecked">@color/surface</color>
+    <color name="on_chip_background_unchecked">@color/on_surface_black_high_emphasis</color>
 
-    <!--    dark-->
-    <color name="dark_primary_4dp_elevation">#202526</color>
-
-
+    <color name="chip_background_checked">#2686D9E1</color>
+    <color name="on_chip_background_checked">@color/primary_variant</color>
 </resources>
 <!--    100% — FF
 99% — FC

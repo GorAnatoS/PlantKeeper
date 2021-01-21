@@ -113,11 +113,11 @@ class PlantItemCard(
 
             if (colorNormal) {
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_normal_color)
+                    getColor(viewHolder.containerView.context, R.color.card_normal)
                 )
             } else {
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_attention_color)
+                    getColor(viewHolder.containerView.context, R.color.card_attention)
                 )
             }
         }

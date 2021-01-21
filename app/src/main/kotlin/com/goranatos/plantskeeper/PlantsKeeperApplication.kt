@@ -1,16 +1,15 @@
-package com.goranatos.plantskeeper.ui
+package com.goranatos.plantskeeper
 
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.data.db.PlantsDatabase
 import com.goranatos.plantskeeper.data.repository.PlantsRepository
 import com.goranatos.plantskeeper.data.repository.PlantsRepositoryImpl
 import com.goranatos.plantskeeper.ui.home.MyPlantsViewModelFactory
 import com.goranatos.plantskeeper.ui.plantDetail.PlantDetailViewModelFactory
-import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS
+import com.goranatos.plantskeeper.ui.settings.LanguagePrefs
 import com.yariksoffice.lingver.Lingver
 import com.yariksoffice.lingver.store.PreferenceLocaleStore
 import org.kodein.di.*
@@ -21,7 +20,6 @@ import java.util.*
 /**
  * Created by qsufff on 7/29/2020.
  */
-
 
 class PlantsKeeperApplication : Application(), DIAware {
 
@@ -70,12 +68,12 @@ class PlantsKeeperApplication : Application(), DIAware {
             getString(R.string.en)
         )) {
             "ru" -> {
-                val store = PreferenceLocaleStore(this, Locale(LANGUAGE_PREFS.LANGUAGE_RUSSIAN))
+                val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_RUSSIAN))
                 val lingver = Lingver.init(this, store)
             }
 
             "en" -> {
-                val store = PreferenceLocaleStore(this, Locale(LANGUAGE_PREFS.LANGUAGE_ENGLISH))
+                val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_ENGLISH))
                 val lingver = Lingver.init(this, store)
             }
         }

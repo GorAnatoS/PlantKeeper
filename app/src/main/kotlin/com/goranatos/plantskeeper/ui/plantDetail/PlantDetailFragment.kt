@@ -5,7 +5,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -146,7 +145,7 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
     }
 
 
-    var isFirstStart = true
+    private var isFirstStart = true
 
     //При получении Растения настраиваем элементы UI
     private fun setUIforPlant(plant: Plant) {
@@ -562,10 +561,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             .setType("image/*")
             .addCategory(Intent.CATEGORY_OPENABLE)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val mimeTypes = arrayOf("image/jpeg", "image/png")
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-        }
+        val mimeTypes = arrayOf("image/jpeg", "image/png")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
 
         startActivityForResult(
             Intent.createChooser(

@@ -61,7 +61,7 @@
     <string name="mtrl_picker_invalid_range" tools:override="true">Invalid range.</string>
     <string name="mtrl_picker_invalid_format_use" tools:override="true">Format: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:override="true">Example: %1$s</string>
-    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ok</string>
+    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">OK</string>
     <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]">Cancel</string>
 
     <string name="plant_notification_channel_id" translatable="false">plant_notification</string>

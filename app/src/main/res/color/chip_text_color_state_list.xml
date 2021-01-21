@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/amazon_chip_on_dark_text_color" android:state_checked="true" />
-    <item android:color="@color/amazon_chip_on_light_text_color" android:state_checked="false" />
+    <item android:color="@color/on_chip_background_checked" android:state_checked="true" />
+    <item android:color="@color/on_chip_background_unchecked" android:state_checked="false" />
 </selector>

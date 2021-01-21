@@ -23,10 +23,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.*
 import com.goranatos.plantskeeper.R
 import com.goranatos.plantskeeper.ui.MainActivity
-import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_ENGLISH
-import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_ENGLISH_COUNTRY
-import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_RUSSIAN
-import com.goranatos.plantskeeper.ui.settings.LANGUAGE_PREFS.LANGUAGE_RUSSIAN_COUNTRY
+import com.goranatos.plantskeeper.ui.settings.LanguagePrefs.LANGUAGE_ENGLISH
+import com.goranatos.plantskeeper.ui.settings.LanguagePrefs.LANGUAGE_ENGLISH_COUNTRY
+import com.goranatos.plantskeeper.ui.settings.LanguagePrefs.LANGUAGE_RUSSIAN
+import com.goranatos.plantskeeper.ui.settings.LanguagePrefs.LANGUAGE_RUSSIAN_COUNTRY
 import com.yariksoffice.lingver.Lingver
 
 
@@ -36,10 +36,9 @@ import com.yariksoffice.lingver.Lingver
  */
 
 const val IS_GO_TO_SETTINGS_AFTER_RESTART = "is_go_to_settings_after_restart"
+private const val DIALOG_FRAGMENT_TAG = "TimePickerDialog"
 
 class SettingsFragment : PreferenceFragmentCompat() {
-    private val DIALOG_FRAGMENT_TAG = "TimePickerDialog"
-
     private var beginAppLanguage: String = ""
     private var endAppLanguage: String = ""
 
@@ -162,7 +161,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 }
 
-object LANGUAGE_PREFS {
+object LanguagePrefs {
     const val LANGUAGE_ENGLISH = "en"
     const val LANGUAGE_ENGLISH_COUNTRY = "US"
     const val LANGUAGE_RUSSIAN = "ru"

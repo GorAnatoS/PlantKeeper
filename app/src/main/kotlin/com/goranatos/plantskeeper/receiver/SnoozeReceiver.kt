@@ -27,9 +27,9 @@ import android.text.format.DateUtils
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 
-class SnoozeReceiver : BroadcastReceiver() {
-    private val REQUEST_CODE = 0
+private const val REQUEST_CODE = 0
 
+class SnoozeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val triggerTime = SystemClock.elapsedRealtime() + DateUtils.MINUTE_IN_MILLIS * 60
 

@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:name=".ui.PlantsKeeperApplication"
+        android:name=".PlantsKeeperApplication"
         android:theme="@style/Theme.PlantsKeeper">
 
         <provider
