@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PlantKeeper</string>
+    <string name="app_name" translatable="false">PlantKeeper</string>
     <string name="action_settings">Settings</string>
 
     <string name="name">Name</string>
-    <string name="add_new_plant">New plant</string>
+    <string name="add_new_plant">Add new plant</string>
     <string name="empty_db_text">@string/add_new_plant</string>
 
     <string name="added">Added</string>
@@ -18,8 +18,8 @@
     <string name="file_provider_authorities" translatable="false">com.goranatos.plantkeeper.provider</string>
     <string name="download">Download</string>
     <string name="to_water">To water</string>
-    <string name="to_water_dialog_plant_info">to water</string>
-    <string name="to_fertilize_dialog_plant_info">to fertilize</string>
+    <string name="watered_dialog_plant_info">watered</string>
+    <string name="fertilized_dialog_plant_info">fertilized</string>
     <string name="to_fertilize">To fertilize</string>
     <string name="from_gallery">From gallery</string>
     <string name="take_photo">Take photo</string>
@@ -61,7 +61,7 @@
     <string name="mtrl_picker_invalid_range" tools:override="true">Invalid range.</string>
     <string name="mtrl_picker_invalid_format_use" tools:override="true">Format: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:override="true">Example: %1$s</string>
-    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">OK</string>
+    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ok</string>
     <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]">Cancel</string>
 
     <string name="plant_notification_channel_id" translatable="false">plant_notification</string>

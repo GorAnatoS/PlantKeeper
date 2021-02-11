@@ -205,12 +205,13 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
             viewModel.updateThePlant()
         }
+
         super.onDismiss(dialog)
     }
 
     private fun isFertilizedCheckBoxChecked() {
         if (binding.checkBoxFertilized.isChecked) {
-            if (plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null && plant.long_next_fertilizing_date != null) {
+            if (plant.is_fertilizing_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null && plant.long_next_fertilizing_date != null) {
                 if (TimeHelper.isDateInPlantHibernateRange(
                         TimeHelper.getCurrentTimeInMs(),
                         plant.long_to_hibernate_from_date!!,
@@ -237,7 +238,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
     private fun isWateredCheckBoxChecked() {
         if (binding.checkBoxWatered.isChecked) {
-            if (plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null && plant.long_next_watering_date != null) {
+            if (plant.is_watering_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 && plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null && plant.long_next_watering_date != null) {
                 if (TimeHelper.isDateInPlantHibernateRange(
                         TimeHelper.getCurrentTimeInMs(),
                         plant.long_to_hibernate_from_date!!,

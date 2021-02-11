@@ -179,6 +179,22 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.toggleGroupToHibernate.uncheck(binding.toggleButtonToHibernate.id)
             viewModel.setHibernateModeOff()
         }
+
+        binding.tvDateHibernateStartFromVal.text =
+            getString(R.string.start_with_space_string,
+                plant.long_to_hibernate_from_date?.let {
+                    TimeHelper.getFormattedDateString(
+                        it
+                    )
+                })
+
+        binding.tvDateHibernateFinishVal.text = getString(R.string.start_with_space_string,
+            plant.long_to_hibernate_till_date?.let {
+                TimeHelper.getFormattedDateString(
+                    it
+                )
+            }
+        )
         //END HIBERNATE
 
         //START WATER
@@ -190,14 +206,26 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             viewModel.setWaterNeedModeOff()
         }
 
-        plant.int_watering_frequency_in_hibernate?.let {
-            binding.tvWateringFrequencyInHibernate.text = it.toString()
-        }
-
         if (plant.is_watering_hibernate_mode_on == 1) {
             binding.tvWateringFrequencyInHibernate.visibility = View.VISIBLE
         } else {
             binding.tvWateringFrequencyInHibernate.visibility = View.GONE
+        }
+
+        if (plant.long_next_watering_date != null) {
+            binding.tvToWaterFromDateVal.text = getString(
+                R.string.start_with_space_string,
+                TimeHelper.getFormattedDateString(plant.long_next_watering_date!!)
+            )
+        }
+
+        plant.int_watering_frequency_normal?.let {
+            binding.tvWateringFrequency.text =
+                getString(R.string.start_with_space_string, it.toString())
+        }
+
+        plant.int_watering_frequency_in_hibernate?.let {
+            binding.tvWateringFrequencyInHibernate.text = it.toString()
         }
         //END WATER
 
@@ -210,16 +238,30 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             viewModel.setFertilizeNeedModeOff()
         }
 
-        plant.int_fertilizing_frequency_in_hibernate?.let {
-            binding.tvFertilizingFrequencyInHibernate.text = it.toString()
-        }
-
         if (plant.is_fertilizing_hibernate_mode_on == 1) {
             binding.tvFertilizingFrequencyInHibernate.visibility = View.VISIBLE
         } else {
             binding.tvFertilizingFrequencyInHibernate.visibility = View.GONE
         }
+
+        if (plant.long_next_fertilizing_date != null) {
+            binding.tvToFertilizeFromDateVal.text = getString(
+                R.string.start_with_space_string,
+                TimeHelper.getFormattedDateString(plant.long_next_fertilizing_date!!)
+            )
+        }
+
+        plant.int_fertilizing_frequency_normal?.let {
+            binding.tvFertilizingFrequency.text =
+                getString(R.string.start_with_space_string, it.toString())
+        }
+
+        plant.int_fertilizing_frequency_in_hibernate?.let {
+            binding.tvFertilizingFrequencyInHibernate.text = it.toString()
+        }
         //END FERTILIZE
+
+
     }
 
     private fun uiSetup() {
@@ -320,18 +362,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
 
                 binding.groupWateringDetails.visibility = View.VISIBLE
 
-                if (viewModel.thePlant.value?.long_next_watering_date != null) {
-                    binding.tvToWaterFromDateVal.text = getString(
-                        R.string.start_with_space_string,
-                        TimeHelper.getFormattedDateString(viewModel.thePlant.value?.long_next_watering_date!!)
-                    )
-                }
-
-                viewModel.thePlant.value?.int_watering_frequency_normal?.let {
-                    binding.tvWateringFrequency.text =
-                        getString(R.string.start_with_space_string, it.toString())
-                }
-
                 viewModel.setWaterNeedModeOn()
             } else {
                 tempCheckedToggleGroupToWater = false
@@ -361,18 +391,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 tempCheckedToggleGroupToFertilize = true
 
                 binding.groupFertilizingDetails.visibility = View.VISIBLE
-
-                if (viewModel.thePlant.value?.long_next_fertilizing_date != null) {
-                    binding.tvToFertilizeFromDateVal.text = getString(
-                        R.string.start_with_space_string,
-                        TimeHelper.getFormattedDateString(viewModel.thePlant.value?.long_next_fertilizing_date!!)
-                    )
-                }
-
-                viewModel.thePlant.value?.int_fertilizing_frequency_normal?.let {
-                    binding.tvFertilizingFrequency.text =
-                        getString(R.string.start_with_space_string, it.toString())
-                }
 
                 viewModel.setFertilizeNeedModeOn()
             } else {
