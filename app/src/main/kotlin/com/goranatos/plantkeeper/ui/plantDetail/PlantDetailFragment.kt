@@ -46,6 +46,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 /*
     Добавляет новые и редактирует имеющийся цветок\растение
     при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
@@ -127,6 +128,8 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.chipWateringMode.isChecked = viewModel.thePlant.value?.is_water_need_on == 1
             binding.chipFertilizingMode.isChecked =
                 viewModel.thePlant.value?.is_fertilize_need_on == 1
+        } else {
+            activity?.title = getString(R.string.edit_the_plant)
         }
 
         viewModel.thePlant.observe(viewLifecycleOwner, { plant ->

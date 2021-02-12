@@ -4,6 +4,7 @@
 
     <string name="name">Name</string>
     <string name="add_new_plant">Add new plant</string>
+    <string name="edit_the_plant">Edit the plant</string>
     <string name="empty_db_text">@string/add_new_plant</string>
 
     <string name="added">Added</string>
