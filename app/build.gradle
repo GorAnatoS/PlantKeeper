@@ -29,8 +29,8 @@ android {
         applicationId "com.goranatos.plantkeeper"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 6
-        versionName "1.0.0.3a"
+        versionCode 7
+        versionName "1.0.0.3b"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -116,15 +116,13 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.5.0')
 
-    // Add the dependency for the Firebase SDK for Google Analytics
-    // When using the BoM, don't specify versions in Firebase dependencies
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
 
     //firebase
     implementation 'com.google.firebase:firebase-analytics:18.0.2'
