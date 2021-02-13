@@ -75,8 +75,8 @@ class TimeHelper {
             rangeDateTillMs: Long
         ): Boolean {
 
-            val calendarDate = Calendar.getInstance()
-            calendarDate.timeInMillis = dateInMs
+            val currentDate = Calendar.getInstance()
+            currentDate.timeInMillis = dateInMs
 
             val calendarFrom = Calendar.getInstance()
             calendarFrom.timeInMillis = rangeDateFromMs
@@ -84,18 +84,17 @@ class TimeHelper {
             val calendarTill = Calendar.getInstance()
             calendarTill.timeInMillis = rangeDateTillMs
 
-            calendarFrom.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR))
-
-            if (calendarFrom.before(calendarTill)) {
-                calendarTill.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR))
-            } else {
-                calendarTill.set(Calendar.YEAR, calendarDate.get(Calendar.YEAR) + 1)
-            }
+            calendarFrom.set(Calendar.YEAR, currentDate.get(Calendar.YEAR))
+            calendarTill.set(Calendar.YEAR, currentDate.get(Calendar.YEAR))
 
             calendarFrom.set(Calendar.DAY_OF_YEAR, calendarFrom.get(Calendar.DAY_OF_YEAR) - 1)
             calendarTill.set(Calendar.DAY_OF_YEAR, calendarTill.get(Calendar.DAY_OF_YEAR) + 1)
 
-            return calendarDate.before(calendarTill) && calendarDate.after(calendarFrom)
+            if (calendarFrom.before(calendarTill)) {
+                return currentDate.before(calendarTill) && currentDate.after(calendarFrom)
+            } else {
+                return currentDate.before(calendarTill) || currentDate.after(calendarFrom)
+            }
         }
 
         fun longDatePlusDays(date: Long, plusDays: Int): Long {
