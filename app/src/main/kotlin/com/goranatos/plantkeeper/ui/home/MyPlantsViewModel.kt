@@ -76,14 +76,13 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
             false
         )
 
-        if (isToShowNotifications) {
+        val notificationManager =
+            ContextCompat.getSystemService(
+                app,
+                NotificationManager::class.java
+            ) as NotificationManager
 
-            val notificationManager =
-                ContextCompat.getSystemService(
-                    app,
-                    NotificationManager::class.java
-                ) as NotificationManager
-            notificationManager.cancelNotifications()
+        if (isToShowNotifications) {
 
             val collectionOfDates = mutableListOf<Long>()
 
@@ -143,6 +142,8 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                     notifyPendingIntent
                 )
             }
+        } else {
+            notificationManager.cancelNotifications()
         }
     }
 
@@ -162,5 +163,10 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         viewModelScope.launch {
             updatePlant()
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        setNotificationsForPlantList(allPlants.value)
     }
 }

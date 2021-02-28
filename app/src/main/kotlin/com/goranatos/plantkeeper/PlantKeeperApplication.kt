@@ -43,6 +43,8 @@ class PlantKeeperApplication : Application(), DIAware {
         sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
 
+
+
         setApplicationTheme()
 
         setApplicationLanguage()
@@ -80,9 +82,6 @@ class PlantKeeperApplication : Application(), DIAware {
         }
     }
 }
-// TODO: 11/22/2020 Для релиза первой версии
-//Иконка приложения
-
 // TODO: 11/22/2020 In second version add
 //help
 //about_application option

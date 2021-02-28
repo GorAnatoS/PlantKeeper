@@ -12,6 +12,7 @@ import com.goranatos.plantkeeper.ui.settings.IS_GO_TO_SETTINGS_AFTER_RESTART
 import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
 
+
 class MainActivity : AppCompatActivity(), DIAware {
 
     override val di by closestDI()

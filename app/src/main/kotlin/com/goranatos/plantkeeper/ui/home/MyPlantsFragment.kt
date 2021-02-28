@@ -71,9 +71,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
             if (it.isNotEmpty()) binding.textViewEmptyDatabaseNotification.visibility = View.GONE
             else binding.textViewEmptyDatabaseNotification.visibility = View.VISIBLE
-
-            viewModel.setNotificationsForPlantList(it)
-
         })
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {

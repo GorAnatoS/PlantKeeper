@@ -30,9 +30,9 @@ android {
     defaultConfig {
         applicationId "com.goranatos.plantkeeper"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 8
-        versionName "1.0.0.4"
+        targetSdkVersion 31
+        versionCode 9
+        versionName "1.0.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

@@ -14,6 +14,7 @@
         </intent>
     </queries>
 
+
     <application
         android:allowNativeHeapPointerTagging="false"
         android:icon="@mipmap/ic_launcher"
@@ -52,12 +53,12 @@
         <receiver
             android:name="com.goranatos.plantkeeper.receiver.AlarmReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <receiver
             android:name="com.goranatos.plantkeeper.receiver.SnoozeReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <meta-data
             android:name="firebase_performance_logcat_enabled"
