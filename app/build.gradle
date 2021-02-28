@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+// Apply the Performance Monitoring plugin
+apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
@@ -8,7 +10,7 @@ apply plugin: 'kotlin-kapt'
 
 // Create a variable called keystorePropertiesFile, and initialize it to your
 // keystore.properties file, in the rootProject folder.
-def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystorePropertiesFile = rootProject.file("keystore.properties.txt")
 
 // Initialize a new Properties() object called keystoreProperties.
 def keystoreProperties = new Properties()
@@ -29,8 +31,8 @@ android {
         applicationId "com.goranatos.plantkeeper"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 7
-        versionName "1.0.0.3b"
+        versionCode 8
+        versionName "1.0.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -53,10 +55,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["storePassword"]
         }
     }
 
@@ -123,15 +125,11 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-perf-ktx'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
 
-    //firebase
-    implementation 'com.google.firebase:firebase-analytics:18.0.2'
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
-    implementation 'com.google.firebase:firebase-core:18.0.2'
-    implementation 'com.google.firebase:firebase-auth:20.0.2'
-    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
-    // Add the Firebase Crashlytics NDK dependency.
     implementation 'com.google.firebase:firebase-crashlytics-ndk:17.3.1'
+
 
     //coordinator layout
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
@@ -160,7 +158,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$arch_version"
     // Room
-    implementation "androidx.room:room-runtime:2.3.0-beta01"
+    implementation "androidx.room:room-runtime:2.3.0-beta02"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 
 
@@ -213,12 +211,12 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.6'
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Groupie RecyclerView
-    implementation 'com.xwray:groupie:2.8.0'
-    implementation 'com.xwray:groupie-kotlin-android-extensions:2.8.0'
+    implementation 'com.xwray:groupie:2.9.0'
+    implementation 'com.xwray:groupie-kotlin-android-extensions:2.9.0'
 
     // Preference
     implementation 'androidx.preference:preference-ktx:1.1.1'

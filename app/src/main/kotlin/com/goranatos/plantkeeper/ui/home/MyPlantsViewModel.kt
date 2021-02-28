@@ -101,6 +101,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
                     calendar.set(Calendar.MINUTE, prefMinute % 60)
                     calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
 
                     val triggerTime = calendar.timeInMillis
 
@@ -119,6 +120,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
                     calendar.set(Calendar.MINUTE, prefMinute % 60)
                     calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
 
                     val triggerTime = calendar.timeInMillis
 
