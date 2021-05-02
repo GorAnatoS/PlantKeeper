@@ -74,8 +74,9 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
                 getString(R.string.pref_option_is_list_home_adapter), true
             ).also { isListHomeAdapter ->
-//                if (isListHomeAdapter || calculateSpanCount() < 2) initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
-                if (isListHomeAdapter) initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
+                if (isListHomeAdapter || calculateSpanCount() < 2) initRecycleViewWithLinearAdapter(
+                    it.toPlantListItemCards()
+                )
                 else
                     initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
             }
@@ -122,6 +123,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             layoutManager = GridLayoutManager(requireContext(), spanCount)
             adapter = groupAdapter
         }
+
     }
 
     private fun calculateSpanCount(): Int {
@@ -227,9 +229,11 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                 getString(R.string.pref_option_is_list_home_adapter), true
             ).also { isListHomeAdapter ->
 
-                viewModel.allPlants.value?.let {
-                    //if ( calculateSpanCount() > 1) {
-                    if (true) {
+                if (calculateSpanCount() > 1) {
+
+                    viewModel.allPlants.value?.let {
+                        //if ( calculateSpanCount() > 1) {
+
                         val pmEditor =
                             PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
 
@@ -249,7 +253,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                         }
                     }
                 }
-
             }
 
             true
