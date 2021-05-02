@@ -62,7 +62,7 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val myList: MutableList<Uri> = mutableListOf(
+        val myList: List<Uri> = listOf(
             Uri.parse("android.resource://com.goranatos.plantkeeper/drawable/ic_plant1"),
             Uri.parse("android.resource://com.goranatos.plantkeeper/drawable/ic_plant2"),
             Uri.parse("android.resource://com.goranatos.plantkeeper/drawable/ic_plant3"),

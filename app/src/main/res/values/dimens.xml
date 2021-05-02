@@ -1,11 +1,20 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="margin_list_items">8dp</dimen>
-    <dimen name="margin_half">8dp</dimen>
-    <dimen name="margin_normal">16dp</dimen>
-    <dimen name="margin_list_horizontal">8dp</dimen>
+
+    <dimen name="margin_025x">4dp</dimen>
+    <dimen name="margin_05x">8dp</dimen>
+    <dimen name="margin_075x">12dp</dimen>
+    <dimen name="margin_std">16dp</dimen>
+    <dimen name="margin_15x">24dp</dimen>
     <dimen name="margin_2x">32dp</dimen>
-    <dimen name="margin_0_75x">12dp</dimen>
+
+    <dimen name="margin_list_horizontal">8dp</dimen>
+    <dimen name="margin_list_items">8dp</dimen>
 
     <dimen name="customMinWidth">300dp</dimen>
+
+    <dimen name="plant_grid_item_width">170dp</dimen>
+    <dimen name="plant_grid_item_height">200dp</dimen>
+    <dimen name="plant_list_item_image_square_size">100dp</dimen>
+    <dimen name="plant_grid_item_image_square_size">100dp</dimen>
 </resources>

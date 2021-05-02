@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/plantCardView"
+        android:layout_width="@dimen/plant_grid_item_width"
+        android:layout_height="@dimen/plant_grid_item_height"
+        android:layout_margin="@dimen/margin_list_items"
+        android:minHeight="?listPreferredItemHeightSmall"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minHeight="?listPreferredItemHeightSmall">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTitle"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_05x"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Хлорофитум" />
+
+            <ImageView
+                android:id="@+id/imageViewPlant"
+                android:layout_width="@dimen/plant_grid_item_image_square_size"
+                android:layout_height="@dimen/plant_grid_item_image_square_size"
+                android:layout_marginStart="@dimen/margin_05x"
+                android:layout_marginTop="@dimen/margin_std"
+                android:layout_marginEnd="@dimen/margin_05x"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/tvTillWateringVal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                app:srcCompat="@drawable/ic_plant1" />
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/tvTillWatering"-->
+            <!--            style="@style/TextAppearance.MaterialComponents.Body1"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginStart="@dimen/margin_half"-->
+            <!--            android:layout_marginBottom="8dp"-->
+            <!--            android:text="@string/days_till_watering"-->
+            <!--            app:drawableStartCompat="@drawable/ic_baseline_invert_colors_24"-->
+            <!--            app:layout_constraintBottom_toTopOf="@+id/tvTillFertilizing"-->
+            <!--            app:layout_constraintEnd_toStartOf="@+id/tvTillWateringVal"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant" />-->
+
+            <TextView
+                android:id="@+id/tvTillWateringVal"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_05x"
+                android:text="@string/_2_days"
+                app:drawableStartCompat="@drawable/ic_baseline_invert_colors_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvTillFertilizingVal"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewPlant" />
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/tvTillFertilizing"-->
+            <!--            style="@style/TextAppearance.MaterialComponents.Body1"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginStart="@dimen/margin_half"-->
+            <!--            android:layout_marginBottom="@dimen/margin_half"-->
+            <!--            android:text="@string/days_till_fertilizing"-->
+            <!--            app:drawableStartCompat="@drawable/ic_baseline_scatter_plot_24"-->
+            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--            app:layout_constraintEnd_toStartOf="@+id/tvTillFertilizingVal"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintTop_toBottomOf="@+id/tvTillWatering" />-->
+
+            <TextView
+                android:id="@+id/tvTillFertilizingVal"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_05x"
+                android:text="@string/_3_days"
+                app:drawableStartCompat="@drawable/ic_baseline_scatter_plot_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvTillWateringVal"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewPlant" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

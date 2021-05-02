@@ -10,6 +10,8 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -17,6 +19,7 @@ import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.*
 import com.goranatos.plantkeeper.databinding.FragmentMyPlantsBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
+import com.goranatos.plantkeeper.util.Helper.Companion.getScreenWidth
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.coroutines.CoroutineScope
@@ -67,7 +70,15 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
-            initRecycleView(it.toPlantItemCards())
+
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+                getString(R.string.pref_option_is_list_home_adapter), true
+            ).also { isListHomeAdapter ->
+//                if (isListHomeAdapter || calculateSpanCount() < 2) initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
+                if (isListHomeAdapter) initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
+                else
+                    initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
+            }
 
             if (it.isNotEmpty()) binding.textViewEmptyDatabaseNotification.visibility = View.GONE
             else binding.textViewEmptyDatabaseNotification.visibility = View.VISIBLE
@@ -75,7 +86,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
-                this.findNavController().navigate(
+                findNavController().navigate(
                     MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId)
                 )
                 viewModel.doneNavigating()
@@ -90,7 +101,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         setHasOptionsMenu(true)
     }
 
-    private fun initRecycleView(items: List<PlantItemCard>) {
+    private fun initRecycleViewWithLinearAdapter(items: List<PlantItemListCard>) {
         val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
             addAll(items)
         }
@@ -101,9 +112,42 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         }
     }
 
-    private fun List<Plant>.toPlantItemCards(): List<PlantItemCard> {
+    private fun initRecycleViewWithGridAdapter(items: List<PlantItemGridCard>) {
+        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
+            addAll(items)
+        }
+
+        binding.recyclerView.apply {
+            val spanCount = calculateSpanCount()
+            layoutManager = GridLayoutManager(requireContext(), spanCount)
+            adapter = groupAdapter
+        }
+    }
+
+    private fun calculateSpanCount(): Int {
+        val density = resources.displayMetrics.density
+        val dpWidth = getScreenWidth(requireActivity()) / density
+        val columns = (dpWidth / (170 + 20)).toInt()
+        return columns
+    }
+
+    private fun List<Plant>.toPlantListItemCards(): List<PlantItemListCard> {
         return this.map {
-            PlantItemCard(it, onPlantItemCardClickedListener, onPlantItemCardLongClickedListener)
+            PlantItemListCard(
+                it,
+                onPlantItemCardClickedListener,
+                onPlantItemCardLongClickedListener
+            )
+        }
+    }
+
+    private fun List<Plant>.toPlantGridItemCards(): List<PlantItemGridCard> {
+        return this.map {
+            PlantItemGridCard(
+                it,
+                onPlantItemCardClickedListener,
+                onPlantItemCardLongClickedListener
+            )
         }
     }
 
@@ -164,7 +208,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
+        inflater.inflate(R.menu.my_plants_menu, menu)
 
         val settingsOption = menu.findItem(R.id.action_option)
 
@@ -172,6 +216,42 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             findNavController().navigate(
                 MyPlantsFragmentDirections.actionMyPlantsFragmentToSettingsFragment()
             )
+            true
+        }
+
+        val changeAppearanceOption = menu.findItem(R.id.action_change_appearance)
+
+        changeAppearanceOption.setOnMenuItemClickListener {
+
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+                getString(R.string.pref_option_is_list_home_adapter), true
+            ).also { isListHomeAdapter ->
+
+                viewModel.allPlants.value?.let {
+                    //if ( calculateSpanCount() > 1) {
+                    if (true) {
+                        val pmEditor =
+                            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
+
+                        if (isListHomeAdapter) {
+                            initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
+                            pmEditor.putBoolean(
+                                getString(R.string.pref_option_is_list_home_adapter),
+                                false
+                            ).apply()
+
+                        } else {
+                            initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
+                            pmEditor.putBoolean(
+                                getString(R.string.pref_option_is_list_home_adapter),
+                                true
+                            ).apply()
+                        }
+                    }
+                }
+
+            }
+
             true
         }
 

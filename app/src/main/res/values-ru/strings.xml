@@ -61,8 +61,9 @@
     <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ок</string>
     <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]">Отменить</string>
 
-    <string name="days_till_watering">&#160;Дней до полива:</string>
-    <string name="days_till_fertilizing">&#160;Дней до внесения удобрений:</string>
+    <string name="days_till_event">%1$sд</string>
+    <string name="days_till_watering">&#160;До полива:</string>
+    <string name="days_till_fertilizing">&#160;До удобрения:</string>
     <string name="notification_plants_need_care">Цветы нуждаются в уходе!</string>
     <string name="plant_s_name">Название растения</string>
     <string name="hibernate_mode">Режим покоя</string>
@@ -106,5 +107,6 @@
     <string name="application_settings">Настройки приложения</string>
     <string name="new_plant">Новое растение</string>
     <string name="no_plants_in_db">Нет растений</string>
+    <string name="action_change_appearance">Изменить внешний вид</string>
 
 </resources>

@@ -1,9 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.goranatos.plantkeeper.ui.MainActivity">
+
+    <item
+        android:id="@+id/action_change_appearance"
+        android:icon="@drawable/ic_baseline_dashboard_24"
+        android:title="@string/action_change_appearance"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_option"
         android:title="@string/action_settings"
         android:icon="@drawable/ic_baseline_settings_24" />
+
 </menu>

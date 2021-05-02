@@ -29,15 +29,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/margin_list_horizontal"
-            android:layout_marginStart="@dimen/margin_half"
-            android:layout_marginTop="@dimen/margin_half"
-            android:layout_marginEnd="@dimen/margin_half"
-            android:layout_marginBottom="@dimen/margin_half"
+            android:layout_marginStart="@dimen/margin_05x"
+            android:layout_marginTop="@dimen/margin_05x"
+            android:layout_marginBottom="@dimen/margin_05x"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_plant" />
+            tools:listitem="@layout/list_item_plant" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

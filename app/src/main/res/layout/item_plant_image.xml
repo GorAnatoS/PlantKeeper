@@ -16,7 +16,7 @@
             android:id="@+id/imageViewPlant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_half"
+            android:layout_margin="@dimen/margin_05x"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

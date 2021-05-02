@@ -68,8 +68,9 @@
     <string name="plant_notification_channel_id" translatable="false">plant_notification</string>
     <string name="plant_notification_channel_name" translatable="false">plant_notification_channel</string>
 
-    <string name="days_till_watering">&#160;Days till watering:</string>
-    <string name="days_till_fertilizing">&#160;Days till fertilizing:</string>
+    <string name="days_till_event">%1$sd</string>
+    <string name="days_till_watering">&#160;Till watering:</string>
+    <string name="days_till_fertilizing">&#160;Till fertilizing:</string>
     <string name="notification_plants_need_care">The plants need care of!</string>
     <string name="plant_s_name">Plant`s name</string>
     <string name="hibernate_mode">Hibernate mode</string>
@@ -90,8 +91,8 @@
     <string name="to_water_once_at_in_days">To water once a  (days):</string>
     <string name="watering_settings_normal_mode">Normal mode:</string>
     <string name="watering_settings_hibernate_mode">Hibernate mode:</string>
-    <string name="_3" translatable="false">3</string>
-    <string name="_2" translatable="false">2</string>
+    <string name="_3_days" translatable="false">3d</string>
+    <string name="_2_days" translatable="false">2d</string>
     <string name="my_plants">My plants</string>
     <string name="settings">Settings</string>
     <string name="settings_feedback">Feedback</string>
@@ -103,7 +104,9 @@
     <string name="application_language">Application language</string>
     <string name="settings_language_russian">Russian</string>
     <string name="choose_application_language">Choose application language</string>
+
     <string name="pref_option_choose_language" translatable="false">pref_option_choose_language</string>
+    <string name="pref_option_is_list_home_adapter" translatable="false">pref_option_is_list_home_adapter</string>
 
     <string name="ru" translatable="false">ru</string>
     <string name="en" translatable="false">en</string>
@@ -136,4 +139,5 @@
     <string name="start_with_space_string" translatable="false">&#160; %1$s</string>
     <string name="new_plant">New plant</string>
     <string name="no_plants_in_db">No plants</string>
+    <string name="action_change_appearance">Change appearance</string>
 </resources>

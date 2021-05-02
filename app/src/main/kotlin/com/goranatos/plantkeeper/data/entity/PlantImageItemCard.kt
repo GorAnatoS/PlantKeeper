@@ -5,7 +5,7 @@ import com.goranatos.plantkeeper.R
 
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.item_plant.view.*
+import kotlinx.android.synthetic.main.list_item_plant.view.*
 
 /**
  * Created by qsufff on 9/13/2020.

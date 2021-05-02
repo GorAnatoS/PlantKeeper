@@ -54,7 +54,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         setWateringNeedVisible()
         setFertilizingNeedVisible()
 
-        if (!isToShowSaveBtn) binding.buttonSave.visibility = View.INVISIBLE
+        if (!isToShowSaveBtn) binding.buttonSave.visibility = View.GONE
 
         setPlantImage()
 
@@ -114,17 +114,17 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             )
 
             if (plant.is_watering_hibernate_mode_on == 0) {
-                binding.tvWateringFrequencyInHibernate.visibility = View.INVISIBLE
+                binding.tvWateringFrequencyInHibernate.visibility = View.GONE
             }
 
         } else {
-            binding.tvToWaterFromDateVal.visibility = View.INVISIBLE
+            binding.tvToWaterFromDateVal.visibility = View.GONE
             binding.tvWateringFrequency.visibility =
-                View.INVISIBLE
+                View.GONE
             binding.tvWateringFrequencyInHibernate.visibility =
-                View.INVISIBLE
+                View.GONE
 
-            binding.tvToWaterIcon.visibility = View.INVISIBLE
+            binding.tvToWaterIcon.visibility = View.GONE
         }
 
 
@@ -153,16 +153,16 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             )
 
             if (plant.is_fertilizing_hibernate_mode_on == 0) {
-                binding.tvFertilizingFrequencyInHibernate.visibility = View.INVISIBLE
+                binding.tvFertilizingFrequencyInHibernate.visibility = View.GONE
             }
         } else {
-            binding.tvToFertilizeFromDateVal.visibility = View.INVISIBLE
+            binding.tvToFertilizeFromDateVal.visibility = View.GONE
             binding.tvFertilizingFrequency.visibility =
-                View.INVISIBLE
+                View.GONE
             binding.tvFertilizingFrequencyInHibernate.visibility =
-                View.INVISIBLE
+                View.GONE
 
-            binding.tvToFertilizeIcon.visibility = View.INVISIBLE
+            binding.tvToFertilizeIcon.visibility = View.GONE
         }
     }
 

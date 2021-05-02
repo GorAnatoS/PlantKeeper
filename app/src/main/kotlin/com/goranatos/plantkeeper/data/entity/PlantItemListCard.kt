@@ -4,11 +4,12 @@ import android.net.Uri
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat.getColor
+import com.bumptech.glide.Glide
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.internal.TimeHelper
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.item_plant.view.*
+import kotlinx.android.synthetic.main.list_item_plant.view.*
 
 /**
  * Created by qsufff on 9/13/2020.
@@ -22,7 +23,7 @@ interface OnPlantItemCardLongClickedListener {
     fun onPlantItemCardLongClicked(id: Int, menuCode: Int)
 }
 
-class PlantItemCard(
+class PlantItemListCard(
     private val content: Plant,
     private val plantItemCardListener: OnPlantItemCardClickedListener,
     private val plantItemCardLongListener: OnPlantItemCardLongClickedListener
@@ -38,6 +39,11 @@ class PlantItemCard(
 
             } else {
                 viewHolder.containerView.imageViewPlant.setImageURI(Uri.parse(content.string_uri_image_path))
+                Glide
+                    .with(viewHolder.containerView)
+                    .load(Uri.parse(content.string_uri_image_path))
+                    //.placeholder(R.drawable.loading_spinner)
+                    .into(viewHolder.containerView.imageViewPlant)
             }
             //при нажатии на карточку открываем подробное описание растения
             itemView.setOnClickListener {
@@ -84,10 +90,12 @@ class PlantItemCard(
                     colorNormal = false
 
                 viewHolder.containerView.tvTillWateringVal.text =
-                    TimeHelper.getDaysTillEventNotification(
-                        System.currentTimeMillis(),
-                        content.long_next_watering_date!!
-                    ).toString()
+                    containerView.context.getString(
+                        R.string.days_till_event, TimeHelper.getDaysTillEventNotification(
+                            System.currentTimeMillis(),
+                            content.long_next_watering_date!!
+                        ).toString()
+                    )
             } else {
                 viewHolder.containerView.tvTillWatering.visibility = View.GONE
                 viewHolder.containerView.tvTillWateringVal.visibility = View.GONE
@@ -102,10 +110,12 @@ class PlantItemCard(
                     colorNormal = false
 
                 viewHolder.containerView.tvTillFertilizingVal.text =
-                    TimeHelper.getDaysTillEventNotification(
-                        System.currentTimeMillis(),
-                        content.long_next_fertilizing_date!!
-                    ).toString()
+                    containerView.context.getString(
+                        R.string.days_till_event, TimeHelper.getDaysTillEventNotification(
+                            System.currentTimeMillis(),
+                            content.long_next_fertilizing_date!!
+                        ).toString()
+                    )
             } else {
                 viewHolder.containerView.tvTillFertilizing.visibility = View.GONE
                 viewHolder.containerView.tvTillFertilizingVal.visibility = View.GONE
@@ -123,7 +133,7 @@ class PlantItemCard(
         }
     }
 
-    override fun getLayout() = R.layout.item_plant
+    override fun getLayout() = R.layout.list_item_plant
 }
 
 enum class PlantItemCardMenu(val menuCode: Int) {

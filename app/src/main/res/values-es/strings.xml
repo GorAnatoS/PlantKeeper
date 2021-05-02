@@ -61,8 +61,9 @@
     <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">OK</string>
     <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]">Cancelar</string>
 
-    <string name="days_till_watering">"&#160;Días hasta el riego: "</string>
-    <string name="days_till_fertilizing">&#160;Días antes de la fertilización:</string>
+    <string name="days_till_event">%1$sd</string>
+    <string name="days_till_watering">"&#160;Hasta riego: "</string>
+    <string name="days_till_fertilizing">&#160;Hasta fertilización:</string>
     <string name="notification_plants_need_care">¡Las plantas necesitan cuidados!</string>
     <string name="plant_s_name">Nombre de la planta</string>
     <string name="hibernate_mode">Modo de hibernación</string>
@@ -106,5 +107,6 @@
     <string name="application_settings">Configuraciones de la aplicación</string>
     <string name="new_plant">Nueva planta</string>
     <string name="no_plants_in_db">Sin plantas</string>
+    <string name="action_change_appearance">Cambiar de apariencia</string>
 
 </resources>
