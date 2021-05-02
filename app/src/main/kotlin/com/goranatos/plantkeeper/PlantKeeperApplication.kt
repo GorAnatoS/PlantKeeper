@@ -43,8 +43,6 @@ class PlantKeeperApplication : Application(), DIAware {
         sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
 
-
-
         setApplicationTheme()
 
         setApplicationLanguage()
