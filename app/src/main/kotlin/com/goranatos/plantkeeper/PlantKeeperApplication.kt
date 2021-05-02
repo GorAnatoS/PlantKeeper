@@ -68,13 +68,18 @@ class PlantKeeperApplication : Application(), DIAware {
             getString(R.string.pref_option_choose_language),
             getString(R.string.en)
         )) {
-            "ru" -> {
+            getString(R.string.ru) -> {
                 val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_RUSSIAN))
                 val lingver = Lingver.init(this, store)
             }
 
-            "en" -> {
+            getString(R.string.en) -> {
                 val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_ENGLISH))
+                val lingver = Lingver.init(this, store)
+            }
+
+            getString(R.string.es) -> {
+                val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_SPANISH))
                 val lingver = Lingver.init(this, store)
             }
         }

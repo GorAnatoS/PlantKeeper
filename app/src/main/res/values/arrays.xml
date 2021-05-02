@@ -3,10 +3,12 @@
     <string-array name="pref_language_option_labels">
         <item>@string/russian_lang</item>
         <item>@string/english_lang</item>
+        <item>@string/spanish_lang</item>
     </string-array>
 
     <string-array name="pref_language_option_values">
         <item>@string/ru</item>
         <item>@string/en</item>
+        <item>@string/es</item>
     </string-array>
 </resources>
