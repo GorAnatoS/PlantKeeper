@@ -46,7 +46,12 @@ class TimeHelper {
         }
 
         fun minutesFromMidnightToHourlyTime(persistedMinutesFromMidnight: Int): CharSequence {
-            return "${persistedMinutesFromMidnight / 60}:${persistedMinutesFromMidnight % 60}"
+            return "${
+                String.format(
+                    "%02d",
+                    (persistedMinutesFromMidnight / 60)
+                )
+            }:${String.format("%02d", persistedMinutesFromMidnight % 60)}"
         }
 
         fun getDaysTillEventNotification(dateFrom: Long, dateTill: Long): Int {
