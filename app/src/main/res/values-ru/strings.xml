@@ -94,6 +94,7 @@
 
     <string name="russian_lang">Русский</string>
     <string name="english_lang">Английский</string>
+    <string name="spanish_lang">Испанский</string>
     <string name="current_lang">Русский</string>
 
     <string name="to_change_app_lang_restart_application">Для изменения языка - перезагрузите приложение</string>
@@ -103,5 +104,7 @@
     <string name="settings_theme_default">Стандартная</string>
     <string name="enable_dark_theme">Включить темную тему</string>
     <string name="application_settings">Настройки приложения</string>
+    <string name="new_plant">Новое растение</string>
+    <string name="no_plants_in_db">Нет растений</string>
 
 </resources>

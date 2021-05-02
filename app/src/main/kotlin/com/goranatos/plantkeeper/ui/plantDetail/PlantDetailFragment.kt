@@ -141,6 +141,14 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (args.plantId == -1) {
+            requireActivity().title = getString(R.string.new_plant)
+        }
+    }
+
     private fun hideRelatedToChipsMaterialCards() {
         binding.materialCardHibernateGroup.visibility = View.GONE
         binding.materialCardWaterGroup.visibility = View.GONE

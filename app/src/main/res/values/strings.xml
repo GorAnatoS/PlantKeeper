@@ -110,6 +110,7 @@
     <string name="empty_string" translatable="false" />
     <string name="russian_lang">Russian</string>
     <string name="english_lang">English</string>
+    <string name="spanish_lang">Spanish</string>
     <string name="current_lang">English</string>
 
     <string name="pref_option_is_to_show_notifications" translatable="false">pref_option_is_to_show_notifications</string>
@@ -132,4 +133,6 @@
     <string name="application_settings">Application settings</string>
 
     <string name="start_with_space_string" translatable="false">&#160; %1$s</string>
+    <string name="new_plant">New plant</string>
+    <string name="no_plants_in_db">No plants</string>
 </resources>

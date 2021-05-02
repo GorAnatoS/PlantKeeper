@@ -18,7 +18,7 @@
             android:id="@+id/textViewEmptyDatabaseNotification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empty_db_text"
+            android:text="@string/no_plants_in_db"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
