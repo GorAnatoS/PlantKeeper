@@ -7,12 +7,14 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantkeeper.R
@@ -66,6 +68,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         return binding.root
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -81,8 +84,10 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                     initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
             }
 
-            if (it.isNotEmpty()) binding.textViewEmptyDatabaseNotification.visibility = View.GONE
-            else binding.textViewEmptyDatabaseNotification.visibility = View.VISIBLE
+            if (it.isNotEmpty()) {
+                binding.textViewEmptyDatabaseNotification.visibility = View.GONE
+                runRecycleViewAnimation(binding.recyclerView, R.anim.app_start_layout_animation)
+            } else binding.textViewEmptyDatabaseNotification.visibility = View.VISIBLE
         })
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
@@ -110,6 +115,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = groupAdapter
+            runRecycleViewAnimation(this, R.anim.grid_to_list_layout_animation)
         }
     }
 
@@ -122,8 +128,8 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             val spanCount = calculateSpanCount()
             layoutManager = GridLayoutManager(requireContext(), spanCount)
             adapter = groupAdapter
+            runRecycleViewAnimation(this, R.anim.list_to_grid_layout_animation)
         }
-
     }
 
     private fun calculateSpanCount(): Int {
@@ -259,6 +265,15 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         }
 
         return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun runRecycleViewAnimation(recyclerView: RecyclerView, animationIntId: Int) {
+        val context = recyclerView.context
+        val controller =
+            AnimationUtils.loadLayoutAnimation(context, animationIntId)
+        recyclerView.layoutAnimation = controller
+        recyclerView.adapter!!.notifyDataSetChanged()
+        recyclerView.scheduleLayoutAnimation()
     }
 
     companion object {

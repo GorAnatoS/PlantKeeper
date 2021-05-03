@@ -11,10 +11,18 @@
         android:label="@string/my_plants" >
         <action
             android:id="@+id/action_myPlantsFragment_to_plantAddAndInfo"
-            app:destination="@id/plantAddAndInfo" />
+            app:destination="@id/plantAddAndInfo"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_myPlantsFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/plantAddAndInfo"
