@@ -34,6 +34,12 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     private var isToSaveResult = false
     private var isToShowSaveBtn = false
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        retainInstance = true
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

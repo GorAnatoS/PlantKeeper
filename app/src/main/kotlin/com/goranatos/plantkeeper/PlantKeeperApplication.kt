@@ -16,11 +16,9 @@ import org.kodein.di.*
 import org.kodein.di.android.x.androidXModule
 import java.util.*
 
-
 /**
  * Created by qsufff on 7/29/2020.
  */
-
 
 class PlantKeeperApplication : Application(), DIAware {
 
@@ -86,7 +84,7 @@ class PlantKeeperApplication : Application(), DIAware {
     }
 }
 
-// TODO: 5/2/2021 1.0.3 add animation Grid->Linear, and other animatiuons, customize dark theme 
+// TODO: 5/2/2021 1.0.4 add other animations, customize dark theme
 
 // TODO: 11/22/2020 In second version add
 //help
