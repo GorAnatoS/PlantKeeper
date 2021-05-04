@@ -77,9 +77,10 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
                 getString(R.string.pref_option_is_list_home_adapter), true
             ).also { isListHomeAdapter ->
-                if (isListHomeAdapter || calculateSpanCount() < 2) initRecycleViewWithLinearAdapter(
-                    it.toPlantListItemCards()
-                )
+                if (isListHomeAdapter || calculateSpanCount() < 2)
+                    initRecycleViewWithLinearAdapter(
+                        it.toPlantListItemCards()
+                    )
                 else
                     initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
             }
@@ -106,6 +107,67 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
         setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.my_plants_menu, menu)
+
+        val settingsOption = menu.findItem(R.id.action_option)
+
+        settingsOption.setOnMenuItemClickListener {
+            findNavController().navigate(
+                MyPlantsFragmentDirections.actionMyPlantsFragmentToSettingsFragment()
+            )
+            true
+        }
+
+        val changeAppearanceOption = menu.findItem(R.id.action_change_appearance)
+
+        if (PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+                getString(R.string.pref_option_is_list_home_adapter), true
+            )
+        ) menu.findItem(R.id.action_change_appearance)
+            .setIcon(R.drawable.ic_baseline_view_agenda_24)
+        else menu.findItem(R.id.action_change_appearance)
+            .setIcon(R.drawable.ic_baseline_dashboard_24)
+
+        changeAppearanceOption.setOnMenuItemClickListener {
+
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+                getString(R.string.pref_option_is_list_home_adapter), true
+            ).also { isListHomeAdapter ->
+
+                if (calculateSpanCount() > 1) {
+
+                    viewModel.allPlants.value?.let {
+                        //if ( calculateSpanCount() > 1) {
+
+                        val pmEditor =
+                            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
+
+                        if (isListHomeAdapter) {
+                            initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
+                            pmEditor.putBoolean(
+                                getString(R.string.pref_option_is_list_home_adapter),
+                                false
+                            ).apply()
+
+                        } else {
+                            initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
+                            pmEditor.putBoolean(
+                                getString(R.string.pref_option_is_list_home_adapter),
+                                true
+                            ).apply()
+                        }
+                    }
+                }
+            }
+
+            true
+        }
+
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
 
     private fun initRecycleViewWithLinearAdapter(items: List<PlantItemListCard>) {
         val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
@@ -215,57 +277,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.my_plants_menu, menu)
-
-        val settingsOption = menu.findItem(R.id.action_option)
-
-        settingsOption.setOnMenuItemClickListener {
-            findNavController().navigate(
-                MyPlantsFragmentDirections.actionMyPlantsFragmentToSettingsFragment()
-            )
-            true
-        }
-
-        val changeAppearanceOption = menu.findItem(R.id.action_change_appearance)
-
-        changeAppearanceOption.setOnMenuItemClickListener {
-
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
-                getString(R.string.pref_option_is_list_home_adapter), true
-            ).also { isListHomeAdapter ->
-
-                if (calculateSpanCount() > 1) {
-
-                    viewModel.allPlants.value?.let {
-                        //if ( calculateSpanCount() > 1) {
-
-                        val pmEditor =
-                            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
-
-                        if (isListHomeAdapter) {
-                            initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
-                            pmEditor.putBoolean(
-                                getString(R.string.pref_option_is_list_home_adapter),
-                                false
-                            ).apply()
-
-                        } else {
-                            initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
-                            pmEditor.putBoolean(
-                                getString(R.string.pref_option_is_list_home_adapter),
-                                true
-                            ).apply()
-                        }
-                    }
-                }
-            }
-
-            true
-        }
-
-        return super.onCreateOptionsMenu(menu, inflater)
-    }
 
     private fun runRecycleViewAnimation(recyclerView: RecyclerView, animationIntId: Int) {
         val context = recyclerView.context
