@@ -19,8 +19,8 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 'android-S'
-    buildToolsVersion '31.0.0 rc3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 
     buildFeatures {
         viewBinding true
@@ -31,7 +31,7 @@ android {
         applicationId "com.goranatos.plantkeeper"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 13
+        versionCode 15
         versionName "1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -87,9 +87,10 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.debug
 
+            applicationIdSuffix = '.debug'
+            versionNameSuffix = '-debug'
+
             firebaseCrashlytics {
-                // If you don't need crash reporting for your debug build,
-                // you can speed up your build by disabling mapping file uploading.
                 mappingFileUploadEnabled false
             }
 
@@ -113,7 +114,7 @@ android {
         experimental = true
     }
 
-    ndkVersion '22.1.7171670'
+    ndkVersion "22.1.7171670"
 }
 
 dependencies {
@@ -203,7 +204,7 @@ dependencies {
 
 
 
-    def kotlin_version = '1.4.30'
+    def kotlin_version = '1.5.0'
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.3.0"

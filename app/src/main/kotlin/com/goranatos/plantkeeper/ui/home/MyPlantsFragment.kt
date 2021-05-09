@@ -151,12 +151,18 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
                                 false
                             ).apply()
 
+                            menu.findItem(R.id.action_change_appearance)
+                                .setIcon(R.drawable.ic_baseline_dashboard_24)
+
                         } else {
                             initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
                             pmEditor.putBoolean(
                                 getString(R.string.pref_option_is_list_home_adapter),
                                 true
                             ).apply()
+
+                            menu.findItem(R.id.action_change_appearance)
+                                .setIcon(R.drawable.ic_baseline_view_agenda_24)
                         }
                     }
                 }
@@ -286,6 +292,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         recyclerView.adapter!!.notifyDataSetChanged()
         recyclerView.scheduleLayoutAnimation()
     }
+
 
     companion object {
         fun deletePlantItemFromDB(

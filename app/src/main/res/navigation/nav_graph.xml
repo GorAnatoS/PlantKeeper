@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/myPlantsFragment">
+    app:startDestination="@id/nav_my_plants">
     <fragment
-        android:id="@+id/myPlantsFragment"
+        android:id="@+id/nav_my_plants"
         android:name="com.goranatos.plantkeeper.ui.home.MyPlantsFragment"
         tools:layout="@layout/fragment_my_plants"
-        android:label="@string/my_plants" >
+        android:label="@string/my_plants">
         <action
             android:id="@+id/action_myPlantsFragment_to_plantAddAndInfo"
             app:destination="@id/plantAddAndInfo"
