@@ -1,8 +1,11 @@
 package com.goranatos.plantkeeper.ui.home
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.SharedPreferences
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -31,7 +34,6 @@ import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
 import org.kodein.di.instance
 
-
 class MyPlantsFragment : ScopedFragment(), DIAware {
 
     override val di by closestDI()
@@ -42,9 +44,14 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
     lateinit var binding: FragmentMyPlantsBinding
 
+    private lateinit var changeAppearanceActionMenuItem: MenuItem
+
+    lateinit var preferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
+        preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 
     override fun onCreateView(
@@ -62,33 +69,20 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
         createChannel(
             getString(R.string.plant_notification_channel_id),
-            getString(R.string.plant_notification_channel_name)
+            getString(R.string.plant_notification_channel_name),
+            requireActivity()
         )
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
-
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
-                getString(R.string.pref_option_is_list_home_adapter), true
-            ).also { isListHomeAdapter ->
-                if (isListHomeAdapter || calculateSpanCount() < 2)
-                    initRecycleViewWithLinearAdapter(
-                        it.toPlantListItemCards()
-                    )
-                else
-                    initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
-            }
-
-            if (it.isNotEmpty()) {
-                binding.textViewEmptyDatabaseNotification.visibility = View.GONE
-                runRecycleViewAnimation(binding.recyclerView, R.anim.app_start_layout_animation)
-            } else binding.textViewEmptyDatabaseNotification.visibility = View.VISIBLE
+            viewModel.updateRecycleView()
         })
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
@@ -100,12 +94,35 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             }
         })
 
+        viewModel.isToUpdateRecycleView.observe(viewLifecycleOwner, {
+            if (it == true) {
+
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+                    getString(R.string.pref_option_is_list_home_adapter), true
+                ).also { isListHomeAdapter ->
+                    if (isListHomeAdapter || calculateSpanCount(resources, requireActivity()) < 2)
+                        initRecycleViewWithLinearAdapter(
+                            viewModel.allPlants.value?.toPlantListItemCards(), binding.recyclerView
+                        )
+                    else
+                        initRecycleViewWithGridAdapter(
+                            viewModel.allPlants.value?.toPlantGridItemCards(),
+                            binding.recyclerView,
+                            requireActivity()
+                        )
+                }
+
+                if (viewModel.allPlants.value?.isNotEmpty() == true) {
+                    binding.textViewEmptyDatabaseNotification.visibility = View.GONE
+                    runRecycleViewAnimation(binding.recyclerView, R.anim.app_start_layout_animation)
+                } else binding.textViewEmptyDatabaseNotification.visibility = View.VISIBLE
+            }
+        })
+
         binding.fab.setOnClickListener {
             viewModel.updateNavigateToPlantId(-1)
             viewModel.onItemClicked()
         }
-
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -120,7 +137,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
             true
         }
 
-        val changeAppearanceOption = menu.findItem(R.id.action_change_appearance)
+        changeAppearanceActionMenuItem = menu.findItem(R.id.action_change_appearance)
 
         if (PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
                 getString(R.string.pref_option_is_list_home_adapter), true
@@ -130,41 +147,36 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         else menu.findItem(R.id.action_change_appearance)
             .setIcon(R.drawable.ic_baseline_dashboard_24)
 
-        changeAppearanceOption.setOnMenuItemClickListener {
+        changeAppearanceActionMenuItem.setOnMenuItemClickListener {
 
-            PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+            preferences.getBoolean(
                 getString(R.string.pref_option_is_list_home_adapter), true
             ).also { isListHomeAdapter ->
 
-                if (calculateSpanCount() > 1) {
+                val pmEditor =
+                    preferences.edit()
 
-                    viewModel.allPlants.value?.let {
-                        //if ( calculateSpanCount() > 1) {
+                if (isListHomeAdapter) {
+                    changeAppearanceActionMenuItem
+                        .setIcon(R.drawable.ic_baseline_dashboard_24)
 
-                        val pmEditor =
-                            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
+                    pmEditor.putBoolean(
+                        getString(R.string.pref_option_is_list_home_adapter),
+                        false
+                    ).apply()
 
-                        if (isListHomeAdapter) {
-                            initRecycleViewWithGridAdapter(it.toPlantGridItemCards())
-                            pmEditor.putBoolean(
-                                getString(R.string.pref_option_is_list_home_adapter),
-                                false
-                            ).apply()
+                    viewModel.updateRecycleView()
 
-                            menu.findItem(R.id.action_change_appearance)
-                                .setIcon(R.drawable.ic_baseline_dashboard_24)
+                } else {
+                    changeAppearanceActionMenuItem
+                        .setIcon(R.drawable.ic_baseline_view_agenda_24)
 
-                        } else {
-                            initRecycleViewWithLinearAdapter(it.toPlantListItemCards())
-                            pmEditor.putBoolean(
-                                getString(R.string.pref_option_is_list_home_adapter),
-                                true
-                            ).apply()
+                    pmEditor.putBoolean(
+                        getString(R.string.pref_option_is_list_home_adapter),
+                        true
+                    ).apply()
 
-                            menu.findItem(R.id.action_change_appearance)
-                                .setIcon(R.drawable.ic_baseline_view_agenda_24)
-                        }
-                    }
+                    viewModel.updateRecycleView()
                 }
             }
 
@@ -172,39 +184,6 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         }
 
         return super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    private fun initRecycleViewWithLinearAdapter(items: List<PlantItemListCard>) {
-        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
-            addAll(items)
-        }
-
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = groupAdapter
-            runRecycleViewAnimation(this, R.anim.grid_to_list_layout_animation)
-        }
-    }
-
-    private fun initRecycleViewWithGridAdapter(items: List<PlantItemGridCard>) {
-        val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
-            addAll(items)
-        }
-
-        binding.recyclerView.apply {
-            val spanCount = calculateSpanCount()
-            layoutManager = GridLayoutManager(requireContext(), spanCount)
-            adapter = groupAdapter
-            runRecycleViewAnimation(this, R.anim.list_to_grid_layout_animation)
-        }
-    }
-
-    private fun calculateSpanCount(): Int {
-        val density = resources.displayMetrics.density
-        val dpWidth = getScreenWidth(requireActivity()) / density
-        val columns = (dpWidth / (170 + 20)).toInt()
-        return columns
     }
 
     private fun List<Plant>.toPlantListItemCards(): List<PlantItemListCard> {
@@ -260,41 +239,31 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
         }
     }
 
-    private fun createChannel(channelId: String, channelName: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-                .apply {
-                    setShowBadge(false)
-                }
-
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = getString(R.string.plants_notification_description)
-
-            val notificationManager = requireActivity().getSystemService(
-                NotificationManager::class.java
-            )
-            notificationManager.createNotificationChannel(notificationChannel)
-        }
-    }
-
-
-    private fun runRecycleViewAnimation(recyclerView: RecyclerView, animationIntId: Int) {
-        val context = recyclerView.context
-        val controller =
-            AnimationUtils.loadLayoutAnimation(context, animationIntId)
-        recyclerView.layoutAnimation = controller
-        recyclerView.adapter!!.notifyDataSetChanged()
-        recyclerView.scheduleLayoutAnimation()
-    }
-
-
     companion object {
+        private fun createChannel(channelId: String, channelName: String, activity: Activity) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val notificationChannel = NotificationChannel(
+                    channelId,
+                    channelName,
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                    .apply {
+                        setShowBadge(false)
+                    }
+
+                notificationChannel.enableLights(true)
+                notificationChannel.lightColor = Color.RED
+                notificationChannel.enableVibration(true)
+                notificationChannel.description =
+                    activity.getString(R.string.plants_notification_description)
+
+                val notificationManager = activity.getSystemService(
+                    NotificationManager::class.java
+                )
+                notificationManager.createNotificationChannel(notificationChannel)
+            }
+        }
+
         fun deletePlantItemFromDB(
             plantId: Int,
             context: Context,
@@ -320,6 +289,59 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
                     }
                 }.show()
+        }
+
+        fun calculateSpanCount(resources: Resources, activity: Activity): Int {
+            val density = resources.displayMetrics.density
+            val dpWidth = getScreenWidth(activity) / density
+            val columns = (dpWidth / (170 + 20)).toInt()
+            return columns
+        }
+
+        fun initRecycleViewWithGridAdapter(
+            items: List<PlantItemGridCard>?,
+            recyclerView: RecyclerView,
+            activity: Activity
+        ) {
+            items?.let {
+                val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
+                    addAll(items)
+                }
+
+                recyclerView.apply {
+                    val spanCount = calculateSpanCount(resources, activity)
+                    layoutManager = GridLayoutManager(recyclerView.context, spanCount)
+                    adapter = groupAdapter
+                    runRecycleViewAnimation(this, R.anim.list_to_grid_layout_animation)
+                }
+            }
+        }
+
+        fun initRecycleViewWithLinearAdapter(
+            items: List<PlantItemListCard>?,
+            recyclerView: RecyclerView
+        ) {
+            items?.let {
+                val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
+                    addAll(items)
+                }
+
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(recyclerView.context)
+                    adapter = groupAdapter
+                    runRecycleViewAnimation(this, R.anim.grid_to_list_layout_animation)
+                }
+            }
+
+        }
+
+        fun runRecycleViewAnimation(recyclerView: RecyclerView, animationIntId: Int) {
+            val context = recyclerView.context
+            val controller =
+                AnimationUtils.loadLayoutAnimation(context, animationIntId)
+            recyclerView.layoutAnimation = controller
+            recyclerView.adapter!!.notifyDataSetChanged()
+            recyclerView.scheduleLayoutAnimation()
         }
     }
 }

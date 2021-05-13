@@ -26,6 +26,14 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
     lateinit var allPlants: LiveData<List<Plant>>
 
+    private val _isToUpdateRecycleView = MutableLiveData<Boolean?>()
+    val isToUpdateRecycleView: LiveData<Boolean?>
+        get() = _isToUpdateRecycleView
+
+    fun updateRecycleView() {
+        _isToUpdateRecycleView.value = true
+    }
+
     lateinit var thePlant: Plant
 
     private val viewModelJob = Job()
@@ -33,6 +41,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
     //create new plant
     var navigateToPlantId = -1
+
 
     private val _navigateToThePlant = MutableLiveData<Boolean?>()
     val navigateToThePlant: LiveData<Boolean?>
@@ -61,6 +70,8 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         viewModelScope.launch(Dispatchers.IO) {
             allPlants = repository.getAllMyPlants().asLiveData()
         }
+
+        isToUpdateRecycleView.value
     }
 
     suspend fun setPlant(plantId: Int) {

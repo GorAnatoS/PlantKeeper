@@ -30,6 +30,8 @@
 
         <item name="android:textColor">@color/black_87_opacity</item>
         <item name="android:editTextColor">@color/black_87_opacity</item>
+
+
     </style>
 
     <style name="Theme.PlantKeeper.ActionOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
@@ -59,5 +61,18 @@
     <style name="Theme.PlantKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar" />
 
     <style name="Theme.PlantKeeper.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Widget.PlantKeeper.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        ...
+        <item name="materialThemeOverlay">@style/ThemeOverlay.PlantKeeper.Chip.Choice</item>
+    </style>
+
+    <!-- Disabling elevation overlays because when chip's default background/surface
+         composite are combined with elevation overlays in a highly elevated dialog,
+         the resulting color becomes too light and causes contrast
+         issues. -->
+    <style name="ThemeOverlay.PlantKeeper.Chip.Choice" parent="">
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
 </resources>
 

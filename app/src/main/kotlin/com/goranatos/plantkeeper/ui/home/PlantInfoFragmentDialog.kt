@@ -217,55 +217,63 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
     private fun isFertilizedCheckBoxChecked() {
         if (binding.checkBoxFertilized.isChecked) {
-            if (plant.is_fertilizing_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 &&
-                plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null &&
-                TimeHelper.isDateInPlantHibernateRange(
-                    TimeHelper.getCurrentTimeInMs(),
-                    plant.long_to_hibernate_from_date!!,
-                    plant.long_to_hibernate_till_date!!
-                )
-            ) {
+            updatePlantFertilizeData()
+        }
+    }
 
-                plant.int_fertilizing_frequency_in_hibernate?.let {
-                    viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
-                        TimeHelper.getCurrentTimeInMs(),
-                        plant.int_fertilizing_frequency_in_hibernate!!
-                    )
-                }
-            } else {
-                plant.int_fertilizing_frequency_normal?.let {
-                    viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
-                        TimeHelper.getCurrentTimeInMs(),
-                        plant.int_fertilizing_frequency_normal!!
-                    )
-                }
+    private fun updatePlantFertilizeData() {
+        if (plant.is_fertilizing_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 &&
+            plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null &&
+            TimeHelper.isDateInPlantHibernateRange(
+                TimeHelper.getCurrentTimeInMs(),
+                plant.long_to_hibernate_from_date!!,
+                plant.long_to_hibernate_till_date!!
+            )
+        ) {
+
+            plant.int_fertilizing_frequency_in_hibernate?.let {
+                viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_fertilizing_frequency_in_hibernate!!
+                )
+            }
+        } else {
+            plant.int_fertilizing_frequency_normal?.let {
+                viewModel.thePlant.long_next_fertilizing_date = longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_fertilizing_frequency_normal!!
+                )
             }
         }
     }
 
     private fun isWateredCheckBoxChecked() {
         if (binding.checkBoxWatered.isChecked) {
-            if (plant.is_watering_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 &&
-                plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null &&
-                TimeHelper.isDateInPlantHibernateRange(
-                    TimeHelper.getCurrentTimeInMs(),
-                    plant.long_to_hibernate_from_date!!,
-                    plant.long_to_hibernate_till_date!!
-                )
+            updatePlantWateringData()
+        }
+    }
+
+    private fun updatePlantWateringData() {
+        if (plant.is_watering_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 &&
+            plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null &&
+            TimeHelper.isDateInPlantHibernateRange(
+                TimeHelper.getCurrentTimeInMs(),
+                plant.long_to_hibernate_from_date!!,
+                plant.long_to_hibernate_till_date!!
             )
-                plant.int_watering_frequency_in_hibernate?.let {
-                    viewModel.thePlant.long_next_watering_date = longDatePlusDays(
-                        TimeHelper.getCurrentTimeInMs(),
-                        plant.int_watering_frequency_in_hibernate!!
-                    )
-                }
-            else {
-                plant.int_watering_frequency_normal?.let {
-                    viewModel.thePlant.long_next_watering_date = longDatePlusDays(
-                        TimeHelper.getCurrentTimeInMs(),
-                        plant.int_watering_frequency_normal!!
-                    )
-                }
+        )
+            plant.int_watering_frequency_in_hibernate?.let {
+                viewModel.thePlant.long_next_watering_date = longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_watering_frequency_in_hibernate!!
+                )
+            }
+        else {
+            plant.int_watering_frequency_normal?.let {
+                viewModel.thePlant.long_next_watering_date = longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_watering_frequency_normal!!
+                )
             }
         }
     }

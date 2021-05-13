@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_my_plants">
+    app:startDestination="@id/navigation_my_plants">
     <fragment
-        android:id="@+id/nav_my_plants"
+        android:id="@+id/navigation_my_plants"
         android:name="com.goranatos.plantkeeper.ui.home.MyPlantsFragment"
         tools:layout="@layout/fragment_my_plants"
         android:label="@string/my_plants">
@@ -18,12 +18,16 @@
             app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_myPlantsFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment"
+            app:destination="@id/settings"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_nav_my_plants_to_todoFragment"
+            app:destination="@id/navigation_todo" />
     </fragment>
+
     <fragment
         android:id="@+id/plantAddAndInfo"
         tools:layout="@layout/fragment_detailed_plant"
@@ -36,8 +40,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/settingsFragment"
+        android:id="@+id/settings"
         android:name="com.goranatos.plantkeeper.ui.settings.SettingsFragment"
         android:label="@string/settings" />
-    
+
+    <fragment
+        android:id="@+id/navigation_todo"
+        android:name="com.goranatos.plantkeeper.ui.todo.TodoFragment"
+        android:label="@string/to_do_list"
+        tools:layout="@layout/fragment_todo" />
+
 </navigation>

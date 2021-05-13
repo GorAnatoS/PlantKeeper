@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.repository.PlantsRepository
+import com.xwray.groupie.BuildConfig
 import kotlinx.coroutines.*
 
 class PlantDetailViewModel(
@@ -60,13 +61,15 @@ class PlantDetailViewModel(
         }
     }
 
+
     fun setPlant() {
         if (plantId == -1) {
+
             _thePlant.value = Plant(
                 0,
                 null,
                 null,
-                "android.resource://com.goranatos.plantkeeper/drawable/ic_plant1",
+                if (BuildConfig.DEBUG) "android.resource://com.goranatos.plantkeeper/drawable/ic_plant1" else "android.resource://com.goranatos.plantkeeper.debug/drawable/ic_plant1",
 
                 0,
                 null,

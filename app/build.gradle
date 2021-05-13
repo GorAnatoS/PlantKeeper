@@ -31,8 +31,8 @@ android {
         applicationId "com.goranatos.plantkeeper"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 15
-        versionName "1.0.3"
+        versionCode 16
+        versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -104,6 +104,7 @@ android {
     compileOptions {
         sourceCompatibility "1.8"
         targetCompatibility "1.8"
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
@@ -128,9 +129,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.firebase:firebase-messaging:21.1.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
 
-    implementation 'com.google.firebase:firebase-crashlytics-ndk:17.4.1'
+    implementation 'com.google.firebase:firebase-crashlytics-ndk:18.0.0'
 
 
     //coordinator layout
@@ -164,14 +165,18 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$arch_version"
     // Room
-    implementation "androidx.room:room-runtime:2.4.0-alpha01"
+    implementation "androidx.room:room-runtime:2.4.0-alpha02"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 
+    //desugaring
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     //Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
+
+    implementation 'com.github.ibrahimsn98:live-preferences:1.9'
 
     //Permissions
     def permission_version = '4.8.0'

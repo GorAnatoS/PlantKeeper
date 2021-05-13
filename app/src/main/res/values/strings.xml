@@ -140,4 +140,11 @@
     <string name="new_plant">New plant</string>
     <string name="no_plants_in_db">No plants</string>
     <string name="action_change_appearance">Change appearance</string>
+    <string name="today_tasks_completed">Today\'s tasks have been compled.</string>
+    <string name="to_do_menu">To-do</string>
+    <string name="my_plants_menu">My plants</string>
+    <string name="today_title">Today</string>
+    <string name="tomorrow_title">Tomorrow</string>
+    <string name="week_title">Week</string>
+    <string name="to_do_list">To-do list</string>
 </resources>

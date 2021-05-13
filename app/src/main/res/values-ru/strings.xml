@@ -108,5 +108,12 @@
     <string name="new_plant">Новое растение</string>
     <string name="no_plants_in_db">Нет растений</string>
     <string name="action_change_appearance">Изменить внешний вид</string>
+    <string name="today_tasks_completed">Задачи на сегодня выполнены.</string>
+    <string name="to_do_menu">Что сделать</string>
+    <string name="my_plants_menu">Мои растения</string>
+    <string name="today_title">Сегодня</string>
+    <string name="tomorrow_title">Завтра</string>
+    <string name="week_title">Неделя</string>
+    <string name="to_do_list">Список дел</string>
 
 </resources>

@@ -10,6 +10,7 @@ import com.goranatos.plantkeeper.data.repository.PlantsRepositoryImpl
 import com.goranatos.plantkeeper.ui.home.MyPlantsViewModelFactory
 import com.goranatos.plantkeeper.ui.plantDetail.PlantDetailViewModelFactory
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs
+import com.goranatos.plantkeeper.ui.todo.TodoViewModelFactory
 import com.yariksoffice.lingver.Lingver
 import com.yariksoffice.lingver.store.PreferenceLocaleStore
 import org.kodein.di.*
@@ -30,6 +31,7 @@ class PlantKeeperApplication : Application(), DIAware {
         bind<PlantsRepository>() with singleton { PlantsRepositoryImpl(instance()) }
         bind() from singleton { MyPlantsViewModelFactory(instance(), instance()) }
         bind() from factory { plantId: Int -> PlantDetailViewModelFactory(instance(), plantId) }
+        bind() from singleton { TodoViewModelFactory(instance(), instance()) }
     }
 
     private lateinit var sharedPreferences: SharedPreferences
@@ -87,6 +89,11 @@ class PlantKeeperApplication : Application(), DIAware {
 // TODO: 5/2/2021 1.0.4 add other animations, customize dark theme
 
 // TODO: 11/22/2020 In second version add
+
+////TODO 2021/05/10 14:56 || new architecture
+
+//todo onStartMessageAdd
+
 //help
 //about_application option
 //const val SPRAY_NEED_COLUMN = "spraying_need"

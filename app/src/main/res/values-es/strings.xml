@@ -108,5 +108,12 @@
     <string name="new_plant">Nueva planta</string>
     <string name="no_plants_in_db">Sin plantas</string>
     <string name="action_change_appearance">Cambiar de apariencia</string>
+    <string name="today_tasks_completed">"Las tareas de hoy se han completado. "</string>
+    <string name="to_do_menu">Que hacer</string>
+    <string name="my_plants_menu">Mis plantas</string>
+    <string name="today_title">Hoy</string>
+    <string name="tomorrow_title">Mañana</string>
+    <string name="week_title">Semana</string>
+    <string name="to_do_list">Que hacer</string>
 
 </resources>

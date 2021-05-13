@@ -1,6 +1,7 @@
 package com.goranatos.plantkeeper.internal
 
 import java.text.SimpleDateFormat
+import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -101,6 +102,35 @@ class TimeHelper {
                 return currentDate.before(calendarTill) || currentDate.after(calendarFrom)
             }
         }
+
+        fun isBeforeOrEqualThanDate(
+            dateInLong: Long,
+            tillDateInLong: Long
+        ): Boolean {
+            val date = Calendar.getInstance()
+            date.timeInMillis = dateInLong
+
+            val tillDate = Calendar.getInstance()
+            tillDate.timeInMillis = tillDateInLong
+
+            return !date.toInstant().truncatedTo(ChronoUnit.DAYS)
+                .isAfter(tillDate.toInstant().truncatedTo(ChronoUnit.DAYS))
+        }
+
+        fun isInThatDate(
+            dateInLong: Long,
+            tillDateInLong: Long
+        ): Boolean {
+            val date = Calendar.getInstance()
+            date.timeInMillis = dateInLong
+
+            val tillDate = Calendar.getInstance()
+            tillDate.timeInMillis = tillDateInLong
+
+            return date.toInstant().truncatedTo(ChronoUnit.DAYS) == tillDate.toInstant()
+                .truncatedTo(ChronoUnit.DAYS)
+        }
+
 
         fun longDatePlusDays(date: Long, plusDays: Int): Long {
             val calendar = Calendar.getInstance()
