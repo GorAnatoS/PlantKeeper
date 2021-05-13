@@ -32,7 +32,7 @@ import com.goranatos.plantkeeper.ui.plantDetail.dialogs.SelectPlantImageUriFromC
 import com.goranatos.plantkeeper.ui.plantDetail.dialogs.SetFertilizingSettingsFragmentDialog
 import com.goranatos.plantkeeper.ui.plantDetail.dialogs.SetHibernatingSettingsFragmentDialog
 import com.goranatos.plantkeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
-import com.goranatos.plantkeeper.util.Helper.Companion.hideKeyboard
+import com.goranatos.plantkeeper.utilities.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

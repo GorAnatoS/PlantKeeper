@@ -23,7 +23,7 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 
 import com.goranatos.plantkeeper.R
-import com.goranatos.plantkeeper.util.sendNotification
+import com.goranatos.plantkeeper.utilities.sendNotification
 
 class AlarmReceiver : BroadcastReceiver() {
 

@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.ui.home.MyPlantsFragmentDirections
 import com.goranatos.plantkeeper.ui.settings.IS_GO_TO_SETTINGS_AFTER_RESTART
-import com.goranatos.plantkeeper.util.AnimationConstants
+import com.goranatos.plantkeeper.utilities.AnimationConstants
 import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
 

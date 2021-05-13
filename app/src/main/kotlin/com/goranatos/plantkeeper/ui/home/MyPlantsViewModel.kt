@@ -16,8 +16,8 @@ import androidx.preference.PreferenceManager
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.repository.PlantsRepository
 import com.goranatos.plantkeeper.receiver.AlarmReceiver
-import com.goranatos.plantkeeper.util.SharedPreferencesRepository
-import com.goranatos.plantkeeper.util.cancelNotifications
+import com.goranatos.plantkeeper.utilities.SharedPreferencesRepository
+import com.goranatos.plantkeeper.utilities.cancelNotifications
 import kotlinx.coroutines.*
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.util
+package com.goranatos.plantkeeper.utilities
 
 
 /**

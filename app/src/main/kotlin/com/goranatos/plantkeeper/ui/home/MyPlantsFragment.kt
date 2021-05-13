@@ -24,7 +24,7 @@ import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.*
 import com.goranatos.plantkeeper.databinding.FragmentMyPlantsBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
-import com.goranatos.plantkeeper.util.Helper.Companion.getScreenWidth
+import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.coroutines.CoroutineScope

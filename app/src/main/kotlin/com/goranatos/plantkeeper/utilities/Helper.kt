@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.util
+package com.goranatos.plantkeeper.utilities
 
 import android.app.Activity
 import android.content.Context

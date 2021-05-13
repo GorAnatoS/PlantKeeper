@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.goranatos.plantkeeper.util
+package com.goranatos.plantkeeper.utilities
 
 import android.app.NotificationManager
 import android.app.PendingIntent
