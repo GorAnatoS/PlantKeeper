@@ -64,12 +64,13 @@ class PlantDetailViewModel(
 
     fun setPlant() {
         if (plantId == -1) {
+//            if (BuildConfig.BUILD_TYPE.equals("debug")){
 
             _thePlant.value = Plant(
                 0,
                 null,
                 null,
-                if (BuildConfig.DEBUG) "android.resource://com.goranatos.plantkeeper/drawable/ic_plant1" else "android.resource://com.goranatos.plantkeeper.debug/drawable/ic_plant1",
+                if (BuildConfig.BUILD_TYPE == "debug") "android.resource://com.goranatos.plantkeeper.debug/drawable/ic_plant1" else "android.resource://com.goranatos.plantkeeper/drawable/ic_plant1",
 
                 0,
                 null,
