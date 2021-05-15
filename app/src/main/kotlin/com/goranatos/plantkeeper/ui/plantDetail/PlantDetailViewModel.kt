@@ -4,9 +4,9 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.goranatos.plantkeeper.BuildConfig
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.repository.PlantsRepository
-import com.xwray.groupie.BuildConfig
 import kotlinx.coroutines.*
 
 class PlantDetailViewModel(
