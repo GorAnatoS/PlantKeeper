@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.ui.home
+package com.goranatos.plantkeeper.ui.myplants
 
 import android.app.Activity
 import android.app.NotificationChannel
@@ -26,6 +26,8 @@ import com.goranatos.plantkeeper.data.entity.*
 import com.goranatos.plantkeeper.databinding.FragmentMyPlantsBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
 import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
+import com.goranatos.plantkeeper.utilities.Helper.Companion.onFirstStartShowAppInfo
+import com.goranatos.plantkeeper.utilities.SharedPreferencesRepositoryConstants
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -118,6 +120,15 @@ class MyPlantsFragment : ScopedFragment() {
             viewModel.updateNavigateToPlantId(-1)
             viewModel.onItemClicked()
         }
+
+        if (preferences.getBoolean(
+                SharedPreferencesRepositoryConstants.PREF_IS_FIRST_APPLICATION_START,
+                true
+            )
+        ) {
+            onFirstStartShowAppInfo(requireContext())
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

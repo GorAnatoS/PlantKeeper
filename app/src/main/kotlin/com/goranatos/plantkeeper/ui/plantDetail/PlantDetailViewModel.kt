@@ -15,13 +15,18 @@ import javax.inject.Inject
 @HiltViewModel
 class PlantDetailViewModel @Inject constructor(
     private val repository: PlantRepository,
-    savedStateHandle: SavedStateHandle
+    val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var plantId: Int? = -1
 
     init {
         plantId = savedStateHandle["plantId"]
+    }
+
+    fun initPlantDetailViewModel() {
+        plantId = savedStateHandle["plantId"]
+        setPlant()
     }
 
     companion object {

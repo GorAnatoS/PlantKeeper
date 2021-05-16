@@ -17,8 +17,8 @@ import com.goranatos.plantkeeper.data.entity.PlantItemGridTodoCard
 import com.goranatos.plantkeeper.data.entity.PlantItemLinearTodoCard
 import com.goranatos.plantkeeper.databinding.FragmentTodoBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
-import com.goranatos.plantkeeper.ui.home.MyPlantsFragment
-import com.goranatos.plantkeeper.ui.home.MyPlantsFragment.Companion.calculateSpanCount
+import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment
+import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment.Companion.calculateSpanCount
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint

@@ -6,7 +6,7 @@
     app:startDestination="@id/navigation_my_plants">
     <fragment
         android:id="@+id/navigation_my_plants"
-        android:name="com.goranatos.plantkeeper.ui.home.MyPlantsFragment"
+        android:name="com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment"
         tools:layout="@layout/fragment_my_plants"
         android:label="@string/my_plants">
         <action

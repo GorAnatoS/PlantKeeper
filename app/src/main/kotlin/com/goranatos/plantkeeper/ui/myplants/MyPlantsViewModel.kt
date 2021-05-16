@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.ui.home
+package com.goranatos.plantkeeper.ui.myplants
 
 import android.app.AlarmManager
 import android.app.NotificationManager
@@ -12,7 +12,7 @@ import androidx.preference.PreferenceManager
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.repository.PlantRepository
 import com.goranatos.plantkeeper.receiver.AlarmReceiver
-import com.goranatos.plantkeeper.utilities.SharedPreferencesRepository
+import com.goranatos.plantkeeper.utilities.SharedPreferencesRepositoryConstants
 import com.goranatos.plantkeeper.utilities.cancelNotifications
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -84,7 +84,7 @@ class MyPlantsViewModel @Inject constructor(
     fun setNotificationsForPlantList(plantList: List<Plant>?) {
 
         val isToShowNotifications = sharedPreferences.getBoolean(
-            SharedPreferencesRepository.PREF_OPTION_IS_TO_SHOW_NOTIFICATIONS,
+            SharedPreferencesRepositoryConstants.PREF_OPTION_IS_TO_SHOW_NOTIFICATIONS,
             false
         )
 
@@ -105,7 +105,7 @@ class MyPlantsViewModel @Inject constructor(
                     calendar.timeInMillis = plant.long_next_watering_date!!
 
                     val prefMinute = sharedPreferences.getInt(
-                        SharedPreferencesRepository.PREF_OPTION_NOTIFICATION_TIME,
+                        SharedPreferencesRepositoryConstants.PREF_OPTION_NOTIFICATION_TIME,
                         9 * 60 + 30
                     )
 
@@ -124,7 +124,7 @@ class MyPlantsViewModel @Inject constructor(
                     calendar.timeInMillis = plant.long_next_fertilizing_date!!
 
                     val prefMinute = sharedPreferences.getInt(
-                        SharedPreferencesRepository.PREF_OPTION_NOTIFICATION_TIME,
+                        SharedPreferencesRepositoryConstants.PREF_OPTION_NOTIFICATION_TIME,
                         9 * 60 + 30
                     )
 

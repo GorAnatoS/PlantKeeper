@@ -116,4 +116,17 @@
     <string name="week_title">Неделя</string>
     <string name="to_do_list">Список дел</string>
 
+    <string name="slide_1_title">О приложении</string>
+    <string name="slide_1_desc">PlantKeeper поможет вам организовать правильный уход за вашими цветами и растениями.</string>
+
+    <string name="slide_2_title">Настройте параметры ухода и оповещения</string>
+    <string name="slide_2_desc">* Регулярности полива,\n* Регулярности внесения удобрений,\n* Другие параметры</string>
+
+    <string name="slide_3_title">И наслаждайтесь ростом ваших растений!</string>
+    <string name="slide_3_desc">Попробуйте!</string>
+
+    <string name="about">Начало</string>
+    <string name="first_start_info">   <![CDATA[ Нажмите на <b>+</b> и добавьте в вашу коллекцию новые растения. </ br> <br />Зайдите в <b>Настройки</b>, включите оповещения и выберите время.</ br> <br /> Все!   ]]></string>
+    <string name="str_continue">Продолжить</string>
+
 </resources>

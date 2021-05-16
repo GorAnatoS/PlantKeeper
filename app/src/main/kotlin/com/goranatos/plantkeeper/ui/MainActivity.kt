@@ -10,7 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.goranatos.plantkeeper.R
-import com.goranatos.plantkeeper.ui.home.MyPlantsFragmentDirections
+import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragmentDirections
 import com.goranatos.plantkeeper.ui.settings.IS_GO_TO_SETTINGS_AFTER_RESTART
 import com.goranatos.plantkeeper.utilities.AnimationConstants
 import dagger.hilt.android.AndroidEntryPoint

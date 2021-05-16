@@ -116,4 +116,17 @@
     <string name="week_title">Semana</string>
     <string name="to_do_list">Que hacer</string>
 
+    <string name="slide_1_title"> Acerca de la aplicación </string>
+    <string name="slide_1_desc"> PlantKeeper lo ayudará a organizar el cuidado adecuado de sus flores y plantas. </string>
+
+    <string name="slide_2_title"> Configure las opciones de diapositivas y alertas. </string>
+    <string name="slide_2_desc"> * Regularidad del riego, \n * Regularidad de la fertilización, \n * Otros parámetros </string>
+
+    <string name="slide_3_title"> ¡Y disfrute de sus plantas creciendo! </string>
+    <string name="slide_3_desc"> ¡Intentalo! </string>
+
+    <string name="about"> Inicio </string>
+    <string name="first_start_info">   <![CDATA[ Haga clic en <b>+</b> y agregue nuevas plantas a su colección. </ br> <br /> Vaya a <b>Ajustes</b>, active las notificaciones y seleccione una hora. </ br>  <br />¡Es todo! ]]></string>
+    <string name="str_continue"> Continuar </string>
+
 </resources>

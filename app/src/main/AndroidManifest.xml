@@ -64,6 +64,11 @@
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
 
+        <activity
+            android:name=".ui.intro.IntroActivity"
+            android:label="@string/about"
+            android:theme="@style/Theme.PlantKeeper" />
+
     </application>
 
 </manifest>

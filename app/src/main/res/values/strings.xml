@@ -140,11 +140,24 @@
     <string name="new_plant">New plant</string>
     <string name="no_plants_in_db">No plants</string>
     <string name="action_change_appearance">Change appearance</string>
-    <string name="today_tasks_completed">Today\'s tasks have been compled.</string>
+    <string name="today_tasks_completed">Today\'s tasks have been completed.</string>
     <string name="to_do_menu">To-do</string>
     <string name="my_plants_menu">My plants</string>
     <string name="today_title">Today</string>
     <string name="tomorrow_title">Tomorrow</string>
     <string name="week_title">Week</string>
     <string name="to_do_list">To-do list</string>
+
+    <string name="slide_1_title"> About the app </string>
+    <string name="slide_1_desc"> PlantKeeper will help you organize the proper care of your flowers and plants. </string>
+
+    <string name="slide_2_title"> Configure care and notification options </string>
+    <string name="slide_2_desc"> * Regularity of watering, \n * Regularity of fertilization, \n * Other parameters </string>
+
+    <string name="slide_3_title"> And enjoy your plants growing! </string>
+    <string name="slide_3_desc"> Try it! </string>
+
+    <string name="about"> Intro </string>
+    <string name="first_start_info">"  <![CDATA[ Click on the <b>+</b> and add new plants to your collection. <br /> <br /> Go to <b>Settings</b>, turn on notifications and select a right time. <br />  <br />That's all!    ]]>"</string>
+    <string name="str_continue"> Continue </string>
 </resources>

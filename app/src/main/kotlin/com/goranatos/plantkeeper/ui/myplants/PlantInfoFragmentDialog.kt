@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.ui.home
+package com.goranatos.plantkeeper.ui.myplants
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -17,7 +17,7 @@ import com.goranatos.plantkeeper.databinding.DialogPlantInfoBinding
 import com.goranatos.plantkeeper.internal.TimeHelper
 import com.goranatos.plantkeeper.internal.TimeHelper.Companion.getDaysTillEventNotification
 import com.goranatos.plantkeeper.internal.TimeHelper.Companion.longDatePlusDays
-import com.goranatos.plantkeeper.ui.home.MyPlantsFragment.Companion.deletePlantItemFromDB
+import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment.Companion.deletePlantItemFromDB
 
 /**
  * Created by qsufff on 12/7/2020.

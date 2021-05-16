@@ -33,6 +33,7 @@ import com.goranatos.plantkeeper.ui.plantDetail.dialogs.SetHibernatingSettingsFr
 import com.goranatos.plantkeeper.ui.plantDetail.dialogs.SetWateringSettingsFragmentDialog
 import com.goranatos.plantkeeper.utilities.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import permissions.dispatcher.NeedsPermission
@@ -48,6 +49,7 @@ import java.util.*
     при создание -1 -> создание нового цветка, иначе - редактирование номера в БД
  */
 
+@AndroidEntryPoint
 @RuntimePermissions
 class PlantDetailFragment : ScopedFragment() {
     private val args: PlantDetailFragmentArgs by navArgs()
@@ -89,6 +91,7 @@ class PlantDetailFragment : ScopedFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.initPlantDetailViewModel()
         setHasOptionsMenu(true)
     }
 
@@ -104,8 +107,6 @@ class PlantDetailFragment : ScopedFragment() {
                 false
             )
         binding.lifecycleOwner = this
-
-        binding.viewModel = viewModel
 
         binding.fragment = this
 
@@ -137,6 +138,8 @@ class PlantDetailFragment : ScopedFragment() {
         if (args.plantId == -1) {
             requireActivity().title = getString(R.string.new_plant)
         }
+
+        binding.viewModel = viewModel
     }
 
     private fun hideRelatedToChipsMaterialCards() {
