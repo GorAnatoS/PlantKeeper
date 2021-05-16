@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
  * Created by qsufff on 9/13/2020.
  */
 @Dao
-interface PlantsDatabaseDao {
+interface PlantDatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(plant: Plant)
 

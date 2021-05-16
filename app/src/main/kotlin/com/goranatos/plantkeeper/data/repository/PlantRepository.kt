@@ -1,39 +1,39 @@
 package com.goranatos.plantkeeper.data.repository
 
 import androidx.annotation.WorkerThread
-import com.goranatos.plantkeeper.data.db.PlantsDatabaseDao
+import com.goranatos.plantkeeper.data.db.PlantDatabaseDao
 import com.goranatos.plantkeeper.data.entity.Plant
 import kotlinx.coroutines.flow.Flow
 
-class PlantsRepositoryImpl(
-    private val plantsDatabaseDao: PlantsDatabaseDao
-) : PlantsRepository {
+class PlantRepository(
+    private val plantDatabaseDao: PlantDatabaseDao
+) : PlantRepositoryInterface {
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     override suspend fun insertPlant(plant: Plant) {
-        plantsDatabaseDao.insert(plant)
+        plantDatabaseDao.insert(plant)
     }
 
     override suspend fun getPlant(id: Int): Plant {
-        return plantsDatabaseDao.getPlant(id)
+        return plantDatabaseDao.getPlant(id)
     }
 
     override suspend fun updatePlant(plant: Plant) {
-        return plantsDatabaseDao.update(plant)
+        return plantDatabaseDao.update(plant)
     }
 
     override suspend fun deletePlant(plant: Plant) {
-        plantsDatabaseDao.delete(plant)
+        plantDatabaseDao.delete(plant)
     }
 
     override suspend fun deletePlantWithId(id: Int) {
-        plantsDatabaseDao.deletePlantWithId(id)
+        plantDatabaseDao.deletePlantWithId(id)
     }
 
     override suspend fun getAllMyPlants(): Flow<List<Plant>> {
-        return plantsDatabaseDao.getAllMyPlants()
+        return plantDatabaseDao.getAllMyPlants()
     }
 }

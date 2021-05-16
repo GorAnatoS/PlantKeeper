@@ -1,30 +1,41 @@
 package com.goranatos.plantkeeper.ui.home
 
 import android.app.AlarmManager
-import android.app.Application
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.goranatos.plantkeeper.data.entity.Plant
-import com.goranatos.plantkeeper.data.repository.PlantsRepository
+import com.goranatos.plantkeeper.data.repository.PlantRepository
 import com.goranatos.plantkeeper.receiver.AlarmReceiver
 import com.goranatos.plantkeeper.utilities.SharedPreferencesRepository
 import com.goranatos.plantkeeper.utilities.cancelNotifications
-import kotlinx.coroutines.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
+import javax.inject.Inject
 
-class MyPlantsViewModel(private val repository: PlantsRepository, val app: Application) :
-    AndroidViewModel(app) {
+@HiltViewModel
+class MyPlantsViewModel @Inject constructor(
+    private val repository: PlantRepository,
+    @ApplicationContext private val context: Context
+) : ViewModel(), LifecycleObserver {
 
     lateinit var allPlants: LiveData<List<Plant>>
+
+    fun initMyPlantsViewModel() {
+        viewModelScope.launch(Dispatchers.IO) {
+            allPlants = repository.getAllMyPlants().asLiveData()
+        }
+        isToUpdateRecycleView.value
+    }
 
     private val _isToUpdateRecycleView = MutableLiveData<Boolean?>()
     val isToUpdateRecycleView: LiveData<Boolean?>
@@ -35,9 +46,6 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
     }
 
     lateinit var thePlant: Plant
-
-    private val viewModelJob = Job()
-    val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     //create new plant
     var navigateToPlantId = -1
@@ -59,20 +67,13 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
         navigateToPlantId = newId
     }
 
-    private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     private val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
+        PreferenceManager.getDefaultSharedPreferences(context)
 
-    private val notifyIntent = Intent(app, AlarmReceiver::class.java)
+    private val notifyIntent = Intent(context, AlarmReceiver::class.java)
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            allPlants = repository.getAllMyPlants().asLiveData()
-        }
-
-        isToUpdateRecycleView.value
-    }
 
     suspend fun setPlant(plantId: Int) {
         return withContext(Dispatchers.IO) {
@@ -89,7 +90,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
         val notificationManager =
             ContextCompat.getSystemService(
-                app,
+                context,
                 NotificationManager::class.java
             ) as NotificationManager
 
@@ -140,7 +141,7 @@ class MyPlantsViewModel(private val repository: PlantsRepository, val app: Appli
 
             collectionOfDates.forEach {
                 val notifyPendingIntent = PendingIntent.getBroadcast(
-                    getApplication(),
+                    context,
                     it.toInt(),
                     notifyIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT

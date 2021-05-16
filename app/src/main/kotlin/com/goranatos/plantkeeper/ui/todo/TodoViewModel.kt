@@ -1,17 +1,21 @@
 package com.goranatos.plantkeeper.ui.todo
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.goranatos.plantkeeper.data.entity.Plant
-import com.goranatos.plantkeeper.data.repository.PlantsRepository
+import com.goranatos.plantkeeper.data.repository.PlantRepository
 import com.goranatos.plantkeeper.internal.TimeHelper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class TodoViewModel(private val repository: PlantsRepository, val app: Application) :
-    AndroidViewModel(app) {
+@HiltViewModel
+class TodoViewModel @Inject constructor(
+    private val repository: PlantRepository,
+) :
+    ViewModel() {
 
     lateinit var allPlants: LiveData<List<Plant>>
     lateinit var todayPlantList: LinkedHashSet<Plant>
@@ -44,6 +48,13 @@ class TodoViewModel(private val repository: PlantsRepository, val app: Applicati
 
 
     init {
+        viewModelScope.launch(Dispatchers.IO) {
+            allPlants = repository.getAllMyPlants().asLiveData()
+            todayPlantList = LinkedHashSet<Plant>()
+        }
+    }
+
+    fun initTodoViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             allPlants = repository.getAllMyPlants().asLiveData()
             todayPlantList = LinkedHashSet<Plant>()

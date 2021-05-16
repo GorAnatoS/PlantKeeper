@@ -3,16 +3,26 @@ package com.goranatos.plantkeeper.ui.plantDetail
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.goranatos.plantkeeper.BuildConfig
 import com.goranatos.plantkeeper.data.entity.Plant
-import com.goranatos.plantkeeper.data.repository.PlantsRepository
+import com.goranatos.plantkeeper.data.repository.PlantRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class PlantDetailViewModel(
-    private val repository: PlantsRepository,
-    private val plantId: Int,
+@HiltViewModel
+class PlantDetailViewModel @Inject constructor(
+    private val repository: PlantRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private var plantId: Int? = -1
+
+    init {
+        plantId = savedStateHandle["plantId"]
+    }
 
     companion object {
         //Camera request code
@@ -93,7 +103,7 @@ class PlantDetailViewModel(
             isToCreateNewPlant = true
         } else {
             uiScope.launch {
-                _thePlant.value = getPlant(plantId)
+                _thePlant.value = plantId?.let { getPlant(it) }
 
                 isToCreateNewPlant = false
 
@@ -150,4 +160,5 @@ class PlantDetailViewModel(
             }
         }
     }
+
 }

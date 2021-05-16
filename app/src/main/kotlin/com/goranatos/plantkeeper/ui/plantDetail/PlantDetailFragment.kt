@@ -1,5 +1,4 @@
 package com.goranatos.plantkeeper.ui.plantDetail
-
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Context
@@ -14,7 +13,7 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -36,9 +35,6 @@ import com.goranatos.plantkeeper.utilities.Helper.Companion.hideKeyboard
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.closestDI
-import org.kodein.di.instance
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.RuntimePermissions
 import java.io.File
@@ -53,12 +49,10 @@ import java.util.*
  */
 
 @RuntimePermissions
-class PlantDetailFragment : ScopedFragment(), DIAware {
-    override val di by closestDI()
-
+class PlantDetailFragment : ScopedFragment() {
     private val args: PlantDetailFragmentArgs by navArgs()
 
-    private lateinit var viewModel: PlantDetailViewModel
+    private val viewModel by viewModels<PlantDetailViewModel>()
 
     lateinit var binding: FragmentDetailedPlantBinding
 
@@ -110,10 +104,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
                 false
             )
         binding.lifecycleOwner = this
-
-        val viewModelFactory: PlantDetailViewModelFactory by instance(arg = args.plantId)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(PlantDetailViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -271,8 +261,6 @@ class PlantDetailFragment : ScopedFragment(), DIAware {
             binding.tvFertilizingFrequencyInHibernate.text = it.toString()
         }
         //END FERTILIZE
-
-
     }
 
     private fun uiSetup() {

@@ -12,7 +12,8 @@ import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,20 +28,14 @@ import com.goranatos.plantkeeper.ui.base.ScopedFragment
 import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.closestDI
-import org.kodein.di.instance
 
-class MyPlantsFragment : ScopedFragment(), DIAware {
-
-    override val di by closestDI()
-
-    private lateinit var viewModel: MyPlantsViewModel
-
-    private val viewModelFactory: MyPlantsViewModelFactory by instance()
+@AndroidEntryPoint
+class MyPlantsFragment : ScopedFragment() {
+    private val viewModel by viewModels<MyPlantsViewModel>()
 
     lateinit var binding: FragmentMyPlantsBinding
 
@@ -50,7 +45,7 @@ class MyPlantsFragment : ScopedFragment(), DIAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MyPlantsViewModel::class.java)
+        viewModel.initMyPlantsViewModel()
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 

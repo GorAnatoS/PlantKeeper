@@ -5,7 +5,7 @@ import com.goranatos.plantkeeper.data.entity.Plant
 import kotlinx.coroutines.flow.Flow
 
 
-interface PlantsRepository {
+interface PlantRepositoryInterface {
     suspend fun getAllMyPlants(): Flow<List<Plant>>
     suspend fun insertPlant(plant: Plant)
 

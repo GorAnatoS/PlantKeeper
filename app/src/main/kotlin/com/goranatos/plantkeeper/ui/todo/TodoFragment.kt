@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,20 +21,15 @@ import com.goranatos.plantkeeper.ui.home.MyPlantsFragment
 import com.goranatos.plantkeeper.ui.home.MyPlantsFragment.Companion.calculateSpanCount
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.closestDI
-import org.kodein.di.instance
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-class TodoFragment : ScopedFragment(), DIAware {
-    override val di by closestDI()
-
-    private lateinit var viewModel: TodoViewModel
-
-    private val viewModelFactory: TodoViewModelFactory by instance()
+@AndroidEntryPoint
+class TodoFragment : ScopedFragment() {
+    private val viewModel by viewModels<TodoViewModel>()
 
     lateinit var binding: FragmentTodoBinding
 
@@ -44,7 +39,7 @@ class TodoFragment : ScopedFragment(), DIAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TodoViewModel::class.java)
+        viewModel.initTodoViewModel()
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 
