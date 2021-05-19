@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.ui.plantDetail.dialogs
+package com.goranatos.plantkeeper.ui.plantdetail.dialogs
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -14,7 +14,7 @@ import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.IncludeHibernateSettingsBinding
 import com.goranatos.plantkeeper.internal.TimeHelper
-import com.goranatos.plantkeeper.ui.plantDetail.PlantDetailViewModel
+import com.goranatos.plantkeeper.ui.plantdetail.PlantDetailViewModel
 import java.util.*
 
 

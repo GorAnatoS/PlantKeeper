@@ -67,7 +67,7 @@
         <activity
             android:name=".ui.intro.IntroActivity"
             android:label="@string/about"
-            android:theme="@style/Theme.PlantKeeper" />
+            android:theme="@style/AppTheme.FullScreenTheme" />
 
     </application>
 

@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.ui.plantDetail.dialogs
+package com.goranatos.plantkeeper.ui.plantdetail.dialogs
 
 import android.app.Dialog
 import android.net.Uri
@@ -13,7 +13,7 @@ import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.OnPlantImageItemClickedListener
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.entity.PlantImageItemCard
-import com.goranatos.plantkeeper.ui.plantDetail.PlantDetailViewModel
+import com.goranatos.plantkeeper.ui.plantdetail.PlantDetailViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.dialog_select_plant_image_from_collection.*

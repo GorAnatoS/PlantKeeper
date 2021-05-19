@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/plantAddAndInfo"
         tools:layout="@layout/fragment_detailed_plant"
-        android:name="com.goranatos.plantkeeper.ui.plantDetail.PlantDetailFragment"
+        android:name="com.goranatos.plantkeeper.ui.plantdetail.PlantDetailFragment"
         android:label="@string/add_new_plant" >
         <argument
             android:name="plantId"
