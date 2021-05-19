@@ -128,5 +128,6 @@
     <string name="about">Начало</string>
     <string name="first_start_info">   <![CDATA[ Нажмите на <b>+</b> и добавьте в вашу коллекцию новые растения. </ br> <br />Зайдите в <b>Настройки</b>, включите оповещения и выберите время.</ br> <br /> Все!   ]]></string>
     <string name="str_continue">Продолжить</string>
+    <string name="no_plants_need_care_of">Растения не нуждаются в уходе.</string>
 
 </resources>

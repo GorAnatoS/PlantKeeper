@@ -80,5 +80,16 @@ class Helper {
                 .setCancelable(false)
                 .show()
         }
+
+        fun showMaterialDialogPositiveOnly(
+            message: String,
+            con: Context
+        ) {
+            MaterialAlertDialogBuilder(con)
+                .setMessage(message)
+                .setPositiveButton(con.getString(R.string.str_continue), null)
+                .setCancelable(false)
+                .show()
+        }
     }
 }

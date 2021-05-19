@@ -198,11 +198,15 @@ class TodoFragment : ScopedFragment() {
                                 }
                             }
                         }
+                        binding.noPlantsToWaterTextView.visibility = View.GONE
                         if (viewModel.dateWhenIntCode == DateWhen.TODAY.code) binding.fab.visibility =
                             View.VISIBLE
                     } else {
-                        binding.recyclerView.adapter = null
-                        binding.fab.visibility = View.GONE
+                        binding.apply {
+                            recyclerView.adapter = null
+                            fab.visibility = View.GONE
+                            noPlantsToWaterTextView.visibility = View.VISIBLE
+                        }
                     }
                 }
             })

@@ -18,6 +18,7 @@ import com.goranatos.plantkeeper.internal.TimeHelper
 import com.goranatos.plantkeeper.internal.TimeHelper.Companion.getDaysTillEventNotification
 import com.goranatos.plantkeeper.internal.TimeHelper.Companion.longDatePlusDays
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment.Companion.deletePlantItemFromDB
+import com.goranatos.plantkeeper.utilities.Helper
 
 /**
  * Created by qsufff on 12/7/2020.
@@ -60,6 +61,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
         setWateringNeedVisible()
         setFertilizingNeedVisible()
+        setPlantDetail()
 
         if (!isToShowSaveBtn) binding.buttonSave.visibility = View.GONE
 
@@ -196,6 +198,17 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
             isToShowSaveBtn = true
         } else {
             binding.checkBoxFertilized.visibility = View.GONE
+        }
+    }
+
+    private fun setPlantDetail() {
+        if (plant.str_desc.isNullOrEmpty()) {
+            binding.plantDetailsBtn.visibility = View.GONE
+        } else {
+            binding.plantDetailsBtn.visibility = View.VISIBLE
+            binding.plantDetailsBtn.setOnClickListener {
+                Helper.showMaterialDialogPositiveOnly(plant.str_desc!!, requireContext())
+            }
         }
     }
 

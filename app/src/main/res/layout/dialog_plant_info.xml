@@ -45,22 +45,36 @@
             app:layout_constraintTop_toTopOf="@+id/toggleEditPlant"
             app:singleSelection="true" />
 
+        <Button
+            android:id="@+id/plantDetailsBtn"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_05x"
+            android:visibility="gone"
+            app:icon="@drawable/ic_baseline_speaker_notes_24"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPlant"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPlant"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/toggleEditPlant"
+            app:singleSelection="true"
+            tools:visibility="visible" />
+
         <ImageView
             android:id="@+id/imageViewPlant"
             android:layout_width="wrap_content"
             android:layout_height="128dp"
             android:layout_marginStart="@dimen/margin_15x"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/margin_std"
             android:layout_marginEnd="@dimen/margin_15x"
-            android:layout_marginBottom="4dp"
             android:contentDescription="@string/plant_s_name"
             android:minWidth="128dp"
             android:minHeight="128dp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewPlantName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toggleEditPlant"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlantName"
             app:srcCompat="@drawable/ic_plant1" />
+
 
         <TextView
             android:id="@+id/textViewPlantName"
@@ -68,21 +82,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="@dimen/margin_std"
+            android:layout_marginBottom="16dp"
             android:text="@{viewModel.thePlant.str_name.toString()}"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxWatered"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewPlant"
-            app:layout_constraintStart_toStartOf="@+id/imageViewPlant"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewPlant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleEditPlant"
             tools:text="Название цветка" />
-
 
         <TextView
             android:id="@+id/tvToWaterIcon"
             android:layout_width="wrap_content"
 
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_15x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
@@ -90,7 +103,7 @@
             app:layout_constraintEnd_toStartOf="@+id/tvToWaterFromDateVal"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPlantName" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant" />
 
         <TextView
             android:id="@+id/tvToWaterFromDateVal"
@@ -98,13 +111,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_15x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
             app:layout_constraintStart_toEndOf="@+id/tvToWaterIcon"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPlantName"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant"
             tools:text="Dec, 20" />
 
         <TextView

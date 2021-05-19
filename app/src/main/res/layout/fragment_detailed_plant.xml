@@ -494,6 +494,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textfield.TextInputLayout
+                app:startIconDrawable="@drawable/ic_baseline_speaker_notes_24"
                 android:id="@+id/filledTextField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
