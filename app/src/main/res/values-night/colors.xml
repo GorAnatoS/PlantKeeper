@@ -32,7 +32,6 @@
     <color name="toolbar_text_and_icons">@color/white_87_opacity</color>
 
     <color name="only_icon_button">#99FFFFFF</color>
-    <!--    <color name="only_icon_button_color">#CCEEF2</color>-->
 
-
+    <color name="card_view_bg_normal">@color/surface</color>
 </resources>

@@ -159,7 +159,13 @@ class MyPlantsViewModel @Inject constructor(
         }
     }
 
-    suspend fun deletePlantWithId(plantId: Int) {
+    fun deleteThePlant() {
+        viewModelScope.launch {
+            deletePlantWithId(thePlant.int_id)
+        }
+    }
+
+    private suspend fun deletePlantWithId(plantId: Int) {
         return withContext(Dispatchers.IO) {
             repository.deletePlantWithId(plantId)
         }

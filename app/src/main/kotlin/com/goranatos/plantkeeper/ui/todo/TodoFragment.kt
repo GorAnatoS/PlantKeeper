@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantkeeper.R
-import com.goranatos.plantkeeper.data.entity.Plant
-import com.goranatos.plantkeeper.data.entity.PlantItemGridTodoCard
-import com.goranatos.plantkeeper.data.entity.PlantItemLinearTodoCard
+import com.goranatos.plantkeeper.data.entity.*
 import com.goranatos.plantkeeper.databinding.FragmentTodoBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment.Companion.calculateSpanCount
+import com.goranatos.plantkeeper.ui.plantinfo.PlantInfoFragmentDialog
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
@@ -32,6 +33,8 @@ class TodoFragment : ScopedFragment() {
     private val viewModel by viewModels<TodoViewModel>()
 
     lateinit var binding: FragmentTodoBinding
+
+    private var selectedDate: Int = -1
 
     private lateinit var changeAppearanceActionMenuItem: MenuItem
 
@@ -125,12 +128,14 @@ class TodoFragment : ScopedFragment() {
             when (checkedId) {
 
                 binding.chipToday.id -> {
+                    selectedDate = SELECTED_DATE.TODAY.code
                     binding.tvWhen.visibility = View.VISIBLE
                     binding.tvWhen.text = localeDate.format(Date())
                     viewModel.setIntDateWhen(DateWhen.TODAY.code)
                     viewModel.setDateInMls(Calendar.getInstance().timeInMillis)
                 }
                 binding.chipTomorrow.id -> {
+                    selectedDate = SELECTED_DATE.TOMORROW.code
                     binding.tvWhen.visibility = View.VISIBLE
                     val locDate = LocalDate.now().plusDays(1)
                     binding.tvWhen.text = localeDate.format(
@@ -146,6 +151,7 @@ class TodoFragment : ScopedFragment() {
 
                 }
                 binding.chipWeek.id -> {
+                    selectedDate = SELECTED_DATE.WEEK.code
                     binding.tvWhen.visibility = View.VISIBLE
                     // TODO: 5/12/2021 - 
                     binding.tvWhen.text =
@@ -227,7 +233,9 @@ class TodoFragment : ScopedFragment() {
     private fun List<Plant>.toTodoListItemPlantCards(): List<PlantItemLinearTodoCard> {
         return this.map {
             PlantItemLinearTodoCard(
-                it
+                it,
+                if (selectedDate == SELECTED_DATE.TODAY.code) todoOnPlantItemCardClickedListener else null,
+                if (selectedDate == SELECTED_DATE.TODAY.code) todoOnPlantItemCardLongClickedListener else null,
             )
         }
     }
@@ -236,8 +244,43 @@ class TodoFragment : ScopedFragment() {
         return this.map {
             PlantItemGridTodoCard(
                 it,
+                if (selectedDate == SELECTED_DATE.TODAY.code) todoOnPlantItemCardLongClickedListener else null
             )
         }
+    }
+
+    private val todoOnPlantItemCardClickedListener = object : TodoOnPlantItemCardClickedListener {
+        override fun onPlantItemCardClicked(id: Int) {
+            val fragmentManager = parentFragmentManager
+            val newFragment = PlantInfoFragmentDialog(id)
+            newFragment.show(fragmentManager, "dialog")
+        }
+    }
+
+    private val todoOnPlantItemCardLongClickedListener =
+        object : TodoOnPlantItemCardLongClickedListener {
+            override fun onPlantItemCardLongClicked(id: Int, menuCode: Int) {
+                when (menuCode) {
+                    TodoPlantItemCardMenu.WATERED_MENU.menuCode -> {
+                        launch(Dispatchers.IO) {
+                            viewModel.updateWateredData(id)
+                        }
+                    }
+                    TodoPlantItemCardMenu.FERTILIZED_MENU.menuCode -> {
+                        launch(Dispatchers.IO) {
+                            viewModel.updateFertilizedData(id)
+                        }
+                    }
+                    TodoPlantItemCardMenu.NOT_SELECTED.menuCode -> {
+                    }
+                }
+            }
+        }
+
+    enum class SELECTED_DATE(val code: Int) {
+        TODAY(0),
+        TOMORROW(1),
+        WEEK(2)
     }
 
     companion object {

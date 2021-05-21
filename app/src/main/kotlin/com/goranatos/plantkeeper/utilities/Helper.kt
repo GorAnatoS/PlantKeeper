@@ -89,6 +89,7 @@ class Helper {
                 .setMessage(message)
                 .setPositiveButton(con.getString(R.string.str_continue), null)
                 .setCancelable(false)
+                .setBackground(con.getDrawable(R.drawable.background))
                 .show()
         }
     }

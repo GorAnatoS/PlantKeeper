@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.ui.myplants
+package com.goranatos.plantkeeper.ui.plantinfo
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -10,22 +10,27 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.viewModelScope
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.DialogPlantInfoBinding
 import com.goranatos.plantkeeper.internal.TimeHelper
-import com.goranatos.plantkeeper.internal.TimeHelper.Companion.getDaysTillEventNotification
 import com.goranatos.plantkeeper.internal.TimeHelper.Companion.longDatePlusDays
-import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment.Companion.deletePlantItemFromDB
+import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragmentDirections
+import com.goranatos.plantkeeper.ui.todo.TodoFragmentDirections
 import com.goranatos.plantkeeper.utilities.Helper
+import com.goranatos.plantkeeper.utilities.PlantHelper
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by qsufff on 12/7/2020.
  */
 
-class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
-    DialogFragment() {
+@AndroidEntryPoint
+class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
+
+    private val viewModel by viewModels<PlantInfoViewModel>()
 
     lateinit var plant: Plant
 
@@ -39,7 +44,9 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         retainInstance = true
+
         super.onCreate(savedInstanceState)
+        viewModel.initPlantInfoViewModel(plantId)
     }
 
     override fun onCreateView(
@@ -74,6 +81,28 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setBackgroundDrawable(view.context.getDrawable(R.drawable.background))
+
+        viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is t
+                if (findNavController().currentDestination?.id == R.id.navigation_todo) {
+                    findNavController().navigate(
+                        TodoFragmentDirections.actionNavigationTodoToPlantAddAndInfo(viewModel.navigateToPlantId)
+                    )
+                    viewModel.doneNavigating()
+                }
+                if (findNavController().currentDestination?.id == R.id.navigation_my_plants) {
+                    findNavController().navigate(
+                        MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId)
+                    )
+                    viewModel.doneNavigating()
+                }
+            }
+        })
+    }
+
     private fun setPlantImage() {
         if (plant.string_uri_image_path != null) {
             binding.imageViewPlant.setImageURI(Uri.parse(plant.string_uri_image_path))
@@ -86,7 +115,11 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
         }
 
         binding.toggleDeletePlant.setOnClickListener {
-            onDeleteButtonClicked()
+            PlantHelper.deletePlantItemFromDB(
+                requireContext(),
+                ::onDeleteButtonClicked,
+                requireParentFragment().requireView()
+            )
         }
 
         binding.buttonSave.setOnClickListener {
@@ -176,11 +209,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     }
 
     private fun setWateringNeedVisible() {
-        if (plant.is_water_need_on == 1 && getDaysTillEventNotification(
-                System.currentTimeMillis(),
-                plant.long_next_watering_date!!
-            ) <= 0
-        ) {
+        if (PlantHelper.isWaterTodayNeeded(plant)) {
             binding.checkBoxWatered.visibility = View.VISIBLE
             isToShowSaveBtn = true
         } else {
@@ -189,11 +218,7 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     }
 
     private fun setFertilizingNeedVisible() {
-        if (plant.is_fertilize_need_on == 1 && getDaysTillEventNotification(
-                System.currentTimeMillis(),
-                plant.long_next_fertilizing_date!!
-            ) <= 0
-        ) {
+        if (PlantHelper.isFertilizeTodayNeeded(plant)) {
             binding.checkBoxFertilized.visibility = View.VISIBLE
             isToShowSaveBtn = true
         } else {
@@ -293,21 +318,14 @@ class PlantInfoFragmentDialog(private val viewModel: MyPlantsViewModel) :
     }
 
     private fun onEditButtonClicked() {
+
         viewModel.updateNavigateToPlantId(viewModel.thePlant.int_id)
         viewModel.onItemClicked()
-
         dismiss()
     }
 
     private fun onDeleteButtonClicked() {
-        deletePlantItemFromDB(
-            plant.int_id,
-            requireContext(),
-            viewModel.viewModelScope,
-            viewModel,
-            requireView()
-        )
-
+        viewModel.deleteThePlant()
         dismiss()
     }
 }

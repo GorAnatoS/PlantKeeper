@@ -3,7 +3,6 @@ package com.goranatos.plantkeeper.ui.myplants
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
@@ -13,26 +12,23 @@ import android.view.*
 import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.*
 import com.goranatos.plantkeeper.databinding.FragmentMyPlantsBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
+import com.goranatos.plantkeeper.ui.plantinfo.PlantInfoFragmentDialog
 import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
 import com.goranatos.plantkeeper.utilities.Helper.Companion.onFirstStartShowAppInfo
+import com.goranatos.plantkeeper.utilities.PlantHelper
 import com.goranatos.plantkeeper.utilities.SharedPreferencesRepositoryConstants
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -218,7 +214,7 @@ class MyPlantsFragment : ScopedFragment() {
                 viewModel.setPlant(id)
             }
             val fragmentManager = parentFragmentManager
-            val newFragment = PlantInfoFragmentDialog(viewModel)
+            val newFragment = PlantInfoFragmentDialog(id)
             newFragment.show(fragmentManager, "dialog")
         }
     }
@@ -231,11 +227,9 @@ class MyPlantsFragment : ScopedFragment() {
                     viewModel.onItemClicked()
                 }
                 PlantItemCardMenu.DELETE_MENU.menuCode -> {
-                    deletePlantItemFromDB(
-                        id,
+                    PlantHelper.deletePlantItemFromDB(
                         requireContext(),
-                        viewModel.viewModelScope,
-                        viewModel,
+                        ::deleteThePlant,
                         requireView()
                     )
                 }
@@ -243,6 +237,10 @@ class MyPlantsFragment : ScopedFragment() {
                 }
             }
         }
+    }
+
+    fun deleteThePlant() {
+        viewModel.deleteThePlant()
     }
 
     companion object {
@@ -268,33 +266,6 @@ class MyPlantsFragment : ScopedFragment() {
                 )
                 notificationManager.createNotificationChannel(notificationChannel)
             }
-        }
-
-        fun deletePlantItemFromDB(
-            plantId: Int,
-            context: Context,
-            viewModelScope: CoroutineScope,
-            viewModel: MyPlantsViewModel,
-            view: View
-        ) {
-            MaterialAlertDialogBuilder(context)
-                .setTitle(context.resources.getString(R.string.delete_plant_from_db))
-                .setMessage(context.resources.getString(R.string.are_you_sure_to_delete_the_plant_from_db))
-                .setNeutralButton(context.resources.getString(R.string.cancel)) { _, _ ->
-                }
-                .setPositiveButton(context.resources.getString(R.string.delete_item)) { _, _ ->
-                    viewModelScope.launch(Dispatchers.IO) {
-                        viewModel.deletePlantWithId(plantId)
-
-                        Snackbar.make(
-                            view,
-                            context.getString(R.string.deleted),
-                            Snackbar.LENGTH_SHORT
-                        )
-                            .show()
-
-                    }
-                }.show()
         }
 
         fun calculateSpanCount(resources: Resources, activity: Activity): Int {

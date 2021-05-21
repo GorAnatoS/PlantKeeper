@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.goranatos.plantkeeper.ui.myplants.MyPlantsViewModel" />
+            type="com.goranatos.plantkeeper.ui.plantinfo.PlantInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -251,13 +251,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/margin_2x"
             android:text="@string/save"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.937"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeFromDateVal"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeFromDateVal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

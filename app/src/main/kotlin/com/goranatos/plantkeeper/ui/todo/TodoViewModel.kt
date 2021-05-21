@@ -143,7 +143,7 @@ class TodoViewModel @Inject constructor(
         }
     }
 
-    fun updateThePlant(plant: Plant) {
+    private fun updateThePlant(plant: Plant) {
         viewModelScope.launch {
             updatePlant(plant)
         }
@@ -200,6 +200,67 @@ class TodoViewModel @Inject constructor(
             }
             updateThePlant(plant)
         }
+    }
+
+    suspend fun updateWateredData(plantId: Int) {
+        val plant: Plant = withContext(Dispatchers.IO) {
+            repository.getPlant(plantId)
+        }
+
+        if (plant.is_watering_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 &&
+            plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null &&
+            TimeHelper.isDateInPlantHibernateRange(
+                TimeHelper.getCurrentTimeInMs(),
+                plant.long_to_hibernate_from_date!!,
+                plant.long_to_hibernate_till_date!!
+            )
+        )
+            plant.int_watering_frequency_in_hibernate?.let {
+                plant.long_next_watering_date = TimeHelper.longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_watering_frequency_in_hibernate!!
+                )
+            }
+        else {
+            plant.int_watering_frequency_normal?.let {
+                plant.long_next_watering_date = TimeHelper.longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_watering_frequency_normal!!
+                )
+            }
+        }
+        updateThePlant(plant)
+    }
+
+    suspend fun updateFertilizedData(plantId: Int) {
+        val plant: Plant = withContext(Dispatchers.IO) {
+            repository.getPlant(plantId)
+        }
+
+        if (plant.is_fertilizing_hibernate_mode_on == 1 && plant.is_hibernate_mode_on == 1 &&
+            plant.long_to_hibernate_from_date != null && plant.long_to_hibernate_till_date != null &&
+            TimeHelper.isDateInPlantHibernateRange(
+                TimeHelper.getCurrentTimeInMs(),
+                plant.long_to_hibernate_from_date!!,
+                plant.long_to_hibernate_till_date!!
+            )
+        ) {
+            plant.int_fertilizing_frequency_in_hibernate?.let {
+                plant.long_next_fertilizing_date = TimeHelper.longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_fertilizing_frequency_in_hibernate!!
+                )
+            }
+        } else {
+            plant.int_fertilizing_frequency_normal?.let {
+                plant.long_next_fertilizing_date = TimeHelper.longDatePlusDays(
+                    TimeHelper.getCurrentTimeInMs(),
+                    plant.int_fertilizing_frequency_normal!!
+                )
+            }
+        }
+
+        updateThePlant(plant)
     }
 }
 

@@ -7,11 +7,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.goranatos.plantkeeper.ui.plantdetail.PlantDetailViewModel" />
+            type="com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel" />
 
         <variable
             name="fragment"
-            type="com.goranatos.plantkeeper.ui.plantdetail.PlantDetailFragment" />
+            type="com.goranatos.plantkeeper.ui.addeditplant.PlantDetailFragment" />
     </data>
 
     <ScrollView

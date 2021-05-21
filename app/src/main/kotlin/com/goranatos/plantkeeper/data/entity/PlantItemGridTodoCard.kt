@@ -16,7 +16,8 @@ import kotlinx.android.synthetic.main.list_item_plant.view.*
 
 
 class PlantItemGridTodoCard(
-    private val content: Plant
+    private val content: Plant,
+    private val todoOnPlantItemCardLongListener: TodoOnPlantItemCardLongClickedListener?
 ) : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
@@ -79,12 +80,12 @@ class PlantItemGridTodoCard(
             }
 
             if (colorNormal) {
-                viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_normal)
-                )
+//                viewHolder.containerView.plantCardView.setCardBackgroundColor(
+//                    getColor(viewHolder.containerView.context, R.color.card_normal)
+//                )
             } else {
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_attention)
+                    getColor(viewHolder.containerView.context, R.color.card_view_bg_attention)
                 )
             }
         }

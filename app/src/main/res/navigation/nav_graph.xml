@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/navigation_my_plants"
         android:name="com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment"
-        tools:layout="@layout/fragment_my_plants"
-        android:label="@string/my_plants">
+        android:label="@string/my_plants"
+        tools:layout="@layout/fragment_my_plants">
         <action
             android:id="@+id/action_myPlantsFragment_to_plantAddAndInfo"
             app:destination="@id/plantAddAndInfo"
@@ -30,13 +30,13 @@
 
     <fragment
         android:id="@+id/plantAddAndInfo"
-        tools:layout="@layout/fragment_detailed_plant"
-        android:name="com.goranatos.plantkeeper.ui.plantdetail.PlantDetailFragment"
-        android:label="@string/add_new_plant" >
+        android:name="com.goranatos.plantkeeper.ui.addeditplant.PlantDetailFragment"
+        android:label="@string/add_new_plant"
+        tools:layout="@layout/fragment_detailed_plant">
         <argument
             android:name="plantId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
     <fragment
@@ -48,6 +48,14 @@
         android:id="@+id/navigation_todo"
         android:name="com.goranatos.plantkeeper.ui.todo.TodoFragment"
         android:label="@string/to_do_list"
-        tools:layout="@layout/fragment_todo" />
+        tools:layout="@layout/fragment_todo">
+        <action
+            android:id="@+id/action_navigation_todo_to_plantAddAndInfo"
+            app:destination="@id/plantAddAndInfo"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
 
 </navigation>

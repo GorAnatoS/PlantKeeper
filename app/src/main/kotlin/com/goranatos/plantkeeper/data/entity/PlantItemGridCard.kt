@@ -50,7 +50,7 @@ class PlantItemGridCard(
                 )
 
                 val pop = PopupMenu(viewHolder.containerView.context, it)
-                pop.inflate(R.menu.plant_menu_on_long_click)
+                pop.inflate(R.menu.my_plants_on_plant_long_clicked_menu)
 
                 pop.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
@@ -115,12 +115,12 @@ class PlantItemGridCard(
             }
 
             if (colorNormal) {
-                viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_normal)
-                )
+//                viewHolder.containerView.plantCardView.setCardBackgroundColor(
+//                    getColor(viewHolder.containerView.context, R.color.card_normal)
+//                )
             } else {
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_attention)
+                    getColor(viewHolder.containerView.context, R.color.card_view_bg_attention)
                 )
             }
         }

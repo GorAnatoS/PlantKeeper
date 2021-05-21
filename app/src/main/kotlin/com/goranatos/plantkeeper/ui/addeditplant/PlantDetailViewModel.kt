@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.ui.plantdetail
+package com.goranatos.plantkeeper.ui.addeditplant
 
 import android.net.Uri
 import androidx.lifecycle.LiveData

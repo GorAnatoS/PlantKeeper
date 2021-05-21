@@ -5,13 +5,15 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        android:background="@color/primary"
         android:id="@+id/plantCardView"
         android:layout_width="@dimen/plant_grid_item_width"
         android:layout_height="@dimen/plant_grid_item_height"
         android:layout_margin="@dimen/margin_list_items"
         android:minHeight="?listPreferredItemHeightSmall"
         app:cardCornerRadius="4dp"
+        android:theme="@style/AppTheme.CardViewStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +42,7 @@
                 android:layout_width="@dimen/plant_grid_item_image_square_size"
                 android:layout_height="@dimen/plant_grid_item_image_square_size"
                 android:layout_marginStart="@dimen/margin_05x"
-                android:layout_marginTop="@dimen/margin_std"
+                android:layout_marginTop="@dimen/margin_05x"
                 android:layout_marginEnd="@dimen/margin_05x"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,5 +109,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
