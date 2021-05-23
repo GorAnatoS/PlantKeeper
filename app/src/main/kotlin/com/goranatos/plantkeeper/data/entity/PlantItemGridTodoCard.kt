@@ -2,10 +2,12 @@ package com.goranatos.plantkeeper.data.entity
 
 import android.net.Uri
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat.getColor
 import com.bumptech.glide.Glide
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.internal.TimeHelper
+import com.goranatos.plantkeeper.utilities.PlantHelper
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.list_item_plant.view.*
@@ -17,6 +19,7 @@ import kotlinx.android.synthetic.main.list_item_plant.view.*
 
 class PlantItemGridTodoCard(
     private val content: Plant,
+    private val todoOnPlantItemCardListener: TodoOnPlantItemCardClickedListener?,
     private val todoOnPlantItemCardLongListener: TodoOnPlantItemCardLongClickedListener?
 ) : Item() {
 
@@ -87,6 +90,50 @@ class PlantItemGridTodoCard(
                 viewHolder.containerView.plantCardView.setCardBackgroundColor(
                     getColor(viewHolder.containerView.context, R.color.card_view_bg_attention)
                 )
+            }
+
+            if (todoOnPlantItemCardListener != null) {
+                itemView.setOnClickListener {
+                    todoOnPlantItemCardListener.onPlantItemCardClicked(content.int_id)
+                }
+            }
+
+            todoOnPlantItemCardLongListener?.let {
+                itemView.setOnLongClickListener {
+                    todoOnPlantItemCardLongListener.onPlantItemCardLongClicked(
+                        content.int_id,
+                        TodoPlantItemCardMenu.NOT_SELECTED.menuCode
+                    )
+
+                    val pop = PopupMenu(viewHolder.containerView.context, it)
+                    pop.inflate(R.menu.todo_on_plant_long_clicked_menu)
+
+                    pop.setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.context_menu_watered -> {
+                                todoOnPlantItemCardLongListener.onPlantItemCardLongClicked(
+                                    content.int_id,
+                                    TodoPlantItemCardMenu.WATERED_MENU.menuCode
+                                )
+                            }
+                            R.id.context_menu_fertilized -> {
+                                todoOnPlantItemCardLongListener.onPlantItemCardLongClicked(
+                                    content.int_id,
+                                    TodoPlantItemCardMenu.FERTILIZED_MENU.menuCode
+                                )
+                            }
+                        }
+                        true
+                    }
+
+                    if (!PlantHelper.isWaterTodayNeeded(content)) pop.menu.findItem(R.id.context_menu_watered).isVisible =
+                        false
+                    if (!PlantHelper.isFertilizeTodayNeeded(content)) pop.menu.findItem(R.id.context_menu_fertilized).isVisible =
+                        false
+
+                    pop.show()
+                    true
+                }
             }
         }
     }

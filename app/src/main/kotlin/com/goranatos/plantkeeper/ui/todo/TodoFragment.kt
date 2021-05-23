@@ -234,7 +234,7 @@ class TodoFragment : ScopedFragment() {
         return this.map {
             PlantItemLinearTodoCard(
                 it,
-                if (selectedDate == SELECTED_DATE.TODAY.code) todoOnPlantItemCardClickedListener else null,
+                todoOnPlantItemCardClickedListener,
                 if (selectedDate == SELECTED_DATE.TODAY.code) todoOnPlantItemCardLongClickedListener else null,
             )
         }
@@ -244,7 +244,8 @@ class TodoFragment : ScopedFragment() {
         return this.map {
             PlantItemGridTodoCard(
                 it,
-                if (selectedDate == SELECTED_DATE.TODAY.code) todoOnPlantItemCardLongClickedListener else null
+                todoOnPlantItemCardClickedListener,
+                if (selectedDate == SELECTED_DATE.TODAY.code) todoOnPlantItemCardLongClickedListener else null,
             )
         }
     }
