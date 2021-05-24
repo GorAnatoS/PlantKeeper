@@ -7,7 +7,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
-import com.goranatos.plantkeeper.internal.TimeHelper
 
 
 /**

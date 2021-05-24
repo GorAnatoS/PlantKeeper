@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
 import androidx.preference.PreferenceDialogFragmentCompat
-import com.goranatos.plantkeeper.internal.TimeHelper.Companion.minutesFromMidnightToHourlyTime
+import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.minutesFromMidnightToHourlyTime
 
 
 /**

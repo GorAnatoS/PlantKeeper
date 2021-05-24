@@ -12,7 +12,9 @@ import androidx.preference.PreferenceManager
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.repository.PlantRepository
 import com.goranatos.plantkeeper.receiver.AlarmReceiver
+import com.goranatos.plantkeeper.utilities.NOTIFICATION_EXTRA_LONG_REQUEST_CODE
 import com.goranatos.plantkeeper.utilities.SharedPreferencesRepositoryConstants
+import com.goranatos.plantkeeper.utilities.TimeHelper
 import com.goranatos.plantkeeper.utilities.cancelNotifications
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -74,7 +76,6 @@ class MyPlantsViewModel @Inject constructor(
 
     private val notifyIntent = Intent(context, AlarmReceiver::class.java)
 
-
     suspend fun setPlant(plantId: Int) {
         return withContext(Dispatchers.IO) {
             thePlant = repository.getPlant(plantId)
@@ -82,7 +83,6 @@ class MyPlantsViewModel @Inject constructor(
     }
 
     fun setNotificationsForPlantList(plantList: List<Plant>?) {
-
         val isToShowNotifications = sharedPreferences.getBoolean(
             SharedPreferencesRepositoryConstants.PREF_OPTION_IS_TO_SHOW_NOTIFICATIONS,
             false
@@ -95,8 +95,29 @@ class MyPlantsViewModel @Inject constructor(
             ) as NotificationManager
 
         if (isToShowNotifications) {
-
             val collectionOfDates = mutableListOf<Long>()
+
+            val prefMinute = sharedPreferences.getInt(
+                SharedPreferencesRepositoryConstants.PREF_OPTION_NOTIFICATION_TIME,
+                9 * 60 + 30
+            )
+
+            val calendarToday = Calendar.getInstance().apply {
+                timeInMillis = TimeHelper.getCurrentTimeInMs()
+                set(Calendar.HOUR_OF_DAY, prefMinute / 60)
+                set(Calendar.MINUTE, prefMinute % 60)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+
+            val calendarEndOfToday = Calendar.getInstance().apply {
+                timeInMillis = TimeHelper.getCurrentTimeInMs()
+                set(Calendar.HOUR_OF_DAY, 23)
+                set(Calendar.MINUTE, 59)
+                set(Calendar.SECOND, 99)
+                set(Calendar.MILLISECOND, 999)
+            }
+
 
             //Добавляю в список из времени и фильтрую на повторы, чтобы потом запускать pendingIntents
             plantList?.forEach { plant ->
@@ -104,11 +125,6 @@ class MyPlantsViewModel @Inject constructor(
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = plant.long_next_watering_date!!
 
-                    val prefMinute = sharedPreferences.getInt(
-                        SharedPreferencesRepositoryConstants.PREF_OPTION_NOTIFICATION_TIME,
-                        9 * 60 + 30
-                    )
-
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
                     calendar.set(Calendar.MINUTE, prefMinute % 60)
                     calendar.set(Calendar.SECOND, 0)
@@ -116,18 +132,24 @@ class MyPlantsViewModel @Inject constructor(
 
                     val triggerTime = calendar.timeInMillis
 
-                    if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(triggerTime)
+                    if (triggerTime > calendarEndOfToday.timeInMillis) {
+                        if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(
+                            triggerTime
+                        )
+                    } else {
+                        if (triggerTime <= TimeHelper.getCurrentTimeInMs() && !isNotExistsTodayOrBeforeDates) {
+                            if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(
+                                triggerTime
+                            )
+                            isNotExistsTodayOrBeforeDates = true
+                        }
+                    }
                 }
 
                 if (plant.is_fertilize_need_on == 1 && plant.long_next_fertilizing_date != null) {
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = plant.long_next_fertilizing_date!!
 
-                    val prefMinute = sharedPreferences.getInt(
-                        SharedPreferencesRepositoryConstants.PREF_OPTION_NOTIFICATION_TIME,
-                        9 * 60 + 30
-                    )
-
                     calendar.set(Calendar.HOUR_OF_DAY, prefMinute / 60)
                     calendar.set(Calendar.MINUTE, prefMinute % 60)
                     calendar.set(Calendar.SECOND, 0)
@@ -135,16 +157,28 @@ class MyPlantsViewModel @Inject constructor(
 
                     val triggerTime = calendar.timeInMillis
 
-                    if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(triggerTime)
+                    if (triggerTime > calendarEndOfToday.timeInMillis) {
+                        if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(
+                            triggerTime
+                        )
+                    } else {
+                        if (triggerTime <= TimeHelper.getCurrentTimeInMs() && !isNotExistsTodayOrBeforeDates) {
+                            if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(
+                                triggerTime
+                            )
+                            isNotExistsTodayOrBeforeDates = true
+                        }
+                    }
                 }
             }
 
             collectionOfDates.forEach {
+                notifyIntent.putExtra(NOTIFICATION_EXTRA_LONG_REQUEST_CODE, it)
                 val notifyPendingIntent = PendingIntent.getBroadcast(
                     context,
                     it.toInt(),
                     notifyIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_ONE_SHOT
                 )
 
                 AlarmManagerCompat.setExactAndAllowWhileIdle(
@@ -183,8 +217,7 @@ class MyPlantsViewModel @Inject constructor(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        setNotificationsForPlantList(allPlants.value)
+    companion object {
+        var isNotExistsTodayOrBeforeDates = false
     }
 }

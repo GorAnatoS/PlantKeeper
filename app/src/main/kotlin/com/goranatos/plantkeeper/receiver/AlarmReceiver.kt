@@ -23,11 +23,14 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 
 import com.goranatos.plantkeeper.R
+import com.goranatos.plantkeeper.utilities.NOTIFICATION_EXTRA_LONG_REQUEST_CODE
 import com.goranatos.plantkeeper.utilities.sendNotification
 
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+
+        val code = intent.getLongExtra(NOTIFICATION_EXTRA_LONG_REQUEST_CODE, -1L)
 
         val notificationManager = ContextCompat.getSystemService(
             context,

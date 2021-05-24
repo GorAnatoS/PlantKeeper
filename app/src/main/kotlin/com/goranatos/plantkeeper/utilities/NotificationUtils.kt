@@ -16,28 +16,33 @@
 
 package com.goranatos.plantkeeper.utilities
 
+import android.app.Activity
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.receiver.SnoozeReceiver
 import com.goranatos.plantkeeper.ui.MainActivity
 
+
+const val NOTIFICATION_EXTRA_LONG_REQUEST_CODE = "NOTIFICATION_EXTRA_LONG_REQUEST_CODE"
 private const val NOTIFICATION_ID = 0
 private const val REQUEST_CODE = 0
 private const val FLAGS = 0
 
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
-
     val contentIntent = Intent(applicationContext, MainActivity::class.java)
 
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
         NOTIFICATION_ID,
         contentIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT
+        PendingIntent.FLAG_NO_CREATE
     )
 
     val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
@@ -68,10 +73,34 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             snoozePendingIntent
         )
 
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
     notify(NOTIFICATION_ID, builder.build())
 }
 
 fun NotificationManager.cancelNotifications() {
     cancelAll()
+}
+
+fun createChannel(channelId: String, channelName: String, activity: Activity) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val notificationChannel = NotificationChannel(
+            channelId,
+            channelName,
+            NotificationManager.IMPORTANCE_HIGH
+        )
+            .apply {
+                setShowBadge(false)
+            }
+
+        notificationChannel.enableLights(true)
+        notificationChannel.lightColor = Color.RED
+        notificationChannel.enableVibration(true)
+        notificationChannel.description =
+            activity.getString(R.string.plants_notification_description)
+
+        val notificationManager = activity.getSystemService(
+            NotificationManager::class.java
+        )
+        notificationManager.createNotificationChannel(notificationChannel)
+    }
 }

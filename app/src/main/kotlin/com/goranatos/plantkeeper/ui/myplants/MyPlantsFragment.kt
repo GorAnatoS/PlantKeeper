@@ -1,12 +1,8 @@
 package com.goranatos.plantkeeper.ui.myplants
 
 import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
@@ -26,6 +22,7 @@ import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
 import com.goranatos.plantkeeper.utilities.Helper.Companion.onFirstStartShowAppInfo
 import com.goranatos.plantkeeper.utilities.PlantHelper
 import com.goranatos.plantkeeper.utilities.SharedPreferencesRepositoryConstants
+import com.goranatos.plantkeeper.utilities.createChannel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,6 +73,7 @@ class MyPlantsFragment : ScopedFragment() {
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
             viewModel.updateRecycleView()
+            viewModel.setNotificationsForPlantList(it)
         })
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
@@ -244,30 +242,6 @@ class MyPlantsFragment : ScopedFragment() {
     }
 
     companion object {
-        private fun createChannel(channelId: String, channelName: String, activity: Activity) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val notificationChannel = NotificationChannel(
-                    channelId,
-                    channelName,
-                    NotificationManager.IMPORTANCE_HIGH
-                )
-                    .apply {
-                        setShowBadge(false)
-                    }
-
-                notificationChannel.enableLights(true)
-                notificationChannel.lightColor = Color.RED
-                notificationChannel.enableVibration(true)
-                notificationChannel.description =
-                    activity.getString(R.string.plants_notification_description)
-
-                val notificationManager = activity.getSystemService(
-                    NotificationManager::class.java
-                )
-                notificationManager.createNotificationChannel(notificationChannel)
-            }
-        }
-
         fun calculateSpanCount(resources: Resources, activity: Activity): Int {
             val density = resources.displayMetrics.density
             val dpWidth = getScreenWidth(activity) / density

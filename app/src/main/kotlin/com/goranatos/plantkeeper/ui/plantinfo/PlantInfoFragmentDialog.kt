@@ -15,12 +15,12 @@ import androidx.navigation.fragment.findNavController
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.DialogPlantInfoBinding
-import com.goranatos.plantkeeper.internal.TimeHelper
-import com.goranatos.plantkeeper.internal.TimeHelper.Companion.longDatePlusDays
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragmentDirections
 import com.goranatos.plantkeeper.ui.todo.TodoFragmentDirections
 import com.goranatos.plantkeeper.utilities.Helper
 import com.goranatos.plantkeeper.utilities.PlantHelper
+import com.goranatos.plantkeeper.utilities.TimeHelper
+import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.longDatePlusDays
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

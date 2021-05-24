@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.repository.PlantRepository
-import com.goranatos.plantkeeper.internal.TimeHelper
+import com.goranatos.plantkeeper.utilities.TimeHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject

@@ -15,8 +15,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.IncludePlantWateringSettingsBinding
-import com.goranatos.plantkeeper.internal.TimeHelper
 import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel
+import com.goranatos.plantkeeper.utilities.TimeHelper
 
 /**
  * Created by qsufff on 12/7/2020.

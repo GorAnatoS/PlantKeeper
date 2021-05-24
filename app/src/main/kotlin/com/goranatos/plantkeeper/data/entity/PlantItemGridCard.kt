@@ -6,7 +6,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat.getColor
 import com.bumptech.glide.Glide
 import com.goranatos.plantkeeper.R
-import com.goranatos.plantkeeper.internal.TimeHelper
+import com.goranatos.plantkeeper.utilities.TimeHelper
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.list_item_plant.view.*

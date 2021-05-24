@@ -1,4 +1,4 @@
-package com.goranatos.plantkeeper.internal
+package com.goranatos.plantkeeper.utilities
 
 import java.text.SimpleDateFormat
 import java.time.temporal.ChronoUnit

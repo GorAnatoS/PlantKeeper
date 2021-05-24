@@ -21,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.FragmentDetailedPlantBinding
-import com.goranatos.plantkeeper.internal.TimeHelper
 import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel.Companion.REQUEST_CHOOSE_FROM_GALLERY
 import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel.Companion.REQUEST_IMAGE_CAPTURE
 import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel.Companion.uriCapturedImage
@@ -32,6 +31,7 @@ import com.goranatos.plantkeeper.ui.addeditplant.dialogs.SetHibernatingSettingsF
 import com.goranatos.plantkeeper.ui.addeditplant.dialogs.SetWateringSettingsFragmentDialog
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
 import com.goranatos.plantkeeper.utilities.Helper.Companion.hideKeyboard
+import com.goranatos.plantkeeper.utilities.TimeHelper
 import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers

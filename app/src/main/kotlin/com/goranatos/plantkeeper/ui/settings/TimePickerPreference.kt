@@ -3,7 +3,7 @@ package com.goranatos.plantkeeper.ui.settings
 import android.content.Context
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
-import com.goranatos.plantkeeper.internal.TimeHelper.Companion.minutesFromMidnightToHourlyTime
+import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.minutesFromMidnightToHourlyTime
 
 
 /**

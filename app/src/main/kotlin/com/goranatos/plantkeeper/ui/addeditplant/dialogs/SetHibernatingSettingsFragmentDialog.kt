@@ -13,8 +13,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.IncludeHibernateSettingsBinding
-import com.goranatos.plantkeeper.internal.TimeHelper
 import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel
+import com.goranatos.plantkeeper.utilities.TimeHelper
 import java.util.*
 
 
