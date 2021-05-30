@@ -228,10 +228,10 @@ class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
 
     private fun setPlantDetail() {
         if (plant.str_desc.isNullOrEmpty()) {
-            binding.plantDetailsBtn.visibility = View.GONE
+            binding.togglePlantDetails.visibility = View.GONE
         } else {
-            binding.plantDetailsBtn.visibility = View.VISIBLE
-            binding.plantDetailsBtn.setOnClickListener {
+            binding.togglePlantDetails.visibility = View.VISIBLE
+            binding.togglePlantDetails.setOnClickListener {
                 Helper.showMaterialDialogPositiveOnly(plant.str_desc!!, requireContext())
             }
         }

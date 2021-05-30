@@ -42,6 +42,7 @@ class MyPlantsFragment : ScopedFragment() {
         super.onCreate(savedInstanceState)
         viewModel.initMyPlantsViewModel()
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
     }
 
     override fun onCreateView(
@@ -65,11 +66,15 @@ class MyPlantsFragment : ScopedFragment() {
 
         setHasOptionsMenu(true)
 
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        setApplicationLanguage(requireActivity().application)
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
             viewModel.updateRecycleView()

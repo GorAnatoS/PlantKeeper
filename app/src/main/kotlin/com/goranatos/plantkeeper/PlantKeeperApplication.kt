@@ -47,21 +47,26 @@ class PlantKeeperApplication : Application() {
     @Suppress("UNUSED_VARIABLE")
     fun setApplicationLanguage() {
         when (sharedPreferences.getString(
-            getString(R.string.pref_option_choose_language),
-            getString(R.string.en)
+            "pref_option_choose_language",
+            "default"
         )) {
-            getString(R.string.ru) -> {
+            "ru" -> {
                 val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_RUSSIAN))
                 val lingver = Lingver.init(this, store)
             }
 
-            getString(R.string.en) -> {
+            "en" -> {
                 val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_ENGLISH))
                 val lingver = Lingver.init(this, store)
             }
 
-            getString(R.string.es) -> {
+            "es" -> {
                 val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_SPANISH))
+                val lingver = Lingver.init(this, store)
+            }
+
+            else -> {
+                val store = PreferenceLocaleStore(this, Locale.getDefault())
                 val lingver = Lingver.init(this, store)
             }
         }

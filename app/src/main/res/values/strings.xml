@@ -161,4 +161,5 @@
     <string name="first_start_info">"  <![CDATA[ Click on the <b>+</b> and add new plants to your collection. <br /> <br /> Go to <b>Settings</b>, turn on notifications and select a right time. <br />  <br />That's all!    ]]>"</string>
     <string name="str_continue"> Continue </string>
     <string name="no_plants_need_care_of">No plants need care of.</string>
+    <string name="help_item">Help</string>
 </resources>

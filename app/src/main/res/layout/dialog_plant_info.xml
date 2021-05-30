@@ -46,7 +46,7 @@
             app:singleSelection="true" />
 
         <Button
-            android:id="@+id/plantDetailsBtn"
+            android:id="@+id/togglePlantDetails"
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
