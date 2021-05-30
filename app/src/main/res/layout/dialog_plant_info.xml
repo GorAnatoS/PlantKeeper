@@ -7,22 +7,22 @@
     <data>
         <variable
             name="viewModel"
-            type="com.goranatos.plantkeeper.ui.home.MyPlantsViewModel" />
+            type="com.goranatos.plantkeeper.ui.plantinfo.PlantInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:minWidth="300dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minWidth="100dp"
+        android:padding="@dimen/margin_std">
 
         <Button
             android:id="@+id/toggleEditPlant"
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginStart="@dimen/margin_05x"
+            android:layout_marginEnd="@dimen/margin_2x"
             app:icon="@drawable/ic_baseline_edit_24"
             app:layout_constraintEnd_toStartOf="@+id/toggleDeletePlant"
             app:layout_constraintHorizontal_bias="0.5"
@@ -36,7 +36,8 @@
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/margin_2x"
+            android:layout_marginEnd="@dimen/margin_05x"
             app:icon="@drawable/ic_baseline_delete_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -44,44 +45,65 @@
             app:layout_constraintTop_toTopOf="@+id/toggleEditPlant"
             app:singleSelection="true" />
 
+        <Button
+            android:id="@+id/togglePlantDetails"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_05x"
+            android:visibility="gone"
+            app:icon="@drawable/ic_baseline_speaker_notes_24"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPlant"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPlant"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/toggleEditPlant"
+            app:singleSelection="true"
+            tools:visibility="visible" />
+
         <ImageView
             android:id="@+id/imageViewPlant"
             android:layout_width="wrap_content"
-            android:minHeight="128dp"
-            android:minWidth="128dp"
             android:layout_height="128dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="@dimen/margin_15x"
+            android:layout_marginTop="@dimen/margin_std"
+            android:layout_marginEnd="@dimen/margin_15x"
             android:contentDescription="@string/plant_s_name"
+            android:minWidth="128dp"
+            android:minHeight="128dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toggleEditPlant"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlantName"
             app:srcCompat="@drawable/ic_plant1" />
+
 
         <TextView
             android:id="@+id/textViewPlantName"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:text="@{viewModel.thePlant.str_name.toString()}"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewPlant"
-            app:layout_constraintStart_toStartOf="@+id/imageViewPlant"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewPlant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleEditPlant"
             tools:text="Название цветка" />
-
 
         <TextView
             android:id="@+id/tvToWaterIcon"
             android:layout_width="wrap_content"
 
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_15x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_invert_colors_24"
-            app:layout_constraintStart_toStartOf="@+id/toggleEditPlant"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPlantName" />
+            app:layout_constraintEnd_toStartOf="@+id/tvToWaterFromDateVal"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant" />
 
         <TextView
             android:id="@+id/tvToWaterFromDateVal"
@@ -89,13 +111,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
             app:layout_constraintStart_toEndOf="@+id/tvToWaterIcon"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPlantName"
+            app:layout_constraintTop_toTopOf="@+id/tvToWaterIcon"
             tools:text="Dec, 20" />
 
         <TextView
@@ -103,38 +124,28 @@
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_0_75x"
+            android:layout_marginStart="@dimen/margin_075x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_cached_24"
-            app:layout_constraintStart_toEndOf="@+id/tvToWaterFromDateVal"
+            app:layout_constraintStart_toEndOf="@+id/barrierEndOfDates"
             app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal"
             tools:text=" 1 " />
 
         <TextView
             android:id="@+id/tvWateringFrequencyInHibernate"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/margin_05x"
             android:gravity="center"
-            style="@style/TextAppearance.MaterialComponents.Body1"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_ac_unit_24"
             app:layout_constraintStart_toEndOf="@+id/tvWateringFrequency"
             app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
             tools:text=" 1 " />
-
-        <CheckBox
-            android:id="@+id/checkBoxWatered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/to_water_dialog_plant_info"
-            app:layout_constraintBottom_toBottomOf="@+id/tvToWaterFromDateVal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal" />
 
 
         <!--START FERTILIZING-->
@@ -147,14 +158,16 @@
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_scatter_plot_24"
-            app:layout_constraintStart_toStartOf="@+id/toggleEditPlant"
+            app:layout_constraintEnd_toStartOf="@+id/tvToFertilizeFromDateVal"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvToWaterIcon" />
 
         <TextView
             android:id="@+id/tvToFertilizeFromDateVal"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
@@ -170,21 +183,22 @@
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_0_75x"
+            android:layout_marginStart="@dimen/margin_075x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_cached_24"
-            app:layout_constraintStart_toEndOf="@+id/tvToFertilizeFromDateVal"
+            app:layout_constraintStart_toEndOf="@+id/barrierEndOfDates"
             app:layout_constraintTop_toTopOf="@+id/tvToFertilizeFromDateVal"
             tools:text=" 1 " />
 
+
         <TextView
             android:id="@+id/tvFertilizingFrequencyInHibernate"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/margin_05x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
@@ -193,40 +207,60 @@
             app:layout_constraintTop_toTopOf="@+id/tvFertilizingFrequency"
             tools:text=" 1 " />
 
+
+        <!--        END FERTILIZING-->
+
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierEndOfDates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tvToFertilizeFromDateVal, tvToWaterFromDateVal" />
+
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierEndOfCheckboxes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="checkBoxWatered, checkBoxFertilized" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxWatered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/watered_dialog_plant_info"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxFertilized"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeIcon"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
         <CheckBox
             android:id="@+id/checkBoxFertilized"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/to_fertilize_dialog_plant_info"
-            app:layout_constraintBottom_toBottomOf="@+id/tvToFertilizeFromDateVal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tvFertilizingFrequencyInHibernate"
-            app:layout_constraintTop_toTopOf="@+id/tvToFertilizeFromDateVal" />
-
-<!--        END FERTILIZING-->
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            app:layout_constraintGuide_percent="0.5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:text="@string/fertilized_dialog_plant_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxWatered" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/margin_15x"
+            android:layout_marginTop="@dimen/margin_2x"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeFromDateVal" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/barrierEndOfCheckboxes"
+            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeFromDateVal"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

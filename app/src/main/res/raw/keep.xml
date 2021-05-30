@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_flower1, @drawable/ic_flower2, @drawable/ic_flower3, @drawable/ic_flower4, @drawable/ic_flower5, @drawable/ic_flower6, @drawable/ic_flower7, @drawable/ic_flower8,
+                @drawable/ic_plant1, @drawable/ic_plant2, @drawable/ic_plant3, @drawable/ic_plant4, @drawable/ic_plant5, @drawable/ic_plant6, @drawable/ic_plant7, @drawable/ic_plant8" />

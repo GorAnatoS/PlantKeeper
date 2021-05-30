@@ -27,6 +27,8 @@ import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_ENGLISH
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_ENGLISH_COUNTRY
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_RUSSIAN
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_RUSSIAN_COUNTRY
+import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_SPANISH
+import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_SPANISH_COUNTRY
 import com.yariksoffice.lingver.Lingver
 
 
@@ -49,15 +51,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
         if (endAppLanguage.isNotEmpty() && endAppLanguage != beginAppLanguage) {
 
             when (endAppLanguage) {
-                "ru" -> setNewLocale(
+                getString(R.string.ru) -> setNewLocale(
                     requireContext(),
                     LANGUAGE_RUSSIAN,
                     LANGUAGE_RUSSIAN_COUNTRY
                 )
-                "en" -> setNewLocale(
+                getString(R.string.en) -> setNewLocale(
                     requireContext(),
                     LANGUAGE_ENGLISH,
                     LANGUAGE_ENGLISH_COUNTRY
+                )
+                getString(R.string.es) -> setNewLocale(
+                    requireContext(),
+                    LANGUAGE_SPANISH,
+                    LANGUAGE_SPANISH_COUNTRY
                 )
             }
 
@@ -166,4 +173,6 @@ object LanguagePrefs {
     const val LANGUAGE_ENGLISH_COUNTRY = "US"
     const val LANGUAGE_RUSSIAN = "ru"
     const val LANGUAGE_RUSSIAN_COUNTRY = "RU"
+    const val LANGUAGE_SPANISH = "es"
+    const val LANGUAGE_SPANISH_COUNTRY = "SP"
 }

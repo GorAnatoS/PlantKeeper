@@ -10,8 +10,8 @@
 
     <color name="pink_900">#880e4f</color>
 
-    <color name="card_attention">#4DF3CE78</color> <!--30% secondary color-->
-    <color name="card_normal">@color/surface</color>
+    <color name="card_view_bg_attention">#4DF3CE78</color> <!--30% secondary color-->
+    <color name="card_view_bg_normal">@color/chip_background_checked</color>
 
     <!--    dark-->
     <color name="teal_100">#b2ebf2</color>

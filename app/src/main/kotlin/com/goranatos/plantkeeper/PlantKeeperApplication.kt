@@ -4,38 +4,20 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import com.goranatos.plantkeeper.data.db.PlantsDatabase
-import com.goranatos.plantkeeper.data.repository.PlantsRepository
-import com.goranatos.plantkeeper.data.repository.PlantsRepositoryImpl
-import com.goranatos.plantkeeper.ui.home.MyPlantsViewModelFactory
-import com.goranatos.plantkeeper.ui.plantDetail.PlantDetailViewModelFactory
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs
 import com.yariksoffice.lingver.Lingver
 import com.yariksoffice.lingver.store.PreferenceLocaleStore
-import org.kodein.di.*
-import org.kodein.di.android.x.androidXModule
+import dagger.hilt.android.HiltAndroidApp
 import java.util.*
-
 
 /**
  * Created by qsufff on 7/29/2020.
  */
 
-
-class PlantKeeperApplication : Application(), DIAware {
-
-    override val di by DI.lazy {
-        import(androidXModule(this@PlantKeeperApplication))
-
-        bind() from singleton { PlantsDatabase(instance()) }
-        bind() from singleton { instance<PlantsDatabase>().plantsDatabaseDao() }
-        bind<PlantsRepository>() with singleton { PlantsRepositoryImpl(instance()) }
-        bind() from singleton { MyPlantsViewModelFactory(instance(), instance()) }
-        bind() from factory { plantId: Int -> PlantDetailViewModelFactory(instance(), plantId) }
-    }
+@HiltAndroidApp
+class PlantKeeperApplication : Application() {
 
     private lateinit var sharedPreferences: SharedPreferences
-
 
     override fun onCreate() {
         super.onCreate()
@@ -65,8 +47,8 @@ class PlantKeeperApplication : Application(), DIAware {
     @Suppress("UNUSED_VARIABLE")
     fun setApplicationLanguage() {
         when (sharedPreferences.getString(
-            getString(R.string.pref_option_choose_language),
-            getString(R.string.en)
+            "pref_option_choose_language",
+            "default"
         )) {
             "ru" -> {
                 val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_RUSSIAN))
@@ -77,13 +59,28 @@ class PlantKeeperApplication : Application(), DIAware {
                 val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_ENGLISH))
                 val lingver = Lingver.init(this, store)
             }
+
+            "es" -> {
+                val store = PreferenceLocaleStore(this, Locale(LanguagePrefs.LANGUAGE_SPANISH))
+                val lingver = Lingver.init(this, store)
+            }
+
+            else -> {
+                val store = PreferenceLocaleStore(this, Locale.getDefault())
+                val lingver = Lingver.init(this, store)
+            }
         }
     }
 }
-// TODO: 11/22/2020 Для релиза первой версии
-//Иконка приложения
+
+// TODO: 5/2/2021 1.0.4 add other animations, customize dark theme
 
 // TODO: 11/22/2020 In second version add
+
+////TODO 2021/05/10 14:56 || new architecture
+
+//todo onStartMessageAdd
+
 //help
 //about_application option
 //const val SPRAY_NEED_COLUMN = "spraying_need"

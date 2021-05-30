@@ -1,9 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">PlantKeeper</string>
+    <string name="app_name" translatable="false">PlantKeeper</string>
     <string name="action_settings">Settings</string>
 
     <string name="name">Name</string>
-    <string name="add_new_plant">New plant</string>
+    <string name="add_new_plant">Add new plant</string>
+    <string name="edit_the_plant">Edit the plant</string>
     <string name="empty_db_text">@string/add_new_plant</string>
 
     <string name="added">Added</string>
@@ -18,8 +19,8 @@
     <string name="file_provider_authorities" translatable="false">com.goranatos.plantkeeper.provider</string>
     <string name="download">Download</string>
     <string name="to_water">To water</string>
-    <string name="to_water_dialog_plant_info">to water</string>
-    <string name="to_fertilize_dialog_plant_info">to fertilize</string>
+    <string name="watered_dialog_plant_info">watered</string>
+    <string name="fertilized_dialog_plant_info">fertilized</string>
     <string name="to_fertilize">To fertilize</string>
     <string name="from_gallery">From gallery</string>
     <string name="take_photo">Take photo</string>
@@ -61,14 +62,15 @@
     <string name="mtrl_picker_invalid_range" tools:override="true">Invalid range.</string>
     <string name="mtrl_picker_invalid_format_use" tools:override="true">Format: %1$s</string>
     <string name="mtrl_picker_invalid_format_example" tools:override="true">Example: %1$s</string>
-    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">OK</string>
+    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">Ok</string>
     <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]">Cancel</string>
 
     <string name="plant_notification_channel_id" translatable="false">plant_notification</string>
     <string name="plant_notification_channel_name" translatable="false">plant_notification_channel</string>
 
-    <string name="days_till_watering">&#160;Days till watering:</string>
-    <string name="days_till_fertilizing">&#160;Days till fertilizing:</string>
+    <string name="days_till_event">%1$sd</string>
+    <string name="days_till_watering">&#160;Till watering:</string>
+    <string name="days_till_fertilizing">&#160;Till fertilizing:</string>
     <string name="notification_plants_need_care">The plants need care of!</string>
     <string name="plant_s_name">Plant`s name</string>
     <string name="hibernate_mode">Hibernate mode</string>
@@ -89,8 +91,8 @@
     <string name="to_water_once_at_in_days">To water once a  (days):</string>
     <string name="watering_settings_normal_mode">Normal mode:</string>
     <string name="watering_settings_hibernate_mode">Hibernate mode:</string>
-    <string name="_3" translatable="false">3</string>
-    <string name="_2" translatable="false">2</string>
+    <string name="_3_days" translatable="false">3d</string>
+    <string name="_2_days" translatable="false">2d</string>
     <string name="my_plants">My plants</string>
     <string name="settings">Settings</string>
     <string name="settings_feedback">Feedback</string>
@@ -102,13 +104,17 @@
     <string name="application_language">Application language</string>
     <string name="settings_language_russian">Russian</string>
     <string name="choose_application_language">Choose application language</string>
+
     <string name="pref_option_choose_language" translatable="false">pref_option_choose_language</string>
+    <string name="pref_option_is_list_home_adapter" translatable="false">pref_option_is_list_home_adapter</string>
 
     <string name="ru" translatable="false">ru</string>
     <string name="en" translatable="false">en</string>
+    <string name="es" translatable="false">es</string>
     <string name="empty_string" translatable="false" />
     <string name="russian_lang">Russian</string>
     <string name="english_lang">English</string>
+    <string name="spanish_lang">Spanish</string>
     <string name="current_lang">English</string>
 
     <string name="pref_option_is_to_show_notifications" translatable="false">pref_option_is_to_show_notifications</string>
@@ -131,4 +137,29 @@
     <string name="application_settings">Application settings</string>
 
     <string name="start_with_space_string" translatable="false">&#160; %1$s</string>
+    <string name="new_plant">New plant</string>
+    <string name="no_plants_in_db">No plants</string>
+    <string name="action_change_appearance">Change appearance</string>
+    <string name="today_tasks_completed">Today\'s tasks have been completed.</string>
+    <string name="to_do_menu">To-do</string>
+    <string name="my_plants_menu">My plants</string>
+    <string name="today_title">Today</string>
+    <string name="tomorrow_title">Tomorrow</string>
+    <string name="week_title">Week</string>
+    <string name="to_do_list">To-do list</string>
+
+    <string name="slide_1_title"> About the app </string>
+    <string name="slide_1_desc"> PlantKeeper will help you organize the proper care of your flowers and plants. </string>
+
+    <string name="slide_2_title"> Configure care and notification options </string>
+    <string name="slide_2_desc"> * Regularity of watering, \n * Regularity of fertilization, \n * Other parameters </string>
+
+    <string name="slide_3_title"> And enjoy your plants growing! </string>
+    <string name="slide_3_desc"> Try it! </string>
+
+    <string name="about"> Intro </string>
+    <string name="first_start_info">"  <![CDATA[ Click on the <b>+</b> and add new plants to your collection. <br /> <br /> Go to <b>Settings</b>, turn on and select a right time for notifications. <br />  <br />That's all!    ]]>"</string>
+    <string name="str_continue"> Continue </string>
+    <string name="no_plants_need_care_of">No plants need care of.</string>
+    <string name="help_item">Help</string>
 </resources>

@@ -1,0 +1,130 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "d3cd8d60a8f9c581ffa4af4ba921a09e",
+    "entities": [
+      {
+        "tableName": "Plants_database",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `string_name` TEXT, `string_description` TEXT, `string_image_path` TEXT, `is_hibernate_mode_on` INTEGER NOT NULL, `to_hibernate_from_date` INTEGER, `to_hibernate_till_date` INTEGER, `is_water_need_on` INTEGER NOT NULL, `long_next_watering_date` INTEGER, `is_watering_hibernate_mode_on` INTEGER NOT NULL, `int_watering_frequency_normal` INTEGER, `int_watering_frequency_in_hibernate` INTEGER, `is_fertilize_need_on` INTEGER NOT NULL, `long_next_fertilizing_date` INTEGER, `is_fertilizing_hibernate_mode_on` INTEGER NOT NULL, `int_fertilizing_frequency_normal` INTEGER, `int_fertilizing_frequency_in_hibernate` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "int_id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "str_name",
+            "columnName": "string_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "str_desc",
+            "columnName": "string_description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "string_uri_image_path",
+            "columnName": "string_image_path",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "is_hibernate_mode_on",
+            "columnName": "is_hibernate_mode_on",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "long_to_hibernate_from_date",
+            "columnName": "to_hibernate_from_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "long_to_hibernate_till_date",
+            "columnName": "to_hibernate_till_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "is_water_need_on",
+            "columnName": "is_water_need_on",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "long_next_watering_date",
+            "columnName": "long_next_watering_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "is_watering_hibernate_mode_on",
+            "columnName": "is_watering_hibernate_mode_on",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "int_watering_frequency_normal",
+            "columnName": "int_watering_frequency_normal",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "int_watering_frequency_in_hibernate",
+            "columnName": "int_watering_frequency_in_hibernate",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "is_fertilize_need_on",
+            "columnName": "is_fertilize_need_on",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "long_next_fertilizing_date",
+            "columnName": "long_next_fertilizing_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "is_fertilizing_hibernate_mode_on",
+            "columnName": "is_fertilizing_hibernate_mode_on",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "int_fertilizing_frequency_normal",
+            "columnName": "int_fertilizing_frequency_normal",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "int_fertilizing_frequency_in_hibernate",
+            "columnName": "int_fertilizing_frequency_in_hibernate",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd3cd8d60a8f9c581ffa4af4ba921a09e')"
+    ]
+  }
+}

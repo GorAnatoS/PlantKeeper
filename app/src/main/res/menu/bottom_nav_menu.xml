@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_todo"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
+        android:title="@string/to_do_menu" />
+
+    <item
+        android:id="@+id/navigation_my_plants"
+        android:icon="@drawable/ic_baseline_dashboard_24"
+        android:title="@string/my_plants_menu" />
+</menu>

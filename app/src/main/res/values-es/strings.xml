@@ -1,0 +1,134 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="action_settings">"Ajustes "</string>
+
+    <string name="name">"Nombre "</string>
+    <string name="add_new_plant">Agregue una nueva planta</string>
+    <string name="edit_the_plant">Edite la planta</string>
+    <string name="empty_db_text">@string/add_new_plant</string>
+
+    <string name="added">Añadida</string>
+    <string name="changed">Cambiada</string>
+    <string name="deleted">Eliminada</string>
+    <string name="delete_item">Eliminar</string>
+    <string name="save">"guardar "</string>
+    <string name="notes">Notas</string>
+    <string name="label_select_picture">Elegir imagen</string>
+    <string name="toast_cannot_retrieve_selected_image">No se puede cargar la imagen elegida</string>
+
+    <string name="download">Descargar</string>
+    <string name="to_water">Regar</string>
+    <string name="watered_dialog_plant_info">vertidа</string>
+    <string name="fertilized_dialog_plant_info">fecundadа</string>
+    <string name="to_fertilize">Fertilizar</string>
+    <string name="from_gallery">De la galería</string>
+    <string name="take_photo">Tomar foto</string>
+    <string name="choose_photo">Seleccionar una foto</string>
+    <string name="delete_plant_from_db">¿Quitar la planta?</string>
+    <string name="are_you_sure_to_delete_the_plant_from_db">¿Estás seguro de que deseas eliminar esta planta de tu colección?</string>
+    <string name="cancel">Cancelar</string>
+
+    <string name="notification_title">Recordatorio</string>
+    <string name="notification_snooze_60_min">Recuérdame en una hora</string>
+
+    <string name="notifications">Notificaciones</string>
+    <string name="enable_notifications">Permitir notificaciones</string>
+    <string name="alarm_notification_time">Hora de mostrar la notificación</string>
+    <string name="alarm_notification_time_summary">¿A qué hora se mostrará la notificación?</string>
+
+    <!--    contextual menu-->
+    <string name="contextual_action_edit">Editar</string>
+    <string name="contextual_action_delete">Borrar</string>
+
+    <!--    MaterialDatePicker-->
+    <string name="mtrl_picker_range_header_unselected" tools:override="true">Elige una fecha</string>
+    <string name="mtrl_picker_range_header_only_start_selected" tools:override="true">%s - Fecha de envio</string>
+    <string name="mtrl_picker_range_header_only_end_selected" tools:override="true">Fecha de inicio - %s</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint" tools:override="true">Fecha de inicio</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint" tools:override="true">Fecha de inicio</string>
+    <string name="mtrl_picker_text_input_date_format" tools:override="true">MM.dd.yyyy</string>
+    <string name="mtrl_picker_out_of_range" tools:override="true">"Estás fuera del rango: %1$s "</string>
+    <string name="mtrl_picker_invalid_format" tools:override="true">Entrada incorrecta.\\Use: %1$s</string>
+    <string name="mtrl_picker_save" tools:override="true">Ahorrar</string>
+    <string name="mtrl_picker_date_header_title" tools:override="true">Elige la fecha</string>
+    <string name="mtrl_picker_date_header_unselected" tools:override="true">Fecha elegida</string>
+    <string name="mtrl_picker_text_input_date_hint" tools:override="true">Fecha</string>
+    <string name="mtrl_picker_text_input_year_abbr" tools:override="true">г</string>
+    <string name="mtrl_picker_text_input_month_abbr" tools:override="true">m</string>
+    <string name="mtrl_picker_text_input_day_abbr" tools:override="true">d</string>
+    <string name="mtrl_picker_invalid_range" tools:override="true">Неверный диапазон.</string>
+    <string name="mtrl_picker_invalid_format_use" tools:override="true">Formato: %1$s</string>
+    <string name="mtrl_picker_invalid_format_example" tools:override="true">Ejemplo: %1$s</string>
+    <string name="mtrl_picker_confirm" description="Button text to indicate that the widget will save the user's selection [CHAR_LIMIT=16]">OK</string>
+    <string name="mtrl_picker_cancel" description="Button text to indicate that the widget will ignore the user's selection [CHAR_LIMIT=16]">Cancelar</string>
+
+    <string name="days_till_event">%1$sd</string>
+    <string name="days_till_watering">"&#160;Hasta riego: "</string>
+    <string name="days_till_fertilizing">&#160;Hasta fertilización:</string>
+    <string name="notification_plants_need_care">¡Las plantas necesitan cuidados!</string>
+    <string name="plant_s_name">Nombre de la planta</string>
+    <string name="hibernate_mode">Modo de hibernación</string>
+    <string name="dec_20">Dec, 20</string>
+    <string name="hibernate_mode_settings">Configuración del modo de hibernación</string>
+    <string name="begin">Empezar</string>
+    <string name="end">El fin</string>
+    <string name="fertilizing_mode_settings">Configuración del modo de fertilización</string>
+    <string name="sp_hibernate_mode">modo de hibernación</string>
+    <string name="next_fertilization_date">"Siguiente fertilización "</string>
+    <string name="to_fertilize_once_at_in_days">"Fertilizar una vez al (días) "</string>
+    <string name="fertilizing_settings_normal_mode">Modo normal:</string>
+    <string name="fertilizing_settings_hibernate_mode">Modo descanso:</string>
+    <string name="watering_mode_settings">Настройка полива</string>
+    <string name="next_watering">Configuración de riego</string>
+    <string name="to_water_once_at_in_days">Agua una vez cada (días):</string>
+    <string name="watering_settings_normal_mode">Modo normal:</string>
+    <string name="watering_settings_hibernate_mode">Modo descanso:</string>
+    <string name="my_plants">Mis plantas</string>
+    <string name="settings">Ajustes</string>
+    <string name="settings_feedback">Realimentación</string>
+    <string name="about_application">Acerca de la aplicación</string>
+    <string name="watering_mode">modo riego</string>
+    <string name="help">"Ayuda "</string>
+    <string name="settings_feedback_summary">Informar problemas técnicos o sugerir nuevas funciones</string>
+    <string name="application_language">Idioma de la aplicación</string>
+    <string name="settings_language_russian">ruso</string>
+    <string name="choose_application_language">Seleccione el idioma de la aplicación</string>
+
+    <string name="russian_lang">ruso</string>
+    <string name="english_lang">inglés</string>
+    <string name="spanish_lang">Español</string>
+    <string name="current_lang">Español</string>
+
+    <string name="to_change_app_lang_restart_application">Для изменения языка - перезагрузите приложение</string>
+    <string name="settings_night_mode">Tema de la aplicación</string>
+    <string name="settings_theme_light">Ligero</string>
+    <string name="settings_theme_dark">Oscuro</string>
+    <string name="settings_theme_default">Defecto</string>
+    <string name="enable_dark_theme">Habilitar tema oscuro</string>
+    <string name="application_settings">Configuraciones de la aplicación</string>
+    <string name="new_plant">Nueva planta</string>
+    <string name="no_plants_in_db">Sin plantas</string>
+    <string name="action_change_appearance">Cambiar de apariencia</string>
+    <string name="today_tasks_completed">"Las tareas de hoy se han completado. "</string>
+    <string name="to_do_menu">Que hacer</string>
+    <string name="my_plants_menu">Mis plantas</string>
+    <string name="today_title">Hoy</string>
+    <string name="tomorrow_title">Mañana</string>
+    <string name="week_title">Semana</string>
+    <string name="to_do_list">Que hacer</string>
+
+    <string name="slide_1_title"> Acerca de la aplicación </string>
+    <string name="slide_1_desc"> PlantKeeper lo ayudará a organizar el cuidado adecuado de sus flores y plantas. </string>
+
+    <string name="slide_2_title"> Configure las opciones de diapositivas y alertas. </string>
+    <string name="slide_2_desc"> * Regularidad del riego, \n * Regularidad de la fertilización, \n * Otros parámetros </string>
+
+    <string name="slide_3_title"> ¡Y disfrute de sus plantas creciendo! </string>
+    <string name="slide_3_desc"> ¡Intentalo! </string>
+
+    <string name="about"> Inicio </string>
+    <string name="first_start_info">   <![CDATA[ Haga clic en <b>+</b> y agregue nuevas plantas a su colección. </ br> <br /> Vaya a <b>Ajustes</b>, active y seleccione las notificaciones.</ br>  <br />¡Es todo! ]]></string>
+    <string name="str_continue"> Continuar </string>
+    <string name="no_plants_need_care_of">Ninguna planta necesita cuidados.</string>
+    <string name="help_item">Ayuda</string>
+
+</resources>
