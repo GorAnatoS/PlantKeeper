@@ -137,7 +137,7 @@ class MyPlantsViewModel @Inject constructor(
                             triggerTime
                         )
                     } else {
-                        if (triggerTime <= TimeHelper.getCurrentTimeInMs() && !isNotExistsTodayOrBeforeDates) {
+                        if (triggerTime > TimeHelper.getCurrentTimeInMs() && !isNotExistsTodayOrBeforeDates) {
                             if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(
                                 triggerTime
                             )
@@ -162,7 +162,7 @@ class MyPlantsViewModel @Inject constructor(
                             triggerTime
                         )
                     } else {
-                        if (triggerTime <= TimeHelper.getCurrentTimeInMs() && !isNotExistsTodayOrBeforeDates) {
+                        if (triggerTime > TimeHelper.getCurrentTimeInMs() && !isNotExistsTodayOrBeforeDates) {
                             if (!collectionOfDates.contains(triggerTime)) collectionOfDates.add(
                                 triggerTime
                             )
@@ -202,18 +202,6 @@ class MyPlantsViewModel @Inject constructor(
     private suspend fun deletePlantWithId(plantId: Int) {
         return withContext(Dispatchers.IO) {
             repository.deletePlantWithId(plantId)
-        }
-    }
-
-    private suspend fun updatePlant() {
-        return withContext(Dispatchers.IO) {
-            repository.updatePlant(thePlant)
-        }
-    }
-
-    fun updateThePlant() {
-        viewModelScope.launch {
-            updatePlant()
         }
     }
 

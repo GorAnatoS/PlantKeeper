@@ -32,8 +32,8 @@ android {
         applicationId "com.goranatos.plantkeeper"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 19
-        versionName "1.2.1a"
+        versionCode 20
+        versionName "1.2.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

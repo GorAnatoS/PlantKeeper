@@ -42,7 +42,6 @@ class MyPlantsFragment : ScopedFragment() {
         super.onCreate(savedInstanceState)
         viewModel.initMyPlantsViewModel()
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
     }
 
     override fun onCreateView(
@@ -66,15 +65,11 @@ class MyPlantsFragment : ScopedFragment() {
 
         setHasOptionsMenu(true)
 
-
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        setApplicationLanguage(requireActivity().application)
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
             viewModel.updateRecycleView()
@@ -288,7 +283,6 @@ class MyPlantsFragment : ScopedFragment() {
                     runRecycleViewAnimation(this, R.anim.grid_to_list_layout_animation)
                 }
             }
-
         }
 
         fun runRecycleViewAnimation(recyclerView: RecyclerView, animationIntId: Int) {

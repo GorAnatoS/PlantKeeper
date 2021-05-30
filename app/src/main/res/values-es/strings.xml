@@ -126,7 +126,7 @@
     <string name="slide_3_desc"> ¡Intentalo! </string>
 
     <string name="about"> Inicio </string>
-    <string name="first_start_info">   <![CDATA[ Haga clic en <b>+</b> y agregue nuevas plantas a su colección. </ br> <br /> Vaya a <b>Ajustes</b>, active las notificaciones y seleccione una hora. </ br>  <br />¡Es todo! ]]></string>
+    <string name="first_start_info">   <![CDATA[ Haga clic en <b>+</b> y agregue nuevas plantas a su colección. </ br> <br /> Vaya a <b>Ajustes</b>, active y seleccione las notificaciones.</ br>  <br />¡Es todo! ]]></string>
     <string name="str_continue"> Continuar </string>
     <string name="no_plants_need_care_of">Ninguna planta necesita cuidados.</string>
     <string name="help_item">Ayuda</string>
