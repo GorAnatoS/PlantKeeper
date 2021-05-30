@@ -111,13 +111,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="@dimen/margin_15x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
             app:layout_constraintStart_toEndOf="@+id/tvToWaterIcon"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPlant"
+            app:layout_constraintTop_toTopOf="@+id/tvToWaterIcon"
             tools:text="Dec, 20" />
 
         <TextView
@@ -126,14 +125,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_075x"
-            android:layout_marginEnd="@dimen/margin_std"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_cached_24"
-            app:layout_constraintEnd_toStartOf="@+id/tvWateringFrequencyInHibernate"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvToWaterFromDateVal"
+            app:layout_constraintStart_toEndOf="@+id/barrierEndOfDates"
             app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal"
             tools:text=" 1 " />
 
@@ -151,19 +147,19 @@
             app:layout_constraintTop_toTopOf="@+id/tvWateringFrequency"
             tools:text=" 1 " />
 
+
+        <!--START FERTILIZING-->
         <CheckBox
             android:id="@+id/checkBoxWatered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/watered_dialog_plant_info"
-            app:layout_constraintBottom_toBottomOf="@+id/tvToWaterFromDateVal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvWateringFrequencyInHibernate"
-            app:layout_constraintTop_toTopOf="@+id/tvToWaterFromDateVal" />
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxFertilized"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeIcon"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-
-        <!--START FERTILIZING-->
         <TextView
             android:id="@+id/tvToFertilizeIcon"
             android:layout_width="wrap_content"
@@ -185,12 +181,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="@dimen/margin_2x"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
-            app:layout_constraintBottom_toTopOf="@id/button_save"
             app:layout_constraintStart_toEndOf="@+id/tvToFertilizeIcon"
             app:layout_constraintTop_toBottomOf="@+id/tvToWaterFromDateVal"
             tools:text="Dec, 20" />
@@ -201,16 +195,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_075x"
-            android:layout_marginEnd="@dimen/margin_std"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_baseline_cached_24"
-            app:layout_constraintEnd_toStartOf="@+id/tvFertilizingFrequencyInHibernate"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvToFertilizeFromDateVal"
+            app:layout_constraintStart_toEndOf="@+id/barrierEndOfDates"
             app:layout_constraintTop_toTopOf="@+id/tvToFertilizeFromDateVal"
             tools:text=" 1 " />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierEndOfDates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tvToFertilizeFromDateVal, tvToWaterFromDateVal" />
 
         <TextView
             android:id="@+id/tvFertilizingFrequencyInHibernate"
@@ -230,33 +228,23 @@
             android:id="@+id/checkBoxFertilized"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:text="@string/fertilized_dialog_plant_info"
-            app:layout_constraintBottom_toBottomOf="@+id/tvToFertilizeFromDateVal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvFertilizingFrequencyInHibernate"
-            app:layout_constraintTop_toTopOf="@+id/tvToFertilizeFromDateVal" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxWatered" />
 
         <!--        END FERTILIZING-->
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="@dimen/margin_2x"
             android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.937"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeFromDateVal" />
+            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeFromDateVal"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
