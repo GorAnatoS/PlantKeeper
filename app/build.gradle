@@ -4,7 +4,6 @@ apply plugin: 'com.google.firebase.crashlytics'
 // Apply the Performance Monitoring plugin
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
@@ -110,10 +109,6 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-
-    androidExtensions {
-        experimental = true
     }
 
     ndkVersion "22.1.7171670"
