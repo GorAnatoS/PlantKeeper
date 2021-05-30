@@ -1,4 +1,5 @@
 package com.goranatos.plantkeeper.ui.addeditplant
+
 import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Context

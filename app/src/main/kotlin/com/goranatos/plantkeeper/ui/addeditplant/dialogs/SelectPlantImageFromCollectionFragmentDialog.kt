@@ -7,16 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.OnPlantImageItemClickedListener
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.entity.PlantImageItemCard
+import com.goranatos.plantkeeper.databinding.DialogSelectPlantImageFromCollectionBinding
 import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import kotlinx.android.synthetic.main.dialog_select_plant_image_from_collection.*
 
 
 /**
@@ -28,6 +29,8 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
 
     lateinit var myDialog: Dialog
 
+    lateinit var binding: DialogSelectPlantImageFromCollectionBinding
+
     lateinit var plant: Plant
 
     /** The system calls this to get the DialogFragment's layout, regardless
@@ -37,14 +40,15 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout to use as dialog or embedded fragment
+        binding =
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.dialog_select_plant_image_from_collection,
+                container,
+                false
+            )
 
-
-        return inflater.inflate(
-            R.layout.dialog_select_plant_image_from_collection,
-            container,
-            false
-        )
+        return binding.root
     }
 
     /** The system calls this only when creating the layout in a dialog. */
@@ -89,12 +93,11 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
 
     private fun initRecycleView(items: List<PlantImageItemCard>) {
 
-
         val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
             addAll(items)
         }
 
-        recyclerView.apply {
+        binding.recyclerView.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = groupAdapter
         }

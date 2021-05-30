@@ -6,10 +6,9 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat.getColor
 import com.bumptech.glide.Glide
 import com.goranatos.plantkeeper.R
+import com.goranatos.plantkeeper.databinding.ListItemPlantBinding
 import com.goranatos.plantkeeper.utilities.TimeHelper
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.list_item_plant.view.*
+import com.xwray.groupie.databinding.BindableItem
 
 /**
  * Created by qsufff on 9/13/2020.
@@ -27,36 +26,36 @@ class PlantItemListCard(
     private val content: Plant,
     private val plantItemCardListener: OnPlantItemCardClickedListener,
     private val plantItemCardLongListener: OnPlantItemCardLongClickedListener
-) : Item() {
+) : BindableItem<ListItemPlantBinding>() {
 
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+    override fun bind(viewBinding: ListItemPlantBinding, position: Int) {
 
-        viewHolder.apply {
+        viewBinding.apply {
 
-            viewHolder.containerView.tvTitle.text = content.str_name
+            viewBinding.tvTitle.text = content.str_name
 
             if (content.string_uri_image_path.isNullOrEmpty()) {
 
             } else {
-                viewHolder.containerView.imageViewPlant.setImageURI(Uri.parse(content.string_uri_image_path))
+                viewBinding.imageViewPlant.setImageURI(Uri.parse(content.string_uri_image_path))
                 Glide
-                    .with(viewHolder.containerView)
+                    .with(viewBinding.imageViewPlant)
                     .load(Uri.parse(content.string_uri_image_path))
                     //.placeholder(R.drawable.loading_spinner)
-                    .into(viewHolder.containerView.imageViewPlant)
+                    .into(viewBinding.imageViewPlant)
             }
             //при нажатии на карточку открываем подробное описание растения
-            itemView.setOnClickListener {
+            viewBinding.plantCardView.setOnClickListener {
                 plantItemCardListener.onPlantItemCardClicked(content.int_id)
             }
 
-            itemView.setOnLongClickListener {
+            viewBinding.plantCardView.setOnLongClickListener {
                 plantItemCardLongListener.onPlantItemCardLongClicked(
                     content.int_id,
                     PlantItemCardMenu.NOT_SELECTED.menuCode
                 )
 
-                val pop = PopupMenu(viewHolder.containerView.context, it)
+                val pop = PopupMenu(viewBinding.plantCardView.context, it)
                 pop.inflate(R.menu.my_plants_on_plant_long_clicked_menu)
 
                 pop.setOnMenuItemClickListener { item ->
@@ -89,16 +88,16 @@ class PlantItemListCard(
                 )
                     colorNormal = false
 
-                viewHolder.containerView.tvTillWateringVal.text =
-                    containerView.context.getString(
+                viewBinding.tvTillWateringVal.text =
+                    viewBinding.plantCardView.context.getString(
                         R.string.days_till_event, TimeHelper.getDaysTillEventNotification(
                             System.currentTimeMillis(),
                             content.long_next_watering_date!!
                         ).toString()
                     )
             } else {
-                viewHolder.containerView.tvTillWatering.visibility = View.GONE
-                viewHolder.containerView.tvTillWateringVal.visibility = View.GONE
+                viewBinding.tvTillWatering.visibility = View.GONE
+                viewBinding.tvTillWateringVal.visibility = View.GONE
             }
 
             if (content.is_fertilize_need_on == 1) {
@@ -109,16 +108,16 @@ class PlantItemListCard(
                 )
                     colorNormal = false
 
-                viewHolder.containerView.tvTillFertilizingVal.text =
-                    containerView.context.getString(
+                viewBinding.tvTillFertilizingVal.text =
+                    viewBinding.plantCardView.context.getString(
                         R.string.days_till_event, TimeHelper.getDaysTillEventNotification(
                             System.currentTimeMillis(),
                             content.long_next_fertilizing_date!!
                         ).toString()
                     )
             } else {
-                viewHolder.containerView.tvTillFertilizing.visibility = View.GONE
-                viewHolder.containerView.tvTillFertilizingVal.visibility = View.GONE
+                viewBinding.tvTillFertilizing.visibility = View.GONE
+                viewBinding.tvTillFertilizingVal.visibility = View.GONE
             }
 
             if (colorNormal) {
@@ -126,8 +125,8 @@ class PlantItemListCard(
 //                    getColor(viewHolder.containerView.context, R.color.card_normal)
 //                )
             } else {
-                viewHolder.containerView.plantCardView.setCardBackgroundColor(
-                    getColor(viewHolder.containerView.context, R.color.card_view_bg_attention)
+                viewBinding.plantCardView.setCardBackgroundColor(
+                    getColor(viewBinding.plantCardView.context, R.color.card_view_bg_attention)
                 )
             }
         }

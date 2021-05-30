@@ -2,10 +2,8 @@ package com.goranatos.plantkeeper.data.entity
 
 import android.net.Uri
 import com.goranatos.plantkeeper.R
-
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.list_item_plant.view.*
+import com.goranatos.plantkeeper.databinding.ItemPlantImageBinding
+import com.xwray.groupie.databinding.BindableItem
 
 /**
  * Created by qsufff on 9/13/2020.
@@ -20,15 +18,15 @@ interface OnPlantImageItemClickedListener {
 class PlantImageItemCard(
     private val uri: Uri,
     private val plantImageItemListener: OnPlantImageItemClickedListener
-) : Item() {
+) : BindableItem<ItemPlantImageBinding>() {
 
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+    override fun bind(viewBinding: ItemPlantImageBinding, position: Int) {
 
-        viewHolder.apply {
+        viewBinding.apply {
 
-            viewHolder.itemView.imageViewPlant.setImageURI(uri)
+            viewBinding.imageViewPlant.setImageURI(uri)
 
-            itemView.setOnClickListener {
+            viewBinding.imageViewPlant.setOnClickListener {
                 plantImageItemListener.onPlantImageClicked(uri)
             }
         }
