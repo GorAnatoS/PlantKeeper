@@ -17,7 +17,6 @@ import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.*
 import com.goranatos.plantkeeper.databinding.FragmentMyPlantsBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
-import com.goranatos.plantkeeper.ui.plantinfo.PlantInfoFragmentDialog
 import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
 import com.goranatos.plantkeeper.utilities.Helper.Companion.onFirstStartShowAppInfo
 import com.goranatos.plantkeeper.utilities.PlantHelper
@@ -79,7 +78,7 @@ class MyPlantsFragment : ScopedFragment() {
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 findNavController().navigate(
-                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId)
+                    MyPlantsFragmentDirections.actionNavigationMyPlantsToPlantAddOrEdit(viewModel.navigateToPlantId)
                 )
                 viewModel.doneNavigating()
             }
@@ -211,9 +210,10 @@ class MyPlantsFragment : ScopedFragment() {
             launch {
                 viewModel.setPlant(id)
             }
-            val fragmentManager = parentFragmentManager
-            val newFragment = PlantInfoFragmentDialog(id)
-            newFragment.show(fragmentManager, "dialog")
+
+            findNavController().navigate(
+                MyPlantsFragmentDirections.actionNavigationMyPlantsToPlantInfoFragmentDialog(id)
+            )
         }
     }
 

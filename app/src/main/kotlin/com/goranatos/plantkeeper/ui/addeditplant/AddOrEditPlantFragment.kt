@@ -22,10 +22,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.FragmentDetailedPlantBinding
-import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel.Companion.REQUEST_CHOOSE_FROM_GALLERY
-import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel.Companion.REQUEST_IMAGE_CAPTURE
-import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel.Companion.uriCapturedImage
-import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel.Companion.uriDestination
+import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel.Companion.REQUEST_CHOOSE_FROM_GALLERY
+import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel.Companion.REQUEST_IMAGE_CAPTURE
+import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel.Companion.uriCapturedImage
+import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel.Companion.uriDestination
 import com.goranatos.plantkeeper.ui.addeditplant.dialogs.SelectPlantImageUriFromCollectionDialogFragment
 import com.goranatos.plantkeeper.ui.addeditplant.dialogs.SetFertilizingSettingsFragmentDialog
 import com.goranatos.plantkeeper.ui.addeditplant.dialogs.SetHibernatingSettingsFragmentDialog
@@ -52,10 +52,10 @@ import java.util.*
 
 @AndroidEntryPoint
 @RuntimePermissions
-class PlantDetailFragment : ScopedFragment() {
-    private val args: PlantDetailFragmentArgs by navArgs()
+class AddOrEditPlantFragment : ScopedFragment() {
+    private val args: AddOrEditPlantFragmentArgs by navArgs()
 
-    private val viewModel by viewModels<PlantDetailViewModel>()
+    private val viewModel by viewModels<AddOrEditPlantViewModel>()
 
     lateinit var binding: FragmentDetailedPlantBinding
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,6 @@ import com.goranatos.plantkeeper.databinding.FragmentTodoBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment.Companion.calculateSpanCount
-import com.goranatos.plantkeeper.ui.plantinfo.PlantInfoFragmentDialog
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -252,9 +252,9 @@ class TodoFragment : ScopedFragment() {
 
     private val todoOnPlantItemCardClickedListener = object : TodoOnPlantItemCardClickedListener {
         override fun onPlantItemCardClicked(id: Int) {
-            val fragmentManager = parentFragmentManager
-            val newFragment = PlantInfoFragmentDialog(id)
-            newFragment.show(fragmentManager, "dialog")
+            findNavController().navigate(
+                TodoFragmentDirections.actionNavigationTodoToPlantInfoFragmentDialog(id)
+            )
         }
     }
 

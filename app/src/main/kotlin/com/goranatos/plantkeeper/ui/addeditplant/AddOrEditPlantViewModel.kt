@@ -13,9 +13,9 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
-class PlantDetailViewModel @Inject constructor(
+class AddOrEditPlantViewModel @Inject constructor(
     private val repository: PlantRepository,
-    val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var plantId: Int? = -1

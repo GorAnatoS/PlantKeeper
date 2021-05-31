@@ -13,7 +13,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.IncludeHibernateSettingsBinding
-import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel
+import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel
 import com.goranatos.plantkeeper.utilities.TimeHelper
 import java.util.*
 
@@ -22,7 +22,7 @@ import java.util.*
  * Created by qsufff on 12/7/2020.
  */
 
-class SetHibernatingSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) :
+class SetHibernatingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOrEditPlantViewModel) :
     DialogFragment() {
 
     lateinit var plant: Plant
@@ -46,7 +46,7 @@ class SetHibernatingSettingsFragmentDialog(private val viewModel: PlantDetailVie
                 false
             )
 
-        plant = viewModel.thePlant.value!!
+        plant = viewModelAddOrEdit.thePlant.value!!
 
         setTvHibernateDateStartFromVal()
 
@@ -139,10 +139,10 @@ class SetHibernatingSettingsFragmentDialog(private val viewModel: PlantDetailVie
 
     override fun onDismiss(dialog: DialogInterface) {
         if (isToSaveResult)
-            viewModel.updateThePlantOutside(plant)
+            viewModelAddOrEdit.updateThePlantOutside(plant)
         else {
             plant.is_hibernate_mode_on = 0
-            viewModel.updateThePlantOutside(plant)
+            viewModelAddOrEdit.updateThePlantOutside(plant)
         }
 
         super.onDismiss(dialog)

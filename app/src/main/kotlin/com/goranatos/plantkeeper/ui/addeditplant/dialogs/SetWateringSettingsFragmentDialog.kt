@@ -15,14 +15,14 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.IncludePlantWateringSettingsBinding
-import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel
+import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel
 import com.goranatos.plantkeeper.utilities.TimeHelper
 
 /**
  * Created by qsufff on 12/7/2020.
  */
 
-class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewModel) :
+class SetWateringSettingsFragmentDialog(private val viewModelAddOrEdit: AddOrEditPlantViewModel) :
     DialogFragment() {
 
     lateinit var plant: Plant
@@ -46,7 +46,7 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
                 false
             )
 
-        plant = viewModel.thePlant.value!!
+        plant = viewModelAddOrEdit.thePlant.value!!
 
         setHibernateMode()
 
@@ -188,10 +188,10 @@ class SetWateringSettingsFragmentDialog(private val viewModel: PlantDetailViewMo
 
     override fun onDismiss(dialog: DialogInterface) {
         if (isToSaveResult) {
-            viewModel.updateThePlantOutside(plant)
+            viewModelAddOrEdit.updateThePlantOutside(plant)
         } else {
             plant.is_water_need_on = 0
-            viewModel.updateThePlantOutside(plant)
+            viewModelAddOrEdit.updateThePlantOutside(plant)
         }
 
         super.onDismiss(dialog)

@@ -15,8 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.DialogPlantInfoBinding
-import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragmentDirections
-import com.goranatos.plantkeeper.ui.todo.TodoFragmentDirections
 import com.goranatos.plantkeeper.utilities.Helper
 import com.goranatos.plantkeeper.utilities.PlantHelper
 import com.goranatos.plantkeeper.utilities.TimeHelper
@@ -28,8 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
-
+class PlantInfoFragmentDialog : DialogFragment() {
     private val viewModel by viewModels<PlantInfoViewModel>()
 
     lateinit var plant: Plant
@@ -41,19 +38,23 @@ class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
     private var isToSaveResult = false
     private var isToShowSaveBtn = false
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        retainInstance = true
-
-        super.onCreate(savedInstanceState)
-        viewModel.initPlantInfoViewModel(plantId)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is t
+                findNavController().navigate(
+                    PlantInfoFragmentDialogDirections.actionPlantInfoFragmentDialogToPlantAddAndInfo(
+                        viewModel.thePlant.int_id
+                    )
+                )
+            }
+        })
+
+        viewModel.initPlantInfoViewModel()
+
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -85,22 +86,7 @@ class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.setBackgroundDrawable(view.context.getDrawable(R.drawable.background))
 
-        viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
-            if (it == true) { // Observed state is t
-                if (findNavController().currentDestination?.id == R.id.navigation_todo) {
-                    findNavController().navigate(
-                        TodoFragmentDirections.actionNavigationTodoToPlantAddAndInfo(viewModel.navigateToPlantId)
-                    )
-                    viewModel.doneNavigating()
-                }
-                if (findNavController().currentDestination?.id == R.id.navigation_my_plants) {
-                    findNavController().navigate(
-                        MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId)
-                    )
-                    viewModel.doneNavigating()
-                }
-            }
-        })
+
     }
 
     private fun setPlantImage() {
@@ -318,7 +304,6 @@ class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
     }
 
     private fun onEditButtonClicked() {
-
         viewModel.updateNavigateToPlantId(viewModel.thePlant.int_id)
         viewModel.onItemClicked()
         dismiss()
