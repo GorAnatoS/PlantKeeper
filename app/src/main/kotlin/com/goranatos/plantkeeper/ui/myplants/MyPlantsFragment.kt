@@ -86,7 +86,6 @@ class MyPlantsFragment : ScopedFragment() {
 
         viewModel.isToUpdateRecycleView.observe(viewLifecycleOwner, {
             if (it == true) {
-
                 PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
                     getString(R.string.pref_option_is_list_home_adapter), true
                 ).also { isListHomeAdapter ->

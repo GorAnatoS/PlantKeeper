@@ -35,12 +35,16 @@
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:navGraph="@navigation/nav_graph" />
 
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
+            app:itemHorizontalTranslationEnabled="true"
+            app:labelVisibilityMode="selected"
+
 
             android:background="@drawable/background_bottom_navbar"
             app:itemIconTint="@color/toolbar_text_and_icons"
