@@ -20,6 +20,7 @@ import com.goranatos.plantkeeper.ui.base.ScopedFragment
 import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
 import com.goranatos.plantkeeper.utilities.Helper.Companion.onFirstStartShowAppInfo
 import com.goranatos.plantkeeper.utilities.PlantHelper
+import com.goranatos.plantkeeper.utilities.PlantHelper.Companion.setNotificationsForPlantList
 import com.goranatos.plantkeeper.utilities.SharedPreferencesRepositoryConstants
 import com.goranatos.plantkeeper.utilities.createChannel
 import com.xwray.groupie.GroupAdapter
@@ -72,7 +73,7 @@ class MyPlantsFragment : ScopedFragment() {
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
             viewModel.updateRecycleView()
-            viewModel.setNotificationsForPlantList(it)
+            setNotificationsForPlantList(it, requireContext())
         })
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {

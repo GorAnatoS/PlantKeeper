@@ -184,7 +184,6 @@ class TodoFragment : ScopedFragment() {
         viewModel.allPlants.observe(viewLifecycleOwner, {
             viewModel.dateInMls.observe(viewLifecycleOwner, {
                 viewModel.getMatchPlantList().let { plantList ->
-
                     if (plantList.isNotEmpty()) {
                         preferences.getBoolean(
                             getString(R.string.pref_option_is_list_home_adapter), true
