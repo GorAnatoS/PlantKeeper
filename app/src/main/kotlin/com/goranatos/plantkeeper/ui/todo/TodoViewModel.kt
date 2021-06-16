@@ -50,7 +50,7 @@ class TodoViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             allPlants = repository.getAllMyPlants().asLiveData()
-            todayPlantList = LinkedHashSet<Plant>()
+            todayPlantList = LinkedHashSet()
         }
     }
 

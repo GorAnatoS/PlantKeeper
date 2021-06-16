@@ -34,5 +34,13 @@
 
         <item name="android:textColor">@color/white_87_opacity</item>
         <item name="android:editTextColor">@color/white_87_opacity</item>
+
+        <item name="snackBarBackground">@color/green_300_87</item>
+        <item name="onSnackBarBackground">@color/black_87_opacity</item>
+
+        <item name="snackbarStyle">@style/MySnackBarStyle</item>
+        <item name="snackbarTextViewStyle">@style/MySnackBarTextViewStyle</item>
     </style>
+
+
 </resources>

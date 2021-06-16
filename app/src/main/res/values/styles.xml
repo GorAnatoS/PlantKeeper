@@ -52,4 +52,14 @@
         <item name="elevationOverlayEnabled">false</item>
     </style>
 
+    <style name="MySnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:backgroundTint">?attr/snackBarBackground</item>
+        <item name="backgroundOverlayColorAlpha">1</item>
+
+    </style>
+
+    <style name="MySnackBarTextViewStyle" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">?attr/onSnackBarBackground</item>
+    </style>
+
 </resources>

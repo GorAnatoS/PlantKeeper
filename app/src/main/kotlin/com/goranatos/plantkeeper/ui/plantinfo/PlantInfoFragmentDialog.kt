@@ -17,7 +17,6 @@ import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.DialogPlantInfoBinding
 import com.goranatos.plantkeeper.utilities.Helper
 import com.goranatos.plantkeeper.utilities.PlantHelper
-import com.goranatos.plantkeeper.utilities.PlantHelper.Companion.setNotificationsForPlant
 import com.goranatos.plantkeeper.utilities.TimeHelper
 import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.longDatePlusDays
 import dagger.hilt.android.AndroidEntryPoint
@@ -271,7 +270,6 @@ class PlantInfoFragmentDialog : DialogFragment() {
                 )
             }
         }
-        setNotificationsForPlant(plant, requireContext())
     }
 
     private fun isWateredCheckBoxChecked() {
@@ -303,7 +301,6 @@ class PlantInfoFragmentDialog : DialogFragment() {
                 )
             }
         }
-        setNotificationsForPlant(plant, requireContext())
     }
 
     private fun onEditButtonClicked() {

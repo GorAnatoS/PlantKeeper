@@ -18,6 +18,7 @@ import com.goranatos.plantkeeper.databinding.FragmentTodoBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment
 import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragment.Companion.calculateSpanCount
+import com.goranatos.plantkeeper.utilities.PlantHelper
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -182,6 +183,7 @@ class TodoFragment : ScopedFragment() {
         binding.chipToday.isChecked = true
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
+            PlantHelper.setNotificationsForPlantList(it, requireContext())
             viewModel.dateInMls.observe(viewLifecycleOwner, {
                 viewModel.getMatchPlantList().let { plantList ->
                     if (plantList.isNotEmpty()) {

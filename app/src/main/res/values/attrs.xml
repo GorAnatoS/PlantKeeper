@@ -20,4 +20,7 @@
     <attr name="onBottomNavigationBar" format="color" />
 
     <attr name="appBarIcon" type="color" />
+
+    <attr name="snackBarBackground" format="color" />
+    <attr name="onSnackBarBackground" format="color" />
 </resources>

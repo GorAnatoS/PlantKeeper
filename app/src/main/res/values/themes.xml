@@ -53,6 +53,11 @@
 
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
 
+        <item name="snackBarBackground">@color/green_900_dark</item>
+        <item name="onSnackBarBackground">@color/white_87_opacity</item>
+
+        <item name="snackbarStyle">@style/MySnackBarStyle</item>
+        <item name="snackbarTextViewStyle">@style/MySnackBarTextViewStyle</item>
     </style>
 
 
