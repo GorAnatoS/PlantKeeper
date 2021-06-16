@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorError" format="color" />
+    <attr name="on_error" format="color" />
+
+    <attr name="chip_background_unchecked" format="color" />
+    <attr name="on_chip_background_unchecked" format="color" />
+
+    <attr name="chip_background_checked" format="color" />
+    <attr name="on_chip_background_checked" format="color" />
+
+    <attr name="card_view_bg_need_care" format="color" />
+    <attr name="card_view_bg_normal" format="color" />
+
+    <attr name="onlyIconButton" format="color" />
+
+    <attr name="topAppBar" format="color" />
+    <attr name="onTopAppBar" format="color" />
+    <attr name="bottomNavigationBar" format="color" />
+    <attr name="onBottomNavigationBar" format="color" />
+
+    <attr name="appBarIcon" type="color" />
+</resources>

@@ -30,7 +30,6 @@
                 app:singleLine="true"
                 app:singleSelection="true">
 
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipToday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -45,15 +44,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/tomorrow_title" />
 
-
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipWeek"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/week_title" />
-
-
             </com.google.android.material.chip.ChipGroup>
 
         </HorizontalScrollView>
@@ -107,7 +103,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_outline_done_all_24"
             tools:visibility="visible" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

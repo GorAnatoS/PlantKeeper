@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavView.setupWithNavController(navController)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.topAppBar)
         setSupportActionBar(toolbar)
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.navigation_my_plants, R.id.navigation_todo)

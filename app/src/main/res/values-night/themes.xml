@@ -1,36 +1,38 @@
 <resources>
 
     <style name="Theme.PlantKeeper" parent="Theme.MaterialComponents.DayNight">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primary</item>
-        <item name="colorOnPrimary">@color/on_primary</item>
 
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="colorSecondaryVariant">@color/secondary</item>
-        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorPrimary">@color/green_300</item>
+        <item name="colorPrimaryVariant">@color/green_300</item>
+        <item name="colorOnPrimary">@color/black_87_opacity</item>
 
-        <item name="backgroundColor">@color/background</item>
-        <item name="colorOnBackground">@color/on_background</item>
+        <item name="colorSecondary">@color/amber_300</item>
+        <item name="colorSecondaryVariant">@color/amber_300_dark</item>
+        <item name="colorOnSecondary">@color/black_87_opacity</item>
 
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="backgroundColor">@color/green_300_8</item>
+        <item name="colorOnBackground">@color/white_87_opacity</item>
 
-        <item name="colorError">@color/error</item>
-        <item name="colorOnError">@color/on_error</item>
+        <item name="colorSurface">@color/green_300_12</item>
+        <item name="colorOnSurface">@color/white_87_opacity</item>
+
+        <item name="colorError">@color/error_red</item>
+        <item name="colorOnError">@color/white_87_opacity</item>
+
+        <item name="chip_background_unchecked">@color/green_900_dark</item>
+        <item name="on_chip_background_unchecked">@color/black_87_opacity</item>
+
+        <item name="chip_background_checked">#2686D9E1</item>
+        <item name="on_chip_background_checked">?attr/colorPrimary</item>
+
+        <item name="colorControlNormal">@color/white_87_opacity</item>
+
+        <item name="card_view_bg_normal">?attr/colorSurface</item>
+        <item name="card_view_bg_need_care">@color/amber_300_24</item>
+
+        <item name="onlyIconButton">@color/white_87_opacity</item>
 
         <item name="android:textColor">@color/white_87_opacity</item>
         <item name="android:editTextColor">@color/white_87_opacity</item>
     </style>
-
-    <style name="Theme.PlantKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="iconTint">@color/toolbar_text_and_icons</item>
-        <item name="colorControlNormal">@color/toolbar_text_and_icons</item>
-        <item name="android:textColor">@color/toolbar_text_and_icons</item>
-    </style>
-
-    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/chip_background_color_state_list</item>
-        <item name="android:textColor">@color/chip_text_color_state_list</item>
-    </style>
-
 </resources>
