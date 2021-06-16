@@ -29,11 +29,7 @@
 
         <item name="appBarIcon">@color/white_87_opacity</item>
 
-
-        <item name="bottomNavigationBar">?attr/colorPrimary</item>
-        <item name="onBottomNavigationBar">?attr/colorOnPrimary</item>
-
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="actionOverflowButtonStyle">@style/Theme.PlantKeeper.ActionOverflowButtonStyle
         </item>
 
@@ -51,13 +47,17 @@
 
         <item name="colorButtonNormal">@color/white_87_opacity</item>
 
-        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
-
         <item name="snackBarBackground">@color/green_900_dark</item>
         <item name="onSnackBarBackground">@color/white_87_opacity</item>
 
         <item name="snackbarStyle">@style/MySnackBarStyle</item>
         <item name="snackbarTextViewStyle">@style/MySnackBarTextViewStyle</item>
+
+        <item name="topAppBar">?attr/colorPrimary</item>
+        <item name="bottomNavigationBar">?attr/colorPrimary</item>
+        <item name="onBottomNavigationBar">?attr/colorOnPrimary</item>
+
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
 

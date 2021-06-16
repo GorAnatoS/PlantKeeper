@@ -13,12 +13,14 @@
     <color name="green_300_light">#b2fab4</color>
     <color name="green_300_dark">#519657</color>
 
-    <color name="green_300_4dp">#1C221C</color>
-    <color name="green_300_12dp">#1F2820</color>
-
+    <color name="green_300_4dp">@color/green_300_9_on_grey</color>
+    <color name="green_300_8dp">@color/green_300_12_on_grey</color>
+    <color name="dark_theme_app_bar">#2B3B2C</color>
 
     <color name="green_300_8">#1B201B</color>
+    <color name="green_300_9_on_grey">#1C221C</color>
     <color name="green_300_12">#1F81C784</color>
+    <color name="green_300_12_on_grey">#1F2820</color>
     <color name="green_300_40">#6681C784</color>
     <color name="green_300_87">#DE81C784</color>
 

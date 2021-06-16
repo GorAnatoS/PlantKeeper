@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.PlantKeeper" parent="Theme.MaterialComponents.DayNight">
 
@@ -25,6 +25,8 @@
         <item name="chip_background_checked">#2686D9E1</item>
         <item name="on_chip_background_checked">?attr/colorPrimary</item>
 
+        <item name="android:statusBarColor" tools:targetApi="l">@color/green_300_40</item>
+
         <item name="colorControlNormal">@color/white_87_opacity</item>
 
         <item name="card_view_bg_normal">?attr/colorSurface</item>
@@ -40,6 +42,9 @@
 
         <item name="snackbarStyle">@style/MySnackBarStyle</item>
         <item name="snackbarTextViewStyle">@style/MySnackBarTextViewStyle</item>
+
+        <item name="topAppBar">@color/green_300_4dp</item>
+        <item name="bottomNavigationBar">@color/dark_theme_app_bar</item>
     </style>
 
 
