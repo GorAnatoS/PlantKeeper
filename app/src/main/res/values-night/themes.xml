@@ -25,7 +25,7 @@
         <item name="chip_background_checked">#2686D9E1</item>
         <item name="on_chip_background_checked">?attr/colorPrimary</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">@color/green_300_40</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/bottomNavigationBar</item>
 
         <item name="colorControlNormal">@color/white_87_opacity</item>
 

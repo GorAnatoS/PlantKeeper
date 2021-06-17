@@ -12,6 +12,7 @@
 
         <item name="backgroundColor">@color/white</item>
         <item name="colorOnBackground">@color/black_87_opacity</item>
+        <item name="android:colorBackground">@color/green_900_5_on_white</item>
 
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black_87_opacity</item>
