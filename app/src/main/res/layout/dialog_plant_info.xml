@@ -232,6 +232,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/watered_dialog_plant_info"
+            app:layout_goneMarginBottom="@dimen/margin_std"
             app:layout_constraintBottom_toTopOf="@+id/checkBoxFertilized"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeIcon"
@@ -252,14 +253,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_15x"
-            android:layout_marginTop="@dimen/margin_2x"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@id/barrierEndOfCheckboxes"
-            app:layout_constraintTop_toBottomOf="@+id/tvToFertilizeFromDateVal"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintStart_toEndOf="@id/barrierEndOfCheckboxes" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

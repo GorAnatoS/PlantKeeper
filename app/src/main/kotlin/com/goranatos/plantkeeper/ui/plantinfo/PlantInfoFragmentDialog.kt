@@ -1,13 +1,11 @@
 package com.goranatos.plantkeeper.ui.plantinfo
 
-import android.app.Dialog
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -31,7 +29,7 @@ class PlantInfoFragmentDialog : DialogFragment() {
 
     lateinit var plant: Plant
 
-    private lateinit var myDialog: Dialog
+//    private lateinit var myDialog: Dialog
 
     lateinit var binding: DialogPlantInfoBinding
 
@@ -80,13 +78,6 @@ class PlantInfoFragmentDialog : DialogFragment() {
         setOnButtonsClicked()
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dialog?.window?.setBackgroundDrawable(view.context.getDrawable(R.drawable.background))
-
-
     }
 
     private fun setPlantImage() {
@@ -221,12 +212,6 @@ class PlantInfoFragmentDialog : DialogFragment() {
                 Helper.showMaterialDialogPositiveOnly(plant.str_desc!!, requireContext())
             }
         }
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        myDialog = super.onCreateDialog(savedInstanceState)
-        myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        return myDialog
     }
 
     override fun onDismiss(dialog: DialogInterface) {
