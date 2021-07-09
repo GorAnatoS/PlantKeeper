@@ -4,16 +4,12 @@ https://raw.githubusercontent.com/android/sunflower/main/README.md
 PlantKeeper
 ===========
 
-A gardening app illustrating Android development best practices with Android Jetpack.
-
-Android Sunflower is currently under heavy development.
-Note that some changes (such as database schema modifications) are not backwards
-compatible and may cause the app to crash. In this
-case, please uninstall and re-install the app.
+PlantKeeper is a simple app that helps you taking care of your plants.
 
 Introduction
 ------------
 
+There are some
 Android Jetpack is a set of components, tools and guidance to make great Android apps. They bring
 together the existing Support Library and Architecture Components and arrange them into four
 categories:
@@ -37,21 +33,6 @@ There are two Gradle tasks for testing the project:
 For more resources on learning Android development, visit the
 [Developer Guides](https://developer.android.com/guide/) at
 [developer.android.com](https://developer.android.com).
-
-### Unsplash API key
-
-Sunflower uses the [Unsplash API](https://unsplash.com/developers) to load pictures on the gallery
-screen. To use the API, you will need to obtain a free developer API key. See the
-[Unsplash API Documentation](https://unsplash.com/documentation) for instructions.
-
-Once you have the key, add this line to the `gradle.properties` file, either in your user home
-directory (usually `~/.gradle/gradle.properties` on Linux and Mac) or in the project's root folder:
-
-```
-unsplash_access_key=<your Unsplash access key>
-```
-
-The app is still usable without an API key, though you won't be able to navigate to the gallery screen.
 
 Screenshots
 -----------
@@ -108,14 +89,6 @@ Libraries Used
 [92]: https://developer.android.com/training/dependency-injection/hilt-android
 [93]: https://developer.android.com/training/dependency-injection
 
-Upcoming features
------------------
-Updates will include incorporating additional Jetpack components and updating existing components
-as the component libraries evolve.
-
-Interested in seeing a particular feature of the Android Framework or Jetpack implemented in this
-app? Please open a new [issue](https://github.com/android/sunflower/issues).
-
 Android Studio IDE setup
 ------------------------
 For development, the latest version of Android Studio is required. The latest version can be
@@ -167,15 +140,6 @@ Select text used for describing the plants (in `plants.json`) are used from Wiki
 
 License
 -------
-
-Copyright 2018 Google, Inc.
-
-Licensed to the Apache Software Foundation (ASF) under one or more contributor
-license agreements.  See the NOTICE file distributed with this work for
-additional information regarding copyright ownership.  The ASF licenses this
-file to you under the Apache License, Version 2.0 (the "License"); you may not
-use this file except in compliance with the License.  You may obtain a copy of
-the License at
 
   https://www.apache.org/licenses/LICENSE-2.0
 
