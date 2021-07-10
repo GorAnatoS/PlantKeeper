@@ -3,7 +3,7 @@ package com.goranatos.plantkeeper.ui.settings
 import android.content.Context
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
-import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.minutesFromMidnightToHourlyTime
+import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.minutesFromMidnightToHourAndMinutesTime
 
 
 /**
@@ -25,7 +25,7 @@ class TimePickerPreference(context: Context?, attrs: AttributeSet?) :
 
     override fun onSetInitialValue(defaultValue: Any?) {
         super.onSetInitialValue(defaultValue)
-        summary = minutesFromMidnightToHourlyTime(getPersistedMinutesFromMidnight())
+        summary = minutesFromMidnightToHourAndMinutesTime(getPersistedMinutesFromMidnight())
     }
 
 
@@ -33,7 +33,7 @@ class TimePickerPreference(context: Context?, attrs: AttributeSet?) :
     companion object {
         // By default we want notification to appear at 9 AM each time.
         private const val DEFAULT_HOUR = 9
-        const val DEFAULT_MINUTES_FROM_MIDNIGHT = DEFAULT_HOUR * 60
+        const val DEFAULT_MINUTES_FROM_MIDNIGHT = DEFAULT_HOUR * 60 + 30
     }
 
 }
