@@ -29,7 +29,7 @@ There are two Gradle tasks for testing the project:
 
 Screenshots: light theme
 -----------
-<p float="left"> 
+<p float="center"> 
   <img src="screenshots/light_my_plants_linear.png" alt="Your image title" width="300">
   <img src="screenshots/light_edit_plant.png" alt="Your image title" width="300">
   <img src="screenshots/light_plants_info.png" alt="Your image title" width="300">
