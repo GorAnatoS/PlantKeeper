@@ -46,7 +46,7 @@ class TimeHelper {
             return calendar.timeInMillis
         }
 
-        fun minutesFromMidnightToHourlyTime(persistedMinutesFromMidnight: Int): CharSequence {
+        fun minutesFromMidnightToHourAndMinutesTime(persistedMinutesFromMidnight: Int): CharSequence {
             return "${
                 String.format(
                     "%02d",
