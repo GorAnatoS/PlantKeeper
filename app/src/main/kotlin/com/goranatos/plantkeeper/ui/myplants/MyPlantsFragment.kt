@@ -17,10 +17,10 @@ import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.*
 import com.goranatos.plantkeeper.databinding.FragmentMyPlantsBinding
 import com.goranatos.plantkeeper.ui.base.ScopedFragment
-import com.goranatos.plantkeeper.ui.plantinfo.PlantInfoFragmentDialog
 import com.goranatos.plantkeeper.utilities.Helper.Companion.getScreenWidth
 import com.goranatos.plantkeeper.utilities.Helper.Companion.onFirstStartShowAppInfo
 import com.goranatos.plantkeeper.utilities.PlantHelper
+import com.goranatos.plantkeeper.utilities.PlantHelper.Companion.setNotificationsForPlantList
 import com.goranatos.plantkeeper.utilities.SharedPreferencesRepositoryConstants
 import com.goranatos.plantkeeper.utilities.createChannel
 import com.xwray.groupie.GroupAdapter
@@ -73,13 +73,13 @@ class MyPlantsFragment : ScopedFragment() {
 
         viewModel.allPlants.observe(viewLifecycleOwner, {
             viewModel.updateRecycleView()
-            viewModel.setNotificationsForPlantList(it)
+            setNotificationsForPlantList(it, requireContext())
         })
 
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is true.
                 findNavController().navigate(
-                    MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId)
+                    MyPlantsFragmentDirections.actionNavigationMyPlantsToPlantAddOrEdit(viewModel.navigateToPlantId)
                 )
                 viewModel.doneNavigating()
             }
@@ -87,7 +87,6 @@ class MyPlantsFragment : ScopedFragment() {
 
         viewModel.isToUpdateRecycleView.observe(viewLifecycleOwner, {
             if (it == true) {
-
                 PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
                     getString(R.string.pref_option_is_list_home_adapter), true
                 ).also { isListHomeAdapter ->
@@ -211,9 +210,10 @@ class MyPlantsFragment : ScopedFragment() {
             launch {
                 viewModel.setPlant(id)
             }
-            val fragmentManager = parentFragmentManager
-            val newFragment = PlantInfoFragmentDialog(id)
-            newFragment.show(fragmentManager, "dialog")
+
+            findNavController().navigate(
+                MyPlantsFragmentDirections.actionNavigationMyPlantsToPlantInfoFragmentDialog(id)
+            )
         }
     }
 

@@ -1,13 +1,11 @@
 package com.goranatos.plantkeeper.ui.plantinfo
 
-import android.app.Dialog
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -15,8 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.DialogPlantInfoBinding
-import com.goranatos.plantkeeper.ui.myplants.MyPlantsFragmentDirections
-import com.goranatos.plantkeeper.ui.todo.TodoFragmentDirections
 import com.goranatos.plantkeeper.utilities.Helper
 import com.goranatos.plantkeeper.utilities.PlantHelper
 import com.goranatos.plantkeeper.utilities.TimeHelper
@@ -28,32 +24,35 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
-
+class PlantInfoFragmentDialog : DialogFragment() {
     private val viewModel by viewModels<PlantInfoViewModel>()
 
     lateinit var plant: Plant
 
-    private lateinit var myDialog: Dialog
+//    private lateinit var myDialog: Dialog
 
     lateinit var binding: DialogPlantInfoBinding
 
     private var isToSaveResult = false
     private var isToShowSaveBtn = false
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        retainInstance = true
-
-        super.onCreate(savedInstanceState)
-        viewModel.initPlantInfoViewModel(plantId)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is t
+                findNavController().navigate(
+                    PlantInfoFragmentDialogDirections.actionPlantInfoFragmentDialogToPlantAddAndInfo(
+                        viewModel.thePlant.int_id
+                    )
+                )
+            }
+        })
+
+        viewModel.initPlantInfoViewModel()
+
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -79,28 +78,6 @@ class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
         setOnButtonsClicked()
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dialog?.window?.setBackgroundDrawable(view.context.getDrawable(R.drawable.background))
-
-        viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
-            if (it == true) { // Observed state is t
-                if (findNavController().currentDestination?.id == R.id.navigation_todo) {
-                    findNavController().navigate(
-                        TodoFragmentDirections.actionNavigationTodoToPlantAddAndInfo(viewModel.navigateToPlantId)
-                    )
-                    viewModel.doneNavigating()
-                }
-                if (findNavController().currentDestination?.id == R.id.navigation_my_plants) {
-                    findNavController().navigate(
-                        MyPlantsFragmentDirections.actionMyPlantsFragmentToPlantAddAndInfo(viewModel.navigateToPlantId)
-                    )
-                    viewModel.doneNavigating()
-                }
-            }
-        })
     }
 
     private fun setPlantImage() {
@@ -237,12 +214,6 @@ class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        myDialog = super.onCreateDialog(savedInstanceState)
-        myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        return myDialog
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
         if (isToSaveResult) {
             isWateredCheckBoxChecked()
@@ -318,7 +289,6 @@ class PlantInfoFragmentDialog(private val plantId: Int) : DialogFragment() {
     }
 
     private fun onEditButtonClicked() {
-
         viewModel.updateNavigateToPlantId(viewModel.thePlant.int_id)
         viewModel.onItemClicked()
         dismiss()

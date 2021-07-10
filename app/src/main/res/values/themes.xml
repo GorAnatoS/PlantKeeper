@@ -1,42 +1,65 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
 
+    <style name="Theme.PlantKeeper" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/green_900</item>
+        <item name="colorPrimaryVariant">@color/green_900_dark</item>
+        <item name="colorOnPrimary">@color/white_87_opacity</item>
 
-    <style name="Theme.PlantKeeper.ActionOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/on_primary</item>
+        <item name="colorSecondary">@color/amber_700</item>
+        <item name="colorSecondaryVariant">@color/amber_700_dark</item>
+        <item name="colorOnSecondary">@color/black_87_opacity</item>
+
+        <item name="backgroundColor">@color/white</item>
+        <item name="colorOnBackground">@color/black_87_opacity</item>
+        <item name="android:colorBackground">@color/green_900_5_on_white</item>
+
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black_87_opacity</item>
+
+        <item name="colorAccent">@color/amber_700_dark</item>
+
+        <item name="colorError">@color/error_red</item>
+        <item name="colorOnError">@color/white_87_opacity</item>
+
+
+        <item name="chip_background_unchecked">@color/blue_grey_100</item>
+        <item name="on_chip_background_unchecked">@color/black_87_opacity</item>
+        <item name="chip_background_checked">@color/amber_700_dark</item>
+        <item name="on_chip_background_checked">@color/black_87_opacity</item>
+
+        <item name="appBarIcon">@color/white_87_opacity</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="actionOverflowButtonStyle">@style/Theme.PlantKeeper.ActionOverflowButtonStyle
+        </item>
+
+        <item name="card_view_bg_normal">?attr/colorSurface</item>
+        <item name="card_view_bg_need_care">@color/amber_700_18</item>
+
+        <item name="onlyIconButton">#99000000</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+
+        <item name="android:textColor">@color/black_87_opacity</item>
+        <item name="android:editTextColor">@color/black_87_opacity</item>
+
+        <item name="onTopAppBar">@color/white_87_opacity</item>
+
+        <item name="colorButtonNormal">@color/white_87_opacity</item>
+
+        <item name="snackBarBackground">@color/green_900_dark</item>
+        <item name="onSnackBarBackground">@color/white_87_opacity</item>
+
+        <item name="snackbarStyle">@style/MySnackBarStyle</item>
+        <item name="snackbarTextViewStyle">@style/MySnackBarTextViewStyle</item>
+
+        <item name="topAppBar">?attr/colorPrimary</item>
+        <item name="bottomNavigationBar">?attr/colorPrimary</item>
+        <item name="onBottomNavigationBar">?attr/colorOnPrimary</item>
+
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
-    <style name="Theme.PlantKeeper.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextColor">@color/on_primary</item>
-    </style>
 
-    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/chip_background_color_state_list</item>
-        <item name="android:textColor">@color/chip_text_color_state_list</item>
-    </style>
-
-    <style name="Theme.PlantKeeper.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.PlantKeeper.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="iconTint">@color/on_primary</item>
-        <item name="colorControlNormal">@color/on_primary</item>
-        <item name="android:textColor">@color/on_primary</item>
-    </style>
-
-    <style name="Theme.PlantKeeper.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar" />
-
-    <style name="Theme.PlantKeeper.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="Widget.PlantKeeper.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
-        ...
-        <item name="materialThemeOverlay">@style/ThemeOverlay.PlantKeeper.Chip.Choice</item>
-    </style>
-
-    <style name="ThemeOverlay.PlantKeeper.Chip.Choice" parent="">
-        <item name="elevationOverlayEnabled">false</item>
-    </style>
 </resources>
-

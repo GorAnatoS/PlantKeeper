@@ -17,7 +17,7 @@
             android:layout_marginBottom="@dimen/margin_05x"
             android:minHeight="?listPreferredItemHeightSmall"
 
-            android:theme="@style/AppTheme.CardViewStyle"
+            style="@style/AppTheme.CardViewStyle"
             app:cardCornerRadius="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?listPreferredItemHeightSmall">
-
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvTitle"

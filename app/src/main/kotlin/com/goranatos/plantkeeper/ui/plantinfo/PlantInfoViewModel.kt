@@ -1,12 +1,9 @@
 package com.goranatos.plantkeeper.ui.plantinfo
 
-import android.content.Context
 import androidx.lifecycle.*
-import androidx.preference.PreferenceManager
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.repository.PlantRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,10 +12,13 @@ import javax.inject.Inject
 @HiltViewModel
 class PlantInfoViewModel @Inject constructor(
     private val repository: PlantRepository,
-    @ApplicationContext private val context: Context
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel(), LifecycleObserver {
 
-    fun initPlantInfoViewModel() {
+    private var plantId: Int? = -1
+
+    init {
+        plantId = savedStateHandle["plantId"]
     }
 
     lateinit var thePlant: Plant
@@ -26,9 +26,9 @@ class PlantInfoViewModel @Inject constructor(
     //create new plant
     var navigateToPlantId = -1
 
-    fun initPlantInfoViewModel(plantId: Int) {
+    fun initPlantInfoViewModel() {
         viewModelScope.launch {
-            setPlant(plantId)
+            plantId?.let { setPlant(it) }
         }
     }
 
@@ -47,10 +47,6 @@ class PlantInfoViewModel @Inject constructor(
     fun updateNavigateToPlantId(newId: Int) {
         navigateToPlantId = newId
     }
-
-    private val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(context)
-
 
     suspend fun setPlant(plantId: Int) {
         return withContext(Dispatchers.IO) {
@@ -81,6 +77,4 @@ class PlantInfoViewModel @Inject constructor(
             deletePlant()
         }
     }
-
-
 }

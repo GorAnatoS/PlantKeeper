@@ -3,8 +3,8 @@ package com.goranatos.plantkeeper.data.entity
 import android.net.Uri
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat.getColor
 import com.bumptech.glide.Glide
+import com.google.android.material.color.MaterialColors
 import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.databinding.ListItemPlantBinding
 import com.goranatos.plantkeeper.utilities.TimeHelper
@@ -121,12 +121,20 @@ class PlantItemListCard(
             }
 
             if (colorNormal) {
-//                viewHolder.containerView.plantCardView.setCardBackgroundColor(
-//                    getColor(viewHolder.containerView.context, R.color.card_normal)
-//                )
+                viewBinding.plantCardView.setCardBackgroundColor(
+                    MaterialColors.getColor(
+                        viewBinding.plantCardView.context,
+                        R.attr.card_view_bg_normal,
+                        "Error"
+                    )
+                )
             } else {
                 viewBinding.plantCardView.setCardBackgroundColor(
-                    getColor(viewBinding.plantCardView.context, R.color.card_view_bg_attention)
+                    MaterialColors.getColor(
+                        viewBinding.plantCardView.context,
+                        R.attr.card_view_bg_need_care,
+                        "Error"
+                    )
                 )
             }
         }

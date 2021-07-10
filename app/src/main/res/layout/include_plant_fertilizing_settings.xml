@@ -27,12 +27,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchHibernate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:checked="true"
+            app:useMaterialThemeColors="false"
             android:drawableStart="@drawable/ic_baseline_ac_unit_24"
             android:gravity="center"
             android:text="@string/sp_hibernate_mode"
@@ -64,7 +65,7 @@
             android:gravity="center"
             android:text="@string/_01_10"
             android:textAlignment="center"
-            android:textColor="@color/accent"
+            android:textColor="?attr/colorAccent"
             android:textSize="14sp"
             android:visibility="visible"
             app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"

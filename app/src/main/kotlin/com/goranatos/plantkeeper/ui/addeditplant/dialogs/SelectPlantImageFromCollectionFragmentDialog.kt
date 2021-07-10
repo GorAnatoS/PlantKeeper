@@ -15,7 +15,7 @@ import com.goranatos.plantkeeper.data.entity.OnPlantImageItemClickedListener
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.entity.PlantImageItemCard
 import com.goranatos.plantkeeper.databinding.DialogSelectPlantImageFromCollectionBinding
-import com.goranatos.plantkeeper.ui.addeditplant.PlantDetailViewModel
+import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -24,7 +24,7 @@ import com.xwray.groupie.GroupieViewHolder
  * Created by qsufff on 12/7/2020.
  */
 
-class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetailViewModel) :
+class SelectPlantImageUriFromCollectionDialogFragment(val viewModelAddOrEdit: AddOrEditPlantViewModel) :
     DialogFragment() {
 
     lateinit var myDialog: Dialog
@@ -88,7 +88,7 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
 
         initRecycleView(myList.toPlantItemImageCard())
 
-        plant = viewModel.thePlant.value!!
+        plant = viewModelAddOrEdit.thePlant.value!!
     }
 
     private fun initRecycleView(items: List<PlantImageItemCard>) {
@@ -113,7 +113,7 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModel: PlantDetail
     private val onPlantImageItemClickedListener = object : OnPlantImageItemClickedListener {
         override fun onPlantImageClicked(uri: Uri) {
             plant.string_uri_image_path = uri.toString()
-            viewModel.updateThePlantOutside(plant)
+            viewModelAddOrEdit.updateThePlantOutside(plant)
 
             myDialog.dismiss()
 
