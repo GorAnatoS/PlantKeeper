@@ -29,6 +29,7 @@ import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_RUSSIAN
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_RUSSIAN_COUNTRY
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_SPANISH
 import com.goranatos.plantkeeper.ui.settings.LanguagePrefs.LANGUAGE_SPANISH_COUNTRY
+import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.minutesFromMidnightToHourAndMinutesTime
 import com.yariksoffice.lingver.Lingver
 
 
@@ -84,6 +85,56 @@ class SettingsFragment : PreferenceFragmentCompat() {
     ) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
+        setLanguagePreference()
+
+
+        setThemePreference()
+
+        setNotificationTimePreference()
+    }
+
+    private fun setNotificationTimePreference() {
+        val chooseNotificationTimePreference =
+            findPreference<TimePickerPreference>(getString(R.string.pref_option_notification_time))
+
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).getInt(
+            getString(R.string.pref_option_notification_time),
+            resources.getInteger(R.integer.default_timer_time)
+        ).also { intMinutesAfterMidnight ->
+            chooseNotificationTimePreference?.summary = minutesFromMidnightToHourAndMinutesTime(intMinutesAfterMidnight)
+        }
+    }
+
+    private fun setThemePreference() {
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
+            getString(R.string.pref_option_is_dark_theme_enabled), false
+        ).also { beginAppTheme = it }
+
+        val chooseThemePreference =
+            findPreference<SwitchPreferenceCompat>(getString(R.string.pref_option_is_dark_theme_enabled))
+
+        when (requireContext().resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                beginAppTheme = true
+                chooseThemePreference?.isChecked = beginAppTheme
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                beginAppTheme = false
+                chooseThemePreference?.isChecked = beginAppTheme
+            }
+        }
+
+        chooseThemePreference?.setOnPreferenceChangeListener { preference, newValue ->
+
+            endAppTheme = newValue as Boolean
+
+            changeApplicationThemeIfNeeded()
+
+            true
+        }
+    }
+
+    private fun setLanguagePreference() {
         PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(
             getString(R.string.pref_option_choose_language), getString(
                 R.string.empty_string
@@ -111,34 +162,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
                 checkIsLanguageChangeNeeded()
             }
-            true
-        }
-
-
-        PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
-            getString(R.string.pref_option_is_dark_theme_enabled), false
-        ).also { beginAppTheme = it }
-
-        val chooseThemePreference =
-            findPreference<SwitchPreferenceCompat>(getString(R.string.pref_option_is_dark_theme_enabled))
-
-        when (requireContext().resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                beginAppTheme = true
-                chooseThemePreference?.isChecked = beginAppTheme
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                beginAppTheme = false
-                chooseThemePreference?.isChecked = beginAppTheme
-            }
-        }
-
-        chooseThemePreference?.setOnPreferenceChangeListener { preference, newValue ->
-
-            endAppTheme = newValue as Boolean
-
-            changeApplicationThemeIfNeeded()
-
             true
         }
     }
