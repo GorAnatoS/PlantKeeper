@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
 import androidx.preference.PreferenceDialogFragmentCompat
-import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.minutesFromMidnightToHourlyTime
+import com.goranatos.plantkeeper.utilities.TimeHelper.Companion.minutesFromMidnightToHourAndMinutesTime
 
 
 /**
@@ -39,8 +39,7 @@ class TimePickerPreferenceDialog : PreferenceDialogFragmentCompat() {
         if (positiveResult) {
             val minutesAfterMidnight = (timepicker.hour * 60) + timepicker.minute
             (preference as TimePickerPreference).persistMinutesFromMidnight(minutesAfterMidnight)
-            preference.summary = minutesFromMidnightToHourlyTime(minutesAfterMidnight)
-
+            preference.summary = minutesFromMidnightToHourAndMinutesTime(minutesAfterMidnight)
         }
     }
 
