@@ -19,6 +19,9 @@
     <attr name="bottomNavigationBar" format="color" />
     <attr name="onBottomNavigationBar" format="color" />
 
+    <attr name="dialogBackgroundColor" format="color" />
+
+
     <attr name="appBarIcon" type="color" />
 
     <attr name="snackBarBackground" format="color" />
