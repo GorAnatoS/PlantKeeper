@@ -41,7 +41,6 @@ class PlantHelper {
 
         //Set Notifications for Plants
         fun setNotificationsForPlantList(plantList: List<Plant>?, context: Context) {
-
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
             val sharedPreferences =
@@ -51,7 +50,7 @@ class PlantHelper {
 
             val isToShowNotifications = sharedPreferences.getBoolean(
                 SharedPreferencesRepositoryConstants.PREF_OPTION_IS_TO_SHOW_NOTIFICATIONS,
-                false
+                true
             )
 
             val notificationManager =
