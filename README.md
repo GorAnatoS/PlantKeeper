@@ -27,12 +27,25 @@ There are two Gradle tasks for testing the project:
 * `connectedAndroidTest` - for running Espresso on a connected device
 * `test` - for running unit tests
 
-Screenshots
+Screenshots: light theme
 -----------
+<p float="left"> 
+  <img src="screenshots/light_my_plants_linear.png" alt="Your image title" width="300">
+  <img src="screenshots/light_edit_plant.png" alt="Your image title" width="300">
+  <img src="screenshots/light_plants_info.png" alt="Your image title" width="300">
+  <img src="screenshots/light_settings.png" alt="Your image title" width="300">
+</p>
 
-![MyPlants fragment](screenshots/light_my_plants_grid.png.png "A list of plants")
-![Todo fragment](screenshots/phone_plant_detail.png "Details for a specific plant")
-![My Garden](screenshots/phone_my_garden.png "Plants that have been added to your garden")
+
+Screenshots: dark theme
+------------
+<p float="left"> 
+  <img src="screenshots/dark_edit_plant.png" alt="Your image title" width="300">
+  <img src="screenshots/dark_my_plants_grid.png" alt="Your image title" width="300">
+  <img src="screenshots/dark_plant_info.png" alt="Your image title" width="300">
+  <img src="screenshots/dark_settings.png" alt="Your image title" width="300">
+  <img src="screenshots/dark_todo.png" alt="Your image title" width="300">
+</p>
 
 Libraries Used
 --------------
