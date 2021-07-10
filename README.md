@@ -11,6 +11,12 @@ Introduction
 
 PlantsKeeper's GooglePlay page: https://play.google.com/store/apps/details?id=com.goranatos.plantkeeper
 
+App's features
+------------
+
+* light/dark themes
+* 3 languages: English, Russian, Spanish
+* 
 
 Getting Started
 ---------------
@@ -24,7 +30,7 @@ There are two Gradle tasks for testing the project:
 Screenshots
 -----------
 
-![MyPlants fragment](screenshots/phone_plant_list.png "A list of plants")
+![MyPlants fragment](screenshots/light_my_plants_grid.png.png "A list of plants")
 ![Todo fragment](screenshots/phone_plant_detail.png "Details for a specific plant")
 ![My Garden](screenshots/phone_my_garden.png "Plants that have been added to your garden")
 
