@@ -184,7 +184,5 @@ class PlantHelper {
                     })
                 .show()
         }
-
-
     }
 }
