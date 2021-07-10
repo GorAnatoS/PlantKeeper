@@ -33,7 +33,6 @@ Screenshots: light theme
   <img src="screenshots/light_my_plants_linear.png" alt="Your image title" width="300">
   <img src="screenshots/light_edit_plant.png" alt="Your image title" width="300">
   <img src="screenshots/light_plants_info.png" alt="Your image title" width="300">
-  <img src="screenshots/light_settings.png" alt="Your image title" width="300">
 </p>
 
 
@@ -43,8 +42,6 @@ Screenshots: dark theme
   <img src="screenshots/dark_edit_plant.png" alt="Your image title" width="300">
   <img src="screenshots/dark_my_plants_grid.png" alt="Your image title" width="300">
   <img src="screenshots/dark_plant_info.png" alt="Your image title" width="300">
-  <img src="screenshots/dark_settings.png" alt="Your image title" width="300">
-  <img src="screenshots/dark_todo.png" alt="Your image title" width="300">
 </p>
 
 Libraries Used
