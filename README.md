@@ -9,17 +9,8 @@ PlantKeeper is a simple app that helps you taking care of your plants.
 Introduction
 ------------
 
-There are some
-Android Jetpack is a set of components, tools and guidance to make great Android apps. They bring
-together the existing Support Library and Architecture Components and arrange them into four
-categories:
+PlantsKeeper's GooglePlay page: https://play.google.com/store/apps/details?id=com.goranatos.plantkeeper
 
-![Android Jetpack](screenshots/jetpack_donut.png "Android Jetpack Components")
-
-Android Sunflower demonstrates utilizing these components to create a simple gardening app.
-Read the
-[Introducing Android Sunflower](https://medium.com/androiddevelopers/introducing-android-sunflower-e421b43fe0c2)
-article for a walkthrough of the app.
 
 Getting Started
 ---------------
@@ -30,15 +21,11 @@ There are two Gradle tasks for testing the project:
 * `connectedAndroidTest` - for running Espresso on a connected device
 * `test` - for running unit tests
 
-For more resources on learning Android development, visit the
-[Developer Guides](https://developer.android.com/guide/) at
-[developer.android.com](https://developer.android.com).
-
 Screenshots
 -----------
 
-![List of plants](screenshots/phone_plant_list.png "A list of plants")
-![Plant details](screenshots/phone_plant_detail.png "Details for a specific plant")
+![MyPlants fragment](screenshots/phone_plant_list.png "A list of plants")
+![Todo fragment](screenshots/phone_plant_detail.png "Details for a specific plant")
 ![My Garden](screenshots/phone_my_garden.png "Plants that have been added to your garden")
 
 Libraries Used
