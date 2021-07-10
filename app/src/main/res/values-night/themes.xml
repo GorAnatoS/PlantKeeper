@@ -19,6 +19,8 @@
         <item name="colorError">@color/error_red</item>
         <item name="colorOnError">@color/white_87_opacity</item>
 
+        <item name="dialogBackgroundColor">@color/green_300_12</item>
+
         <item name="chip_background_unchecked">@color/green_900_dark</item>
         <item name="on_chip_background_unchecked">@color/black_87_opacity</item>
 
