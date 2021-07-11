@@ -132,7 +132,6 @@ dependencies {
 
     //coordinator layout
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
-
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     // Glide
@@ -144,8 +143,6 @@ dependencies {
 
     //pref
     def preference_version = "1.1.1"
-
-    // Kotlin
     implementation "androidx.preference:preference-ktx:$preference_version"
 
     implementation 'androidx.core:core-ktx:1.6.0'
@@ -198,15 +195,8 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
 
-
-    // Preference
-    implementation 'androidx.preference:preference-ktx:1.1.1'
-
     // New Material Design
     implementation 'com.google.android.material:material:1.4.0'
-
-    //chart
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //Groupie
     def groupie_version = '2.9.0'
