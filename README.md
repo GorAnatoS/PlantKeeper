@@ -1,7 +1,7 @@
 PlantKeeper
 ===========
 
-PlantKeeper is a simple app written on Koltin that helps you taking care of your plants.
+PlantKeeper is a simple app written on Kotlin that helps you taking care of your plants.
 
 Introduction
 ------------
