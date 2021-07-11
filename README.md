@@ -10,19 +10,14 @@ PlantsKeeper's GooglePlay page: https://play.google.com/store/apps/details?id=co
 
 App's features
 ------------
-
-* light/dark themes
-* 3 languages: English, Russian, Spanish
-* 
-
-Getting Started
----------------
-This project uses the Gradle build system. To build this project, use the
-`gradlew build` command or use "Import Project" in Android Studio.
-
-There are two Gradle tasks for testing the project:
-* `connectedAndroidTest` - for running Espresso on a connected device
-* `test` - for running unit tests
+You can:
+* set light/dark themes
+* chose one of 3 languages: English, Russian and Spanish
+* create and set your collection of plants and flowers
+* set each plant with settings like: next watering/fertilizing date, watering/fertilizing intervals, hibernate mode 
+* set plant's photo or image
+* see what plants need care of today/tomorrow/this week
+* set notifications time and turn it on/of
 
 Screenshots: light theme
 -----------
