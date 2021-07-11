@@ -1,6 +1,3 @@
-https://github.com/tchapi/markdown-cheatsheet
-https://raw.githubusercontent.com/android/sunflower/main/README.md
-
 PlantKeeper
 ===========
 
