@@ -92,6 +92,23 @@ Libraries Used
 [92]: https://developer.android.com/training/dependency-injection/hilt-android
 [93]: https://developer.android.com/training/dependency-injection
 
+Firebase: performance, crashlitics, analitics
+Hilt
+Glide    
+Intro
+SharedPrefences
+ViewModel
+LiveData
+Room
+Navigation
+Permission
+Kotlin Android Coroutines
+Translation support
+uCrop
+MaterialDesign
+Chart
+Groupie
+
 Android Studio IDE setup
 ------------------------
 For development, the latest version of Android Studio is required. The latest version can be
