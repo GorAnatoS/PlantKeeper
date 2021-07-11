@@ -19,23 +19,53 @@ You can:
 * see what plants need care of today/tomorrow/this week
 * set notifications time and turn it on/of
 
-Screenshots: light theme
+Screenshots
 -----------
-<p float="center"> 
-  <img src="screenshots/light_my_plants_linear.png" alt="Your image title" width="300">
-  <img src="screenshots/light_edit_plant.png" alt="Your image title" width="300">
-  <img src="screenshots/light_plants_info.png" alt="Your image title" width="300">
-</p>
 
+<table style="padding:20px">
+  <tr>
+    <td>
+      <img src="screenshots/light_my_plants_linear.png"  alt="1" width = 260px>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="screenshots/dark_my_plants_grid.png" alt="2" width = 260px >
+    </td>
+    <td width="30%">
+      MyPlants Screen where you can:<br><br>
+      - see your plant collection<br>
+      - add new or edit plant<br> 
+      - choose linear or grid types of layouts</td>
+  </tr>
+  
+   <tr>
+    <td>
+      <img src="screenshots/light_edit_plant.png"  alt="1" width = 260px>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="screenshots/dark_edit_plant.png" alt="2" width = 260px >
+    </td>
+    <td width="30%">
+      EditPlant Screen where you can:<br><br>
+      - choose picture or make photo of plant<br>
+      - set Hibernate Mode when plants need other type of care (Winter)<br>
+      - set Watering and Fertilization periods and next dates<br>
+      - add plant's notes</td>
+  </tr>
+  
+  <tr>
+    <td>
+      <img src="screenshots/light_plants_info.png"  alt="1" width = 260px>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="screenshots/dark_plant_info.png" alt="2" width = 260px >
+    </td>
+    <td width="30%">
+      PlantInfo Screen where you can:<br><br> 
+      - see plant's info<br>
+      - update watered and fertilized data<br>
+    </td>
+  </tr>
+  
+</table>
 
-Screenshots: dark theme
-------------
-<p float="left"> 
-  <img src="screenshots/dark_edit_plant.png" alt="Your image title" width="300">
-  <img src="screenshots/dark_my_plants_grid.png" alt="Your image title" width="300">
-  <img src="screenshots/dark_plant_info.png" alt="Your image title" width="300">
-</p>
-
+  
 Libraries Used
 --------------
 
