@@ -71,7 +71,7 @@
     <string name="days_till_event">%1$sd</string>
     <string name="days_till_watering">&#160;Till watering:</string>
     <string name="days_till_fertilizing">&#160;Till fertilizing:</string>
-    <string name="notification_plants_need_care">The plants need care of!</string>
+    <string name="notification_plants_need_care">Your plants need care of!</string>
     <string name="plant_s_name">Plant`s name</string>
     <string name="hibernate_mode">Hibernate mode</string>
     <string name="dec_20">Dec, 20</string>
