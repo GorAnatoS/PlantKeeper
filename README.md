@@ -11,13 +11,13 @@ PlantsKeeper's GooglePlay page: https://play.google.com/store/apps/details?id=co
 App's features
 ------------
 You can:
-* set light/dark themes
-* chose one of 3 languages: English, Russian and Spanish
+* choose light/dark themes
+* select one of 3 languages: English, Russian and Spanish
 * create and set your collection of plants and flowers
-* set each plant with settings like: next watering/fertilizing date, watering/fertilizing intervals, hibernate mode 
+* update each plant with settings like: next watering/fertilizing date, watering/fertilizing intervals, hibernate mode 
 * set plant's photo or image
-* see what plants need care of today/tomorrow/this week
-* set notifications time and turn it on/of
+* work with plant's care of scedule (today/tomorrow/this week)
+* add notifications for reminders
 
 Screenshots
 -----------
@@ -30,7 +30,7 @@ Screenshots
       <img src="screenshots/dark_my_plants_grid.png" alt="2" width = 260px >
     </td>
     <td width="30%">
-      MyPlants Screen where you can:<br><br>
+      MyPlants Fragment where you can:<br><br>
       - see your plant collection<br>
       - add new or edit plant<br> 
       - choose linear or grid types of layouts</td>
@@ -43,7 +43,7 @@ Screenshots
       <img src="screenshots/dark_edit_plant.png" alt="2" width = 260px >
     </td>
     <td width="30%">
-      EditPlant Screen where you can:<br><br>
+      EditPlant Fragment where you can:<br><br>
       - choose picture or make photo of plant<br>
       - set Hibernate Mode when plants need other type of care (Winter)<br>
       - set Watering and Fertilization periods and next dates<br>
@@ -57,7 +57,7 @@ Screenshots
       <img src="screenshots/dark_plant_info.png" alt="2" width = 260px >
     </td>
     <td width="30%">
-      PlantInfo Screen where you can:<br><br> 
+      PlantInfo Fragment where you can:<br><br> 
       - see plant's info<br>
       - update watered and fertilized data<br>
     </td>
