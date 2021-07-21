@@ -45,7 +45,7 @@ Screenshots
     <td width="30%">
       EditPlant Fragment where you can:<br><br>
       - choose picture or make photo of plant<br>
-      - set Hibernate Mode when plants need other type of care (Winter)<br>
+      - set Hibernate Mode when plants need special care (winter-time)<br>
       - set Watering and Fertilization periods and next dates<br>
       - add plant's notes</td>
   </tr>
@@ -79,6 +79,7 @@ Libraries Used
 * Lifecycles
 * Broadcasts
 * Animations and Transitions
+* Material Design
 * [Firebase: Performance, Crashlitics, Analitics][0] for analize users app's performance, crashes and getting statistics
 * [Hilt][1] for dependency injection
 * [Glide][2] for image loading
