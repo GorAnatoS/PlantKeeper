@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
@@ -33,7 +32,8 @@ import java.util.*
 class TodoFragment : ScopedFragment() {
     private val viewModel by viewModels<TodoViewModel>()
 
-    lateinit var binding: FragmentTodoBinding
+    private var _binding: FragmentTodoBinding? = null
+    private val binding get() = _binding!!
 
     private var selectedDate: Int = -1
 
@@ -52,20 +52,19 @@ class TodoFragment : ScopedFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_todo,
-                container,
-                false
-            )
-
-        setOnChipClickListener()
+        _binding = FragmentTodoBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
 
-        return binding.root
+        val view = binding.root
+        return view
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.todo_menu, menu)
@@ -179,6 +178,8 @@ class TodoFragment : ScopedFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setOnChipClickListener()
 
         binding.chipToday.isChecked = true
 
