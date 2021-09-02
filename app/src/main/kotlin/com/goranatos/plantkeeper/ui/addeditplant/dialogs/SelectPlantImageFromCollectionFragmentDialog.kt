@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.OnPlantImageItemClickedListener
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.data.entity.PlantImageItemCard
@@ -29,7 +27,9 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModelAddOrEdit: Ad
 
     lateinit var myDialog: Dialog
 
-    lateinit var binding: DialogSelectPlantImageFromCollectionBinding
+    private var _binding: DialogSelectPlantImageFromCollectionBinding? = null
+    private val binding get() = _binding!!
+
 
     lateinit var plant: Plant
 
@@ -40,15 +40,9 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModelAddOrEdit: Ad
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.dialog_select_plant_image_from_collection,
-                container,
-                false
-            )
-
-        return binding.root
+        _binding = DialogSelectPlantImageFromCollectionBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     /** The system calls this only when creating the layout in a dialog. */
@@ -62,6 +56,12 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModelAddOrEdit: Ad
 
         return myDialog
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

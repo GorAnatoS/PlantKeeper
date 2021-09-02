@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -29,9 +28,8 @@ class PlantInfoFragmentDialog : DialogFragment() {
 
     lateinit var plant: Plant
 
-//    private lateinit var myDialog: Dialog
-
-    lateinit var binding: DialogPlantInfoBinding
+    private var _binding: DialogPlantInfoBinding? = null
+    private val binding get() = _binding!!
 
     private var isToSaveResult = false
     private var isToShowSaveBtn = false
@@ -41,6 +39,23 @@ class PlantInfoFragmentDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = DialogPlantInfoBinding.inflate(inflater, container, false)
+
+        viewModel.initPlantInfoViewModel()
+        binding.viewModel = viewModel
+        plant = viewModel.thePlant
+
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.navigateToThePlant.observe(viewLifecycleOwner, {
             if (it == true) { // Observed state is t
                 findNavController().navigate(
@@ -50,20 +65,6 @@ class PlantInfoFragmentDialog : DialogFragment() {
                 )
             }
         })
-
-        viewModel.initPlantInfoViewModel()
-
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.dialog_plant_info,
-                container,
-                false
-            )
-
-        binding.viewModel = viewModel
-
-        plant = viewModel.thePlant
 
         setWateringNeedVisible()
         setFertilizingNeedVisible()
@@ -76,9 +77,8 @@ class PlantInfoFragmentDialog : DialogFragment() {
         setPlantInfo()
 
         setOnButtonsClicked()
-
-        return binding.root
     }
+
 
     private fun setPlantImage() {
         if (plant.string_uri_image_path != null) {

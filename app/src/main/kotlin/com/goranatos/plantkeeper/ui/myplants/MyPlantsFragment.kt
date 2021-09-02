@@ -6,7 +6,6 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
@@ -32,7 +31,8 @@ import kotlinx.coroutines.launch
 class MyPlantsFragment : ScopedFragment() {
     private val viewModel by viewModels<MyPlantsViewModel>()
 
-    lateinit var binding: FragmentMyPlantsBinding
+    private var _binding: FragmentMyPlantsBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var changeAppearanceActionMenuItem: MenuItem
 
@@ -42,6 +42,12 @@ class MyPlantsFragment : ScopedFragment() {
         super.onCreate(savedInstanceState)
         viewModel.initMyPlantsViewModel()
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        createChannel(
+            getString(R.string.plant_notification_channel_id),
+            getString(R.string.plant_notification_channel_name),
+            requireActivity()
+        )
     }
 
     override fun onCreateView(
@@ -49,24 +55,19 @@ class MyPlantsFragment : ScopedFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_my_plants,
-                container,
-                false
-            )
-
-        createChannel(
-            getString(R.string.plant_notification_channel_id),
-            getString(R.string.plant_notification_channel_name),
-            requireActivity()
-        )
+        _binding = FragmentMyPlantsBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
 
-        return binding.root
+        val view = binding.root
+        return view
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.IncludePlantFertilizingSettingsBinding
 import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel
@@ -30,7 +28,8 @@ class SetFertilizingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
 
     private lateinit var myDialog: Dialog
 
-    lateinit var binding: IncludePlantFertilizingSettingsBinding
+    private var _binding: IncludePlantFertilizingSettingsBinding? = null
+    private val binding get() = _binding!!
 
     private var isToSaveResult = false
 
@@ -39,14 +38,19 @@ class SetFertilizingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.include_plant_fertilizing_settings,
-                container,
-                false
-            )
+        _binding = IncludePlantFertilizingSettingsBinding.inflate(inflater, container, false)
 
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         plant = viewModelAddOrEdit.thePlant.value!!
 
         setHibernateMode()
@@ -60,9 +64,8 @@ class SetFertilizingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
         setSaveBtn()
 
         setCancelBtn()
-
-        return binding.root
     }
+
 
     private fun setTvToFertilizeFromDate() {
         if (plant.long_next_fertilizing_date == null) {

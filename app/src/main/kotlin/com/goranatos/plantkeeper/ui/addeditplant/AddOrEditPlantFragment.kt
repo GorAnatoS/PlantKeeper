@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -57,7 +56,8 @@ class AddOrEditPlantFragment : ScopedFragment() {
 
     private val viewModel by viewModels<AddOrEditPlantViewModel>()
 
-    lateinit var binding: FragmentDetailedPlantBinding
+    private var _binding: FragmentDetailedPlantBinding? = null
+    private val binding get() = _binding!!
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
@@ -100,20 +100,37 @@ class AddOrEditPlantFragment : ScopedFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_detailed_plant,
-                container,
-                false
-            )
+        _binding = FragmentDetailedPlantBinding.inflate(inflater, container, false)
+
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.lifecycleOwner = this
 
         binding.fragment = this
 
+        viewModel.setPlant()
+
+        if (args.plantId == -1) {
+            requireActivity().title = getString(R.string.new_plant)
+        }
+
+        binding.viewModel = viewModel
+
         uiSetup()
 
         hideRelatedToChipsMaterialCards()
+
         if (viewModel.isToCreateNewPlant) {
             binding.chipHibernatingMode.isChecked =
                 viewModel.thePlant.value?.is_hibernate_mode_on == 1
@@ -128,19 +145,6 @@ class AddOrEditPlantFragment : ScopedFragment() {
             setUIforPlant(plant)
         })
 
-        viewModel.setPlant()
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (args.plantId == -1) {
-            requireActivity().title = getString(R.string.new_plant)
-        }
-
-        binding.viewModel = viewModel
     }
 
     private fun hideRelatedToChipsMaterialCards() {

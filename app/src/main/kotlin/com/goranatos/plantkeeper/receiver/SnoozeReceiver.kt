@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 private const val REQUEST_CODE = 0
 
 class SnoozeReceiver : BroadcastReceiver() {
+    //when 60 minutes passed after SNOOZE button in Notification
     override fun onReceive(context: Context, intent: Intent) {
         val triggerTime = SystemClock.elapsedRealtime() + DateUtils.MINUTE_IN_MILLIS * 60
 

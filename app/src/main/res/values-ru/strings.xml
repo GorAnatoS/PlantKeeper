@@ -64,7 +64,7 @@
     <string name="days_till_event">%1$sд</string>
     <string name="days_till_watering">&#160;До полива:</string>
     <string name="days_till_fertilizing">&#160;До удобрения:</string>
-    <string name="notification_plants_need_care">Цветы нуждаются в уходе!</string>
+    <string name="notification_plants_need_care">Ваши растения нуждаются в уходе!</string>
     <string name="plant_s_name">Название растения</string>
     <string name="hibernate_mode">Режим покоя</string>
     <string name="dec_20">Dec, 20</string>

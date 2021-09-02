@@ -35,6 +35,7 @@ private const val NOTIFICATION_ID = 0
 private const val REQUEST_CODE = 0
 private const val FLAGS = 0
 
+//what notification we are sending
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
     val contentIntent = Intent(applicationContext, MainActivity::class.java)
 
@@ -42,7 +43,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         applicationContext,
         NOTIFICATION_ID,
         contentIntent,
-        PendingIntent.FLAG_NO_CREATE
+        PendingIntent.FLAG_UPDATE_CURRENT
     )
 
     val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)

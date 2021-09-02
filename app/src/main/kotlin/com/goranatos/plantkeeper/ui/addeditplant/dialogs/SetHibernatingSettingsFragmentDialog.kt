@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.goranatos.plantkeeper.R
 import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.IncludeHibernateSettingsBinding
 import com.goranatos.plantkeeper.ui.addeditplant.AddOrEditPlantViewModel
@@ -29,7 +27,8 @@ class SetHibernatingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
 
     private lateinit var myDialog: Dialog
 
-    lateinit var binding: IncludeHibernateSettingsBinding
+    private var _binding: IncludeHibernateSettingsBinding? = null
+    private val binding get() = _binding!!
 
     private var isToSaveResult = false
 
@@ -38,13 +37,19 @@ class SetHibernatingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.include_hibernate_settings,
-                container,
-                false
-            )
+        _binding = IncludeHibernateSettingsBinding.inflate(inflater, container, false)
+
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         plant = viewModelAddOrEdit.thePlant.value!!
 
@@ -57,8 +62,6 @@ class SetHibernatingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
         setSaveBtn()
 
         setCancelBtn()
-
-        return binding.root
     }
 
     private fun setCancelBtn() {
