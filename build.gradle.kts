@@ -1,21 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        google()
         mavenCentral()
         jcenter()
         maven(url = "https://plugins.gradle.org/m2/")
-        google()
     }
 
     dependencies {
         classpath(BuildPlugins.kotlinGradlePlugin)
         classpath(BuildPlugins.toolsBuildGradle)
         classpath(BuildPlugins.navigationSafeArgsGradlePlugin)
+        classpath(BuildPlugins.googlePlayServices)
         classpath(BuildPlugins.firebaseCrashliticsGradle)
         classpath(BuildPlugins.firebasePerfPlugin)
         classpath(BuildPlugins.hiltPlugin)
-        classpath(BuildPlugins.ktlint)
-
+        classpath(BuildPlugins.ktLint)
     }
 }
 

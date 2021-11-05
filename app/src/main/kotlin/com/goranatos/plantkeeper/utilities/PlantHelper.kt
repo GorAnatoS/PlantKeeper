@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
 import androidx.core.app.AlarmManagerCompat
@@ -168,20 +167,16 @@ class PlantHelper {
 
                 }
                 .setPositiveButton(
-                    context.resources.getString(R.string.delete_item),
-                    DialogInterface.OnClickListener { dialog, which ->
-                        actionOnDelete()
+                    context.resources.getString(R.string.delete_item)
+                ) { _, _ ->
+                    actionOnDelete()
 
-                        //Do nothing here because we override this button later to change the close behaviour.
-                        //However, we still need this because on older versions of Android unless we
-                        //pass a handler the button doesn't get instantiated
-
-                        Snackbar.make(
-                            view,
-                            context.getString(R.string.deleted),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    })
+                    Snackbar.make(
+                        view,
+                        context.getString(R.string.deleted),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
                 .show()
         }
     }

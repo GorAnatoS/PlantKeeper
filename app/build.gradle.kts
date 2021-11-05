@@ -6,6 +6,7 @@ plugins{
     id("kotlin-android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
     id("dagger.hilt.android.plugin")
@@ -42,7 +43,6 @@ android {
 
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("androidTest").assets.srcDirs("$projectDir/schemas")
     }
 
     signingConfigs {
@@ -118,7 +118,7 @@ dependencies {
     kapt(Deps.hiltAndroidCompiler)
 
     implementation(Deps.fragmentKtx)
-    implementation(Deps.constraintlayout)
+    implementation(Deps.constraintLayout)
     implementation(Deps.appcompat)
 
     implementation(Deps.preferenceKtx)
@@ -126,7 +126,6 @@ dependencies {
     implementation(Deps.lifecycleLibraries)
 
     implementation(Deps.roomLibraries)
-    annotationProcessor(Deps.roomCompiler)
     kapt(Deps.roomCompiler)
 
     implementation(Deps.navigationLibraries)

@@ -40,8 +40,7 @@ class SetFertilizingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
     ): View {
         _binding = IncludePlantFertilizingSettingsBinding.inflate(inflater, container, false)
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

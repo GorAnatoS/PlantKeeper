@@ -41,8 +41,7 @@ class SelectPlantImageUriFromCollectionDialogFragment(val viewModelAddOrEdit: Ad
         savedInstanceState: Bundle?
     ): View {
         _binding = DialogSelectPlantImageFromCollectionBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     /** The system calls this only when creating the layout in a dialog. */

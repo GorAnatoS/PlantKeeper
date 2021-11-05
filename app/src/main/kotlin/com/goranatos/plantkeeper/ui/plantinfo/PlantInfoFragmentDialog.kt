@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.goranatos.plantkeeper.R
-import com.goranatos.plantkeeper.data.entity.Plant
 import com.goranatos.plantkeeper.databinding.DialogPlantInfoBinding
 import com.goranatos.plantkeeper.utilities.Helper
 import com.goranatos.plantkeeper.utilities.PlantHelper
@@ -26,13 +25,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class PlantInfoFragmentDialog : DialogFragment() {
     private val viewModel by viewModels<PlantInfoViewModel>()
 
-    lateinit var plant: Plant
-
     private var _binding: DialogPlantInfoBinding? = null
     private val binding get() = _binding!!
 
     private var isToSaveResult = false
     private var isToShowSaveBtn = false
+
+    private val plant get() = viewModel.thePlant
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,10 +42,8 @@ class PlantInfoFragmentDialog : DialogFragment() {
 
         viewModel.initPlantInfoViewModel()
         binding.viewModel = viewModel
-        plant = viewModel.thePlant
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
