@@ -39,8 +39,7 @@ class SetWateringSettingsFragmentDialog(private val viewModelAddOrEdit: AddOrEdi
     ): View {
         _binding = IncludePlantWateringSettingsBinding.inflate(inflater, container, false)
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

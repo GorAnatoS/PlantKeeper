@@ -22,5 +22,4 @@ abstract class ScopedFragment : Fragment(), CoroutineScope {
         super.onDestroy()
         job.cancel()
     }
-
 }

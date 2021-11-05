@@ -1,5 +1,7 @@
 package com.goranatos.plantkeeper.utilities
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -13,28 +15,9 @@ class TimeHelper {
     companion object {
         private val date: Date = Calendar.getInstance().time
 
-        fun formattedDateStringToFormattedDateLong(string: String): Long {
-            val formatter =
-                SimpleDateFormat.getDateInstance() //or use getDateInstance()
-            val formatedDateString = formatter.format(date)
-            return formatter.parse(formatedDateString).time
-        }
-
-        fun getFormattedDateString(): String {
-            val formatter =
-                SimpleDateFormat.getDateInstance()
-            return formatter.format(date)
-        }
-
         fun getFormattedDateString(ms: Long): String {
             val formatter =
                 SimpleDateFormat("MMM, d")//.getDateInstance()
-            return formatter.format(ms)
-        }
-
-        fun getFormattedDateTimeString(ms: Long): String {
-            val formatter =
-                SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
             return formatter.format(ms)
         }
 
@@ -96,13 +79,14 @@ class TimeHelper {
             calendarFrom.set(Calendar.DAY_OF_YEAR, calendarFrom.get(Calendar.DAY_OF_YEAR) - 1)
             calendarTill.set(Calendar.DAY_OF_YEAR, calendarTill.get(Calendar.DAY_OF_YEAR) + 1)
 
-            if (calendarFrom.before(calendarTill)) {
-                return currentDate.before(calendarTill) && currentDate.after(calendarFrom)
+            return if (calendarFrom.before(calendarTill)) {
+                currentDate.before(calendarTill) && currentDate.after(calendarFrom)
             } else {
-                return currentDate.before(calendarTill) || currentDate.after(calendarFrom)
+                currentDate.before(calendarTill) || currentDate.after(calendarFrom)
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun isBeforeOrEqualThanDate(
             dateInLong: Long,
             tillDateInLong: Long
@@ -117,6 +101,7 @@ class TimeHelper {
                 .isAfter(tillDate.toInstant().truncatedTo(ChronoUnit.DAYS))
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun isInThatDate(
             dateInLong: Long,
             tillDateInLong: Long

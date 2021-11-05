@@ -1,8 +1,9 @@
 object Versions {
     //for plugins
-    const val toolsBuildGradle = "7.0.1"
+    const val toolsBuildGradle = "7.0.3"
     const val kotlinGradlePlugin = "1.5.21"
     const val navigationSafeArgs = "2.3.5"
+    const val googlePlayServices: String = "4.3.10:"
 
     const val hilt = "2.38.1"
     const val room = "2.3.0"
@@ -17,11 +18,12 @@ object Versions {
     const val firebaseAnalytics = "19.0.1"
     const val firebaseCrashlytics = "18.2.1"
     const val firebasePerf = "20.0.2"
+    const val firebaseCore = "9.6.1"
 
     const val material = "1.4.0"
 
     const val fragmentKtx = "1.3.5"
-    const val constraintlayout = "2.1.0"
+    const val constraintLayout = "2.1.0"
     const val appcompat = "1.3.1"
     const val gson = "2.8.7"
 

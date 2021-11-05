@@ -39,8 +39,7 @@ class SetHibernatingSettingsFragmentDialog(private val viewModelAddOrEdit: AddOr
     ): View {
         _binding = IncludeHibernateSettingsBinding.inflate(inflater, container, false)
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

@@ -101,7 +101,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             getString(R.string.pref_option_notification_time),
             resources.getInteger(R.integer.default_timer_time)
         ).also { intMinutesAfterMidnight ->
-            chooseNotificationTimePreference?.summary = minutesFromMidnightToHourAndMinutesTime(intMinutesAfterMidnight)
+            chooseNotificationTimePreference?.summary =
+                minutesFromMidnightToHourAndMinutesTime(intMinutesAfterMidnight)
         }
     }
 
@@ -124,7 +125,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        chooseThemePreference?.setOnPreferenceChangeListener { preference, newValue ->
+        chooseThemePreference?.setOnPreferenceChangeListener { _, newValue ->
 
             endAppTheme = newValue as Boolean
 

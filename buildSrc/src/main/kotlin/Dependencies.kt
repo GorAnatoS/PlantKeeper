@@ -10,10 +10,11 @@ object BuildPlugins {
     val hiltPlugin by lazy { "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}" }
     val firebasePerfPlugin by lazy { "com.google.firebase:perf-plugin:${Versions.firebasePerformancePlugin}" }
     val navigationSafeArgsGradlePlugin by lazy { "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigationSafeArgs}" }
+    val googlePlayServices by lazy { "com.google.gms:google-services:${Versions.googlePlayServices}" }
 
     //classpath
     val toolsBuildGradle by lazy { "com.android.tools.build:gradle:${Versions.toolsBuildGradle}" }
-    val ktlint by lazy { "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktLint}" }
+    val ktLint by lazy { "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktLint}" }
     val firebaseCrashliticsGradle by lazy { "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashliticsGradle}" }
 }
 
@@ -27,7 +28,7 @@ object Deps {
     val coreKtx by lazy { "androidx.core:core-ktx:1.7.0-alpha01" }
 
     val material by lazy { "com.google.android.material:material:${Versions.material}" }
-    val constraintlayout by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraintlayout}" }
+    val constraintLayout by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}" }
     val appcompat by lazy { "androidx.appcompat:appcompat:${Versions.appcompat}" }
     val fragmentKtx by lazy { "androidx.fragment:fragment-ktx:${Versions.fragmentKtx}" }
 
@@ -45,7 +46,7 @@ object Deps {
     val hiltAndroidCompiler by lazy { "com.google.dagger:hilt-android-compiler:${Versions.hilt}" }
 
     //firebase
-    private val firebaseAnalytics by lazy { "com.google.firebase:firebase-analytics:${Versions.firebaseAnalytics}" }
+    private val firebaseAnalytics by lazy { "com.google.firebase:firebase-analytics-ktx:${Versions.firebaseAnalytics}" }
     private val firebaseCrashlytics by lazy { "com.google.firebase:firebase-crashlytics:${Versions.firebaseCrashlytics}" }
     private val firebasePerf by lazy { "com.google.firebase:firebase-perf:${Versions.firebasePerf}" }
 
@@ -121,9 +122,6 @@ object Deps {
 
     //uCrop
     val ucrop by lazy { "com.github.yalantis:ucrop:${Versions.ucrop}" }
-
-    // Gson
-    val gson by lazy { "com.google.code.gson:gson:${Versions.gson}" }
 }
 
 //util functions for adding the different type dependencies from build.gradle file

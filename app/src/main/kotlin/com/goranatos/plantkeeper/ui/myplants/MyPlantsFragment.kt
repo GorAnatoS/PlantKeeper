@@ -59,15 +59,13 @@ class MyPlantsFragment : ScopedFragment() {
 
         setHasOptionsMenu(true)
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

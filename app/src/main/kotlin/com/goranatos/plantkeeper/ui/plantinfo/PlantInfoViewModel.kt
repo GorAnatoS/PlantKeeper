@@ -16,15 +16,15 @@ class PlantInfoViewModel @Inject constructor(
 ) : ViewModel(), LifecycleObserver {
 
     private var plantId: Int? = -1
-
-    init {
-        plantId = savedStateHandle["plantId"]
-    }
-
     lateinit var thePlant: Plant
 
     //create new plant
-    var navigateToPlantId = -1
+    private var navigateToPlantId = -1
+
+    init {
+        plantId = savedStateHandle["plantId"]
+        initPlantInfoViewModel()
+    }
 
     fun initPlantInfoViewModel() {
         viewModelScope.launch {

@@ -17,3 +17,11 @@ local.properties
 /keystore.properties
 /keystore.properties.txt
 app/google-services.json
+/.idea/
+/.idea/codeStyles
+/.idea/compiler.xml
+/.idea/deploymentTargetDropDown.xml
+/.idea/gradle.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/.idea/vcs.xml

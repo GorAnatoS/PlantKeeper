@@ -102,8 +102,7 @@ class AddOrEditPlantFragment : ScopedFragment() {
     ): View {
         _binding = FragmentDetailedPlantBinding.inflate(inflater, container, false)
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

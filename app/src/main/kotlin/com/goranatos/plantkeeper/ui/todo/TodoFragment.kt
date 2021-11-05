@@ -39,7 +39,7 @@ class TodoFragment : ScopedFragment() {
 
     private lateinit var changeAppearanceActionMenuItem: MenuItem
 
-    lateinit var preferences: SharedPreferences
+    private lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +56,7 @@ class TodoFragment : ScopedFragment() {
 
         setHasOptionsMenu(true)
 
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -288,11 +287,11 @@ class TodoFragment : ScopedFragment() {
 
     companion object {
         fun initRecycleViewWithLinearAdapterForTodoPlantCard(
-            itemLinears: List<PlantItemLinearTodoCard>,
+            linearItems: List<PlantItemLinearTodoCard>,
             recyclerView: RecyclerView
         ) {
             val groupAdapter = GroupAdapter<GroupieViewHolder>().apply {
-                addAll(itemLinears)
+                addAll(linearItems)
             }
 
             recyclerView.apply {
